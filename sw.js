@@ -1,17 +1,58 @@
+importScripts(
+  "https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"
+);
+
+importScripts(
+  "https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"
+);
+
+
+// ================================
+// FIREBASE
+// ================================
+
+firebase.initializeApp({
+
+  apiKey:
+    "AIzaSyDEBoXvug5fwbB4_u-QxX6RtOQiwAerGG8",
+
+  authDomain:
+    "fc-waengi-1967.firebaseapp.com",
+
+  projectId:
+    "fc-waengi-1967",
+
+  storageBucket:
+    "fc-waengi-1967.firebasestorage.app",
+
+  messagingSenderId:
+    "625120624112",
+
+  appId:
+    "1:625120624112:web:62277738190781734bf135"
+
+});
+
+
+const messaging =
+  firebase.messaging();
+
+
+
+// ================================
+// CACHE
+// ================================
+
 const CACHE_NAME =
-  "fc-waengi-app-v1";
+  "fc-waengi-app-v2";
 
 
 const FILES_TO_CACHE = [
 
   "./",
-
   "./index.html",
-
   "./manifest.json",
-
   "./logo.png",
-
   "./icon-512.png"
 
 ];
@@ -19,326 +60,258 @@ const FILES_TO_CACHE = [
 
 
 self.addEventListener(
-
   "install",
-
   event => {
-
 
     event.waitUntil(
 
-
       caches
+        .open(CACHE_NAME)
 
-        .open(
-          CACHE_NAME
-        )
+        .then(cache => {
 
-        .then(
-          cache => {
+          return cache.addAll(
+            FILES_TO_CACHE
+          );
 
-            return cache.addAll(
-              FILES_TO_CACHE
-            );
-
-          }
-        )
-
+        })
 
     );
-
 
     self.skipWaiting();
 
-
   }
-
 );
 
 
 
 self.addEventListener(
-
   "activate",
-
   event => {
-
 
     event.waitUntil(
 
-
       caches
-
         .keys()
 
-        .then(
-          cacheNames => {
+        .then(cacheNames => {
 
+          return Promise.all(
 
-            return Promise.all(
+            cacheNames.map(
+              cacheName => {
 
+                if (
+                  cacheName !== CACHE_NAME
+                ) {
 
-              cacheNames.map(
-                cacheName => {
-
-
-                  if (
-
-                    cacheName !==
-                    CACHE_NAME
-
-                  ) {
-
-
-                    return caches.delete(
-                      cacheName
-                    );
-
-
-                  }
-
+                  return caches.delete(
+                    cacheName
+                  );
 
                 }
-              )
 
+              }
+            )
 
-            );
+          );
 
-
-          }
-        )
-
+        })
 
     );
 
-
     self.clients.claim();
 
-
   }
-
 );
 
 
 
+// ================================
+// OFFLINE
+// ================================
+
 self.addEventListener(
-
   "fetch",
-
   event => {
+
+    if (
+      event.request.method !== "GET"
+    ) {
+
+      return;
+
+    }
 
 
     event.respondWith(
 
+      fetch(event.request)
 
-      fetch(
-        event.request
-      )
+        .then(response => {
 
-
-      .then(
-        response => {
-
-
-          const responseCopy =
+          const copy =
             response.clone();
 
 
           caches
+            .open(CACHE_NAME)
 
-            .open(
-              CACHE_NAME
-            )
+            .then(cache => {
 
-            .then(
-              cache => {
+              cache.put(
+                event.request,
+                copy
+              );
 
-
-                if (
-
-                  event.request.method ===
-                  "GET"
-
-                ) {
-
-
-                  cache.put(
-
-                    event.request,
-
-                    responseCopy
-
-                  );
-
-
-                }
-
-
-              }
-            );
+            });
 
 
           return response;
 
-
-        }
-      )
+        })
 
 
-      .catch(
-        () => {
-
+        .catch(() => {
 
           return caches.match(
             event.request
           );
 
-
-        }
-      )
-
+        })
 
     );
 
-
   }
-
 );
 
 
 
-self.addEventListener(
+// ================================
+// FIREBASE BACKGROUND PUSH
+// ================================
 
-  "push",
+messaging.onBackgroundMessage(
+  payload => {
 
-  event => {
+    console.log(
+      "FCW Push empfangen:",
+      payload
+    );
 
 
-    let message = {
+    const title =
+      payload.notification?.title ||
+      "FC Wängi 1967";
 
 
-      title:
-        "FC Wängi 1967",
-
+    const options = {
 
       body:
+
+        payload.notification?.body ||
         "Es gibt Neuigkeiten beim FC Wängi.",
 
 
-      url:
-        "./"
+      icon:
+        "./icon-512.png",
 
+
+      badge:
+        "./icon-512.png",
+
+
+      data: {
+
+        url:
+
+          payload.data?.url ||
+          "./"
+
+      }
 
     };
 
 
-
-    if (
-      event.data
-    ) {
-
-
-      try {
-
-
-        message =
-          event.data.json();
-
-
-      }
-
-
-      catch {
-
-
-        message.body =
-          event.data.text();
-
-
-      }
-
-
-    }
-
-
-
-    event.waitUntil(
-
-
-      self.registration
-        .showNotification(
-
-
-          message.title ||
-          "FC Wängi 1967",
-
-
-          {
-
-            body:
-
-              message.body ||
-              "Es gibt Neuigkeiten.",
-
-
-            icon:
-
-              "./icon-512.png",
-
-
-            badge:
-
-              "./icon-512.png",
-
-
-            data: {
-
-              url:
-
-                message.url ||
-                "./"
-
-            }
-
-          }
-
-
-        )
-
-
-    );
-
+    return self.registration
+      .showNotification(
+        title,
+        options
+      );
 
   }
-
 );
 
 
 
+// ================================
+// PUSH ANKLICKEN
+// ================================
+
 self.addEventListener(
-
   "notificationclick",
-
   event => {
-
 
     event.notification.close();
 
 
+    const targetUrl =
+
+      event.notification
+        .data?.url ||
+
+      "./";
+
+
     event.waitUntil(
 
+      clients
+        .matchAll({
 
-      clients.openWindow(
+          type: "window",
 
-        event.notification.data.url ||
-        "./"
+          includeUncontrolled: true
 
-      )
+        })
 
+        .then(
+          windowClients => {
+
+            for (
+              const client
+              of windowClients
+            ) {
+
+              if (
+                "focus" in client
+              ) {
+
+                client.navigate(
+                  targetUrl
+                );
+
+                return client.focus();
+
+              }
+
+            }
+
+
+            if (
+              clients.openWindow
+            ) {
+
+              return clients
+                .openWindow(
+                  targetUrl
+                );
+
+            }
+
+          }
+        )
 
     );
 
-
   }
-
 );
