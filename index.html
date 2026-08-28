@@ -1,1 +1,2785 @@
+<!DOCTYPE html>
+<html lang="de">
 
+<head>
+  <meta charset="UTF-8">
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+  >
+
+  <meta
+    name="theme-color"
+    content="#f4c400"
+  >
+
+  <meta
+    name="apple-mobile-web-app-capable"
+    content="yes"
+  >
+
+  <meta
+    name="apple-mobile-web-app-status-bar-style"
+    content="black-translucent"
+  >
+
+  <meta
+    name="apple-mobile-web-app-title"
+    content="FC Wängi"
+  >
+
+  <title>FC Wängi 1967</title>
+
+  <link
+    rel="manifest"
+    href="./manifest.json"
+  >
+
+  <link
+    rel="apple-touch-icon"
+    href="./icon-512.png"
+  >
+
+  <style>
+
+    :root {
+
+      --yellow: #f4c400;
+      --yellow-dark: #d5aa00;
+      --orange: #e7672d;
+
+      --black: #171717;
+      --dark: #262626;
+
+      --white: #ffffff;
+
+      --background: #efefef;
+      --grey: #f6f6f6;
+
+      --text-grey: #696969;
+
+    }
+
+
+    * {
+
+      box-sizing: border-box;
+
+      margin: 0;
+      padding: 0;
+
+    }
+
+
+    html {
+
+      scroll-behavior: smooth;
+
+    }
+
+
+    body {
+
+      font-family:
+
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        Roboto,
+        Helvetica,
+        Arial,
+        sans-serif;
+
+      background: var(--background);
+
+      color: var(--black);
+
+      padding-bottom:
+        calc(
+          82px +
+          env(safe-area-inset-bottom)
+        );
+
+    }
+
+
+    button,
+    input,
+    select,
+    textarea {
+
+      font: inherit;
+
+    }
+
+
+    button {
+
+      cursor: pointer;
+
+    }
+
+
+    .app {
+
+      width: 100%;
+
+      max-width: 720px;
+
+      margin: auto;
+
+      background: white;
+
+      min-height: 100vh;
+
+    }
+
+
+    /* HEADER */
+
+
+    .header {
+
+      position: sticky;
+
+      top: 0;
+
+      z-index: 100;
+
+      display: flex;
+
+      align-items: center;
+
+      gap: 13px;
+
+      padding:
+
+        calc(
+          12px +
+          env(safe-area-inset-top)
+        )
+
+        16px
+
+        13px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          #f5ca11,
+
+          #ecb600
+
+        );
+
+      box-shadow:
+
+        0 4px 17px
+        rgba(0,0,0,.15);
+
+    }
+
+
+    .club-logo {
+
+      width: 60px;
+      height: 60px;
+
+      object-fit: contain;
+
+      border-radius: 50%;
+
+      background: white;
+
+      padding: 4px;
+
+      box-shadow:
+
+        0 3px 8px
+        rgba(0,0,0,.12);
+
+    }
+
+
+    .header-info {
+
+      flex: 1;
+
+    }
+
+
+    .header-info h1 {
+
+      font-size: 21px;
+
+      font-weight: 900;
+
+      line-height: 1.1;
+
+    }
+
+
+    .header-info p {
+
+      margin-top: 4px;
+
+      font-size: 11px;
+
+      font-weight: 600;
+
+      opacity: .7;
+
+    }
+
+
+    /* MAIN */
+
+
+    main {
+
+      padding: 17px;
+
+    }
+
+
+    .page {
+
+      display: none;
+
+    }
+
+
+    .page.active {
+
+      display: block;
+
+      animation:
+        fadeIn .18s ease;
+
+    }
+
+
+    @keyframes fadeIn {
+
+      from {
+
+        opacity: 0;
+
+        transform:
+          translateY(4px);
+
+      }
+
+      to {
+
+        opacity: 1;
+
+        transform:
+          translateY(0);
+
+      }
+
+    }
+
+
+    .page-title {
+
+      font-size: 28px;
+
+      font-weight: 900;
+
+      margin-bottom: 4px;
+
+    }
+
+
+    .page-description {
+
+      color: var(--text-grey);
+
+      font-size: 14px;
+
+      margin-bottom: 19px;
+
+    }
+
+
+    /* HOME HERO */
+
+
+    .hero {
+
+      position: relative;
+
+      overflow: hidden;
+
+      border-radius: 23px;
+
+      padding: 25px 22px;
+
+      margin-bottom: 18px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          #151515,
+
+          #333333
+
+        );
+
+      color: white;
+
+      box-shadow:
+
+        0 5px 17px
+        rgba(0,0,0,.12);
+
+    }
+
+
+    .hero::after {
+
+      content: "⚽";
+
+      position: absolute;
+
+      right: -13px;
+
+      bottom: -30px;
+
+      font-size: 120px;
+
+      opacity: .07;
+
+    }
+
+
+    .hero-label {
+
+      color: var(--yellow);
+
+      font-size: 11px;
+
+      text-transform: uppercase;
+
+      letter-spacing: 1px;
+
+      font-weight: 900;
+
+    }
+
+
+    .hero h2 {
+
+      font-size: 29px;
+
+      margin:
+
+        7px 0
+
+        8px;
+
+      font-weight: 900;
+
+    }
+
+
+    .hero p {
+
+      max-width: 420px;
+
+      line-height: 1.5;
+
+      color: #e5e5e5;
+
+      font-size: 14px;
+
+    }
+
+
+    /* NOTIFICATIONS */
+
+
+    .notification-box {
+
+      border-radius: 19px;
+
+      padding: 18px;
+
+      margin-bottom: 20px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          #fff4b5,
+
+          #ffe58b
+
+        );
+
+    }
+
+
+    .notification-box h3 {
+
+      font-size: 17px;
+
+      margin-bottom: 5px;
+
+    }
+
+
+    .notification-box p {
+
+      font-size: 13px;
+
+      line-height: 1.45;
+
+      color: #5d5200;
+
+    }
+
+
+    .notification-status {
+
+      font-size: 11px;
+
+      margin-top: 9px;
+
+      color: #655a15;
+
+    }
+
+
+    /* QUICK ACCESS */
+
+
+    .section-heading {
+
+      font-size: 19px;
+
+      font-weight: 900;
+
+      margin-bottom: 11px;
+
+    }
+
+
+    .quick-grid {
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(
+          2,
+          minmax(0, 1fr)
+        );
+
+      gap: 11px;
+
+      margin-bottom: 21px;
+
+    }
+
+
+    .quick-button {
+
+      border: none;
+
+      border-radius: 18px;
+
+      min-height: 105px;
+
+      padding: 17px;
+
+      text-align: left;
+
+      background: var(--grey);
+
+      transition:
+        transform .15s ease,
+        background .15s ease;
+
+    }
+
+
+    .quick-button:active {
+
+      transform:
+        scale(.97);
+
+      background: #ebebeb;
+
+    }
+
+
+    .quick-icon {
+
+      display: block;
+
+      font-size: 28px;
+
+      margin-bottom: 12px;
+
+    }
+
+
+    .quick-button strong {
+
+      display: block;
+
+      font-size: 15px;
+
+      font-weight: 850;
+
+      margin-bottom: 2px;
+
+    }
+
+
+    .quick-button small {
+
+      color: #777;
+
+      font-size: 11px;
+
+    }
+
+
+    /* CARDS */
+
+
+    .card {
+
+      background: white;
+
+      border:
+        1px solid #ececec;
+
+      border-radius: 18px;
+
+      padding: 18px;
+
+      margin-bottom: 13px;
+
+      box-shadow:
+
+        0 4px 14px
+        rgba(0,0,0,.05);
+
+    }
+
+
+    .card h3 {
+
+      font-size: 17px;
+
+      margin-bottom: 7px;
+
+    }
+
+
+    .card p {
+
+      color: #666;
+
+      font-size: 13px;
+
+      line-height: 1.5;
+
+    }
+
+
+    .tag {
+
+      display: inline-block;
+
+      border-radius: 30px;
+
+      padding: 5px 9px;
+
+      margin-bottom: 8px;
+
+      background: #fff0ab;
+
+      color: #725900;
+
+      font-size: 10px;
+
+      font-weight: 900;
+
+      letter-spacing: .3px;
+
+    }
+
+
+    /* BUTTON */
+
+
+    .button {
+
+      display: inline-flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      min-height: 44px;
+
+      margin-top: 12px;
+
+      padding:
+
+        11px
+
+        16px;
+
+      border: none;
+
+      border-radius: 12px;
+
+      background: var(--black);
+
+      color: white;
+
+      text-decoration: none;
+
+      font-size: 13px;
+
+      font-weight: 850;
+
+    }
+
+
+    .button-yellow {
+
+      background: var(--yellow);
+
+      color: #111;
+
+    }
+
+
+    .button-outline {
+
+      background: white;
+
+      color: #111;
+
+      border:
+        1px solid #ddd;
+
+    }
+
+
+    /* TEAM */
+
+
+    .team-row {
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: space-between;
+
+      gap: 10px;
+
+      padding:
+
+        14px 2px;
+
+      border-bottom:
+
+        1px solid #ededed;
+
+    }
+
+
+    .team-row:last-child {
+
+      border-bottom: none;
+
+    }
+
+
+    .team-name {
+
+      font-size: 14px;
+
+      font-weight: 850;
+
+    }
+
+
+    .team-league {
+
+      font-size: 11px;
+
+      color: #777;
+
+      margin-top: 3px;
+
+    }
+
+
+    .team-arrow {
+
+      color: #aaa;
+
+      font-size: 23px;
+
+    }
+
+
+    /* NEWS */
+
+
+    .news-cover {
+
+      height: 145px;
+
+      border-radius: 14px;
+
+      margin-bottom: 14px;
+
+      display: flex;
+
+      align-items: center;
+
+      justify-content: center;
+
+      font-size: 55px;
+
+      background:
+
+        linear-gradient(
+
+          135deg,
+
+          var(--yellow),
+
+          var(--orange)
+
+        );
+
+    }
+
+
+    /* MATCH */
+
+
+    .match-card {
+
+      text-align: center;
+
+    }
+
+
+    .match-date {
+
+      color: #777;
+
+      font-size: 11px;
+
+      margin-bottom: 9px;
+
+    }
+
+
+    .match-club {
+
+      font-size: 18px;
+
+      font-weight: 900;
+
+      margin-bottom: 7px;
+
+    }
+
+
+    /* CONTACT */
+
+
+    .contact-row {
+
+      padding:
+        14px 0;
+
+      border-bottom:
+        1px solid #ededed;
+
+    }
+
+
+    .contact-row:last-child {
+
+      border-bottom: none;
+
+    }
+
+
+    .contact-label {
+
+      font-size: 13px;
+
+      font-weight: 850;
+
+    }
+
+
+    .contact-value {
+
+      font-size: 13px;
+
+      line-height: 1.45;
+
+      color: #666;
+
+      margin-top: 4px;
+
+    }
+
+
+    /* NAVIGATION */
+
+
+    .bottom-nav {
+
+      position: fixed;
+
+      bottom: 0;
+
+      left: 50%;
+
+      transform:
+        translateX(-50%);
+
+      z-index: 200;
+
+      width: 100%;
+
+      max-width: 720px;
+
+      display: grid;
+
+      grid-template-columns:
+        repeat(
+          6,
+          1fr
+        );
+
+      padding:
+
+        7px
+
+        4px
+
+        calc(
+          7px +
+          env(safe-area-inset-bottom)
+        );
+
+      background:
+
+        rgba(
+          255,
+          255,
+          255,
+          .97
+        );
+
+      backdrop-filter:
+        blur(16px);
+
+      -webkit-backdrop-filter:
+        blur(16px);
+
+      border-top:
+        1px solid #dedede;
+
+    }
+
+
+    .nav-button {
+
+      border: none;
+
+      background: transparent;
+
+      color: #777;
+
+      font-size: 8px;
+
+      font-weight: 700;
+
+      padding: 5px 1px;
+
+      min-width: 0;
+
+    }
+
+
+    .nav-button.active {
+
+      color: #a98300;
+
+      font-weight: 900;
+
+    }
+
+
+    .nav-icon {
+
+      display: block;
+
+      font-size: 19px;
+
+      margin-bottom: 3px;
+
+    }
+
+
+    @media
+    (
+      min-width: 700px
+    ) {
+
+      body {
+
+        padding-top: 15px;
+
+      }
+
+
+      .app {
+
+        box-shadow:
+
+          0 0 30px
+          rgba(0,0,0,.08);
+
+      }
+
+    }
+
+
+  </style>
+
+</head>
+
+
+<body>
+
+
+<div class="app">
+
+
+  <!-- HEADER -->
+
+
+  <header class="header">
+
+
+    <img
+
+      src="./logo.png"
+
+      alt="FC Wängi Logo"
+
+      class="club-logo"
+
+      onerror="
+        this.style.display='none'
+      "
+
+    >
+
+
+    <div class="header-info">
+
+      <h1>
+        FC Wängi 1967
+      </h1>
+
+      <p>
+        Fussball mit Herz & Tradition
+      </p>
+
+    </div>
+
+
+  </header>
+
+
+
+  <main>
+
+
+
+    <!-- HOME -->
+
+
+    <section
+      id="home"
+      class="page active"
+    >
+
+
+      <div class="hero">
+
+
+        <div class="hero-label">
+
+          Willkommen beim FCW
+
+        </div>
+
+
+        <h2>
+
+          FC Wängi
+
+        </h2>
+
+
+        <p>
+
+          Die Vereins-App für Spieler,
+          Mitglieder, Eltern, Freunde
+          und Fans des FC Wängi 1967.
+
+        </p>
+
+
+      </div>
+
+
+
+      <div class="notification-box">
+
+
+        <h3>
+
+          🔔 FCW Mitteilungen
+
+        </h3>
+
+
+        <p>
+
+          Aktiviere Mitteilungen für
+          Vereinsnews, Spiele,
+          Matchberichte und weitere
+          FCW-Aktivitäten.
+
+        </p>
+
+
+        <button
+
+          class="button"
+
+          onclick="
+            enableNotifications()
+          "
+
+        >
+
+          Mitteilungen aktivieren
+
+        </button>
+
+
+        <div
+
+          id="notificationStatus"
+
+          class="notification-status"
+
+        >
+
+          Status wird geprüft...
+
+        </div>
+
+
+      </div>
+
+
+
+      <h2 class="section-heading">
+
+        Schnellzugriff
+
+      </h2>
+
+
+
+      <div class="quick-grid">
+
+
+        <button
+
+          class="quick-button"
+
+          onclick="
+            openPage('news')
+          "
+
+        >
+
+          <span class="quick-icon">
+
+            📰
+
+          </span>
+
+
+          <strong>
+
+            News
+
+          </strong>
+
+
+          <small>
+
+            Neues vom Verein
+
+          </small>
+
+
+        </button>
+
+
+
+        <button
+
+          class="quick-button"
+
+          onclick="
+            openPage('teams')
+          "
+
+        >
+
+          <span class="quick-icon">
+
+            👕
+
+          </span>
+
+
+          <strong>
+
+            Teams
+
+          </strong>
+
+
+          <small>
+
+            Unsere Mannschaften
+
+          </small>
+
+
+        </button>
+
+
+
+        <button
+
+          class="quick-button"
+
+          onclick="
+            openPage('spielbetrieb')
+          "
+
+        >
+
+          <span class="quick-icon">
+
+            ⚽
+
+          </span>
+
+
+          <strong>
+
+            Spielbetrieb
+
+          </strong>
+
+
+          <small>
+
+            Spiele & Resultate
+
+          </small>
+
+
+        </button>
+
+
+
+        <button
+
+          class="quick-button"
+
+          onclick="
+            openPage('matchberichte')
+          "
+
+        >
+
+          <span class="quick-icon">
+
+            📝
+
+          </span>
+
+
+          <strong>
+
+            Matchberichte
+
+          </strong>
+
+
+          <small>
+
+            Berichte der Teams
+
+          </small>
+
+
+        </button>
+
+
+      </div>
+
+
+
+      <div class="card">
+
+
+        <span class="tag">
+
+          FC WÄNGI 1967
+
+        </span>
+
+
+        <h3>
+
+          Fussball in Wängi
+
+        </h3>
+
+
+        <p>
+
+          Seit 1967 steht der FC Wängi
+          für Fussball, Nachwuchsförderung,
+          Kameradschaft und ein aktives
+          Vereinsleben.
+
+        </p>
+
+
+        <a
+
+          href="
+            https://www.fcwaengi1967.ch
+          "
+
+          target="_blank"
+
+          rel="noopener"
+
+          class="button button-yellow"
+
+        >
+
+          FCW Homepage
+
+        </a>
+
+
+      </div>
+
+
+
+    </section>
+
+
+
+
+    <!-- NEWS -->
+
+
+    <section
+      id="news"
+      class="page"
+    >
+
+
+      <h1 class="page-title">
+
+        News
+
+      </h1>
+
+
+      <p class="page-description">
+
+        Aktuelles rund um den
+        FC Wängi 1967.
+
+      </p>
+
+
+
+      <div class="card">
+
+
+        <div class="news-cover">
+
+          📰
+
+        </div>
+
+
+        <span class="tag">
+
+          NEWS
+
+        </span>
+
+
+        <h3>
+
+          Aktuelle Vereinsnews
+
+        </h3>
+
+
+        <p>
+
+          Hier findest du Neuigkeiten,
+          Veranstaltungen und wichtige
+          Informationen rund um den
+          FC Wängi.
+
+        </p>
+
+
+        <a
+
+          href="
+            https://www.fcwaengi1967.ch/
+          "
+
+          target="_blank"
+
+          rel="noopener"
+
+          class="button"
+
+        >
+
+          Aktuelle News öffnen
+
+        </a>
+
+
+      </div>
+
+
+
+      <div class="card">
+
+
+        <h3>
+
+          📅 Veranstaltungen
+
+        </h3>
+
+
+        <p>
+
+          Informationen zu Vereinsanlässen,
+          Turnieren und weiteren
+          FCW-Aktivitäten.
+
+        </p>
+
+
+        <a
+
+          href="
+            https://www.fcwaengi1967.ch/
+          "
+
+          target="_blank"
+
+          rel="noopener"
+
+          class="button button-outline"
+
+        >
+
+          Zur Homepage
+
+        </a>
+
+
+      </div>
+
+
+    </section>
+
+
+
+
+    <!-- TEAMS -->
+
+
+    <section
+      id="teams"
+      class="page"
+    >
+
+
+      <h1 class="page-title">
+
+        Teams
+
+      </h1>
+
+
+      <p class="page-description">
+
+        Die Mannschaften des
+        FC Wängi.
+
+      </p>
+
+
+
+      <div class="card">
+
+
+        <div class="team-row">
+
+          <div>
+
+            <div class="team-name">
+
+              1. Mannschaft
+
+            </div>
+
+            <div class="team-league">
+
+              Aktivmannschaft
+
+            </div>
+
+          </div>
+
+          <div class="team-arrow">
+
+            ›
+
+          </div>
+
+        </div>
+
+
+
+        <div class="team-row">
+
+          <div>
+
+            <div class="team-name">
+
+              2. Mannschaft
+
+            </div>
+
+            <div class="team-league">
+
+              Aktivmannschaft
+
+            </div>
+
+          </div>
+
+          <div class="team-arrow">
+
+            ›
+
+          </div>
+
+        </div>
+
+
+
+        <div class="team-row">
+
+          <div>
+
+            <div class="team-name">
+
+              3. Mannschaft
+
+            </div>
+
+            <div class="team-league">
+
+              Aktivmannschaft
+
+            </div>
+
+          </div>
+
+          <div class="team-arrow">
+
+            ›
+
+          </div>
+
+        </div>
+
+
+
+        <div class="team-row">
+
+          <div>
+
+            <div class="team-name">
+
+              Senioren 30+
+
+            </div>
+
+          </div>
+
+          <div class="team-arrow">
+
+            ›
+
+          </div>
+
+        </div>
+
+
+
+        <div class="team-row">
+
+          <div>
+
+            <div class="team-name">
+
+              Senioren 40+
+
+            </div>
+
+          </div>
+
+          <div class="team-arrow">
+
+            ›
+
+          </div>
+
+        </div>
+
+
+
+        <div class="team-row">
+
+          <div>
+
+            <div class="team-name">
+
+              B-Junioren
+
+            </div>
+
+          </div>
+
+          <div class="team-arrow">
+
+            ›
+
+          </div>
+
+        </div>
+
+
+
+        <div class="team-row">
+
+          <div>
+
+            <div class="team-name">
+
+              C-Junioren
+
+            </div>
+
+          </div>
+
+          <div class="team-arrow">
+
+            ›
+
+          </div>
+
+        </div>
+
+
+
+        <div class="team-row">
+
+          <div>
+
+            <div class="team-name">
+
+              D-Junioren
+
+            </div>
+
+          </div>
+
+          <div class="team-arrow">
+
+            ›
+
+          </div>
+
+        </div>
+
+
+
+        <div class="team-row">
+
+          <div>
+
+            <div class="team-name">
+
+              E-Junioren
+
+            </div>
+
+          </div>
+
+          <div class="team-arrow">
+
+            ›
+
+          </div>
+
+        </div>
+
+
+
+        <div class="team-row">
+
+          <div>
+
+            <div class="team-name">
+
+              F-Junioren
+
+            </div>
+
+          </div>
+
+          <div class="team-arrow">
+
+            ›
+
+          </div>
+
+        </div>
+
+
+
+        <div class="team-row">
+
+          <div>
+
+            <div class="team-name">
+
+              G-Junioren
+
+            </div>
+
+          </div>
+
+          <div class="team-arrow">
+
+            ›
+
+          </div>
+
+        </div>
+
+
+
+        <div class="team-row">
+
+          <div>
+
+            <div class="team-name">
+
+              Old Boys
+
+            </div>
+
+          </div>
+
+          <div class="team-arrow">
+
+            ›
+
+          </div>
+
+        </div>
+
+
+
+        <a
+
+          href="
+            https://www.fcwaengi1967.ch/mannschaften
+          "
+
+          target="_blank"
+
+          rel="noopener"
+
+          class="button"
+
+        >
+
+          Alle Teams ansehen
+
+        </a>
+
+
+      </div>
+
+
+    </section>
+
+
+
+
+    <!-- SPIELBETRIEB -->
+
+
+    <section
+      id="spielbetrieb"
+      class="page"
+    >
+
+
+      <h1 class="page-title">
+
+        Spielbetrieb
+
+      </h1>
+
+
+      <p class="page-description">
+
+        Spiele, Resultate und
+        Ranglisten.
+
+      </p>
+
+
+
+      <div class="card">
+
+
+        <h3>
+
+          📆 Vereinsspielplan
+
+        </h3>
+
+
+        <p>
+
+          Übersicht der kommenden
+          Meisterschafts-, Cup-
+          und Freundschaftsspiele.
+
+        </p>
+
+
+        <a
+
+          href="
+            https://www.fcwaengi1967.ch/spielbetrieb
+          "
+
+          target="_blank"
+
+          rel="noopener"
+
+          class="button"
+
+        >
+
+          Spielplan öffnen
+
+        </a>
+
+
+      </div>
+
+
+
+      <div class="card">
+
+
+        <h3>
+
+          🏆 Resultate & Ranglisten
+
+        </h3>
+
+
+        <p>
+
+          Ergebnisse, Tabellen
+          und Informationen zu
+          den verschiedenen Teams.
+
+        </p>
+
+
+        <a
+
+          href="
+            https://matchcenter.ofv.swiss/
+          "
+
+          target="_blank"
+
+          rel="noopener"
+
+          class="button button-yellow"
+
+        >
+
+          OFV Matchcenter
+
+        </a>
+
+
+      </div>
+
+
+
+      <div class="card">
+
+
+        <h3>
+
+          🏠 Heimspiele
+
+        </h3>
+
+
+        <p>
+
+          Alle aktuellen Heimspiele
+          des FC Wängi.
+
+        </p>
+
+
+        <a
+
+          href="
+            https://www.fcwaengi1967.ch/spielbetrieb
+          "
+
+          target="_blank"
+
+          rel="noopener"
+
+          class="button button-outline"
+
+        >
+
+          Heimspiele anzeigen
+
+        </a>
+
+
+      </div>
+
+
+    </section>
+
+
+
+
+    <!-- MATCHBERICHTE -->
+
+
+    <section
+      id="matchberichte"
+      class="page"
+    >
+
+
+      <h1 class="page-title">
+
+        Matchberichte
+
+      </h1>
+
+
+      <p class="page-description">
+
+        Berichte und Geschichten
+        aus dem FCW-Spielbetrieb.
+
+      </p>
+
+
+
+      <div class="card match-card">
+
+
+        <div class="match-date">
+
+          FC WÄNGI 1967
+
+        </div>
+
+
+        <div class="match-club">
+
+          ⚽ Matchberichte
+
+        </div>
+
+
+        <p>
+
+          Lies die neuesten
+          Matchberichte unserer
+          Mannschaften auf der
+          offiziellen Vereinsseite.
+
+        </p>
+
+
+        <a
+
+          href="
+            https://www.fcwaengi1967.ch/mannschaften
+          "
+
+          target="_blank"
+
+          rel="noopener"
+
+          class="button"
+
+        >
+
+          Matchberichte öffnen
+
+        </a>
+
+
+      </div>
+
+
+
+      <div class="card">
+
+
+        <h3>
+
+          ✍️ Eigene Matchberichte
+
+        </h3>
+
+
+        <p>
+
+          In einer späteren Version
+          können Trainer oder
+          Verantwortliche ihre
+          Matchberichte direkt über
+          die App erfassen und
+          veröffentlichen.
+
+        </p>
+
+
+      </div>
+
+
+    </section>
+
+
+
+
+    <!-- KONTAKT -->
+
+
+    <section
+      id="kontakt"
+      class="page"
+    >
+
+
+      <h1 class="page-title">
+
+        Kontakt
+
+      </h1>
+
+
+      <p class="page-description">
+
+        FC Wängi 1967
+
+      </p>
+
+
+
+      <div class="card">
+
+
+        <div class="contact-row">
+
+
+          <div class="contact-label">
+
+            📍 Verein
+
+          </div>
+
+
+          <div class="contact-value">
+
+            FC Wängi 1967<br>
+            9545 Wängi<br>
+            Schweiz
+
+          </div>
+
+
+        </div>
+
+
+
+        <div class="contact-row">
+
+
+          <div class="contact-label">
+
+            🌐 Homepage
+
+          </div>
+
+
+          <div class="contact-value">
+
+            www.fcwaengi1967.ch
+
+          </div>
+
+
+        </div>
+
+
+
+        <div class="contact-row">
+
+
+          <div class="contact-label">
+
+            ⚽ Verband
+
+          </div>
+
+
+          <div class="contact-value">
+
+            Ostschweizer Fussballverband
+
+          </div>
+
+
+        </div>
+
+
+
+        <a
+
+          href="
+            https://www.fcwaengi1967.ch/kontakt
+          "
+
+          target="_blank"
+
+          rel="noopener"
+
+          class="button"
+
+        >
+
+          Kontaktseite öffnen
+
+        </a>
+
+
+      </div>
+
+
+
+      <div class="card">
+
+
+        <h3>
+
+          Mitglied werden
+
+        </h3>
+
+
+        <p>
+
+          Interesse am FC Wängi?
+          Informationen zur Anmeldung
+          und Kontaktmöglichkeiten
+          findest du auf der
+          offiziellen Homepage.
+
+        </p>
+
+
+        <a
+
+          href="
+            https://www.fcwaengi1967.ch/kontakt
+          "
+
+          target="_blank"
+
+          rel="noopener"
+
+          class="button button-yellow"
+
+        >
+
+          Jetzt informieren
+
+        </a>
+
+
+      </div>
+
+
+    </section>
+
+
+
+  </main>
+
+
+
+</div>
+
+
+
+
+<!-- NAVIGATION -->
+
+
+<nav class="bottom-nav">
+
+
+  <button
+
+    class="nav-button active"
+
+    data-page="home"
+
+    onclick="
+      openPage('home')
+    "
+
+  >
+
+    <span class="nav-icon">
+
+      🏠
+
+    </span>
+
+    Home
+
+  </button>
+
+
+
+  <button
+
+    class="nav-button"
+
+    data-page="news"
+
+    onclick="
+      openPage('news')
+    "
+
+  >
+
+    <span class="nav-icon">
+
+      📰
+
+    </span>
+
+    News
+
+  </button>
+
+
+
+  <button
+
+    class="nav-button"
+
+    data-page="teams"
+
+    onclick="
+      openPage('teams')
+    "
+
+  >
+
+    <span class="nav-icon">
+
+      👕
+
+    </span>
+
+    Teams
+
+  </button>
+
+
+
+  <button
+
+    class="nav-button"
+
+    data-page="spielbetrieb"
+
+    onclick="
+      openPage('spielbetrieb')
+    "
+
+  >
+
+    <span class="nav-icon">
+
+      ⚽
+
+    </span>
+
+    Spiele
+
+  </button>
+
+
+
+  <button
+
+    class="nav-button"
+
+    data-page="matchberichte"
+
+    onclick="
+      openPage('matchberichte')
+    "
+
+  >
+
+    <span class="nav-icon">
+
+      📝
+
+    </span>
+
+    Berichte
+
+  </button>
+
+
+
+  <button
+
+    class="nav-button"
+
+    data-page="kontakt"
+
+    onclick="
+      openPage('kontakt')
+    "
+
+  >
+
+    <span class="nav-icon">
+
+      ☎️
+
+    </span>
+
+    Kontakt
+
+  </button>
+
+
+</nav>
+
+
+
+
+<script>
+
+
+  function openPage(
+    pageName
+  ) {
+
+
+    document
+
+      .querySelectorAll(
+        ".page"
+      )
+
+      .forEach(
+        page => {
+
+          page.classList.remove(
+            "active"
+          );
+
+        }
+      );
+
+
+    const page =
+      document.getElementById(
+        pageName
+      );
+
+
+    if (
+      page
+    ) {
+
+      page.classList.add(
+        "active"
+      );
+
+    }
+
+
+
+    document
+
+      .querySelectorAll(
+        ".nav-button"
+      )
+
+      .forEach(
+        button => {
+
+
+          button.classList.remove(
+            "active"
+          );
+
+
+          if (
+
+            button.dataset.page ===
+            pageName
+
+          ) {
+
+            button.classList.add(
+              "active"
+            );
+
+          }
+
+
+        }
+      );
+
+
+    localStorage.setItem(
+
+      "fcwPage",
+
+      pageName
+
+    );
+
+
+    window.scrollTo({
+
+      top: 0,
+
+      behavior: "smooth"
+
+    });
+
+
+  }
+
+
+
+
+  async function enableNotifications() {
+
+
+    const status =
+
+      document.getElementById(
+        "notificationStatus"
+      );
+
+
+    if (
+
+      !(
+        "Notification"
+        in window
+      )
+
+    ) {
+
+
+      status.textContent =
+
+        "Mitteilungen werden auf diesem Gerät nicht unterstützt.";
+
+
+      return;
+
+
+    }
+
+
+
+    try {
+
+
+      const permission =
+
+        await Notification
+          .requestPermission();
+
+
+
+      if (
+
+        permission ===
+        "granted"
+
+      ) {
+
+
+        status.textContent =
+
+          "✅ Mitteilungen aktiviert";
+
+
+        localStorage.setItem(
+
+          "fcwNotifications",
+
+          "yes"
+
+        );
+
+
+      }
+
+
+      else if (
+
+        permission ===
+        "denied"
+
+      ) {
+
+
+        status.textContent =
+
+          "❌ Mitteilungen wurden blockiert.";
+
+
+      }
+
+
+      else {
+
+
+        status.textContent =
+
+          "Mitteilungen wurden nicht aktiviert.";
+
+
+      }
+
+
+    }
+
+
+    catch (
+      error
+    ) {
+
+
+      console.error(
+        error
+      );
+
+
+      status.textContent =
+
+        "Mitteilungen konnten nicht aktiviert werden.";
+
+
+    }
+
+
+  }
+
+
+
+
+  function updateNotificationStatus() {
+
+
+    const status =
+
+      document.getElementById(
+        "notificationStatus"
+      );
+
+
+    if (
+
+      !(
+        "Notification"
+        in window
+      )
+
+    ) {
+
+
+      status.textContent =
+
+        "Browser unterstützt keine Mitteilungen.";
+
+
+      return;
+
+
+    }
+
+
+
+    if (
+
+      Notification.permission ===
+      "granted"
+
+    ) {
+
+
+      status.textContent =
+
+        "✅ Mitteilungen aktiviert";
+
+
+    }
+
+
+    else if (
+
+      Notification.permission ===
+      "denied"
+
+    ) {
+
+
+      status.textContent =
+
+        "❌ Mitteilungen blockiert";
+
+
+    }
+
+
+    else {
+
+
+      status.textContent =
+
+        "Mitteilungen noch nicht aktiviert";
+
+
+    }
+
+
+  }
+
+
+
+
+  if (
+
+    "serviceWorker"
+    in navigator
+
+  ) {
+
+
+    window.addEventListener(
+
+      "load",
+
+      () => {
+
+
+        navigator
+          .serviceWorker
+          .register(
+            "./sw.js"
+          )
+
+          .then(
+            registration => {
+
+              console.log(
+
+                "FC Wängi Service Worker aktiv",
+
+                registration
+
+              );
+
+            }
+          )
+
+          .catch(
+            error => {
+
+              console.error(
+
+                "Service Worker Fehler:",
+
+                error
+
+              );
+
+            }
+          );
+
+
+      }
+
+    );
+
+
+  }
+
+
+
+
+  window.addEventListener(
+
+    "DOMContentLoaded",
+
+    () => {
+
+
+      updateNotificationStatus();
+
+
+      const savedPage =
+
+        localStorage.getItem(
+          "fcwPage"
+        );
+
+
+      if (
+
+        savedPage &&
+
+        document.getElementById(
+          savedPage
+        )
+
+      ) {
+
+
+        openPage(
+          savedPage
+        );
+
+
+      }
+
+
+    }
+
+  );
+
+
+</script>
+
+
+</body>
+
+</html>
