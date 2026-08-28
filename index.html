@@ -47,7 +47,6 @@
 
     :root {
       --yellow: #f4c400;
-      --yellow-dark: #d5aa00;
       --orange: #e7672d;
       --black: #171717;
       --white: #ffffff;
@@ -79,6 +78,7 @@
         sans-serif;
 
       background: #eeeeee;
+
       color: var(--black);
 
       padding-bottom:
@@ -100,6 +100,7 @@
 
       width: 100%;
       max-width: 720px;
+
       margin: auto;
 
       min-height: 100vh;
@@ -115,11 +116,13 @@
     .header {
 
       position: sticky;
+
       top: 0;
 
       z-index: 100;
 
       display: flex;
+
       align-items: center;
 
       gap: 14px;
@@ -169,6 +172,7 @@
     .header-info h1 {
 
       font-size: 21px;
+
       font-weight: 900;
 
     }
@@ -179,6 +183,7 @@
       margin-top: 4px;
 
       font-size: 11px;
+
       font-weight: 650;
 
       opacity: .72;
@@ -227,6 +232,7 @@
     .page-title {
 
       font-size: 28px;
+
       font-weight: 900;
 
       margin-bottom: 5px;
@@ -283,6 +289,7 @@
       position: absolute;
 
       right: -15px;
+
       bottom: -30px;
 
       font-size: 120px;
@@ -297,6 +304,7 @@
       color: var(--yellow);
 
       font-size: 11px;
+
       font-weight: 900;
 
       letter-spacing: 1px;
@@ -308,9 +316,12 @@
 
     .hero h2 {
 
-      margin: 7px 0 8px;
+      margin:
+        7px 0
+        8px;
 
       font-size: 29px;
+
       font-weight: 900;
 
     }
@@ -323,6 +334,7 @@
       color: #e5e5e5;
 
       font-size: 14px;
+
       line-height: 1.5;
 
     }
@@ -363,6 +375,7 @@
       color: #605500;
 
       font-size: 13px;
+
       line-height: 1.45;
 
     }
@@ -375,7 +388,66 @@
       color: #665a00;
 
       font-size: 12px;
+
       font-weight: 650;
+
+    }
+
+
+    .token-box {
+
+      display: none;
+
+      margin-top: 14px;
+
+      padding: 12px;
+
+      border-radius: 12px;
+
+      background: rgba(255,255,255,.7);
+
+      border: 1px solid rgba(0,0,0,.12);
+
+    }
+
+
+    .token-box.visible {
+      display: block;
+    }
+
+
+    .token-title {
+
+      font-size: 12px;
+
+      font-weight: 900;
+
+      margin-bottom: 7px;
+
+    }
+
+
+    .token-text {
+
+      width: 100%;
+
+      min-height: 100px;
+
+      padding: 10px;
+
+      resize: vertical;
+
+      border-radius: 9px;
+
+      border: 1px solid #ccc;
+
+      background: white;
+
+      font-size: 10px;
+
+      line-height: 1.4;
+
+      word-break: break-all;
 
     }
 
@@ -388,6 +460,7 @@
       margin-bottom: 11px;
 
       font-size: 19px;
+
       font-weight: 900;
 
     }
@@ -419,6 +492,7 @@
       text-align: left;
 
       border: none;
+
       border-radius: 18px;
 
       background: var(--grey);
@@ -471,7 +545,10 @@
 
       margin-bottom: 13px;
 
-      border: 1px solid #ececec;
+      border:
+        1px solid
+        #ececec;
+
       border-radius: 18px;
 
       background: white;
@@ -497,6 +574,7 @@
       color: #666;
 
       font-size: 13px;
+
       line-height: 1.5;
 
     }
@@ -506,7 +584,8 @@
 
       display: inline-block;
 
-      padding: 5px 9px;
+      padding:
+        5px 9px;
 
       margin-bottom: 8px;
 
@@ -517,6 +596,7 @@
       color: #725900;
 
       font-size: 10px;
+
       font-weight: 900;
 
     }
@@ -530,15 +610,18 @@
       display: inline-flex;
 
       align-items: center;
+
       justify-content: center;
 
       min-height: 44px;
 
-      padding: 11px 16px;
+      padding:
+        11px 16px;
 
       margin-top: 12px;
 
       border: none;
+
       border-radius: 12px;
 
       background: var(--black);
@@ -548,6 +631,7 @@
       text-decoration: none;
 
       font-size: 13px;
+
       font-weight: 850;
 
     }
@@ -556,6 +640,7 @@
     .button-yellow {
 
       background: var(--yellow);
+
       color: #111;
 
     }
@@ -563,7 +648,9 @@
 
     .button-outline {
 
-      border: 1px solid #ddd;
+      border:
+        1px solid
+        #ddd;
 
       background: white;
 
@@ -572,7 +659,20 @@
     }
 
 
-    /* TEAMS */
+    .button-small {
+
+      min-height: 38px;
+
+      padding: 8px 12px;
+
+      margin-right: 6px;
+
+      font-size: 11px;
+
+    }
+
+
+    /* TEAM */
 
 
     .team-row {
@@ -580,11 +680,13 @@
       display: flex;
 
       align-items: center;
+
       justify-content: space-between;
 
       gap: 10px;
 
-      padding: 14px 2px;
+      padding:
+        14px 2px;
 
       border-bottom:
         1px solid #ededed;
@@ -600,6 +702,7 @@
     .team-name {
 
       font-size: 14px;
+
       font-weight: 850;
 
     }
@@ -633,6 +736,7 @@
       display: flex;
 
       align-items: center;
+
       justify-content: center;
 
       height: 145px;
@@ -658,7 +762,8 @@
 
     .contact-row {
 
-      padding: 14px 0;
+      padding:
+        14px 0;
 
       border-bottom:
         1px solid #ededed;
@@ -666,14 +771,10 @@
     }
 
 
-    .contact-row:last-child {
-      border-bottom: none;
-    }
-
-
     .contact-label {
 
       font-size: 13px;
+
       font-weight: 850;
 
     }
@@ -686,12 +787,13 @@
       color: #666;
 
       font-size: 13px;
+
       line-height: 1.45;
 
     }
 
 
-    /* NAVIGATION */
+    /* NAV */
 
 
     .bottom-nav {
@@ -699,6 +801,7 @@
       position: fixed;
 
       left: 50%;
+
       bottom: 0;
 
       transform:
@@ -707,6 +810,7 @@
       z-index: 200;
 
       width: 100%;
+
       max-width: 720px;
 
       display: grid;
@@ -746,7 +850,8 @@
 
       min-width: 0;
 
-      padding: 5px 1px;
+      padding:
+        5px 1px;
 
       border: none;
 
@@ -755,6 +860,7 @@
       color: #777;
 
       font-size: 8px;
+
       font-weight: 700;
 
     }
@@ -813,7 +919,6 @@
   </header>
 
 
-
   <main>
 
 
@@ -845,7 +950,6 @@
       </div>
 
 
-
       <div class="notification-box">
 
         <h3>
@@ -859,12 +963,22 @@
           und wichtige Aktivitäten.
         </p>
 
+
         <button
           class="button"
           onclick="enableNotifications()"
         >
           Mitteilungen aktivieren
         </button>
+
+
+        <button
+          class="button button-outline"
+          onclick="showPushToken()"
+        >
+          Push-Token anzeigen
+        </button>
+
 
         <div
           id="notificationStatus"
@@ -873,14 +987,44 @@
           Status wird geprüft...
         </div>
 
-      </div>
 
+        <div
+          id="tokenBox"
+          class="token-box"
+        >
+
+          <div class="token-title">
+            Firebase FCM Token
+          </div>
+
+          <textarea
+            id="tokenText"
+            class="token-text"
+            readonly
+          ></textarea>
+
+          <button
+            class="button button-small"
+            onclick="copyPushToken()"
+          >
+            Token kopieren
+          </button>
+
+          <button
+            class="button button-outline button-small"
+            onclick="hidePushToken()"
+          >
+            Ausblenden
+          </button>
+
+        </div>
+
+      </div>
 
 
       <h2 class="section-heading">
         Schnellzugriff
       </h2>
-
 
 
       <div class="quick-grid">
@@ -906,7 +1050,6 @@
         </button>
 
 
-
         <button
           class="quick-button"
           onclick="openPage('teams')"
@@ -925,7 +1068,6 @@
           </small>
 
         </button>
-
 
 
         <button
@@ -948,7 +1090,6 @@
         </button>
 
 
-
         <button
           class="quick-button"
           onclick="openPage('matchberichte')"
@@ -969,7 +1110,6 @@
         </button>
 
       </div>
-
 
 
       <div class="card">
@@ -1001,7 +1141,6 @@
       </div>
 
     </section>
-
 
 
     <!-- NEWS -->
@@ -1055,7 +1194,6 @@
     </section>
 
 
-
     <!-- TEAMS -->
 
 
@@ -1075,187 +1213,119 @@
 
       <div class="card">
 
-
         <div class="team-row">
-
           <div>
             <div class="team-name">
               1. Mannschaft
             </div>
-
             <div class="team-league">
               Aktivmannschaft
             </div>
           </div>
-
-          <div class="team-arrow">
-            ›
-          </div>
-
+          <div class="team-arrow">›</div>
         </div>
 
 
-
         <div class="team-row">
-
           <div>
             <div class="team-name">
               2. Mannschaft
             </div>
-
             <div class="team-league">
               Aktivmannschaft
             </div>
           </div>
-
-          <div class="team-arrow">
-            ›
-          </div>
-
+          <div class="team-arrow">›</div>
         </div>
 
 
-
         <div class="team-row">
-
           <div>
             <div class="team-name">
               3. Mannschaft
             </div>
           </div>
-
-          <div class="team-arrow">
-            ›
-          </div>
-
+          <div class="team-arrow">›</div>
         </div>
 
 
-
         <div class="team-row">
-
           <div>
             <div class="team-name">
               Senioren 30+
             </div>
           </div>
-
-          <div class="team-arrow">
-            ›
-          </div>
-
+          <div class="team-arrow">›</div>
         </div>
 
 
-
         <div class="team-row">
-
           <div>
             <div class="team-name">
               Senioren 40+
             </div>
           </div>
-
-          <div class="team-arrow">
-            ›
-          </div>
-
+          <div class="team-arrow">›</div>
         </div>
 
 
-
         <div class="team-row">
-
           <div>
             <div class="team-name">
               B-Junioren
             </div>
           </div>
-
-          <div class="team-arrow">
-            ›
-          </div>
-
+          <div class="team-arrow">›</div>
         </div>
 
 
-
         <div class="team-row">
-
           <div>
             <div class="team-name">
               C-Junioren
             </div>
           </div>
-
-          <div class="team-arrow">
-            ›
-          </div>
-
+          <div class="team-arrow">›</div>
         </div>
 
 
-
         <div class="team-row">
-
           <div>
             <div class="team-name">
               D-Junioren
             </div>
           </div>
-
-          <div class="team-arrow">
-            ›
-          </div>
-
+          <div class="team-arrow">›</div>
         </div>
 
 
-
         <div class="team-row">
-
           <div>
             <div class="team-name">
               E-Junioren
             </div>
           </div>
-
-          <div class="team-arrow">
-            ›
-          </div>
-
+          <div class="team-arrow">›</div>
         </div>
 
 
-
         <div class="team-row">
-
           <div>
             <div class="team-name">
               F-Junioren
             </div>
           </div>
-
-          <div class="team-arrow">
-            ›
-          </div>
-
+          <div class="team-arrow">›</div>
         </div>
 
 
-
         <div class="team-row">
-
           <div>
             <div class="team-name">
               G-Junioren
             </div>
           </div>
-
-          <div class="team-arrow">
-            ›
-          </div>
-
+          <div class="team-arrow">›</div>
         </div>
 
 
@@ -1271,7 +1341,6 @@
       </div>
 
     </section>
-
 
 
     <!-- SPIELBETRIEB -->
@@ -1314,7 +1383,6 @@
       </div>
 
 
-
       <div class="card">
 
         <h3>
@@ -1336,7 +1404,6 @@
         </a>
 
       </div>
-
 
 
       <div class="card">
@@ -1362,7 +1429,6 @@
       </div>
 
     </section>
-
 
 
     <!-- MATCHBERICHTE -->
@@ -1411,7 +1477,6 @@
     </section>
 
 
-
     <!-- KONTAKT -->
 
 
@@ -1431,7 +1496,6 @@
 
       <div class="card">
 
-
         <div class="contact-row">
 
           <div class="contact-label">
@@ -1445,7 +1509,6 @@
           </div>
 
         </div>
-
 
 
         <div class="contact-row">
@@ -1481,7 +1544,6 @@
 </div>
 
 
-
 <nav class="bottom-nav">
 
 
@@ -1490,13 +1552,8 @@
     data-page="home"
     onclick="openPage('home')"
   >
-
-    <span class="nav-icon">
-      🏠
-    </span>
-
+    <span class="nav-icon">🏠</span>
     Home
-
   </button>
 
 
@@ -1505,13 +1562,8 @@
     data-page="news"
     onclick="openPage('news')"
   >
-
-    <span class="nav-icon">
-      📰
-    </span>
-
+    <span class="nav-icon">📰</span>
     News
-
   </button>
 
 
@@ -1520,13 +1572,8 @@
     data-page="teams"
     onclick="openPage('teams')"
   >
-
-    <span class="nav-icon">
-      👕
-    </span>
-
+    <span class="nav-icon">👕</span>
     Teams
-
   </button>
 
 
@@ -1535,13 +1582,8 @@
     data-page="spielbetrieb"
     onclick="openPage('spielbetrieb')"
   >
-
-    <span class="nav-icon">
-      ⚽
-    </span>
-
+    <span class="nav-icon">⚽</span>
     Spiele
-
   </button>
 
 
@@ -1550,13 +1592,8 @@
     data-page="matchberichte"
     onclick="openPage('matchberichte')"
   >
-
-    <span class="nav-icon">
-      📝
-    </span>
-
+    <span class="nav-icon">📝</span>
     Berichte
-
   </button>
 
 
@@ -1565,21 +1602,12 @@
     data-page="kontakt"
     onclick="openPage('kontakt')"
   >
-
-    <span class="nav-icon">
-      ☎️
-    </span>
-
+    <span class="nav-icon">☎️</span>
     Kontakt
-
   </button>
 
 
 </nav>
-
-
-
-<!-- FIREBASE -->
 
 
 <script
@@ -1591,12 +1619,11 @@
 ></script>
 
 
-
 <script>
 
 
 /* ==============================
-   FIREBASE CONFIG
+   FIREBASE
 ============================== */
 
 
@@ -1636,7 +1663,6 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 
-
 /* ==============================
    NAVIGATION
 ============================== */
@@ -1645,7 +1671,6 @@ const VAPID_KEY =
 function openPage(
   pageName
 ) {
-
 
   document
     .querySelectorAll(
@@ -1684,7 +1709,6 @@ function openPage(
     .forEach(
       button => {
 
-
         button.classList.remove(
           "active"
         );
@@ -1700,7 +1724,6 @@ function openPage(
           );
 
         }
-
 
       }
     );
@@ -1718,7 +1741,6 @@ function openPage(
   });
 
 }
-
 
 
 /* ==============================
@@ -1755,7 +1777,6 @@ async function enableNotifications() {
       true;
 
 
-
     if (
       isIOS &&
       !isStandalone
@@ -1776,7 +1797,6 @@ async function enableNotifications() {
     }
 
 
-
     if (
       !(
         "serviceWorker"
@@ -1792,7 +1812,6 @@ async function enableNotifications() {
       return;
 
     }
-
 
 
     if (
@@ -1812,11 +1831,9 @@ async function enableNotifications() {
     }
 
 
-
     const permission =
       await Notification
         .requestPermission();
-
 
 
     if (
@@ -1834,17 +1851,14 @@ async function enableNotifications() {
     }
 
 
-
     status.textContent =
       "⏳ Gerät wird bei FC Wängi registriert...";
-
 
 
     const registration =
       await navigator
         .serviceWorker
         .ready;
-
 
 
     const token =
@@ -1860,14 +1874,7 @@ async function enableNotifications() {
         });
 
 
-
     if (token) {
-
-
-      console.log(
-        "FC Wängi Firebase Token:",
-        token
-      );
 
 
       localStorage.setItem(
@@ -1929,6 +1936,143 @@ async function enableNotifications() {
 }
 
 
+/* ==============================
+   TOKEN ANZEIGEN
+============================== */
+
+
+function showPushToken() {
+
+
+  const token =
+    localStorage.getItem(
+      "fcwFirebaseToken"
+    );
+
+
+  const tokenBox =
+    document.getElementById(
+      "tokenBox"
+    );
+
+
+  const tokenText =
+    document.getElementById(
+      "tokenText"
+    );
+
+
+  if (!token) {
+
+
+    alert(
+      "Noch kein Push-Token vorhanden. Aktiviere zuerst die Mitteilungen."
+    );
+
+
+    return;
+
+  }
+
+
+  tokenText.value =
+    token;
+
+
+  tokenBox.classList.add(
+    "visible"
+  );
+
+}
+
+
+/* ==============================
+   TOKEN AUSBLENDEN
+============================== */
+
+
+function hidePushToken() {
+
+
+  const tokenBox =
+    document.getElementById(
+      "tokenBox"
+    );
+
+
+  tokenBox.classList.remove(
+    "visible"
+  );
+
+}
+
+
+/* ==============================
+   TOKEN KOPIEREN
+============================== */
+
+
+async function copyPushToken() {
+
+
+  const token =
+    localStorage.getItem(
+      "fcwFirebaseToken"
+    );
+
+
+  if (!token) {
+
+
+    alert(
+      "Kein Push-Token vorhanden."
+    );
+
+
+    return;
+
+  }
+
+
+  try {
+
+
+    await navigator.clipboard
+      .writeText(
+        token
+      );
+
+
+    alert(
+      "FCM Token wurde kopiert."
+    );
+
+
+  }
+
+  catch (error) {
+
+
+    const tokenText =
+      document.getElementById(
+        "tokenText"
+      );
+
+
+    tokenText.focus();
+
+    tokenText.select();
+
+
+    alert(
+      "Automatisches Kopieren nicht möglich. Der Token ist markiert – bitte manuell kopieren."
+    );
+
+
+  }
+
+}
+
 
 /* ==============================
    STATUS
@@ -1961,7 +2105,6 @@ function updateNotificationStatus() {
   }
 
 
-
   if (
     Notification.permission ===
     "granted"
@@ -1976,15 +2119,19 @@ function updateNotificationStatus() {
 
     if (token) {
 
+
       status.textContent =
         "✅ FCW-Mitteilungen sind aktiviert";
+
 
     }
 
     else {
 
+
       status.textContent =
         "Mitteilungen erlaubt – Gerät noch nicht registriert";
+
 
     }
 
@@ -2015,9 +2162,8 @@ function updateNotificationStatus() {
 }
 
 
-
 /* ==============================
-   PUSH BEI GEÖFFNETER APP
+   FOREGROUND PUSH
 ============================== */
 
 
@@ -2082,7 +2228,6 @@ messaging.onMessage(
 );
 
 
-
 /* ==============================
    SERVICE WORKER
 ============================== */
@@ -2137,9 +2282,8 @@ if (
 }
 
 
-
 /* ==============================
-   APP START
+   START
 ============================== */
 
 
