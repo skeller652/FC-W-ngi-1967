@@ -1,1 +1,20 @@
-
+{
+  "name": "FC Wängi 1967",
+  "short_name": "FC Wängi",
+  "description": "Die Vereins-App für Mitglieder und Fans des FC Wängi 1967",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f4c400",
+  "orientation": "portrait",
+  "lang": "de-CH",
+  "icons": [
+    {
+      "src": "./icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
