@@ -1,20 +1,29 @@
+/* ==========================================
+   FC WÄNGI 1967
+   SERVICE WORKER + FIREBASE CLOUD MESSAGING
+========================================== */
+
+
 importScripts(
   "https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"
 );
+
 
 importScripts(
   "https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"
 );
 
 
-// ================================
-// FIREBASE
-// ================================
+
+/* ==========================================
+   FIREBASE
+========================================== */
+
 
 firebase.initializeApp({
 
   apiKey:
-    "AIzaSyDEBoXvug5fwbB4_u-QxX6RtOQiwAerGG8",
+    "AIzaSyDFBoXvU05fwbB4_u-QxX6RtOQiwAerGG8",
 
   authDomain:
     "fc-waengi-1967.firebaseapp.com",
@@ -39,104 +48,152 @@ const messaging =
 
 
 
-// ================================
-// CACHE
-// ================================
+/* ==========================================
+   CACHE
+========================================== */
+
 
 const CACHE_NAME =
-  "fc-waengi-app-v2";
+  "fc-waengi-app-v3";
 
 
 const FILES_TO_CACHE = [
 
   "./",
+
   "./index.html",
+
   "./manifest.json",
+
   "./logo.png",
+
   "./icon-512.png"
 
 ];
 
 
 
+/* ==========================================
+   INSTALL
+========================================== */
+
+
 self.addEventListener(
   "install",
   event => {
 
+
     event.waitUntil(
 
       caches
-        .open(CACHE_NAME)
+        .open(
+          CACHE_NAME
+        )
 
-        .then(cache => {
+        .then(
+          cache => {
 
-          return cache.addAll(
-            FILES_TO_CACHE
-          );
+            return cache.addAll(
+              FILES_TO_CACHE
+            );
 
-        })
+          }
+        )
 
     );
 
+
     self.skipWaiting();
+
 
   }
 );
 
+
+
+/* ==========================================
+   ACTIVATE
+========================================== */
 
 
 self.addEventListener(
   "activate",
   event => {
 
+
     event.waitUntil(
 
       caches
         .keys()
 
-        .then(cacheNames => {
+        .then(
+          cacheNames => {
 
-          return Promise.all(
 
-            cacheNames.map(
-              cacheName => {
+            return Promise.all(
 
-                if (
-                  cacheName !== CACHE_NAME
-                ) {
+              cacheNames.map(
+                cacheName => {
 
-                  return caches.delete(
-                    cacheName
-                  );
+
+                  if (
+                    cacheName !==
+                    CACHE_NAME
+                  ) {
+
+
+                    return caches.delete(
+                      cacheName
+                    );
+
+
+                  }
+
 
                 }
+              )
 
-              }
-            )
+            );
 
-          );
 
-        })
+          }
+        )
 
     );
 
+
     self.clients.claim();
+
 
   }
 );
 
 
 
-// ================================
-// OFFLINE
-// ================================
+/* ==========================================
+   FETCH / OFFLINE
+========================================== */
+
 
 self.addEventListener(
   "fetch",
   event => {
 
+
     if (
-      event.request.method !== "GET"
+      event.request.method !==
+      "GET"
+    ) {
+
+      return;
+
+    }
+
+
+    if (
+      !event.request.url.startsWith(
+        "http"
+      )
     ) {
 
       return;
@@ -146,71 +203,138 @@ self.addEventListener(
 
     event.respondWith(
 
-      fetch(event.request)
+      fetch(
+        event.request
+      )
 
-        .then(response => {
+      .then(
+        response => {
 
-          const copy =
+
+          const responseCopy =
             response.clone();
 
 
           caches
-            .open(CACHE_NAME)
+            .open(
+              CACHE_NAME
+            )
 
-            .then(cache => {
+            .then(
+              cache => {
 
-              cache.put(
-                event.request,
-                copy
-              );
 
-            });
+                cache.put(
+                  event.request,
+                  responseCopy
+                );
+
+
+              }
+            );
 
 
           return response;
 
-        })
+
+        }
+      )
+
+      .catch(
+        async () => {
 
 
-        .catch(() => {
+          const cachedResponse =
+            await caches.match(
+              event.request
+            );
 
-          return caches.match(
-            event.request
-          );
 
-        })
+          if (
+            cachedResponse
+          ) {
+
+            return cachedResponse;
+
+          }
+
+
+          if (
+            event.request.mode ===
+            "navigate"
+          ) {
+
+
+            return caches.match(
+              "./index.html"
+            );
+
+
+          }
+
+
+          return Response.error();
+
+
+        }
+      )
 
     );
+
 
   }
 );
 
 
 
-// ================================
-// FIREBASE BACKGROUND PUSH
-// ================================
+/* ==========================================
+   FIREBASE BACKGROUND PUSH
+========================================== */
+
 
 messaging.onBackgroundMessage(
   payload => {
 
+
     console.log(
-      "FCW Push empfangen:",
+      "FCW Push im Hintergrund:",
       payload
     );
 
 
     const title =
+
       payload.notification?.title ||
+
+      payload.data?.title ||
+
       "FC Wängi 1967";
+
+
+
+    const body =
+
+      payload.notification?.body ||
+
+      payload.data?.body ||
+
+      "Es gibt Neuigkeiten beim FC Wängi.";
+
+
+
+    const url =
+
+      payload.data?.url ||
+
+      "./";
+
 
 
     const options = {
 
-      body:
 
-        payload.notification?.body ||
-        "Es gibt Neuigkeiten beim FC Wängi.",
+      body:
+        body,
 
 
       icon:
@@ -224,11 +348,21 @@ messaging.onBackgroundMessage(
       data: {
 
         url:
+          url
 
-          payload.data?.url ||
-          "./"
+      },
 
-      }
+
+      vibrate: [
+        200,
+        100,
+        200
+      ],
+
+
+      tag:
+        "fc-waengi-push"
+
 
     };
 
@@ -239,18 +373,21 @@ messaging.onBackgroundMessage(
         options
       );
 
+
   }
 );
 
 
 
-// ================================
-// PUSH ANKLICKEN
-// ================================
+/* ==========================================
+   NOTIFICATION ANKLICKEN
+========================================== */
+
 
 self.addEventListener(
   "notificationclick",
   event => {
+
 
     event.notification.close();
 
@@ -268,31 +405,47 @@ self.addEventListener(
       clients
         .matchAll({
 
-          type: "window",
+          type:
+            "window",
 
-          includeUncontrolled: true
+          includeUncontrolled:
+            true
 
         })
 
         .then(
           windowClients => {
 
+
             for (
               const client
               of windowClients
             ) {
 
+
               if (
                 "focus" in client
               ) {
 
-                client.navigate(
-                  targetUrl
-                );
+
+                if (
+                  "navigate" in client
+                ) {
+
+
+                  client.navigate(
+                    targetUrl
+                  );
+
+
+                }
+
 
                 return client.focus();
 
+
               }
+
 
             }
 
@@ -301,17 +454,21 @@ self.addEventListener(
               clients.openWindow
             ) {
 
+
               return clients
                 .openWindow(
                   targetUrl
                 );
 
+
             }
+
 
           }
         )
 
     );
+
 
   }
 );
