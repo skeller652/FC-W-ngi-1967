@@ -32,7 +32,6 @@
 
   <title>FC Wängi 1967</title>
 
-
   <link
     rel="manifest"
     href="./manifest.json"
@@ -47,39 +46,24 @@
   <style>
 
     :root {
-
       --yellow: #f4c400;
       --yellow-dark: #d5aa00;
-
       --orange: #e7672d;
-
       --black: #171717;
-      --dark: #292929;
-
       --white: #ffffff;
-
       --grey: #f5f5f5;
-
-      --text-grey: #666666;
-
     }
 
 
     * {
-
       box-sizing: border-box;
-
       margin: 0;
-
       padding: 0;
-
     }
 
 
     html {
-
       scroll-behavior: smooth;
-
     }
 
 
@@ -95,7 +79,6 @@
         sans-serif;
 
       background: #eeeeee;
-
       color: var(--black);
 
       padding-bottom:
@@ -108,20 +91,15 @@
 
 
     button {
-
       font: inherit;
-
       cursor: pointer;
-
     }
 
 
     .app {
 
       width: 100%;
-
       max-width: 720px;
-
       margin: auto;
 
       min-height: 100vh;
@@ -131,39 +109,30 @@
     }
 
 
-
-    /* ==============================
-       HEADER
-    ============================== */
+    /* HEADER */
 
 
     .header {
 
       position: sticky;
-
       top: 0;
 
       z-index: 100;
 
       display: flex;
-
       align-items: center;
 
       gap: 14px;
 
       padding:
-
         calc(
           12px +
           env(safe-area-inset-top)
         )
-
         16px
-
         13px;
 
       background:
-
         linear-gradient(
           135deg,
           #f6ce1d,
@@ -171,7 +140,6 @@
         );
 
       box-shadow:
-
         0 4px 15px
         rgba(0,0,0,.14);
 
@@ -181,7 +149,6 @@
     .club-logo {
 
       width: 61px;
-
       height: 61px;
 
       object-fit: contain;
@@ -193,7 +160,6 @@
       padding: 4px;
 
       box-shadow:
-
         0 3px 8px
         rgba(0,0,0,.15);
 
@@ -203,7 +169,6 @@
     .header-info h1 {
 
       font-size: 21px;
-
       font-weight: 900;
 
     }
@@ -214,7 +179,6 @@
       margin-top: 4px;
 
       font-size: 11px;
-
       font-weight: 650;
 
       opacity: .72;
@@ -222,23 +186,16 @@
     }
 
 
-
-    /* ==============================
-       MAIN
-    ============================== */
+    /* MAIN */
 
 
     main {
-
       padding: 17px;
-
     }
 
 
     .page {
-
       display: none;
-
     }
 
 
@@ -255,21 +212,13 @@
     @keyframes fadeIn {
 
       from {
-
         opacity: 0;
-
-        transform:
-          translateY(4px);
-
+        transform: translateY(4px);
       }
 
       to {
-
         opacity: 1;
-
-        transform:
-          translateY(0);
-
+        transform: translateY(0);
       }
 
     }
@@ -278,7 +227,6 @@
     .page-title {
 
       font-size: 28px;
-
       font-weight: 900;
 
       margin-bottom: 5px;
@@ -297,10 +245,7 @@
     }
 
 
-
-    /* ==============================
-       HOME
-    ============================== */
+    /* HERO */
 
 
     .hero {
@@ -318,7 +263,6 @@
       color: white;
 
       background:
-
         linear-gradient(
           135deg,
           #151515,
@@ -326,7 +270,6 @@
         );
 
       box-shadow:
-
         0 5px 16px
         rgba(0,0,0,.12);
 
@@ -340,7 +283,6 @@
       position: absolute;
 
       right: -15px;
-
       bottom: -30px;
 
       font-size: 120px;
@@ -355,7 +297,6 @@
       color: var(--yellow);
 
       font-size: 11px;
-
       font-weight: 900;
 
       letter-spacing: 1px;
@@ -367,12 +308,9 @@
 
     .hero h2 {
 
-      margin:
-        7px 0
-        8px;
+      margin: 7px 0 8px;
 
       font-size: 29px;
-
       font-weight: 900;
 
     }
@@ -385,16 +323,12 @@
       color: #e5e5e5;
 
       font-size: 14px;
-
       line-height: 1.5;
 
     }
 
 
-
-    /* ==============================
-       PUSH
-    ============================== */
+    /* PUSH */
 
 
     .notification-box {
@@ -406,7 +340,6 @@
       border-radius: 19px;
 
       background:
-
         linear-gradient(
           135deg,
           #fff4b5,
@@ -430,7 +363,6 @@
       color: #605500;
 
       font-size: 13px;
-
       line-height: 1.45;
 
     }
@@ -443,16 +375,12 @@
       color: #665a00;
 
       font-size: 12px;
-
       font-weight: 650;
 
     }
 
 
-
-    /* ==============================
-       QUICK ACCESS
-    ============================== */
+    /* QUICK ACCESS */
 
 
     .section-heading {
@@ -460,7 +388,6 @@
       margin-bottom: 11px;
 
       font-size: 19px;
-
       font-weight: 900;
 
     }
@@ -492,7 +419,6 @@
       text-align: left;
 
       border: none;
-
       border-radius: 18px;
 
       background: var(--grey);
@@ -501,10 +427,7 @@
 
 
     .quick-button:active {
-
-      transform:
-        scale(.97);
-
+      transform: scale(.97);
     }
 
 
@@ -539,10 +462,7 @@
     }
 
 
-
-    /* ==============================
-       CARDS
-    ============================== */
+    /* CARDS */
 
 
     .card {
@@ -551,17 +471,12 @@
 
       margin-bottom: 13px;
 
-      border:
-
-        1px solid
-        #ececec;
-
+      border: 1px solid #ececec;
       border-radius: 18px;
 
       background: white;
 
       box-shadow:
-
         0 4px 14px
         rgba(0,0,0,.05);
 
@@ -582,7 +497,6 @@
       color: #666;
 
       font-size: 13px;
-
       line-height: 1.5;
 
     }
@@ -592,8 +506,7 @@
 
       display: inline-block;
 
-      padding:
-        5px 9px;
+      padding: 5px 9px;
 
       margin-bottom: 8px;
 
@@ -604,16 +517,12 @@
       color: #725900;
 
       font-size: 10px;
-
       font-weight: 900;
 
     }
 
 
-
-    /* ==============================
-       BUTTONS
-    ============================== */
+    /* BUTTONS */
 
 
     .button {
@@ -621,20 +530,15 @@
       display: inline-flex;
 
       align-items: center;
-
       justify-content: center;
 
       min-height: 44px;
 
-      padding:
-
-        11px
-        16px;
+      padding: 11px 16px;
 
       margin-top: 12px;
 
       border: none;
-
       border-radius: 12px;
 
       background: var(--black);
@@ -644,7 +548,6 @@
       text-decoration: none;
 
       font-size: 13px;
-
       font-weight: 850;
 
     }
@@ -653,7 +556,6 @@
     .button-yellow {
 
       background: var(--yellow);
-
       color: #111;
 
     }
@@ -661,9 +563,7 @@
 
     .button-outline {
 
-      border:
-        1px solid
-        #ddd;
+      border: 1px solid #ddd;
 
       background: white;
 
@@ -672,10 +572,7 @@
     }
 
 
-
-    /* ==============================
-       TEAMS
-    ============================== */
+    /* TEAMS */
 
 
     .team-row {
@@ -683,13 +580,11 @@
       display: flex;
 
       align-items: center;
-
       justify-content: space-between;
 
       gap: 10px;
 
-      padding:
-        14px 2px;
+      padding: 14px 2px;
 
       border-bottom:
         1px solid #ededed;
@@ -698,16 +593,13 @@
 
 
     .team-row:last-child {
-
       border-bottom: none;
-
     }
 
 
     .team-name {
 
       font-size: 14px;
-
       font-weight: 850;
 
     }
@@ -733,10 +625,7 @@
     }
 
 
-
-    /* ==============================
-       NEWS
-    ============================== */
+    /* NEWS */
 
 
     .news-cover {
@@ -744,7 +633,6 @@
       display: flex;
 
       align-items: center;
-
       justify-content: center;
 
       height: 145px;
@@ -754,7 +642,6 @@
       border-radius: 14px;
 
       background:
-
         linear-gradient(
           135deg,
           var(--yellow),
@@ -766,16 +653,12 @@
     }
 
 
-
-    /* ==============================
-       CONTACT
-    ============================== */
+    /* CONTACT */
 
 
     .contact-row {
 
-      padding:
-        14px 0;
+      padding: 14px 0;
 
       border-bottom:
         1px solid #ededed;
@@ -784,16 +667,13 @@
 
 
     .contact-row:last-child {
-
       border-bottom: none;
-
     }
 
 
     .contact-label {
 
       font-size: 13px;
-
       font-weight: 850;
 
     }
@@ -806,16 +686,12 @@
       color: #666;
 
       font-size: 13px;
-
       line-height: 1.45;
 
     }
 
 
-
-    /* ==============================
-       BOTTOM NAV
-    ============================== */
+    /* NAVIGATION */
 
 
     .bottom-nav {
@@ -823,7 +699,6 @@
       position: fixed;
 
       left: 50%;
-
       bottom: 0;
 
       transform:
@@ -832,7 +707,6 @@
       z-index: 200;
 
       width: 100%;
-
       max-width: 720px;
 
       display: grid;
@@ -841,10 +715,8 @@
         repeat(6,1fr);
 
       padding:
-
         7px
         4px
-
         calc(
           7px +
           env(safe-area-inset-bottom)
@@ -854,7 +726,6 @@
         1px solid #dedede;
 
       background:
-
         rgba(
           255,
           255,
@@ -875,8 +746,7 @@
 
       min-width: 0;
 
-      padding:
-        5px 1px;
+      padding: 5px 1px;
 
       border: none;
 
@@ -885,7 +755,6 @@
       color: #777;
 
       font-size: 8px;
-
       font-weight: 700;
 
     }
@@ -910,11 +779,9 @@
 
     }
 
-
   </style>
 
 </head>
-
 
 
 <body>
@@ -923,25 +790,13 @@
 <div class="app">
 
 
-
-  <!-- ==============================
-       HEADER
-  ============================== -->
-
-
   <header class="header">
 
-
     <img
-
       src="./logo.png"
-
       alt="FC Wängi Logo"
-
       class="club-logo"
-
     >
-
 
     <div class="header-info">
 
@@ -955,19 +810,14 @@
 
     </div>
 
-
   </header>
-
 
 
 
   <main>
 
 
-
-    <!-- ==============================
-         HOME
-    ============================== -->
+    <!-- HOME -->
 
 
     <section
@@ -978,94 +828,58 @@
 
       <div class="hero">
 
-
         <div class="hero-label">
-
           Willkommen beim FCW
-
         </div>
 
-
         <h2>
-
           FC Wängi
-
         </h2>
 
-
         <p>
-
           Die Vereins-App für Spieler,
           Mitglieder, Eltern, Freunde
           und Fans des FC Wängi 1967.
-
         </p>
 
-
       </div>
-
 
 
 
       <div class="notification-box">
 
-
         <h3>
-
           🔔 FCW Mitteilungen
-
         </h3>
 
-
         <p>
-
           Erhalte Push-Mitteilungen über
           Vereinsnews, Spiele,
           Resultate, Matchberichte
           und wichtige Aktivitäten.
-
         </p>
 
-
         <button
-
           class="button"
-
-          onclick="
-            enableNotifications()
-          "
-
+          onclick="enableNotifications()"
         >
-
           Mitteilungen aktivieren
-
         </button>
 
-
         <div
-
           id="notificationStatus"
-
           class="notification-status"
-
         >
-
           Status wird geprüft...
-
         </div>
-
 
       </div>
 
 
 
-
       <h2 class="section-heading">
-
         Schnellzugriff
-
       </h2>
-
 
 
 
@@ -1073,208 +887,124 @@
 
 
         <button
-
           class="quick-button"
-
-          onclick="
-            openPage('news')
-          "
-
+          onclick="openPage('news')"
         >
 
           <span class="quick-icon">
-
             📰
-
           </span>
 
-
           <strong>
-
             News
-
           </strong>
 
-
           <small>
-
             Neues vom Verein
-
           </small>
-
 
         </button>
 
 
 
-
         <button
-
           class="quick-button"
-
-          onclick="
-            openPage('teams')
-          "
-
+          onclick="openPage('teams')"
         >
 
           <span class="quick-icon">
-
             👕
-
           </span>
 
-
           <strong>
-
             Teams
-
           </strong>
 
-
           <small>
-
             Unsere Mannschaften
-
           </small>
-
 
         </button>
 
 
 
-
         <button
-
           class="quick-button"
-
-          onclick="
-            openPage('spielbetrieb')
-          "
-
+          onclick="openPage('spielbetrieb')"
         >
 
           <span class="quick-icon">
-
             ⚽
-
           </span>
 
-
           <strong>
-
             Spielbetrieb
-
           </strong>
 
-
           <small>
-
             Spiele & Resultate
-
           </small>
 
-
         </button>
-
 
 
 
         <button
-
           class="quick-button"
-
-          onclick="
-            openPage('matchberichte')
-          "
-
+          onclick="openPage('matchberichte')"
         >
 
           <span class="quick-icon">
-
             📝
-
           </span>
 
-
           <strong>
-
             Matchberichte
-
           </strong>
 
-
           <small>
-
             Berichte unserer Teams
-
           </small>
 
-
         </button>
-
 
       </div>
-
 
 
 
       <div class="card">
 
-
         <span class="tag">
-
           FC WÄNGI 1967
-
         </span>
 
-
         <h3>
-
           Fussball in Wängi
-
         </h3>
 
-
         <p>
-
           Seit 1967 steht der FC Wängi
           für Fussball, Nachwuchsarbeit,
           Kameradschaft und ein aktives
           Vereinsleben.
-
         </p>
 
-
         <a
-
           href="https://www.fcwaengi1967.ch"
-
           target="_blank"
-
           rel="noopener"
-
           class="button button-yellow"
-
         >
-
           FCW Homepage
-
         </a>
 
-
       </div>
-
 
     </section>
 
 
 
-
-
-    <!-- ==============================
-         NEWS
-    ============================== -->
+    <!-- NEWS -->
 
 
     <section
@@ -1282,87 +1012,51 @@
       class="page"
     >
 
-
       <h1 class="page-title">
-
         News
-
       </h1>
 
-
       <p class="page-description">
-
-        Aktuelles rund um den
-        FC Wängi 1967.
-
+        Aktuelles rund um den FC Wängi 1967.
       </p>
-
-
 
 
       <div class="card">
 
-
         <div class="news-cover">
-
           📰
-
         </div>
 
-
         <span class="tag">
-
           NEWS
-
         </span>
 
-
         <h3>
-
           Aktuelle Vereinsnews
-
         </h3>
 
-
         <p>
-
           Hier findest du Neuigkeiten,
           Veranstaltungen und wichtige
-          Informationen rund um den
-          FC Wängi.
-
+          Informationen rund um den FC Wängi.
         </p>
 
-
         <a
-
           href="https://www.fcwaengi1967.ch/"
-
           target="_blank"
-
           rel="noopener"
-
           class="button"
-
         >
-
           Aktuelle News öffnen
-
         </a>
 
-
       </div>
-
 
     </section>
 
 
 
-
-
-    <!-- ==============================
-         TEAMS
-    ============================== -->
+    <!-- TEAMS -->
 
 
     <section
@@ -1370,21 +1064,13 @@
       class="page"
     >
 
-
       <h1 class="page-title">
-
         Teams
-
       </h1>
 
-
       <p class="page-description">
-
         Unsere Mannschaften.
-
       </p>
-
-
 
 
       <div class="card">
@@ -1393,19 +1079,13 @@
         <div class="team-row">
 
           <div>
-
             <div class="team-name">
-
               1. Mannschaft
-
             </div>
 
             <div class="team-league">
-
               Aktivmannschaft
-
             </div>
-
           </div>
 
           <div class="team-arrow">
@@ -1416,23 +1096,16 @@
 
 
 
-
         <div class="team-row">
 
           <div>
-
             <div class="team-name">
-
               2. Mannschaft
-
             </div>
 
             <div class="team-league">
-
               Aktivmannschaft
-
             </div>
-
           </div>
 
           <div class="team-arrow">
@@ -1443,17 +1116,12 @@
 
 
 
-
         <div class="team-row">
 
           <div>
-
             <div class="team-name">
-
               3. Mannschaft
-
             </div>
-
           </div>
 
           <div class="team-arrow">
@@ -1464,17 +1132,12 @@
 
 
 
-
         <div class="team-row">
 
           <div>
-
             <div class="team-name">
-
               Senioren 30+
-
             </div>
-
           </div>
 
           <div class="team-arrow">
@@ -1485,17 +1148,12 @@
 
 
 
-
         <div class="team-row">
 
           <div>
-
             <div class="team-name">
-
               Senioren 40+
-
             </div>
-
           </div>
 
           <div class="team-arrow">
@@ -1506,17 +1164,12 @@
 
 
 
-
         <div class="team-row">
 
           <div>
-
             <div class="team-name">
-
               B-Junioren
-
             </div>
-
           </div>
 
           <div class="team-arrow">
@@ -1527,17 +1180,12 @@
 
 
 
-
         <div class="team-row">
 
           <div>
-
             <div class="team-name">
-
               C-Junioren
-
             </div>
-
           </div>
 
           <div class="team-arrow">
@@ -1548,17 +1196,12 @@
 
 
 
-
         <div class="team-row">
 
           <div>
-
             <div class="team-name">
-
               D-Junioren
-
             </div>
-
           </div>
 
           <div class="team-arrow">
@@ -1569,17 +1212,12 @@
 
 
 
-
         <div class="team-row">
 
           <div>
-
             <div class="team-name">
-
               E-Junioren
-
             </div>
-
           </div>
 
           <div class="team-arrow">
@@ -1590,17 +1228,12 @@
 
 
 
-
         <div class="team-row">
 
           <div>
-
             <div class="team-name">
-
               F-Junioren
-
             </div>
-
           </div>
 
           <div class="team-arrow">
@@ -1608,20 +1241,15 @@
           </div>
 
         </div>
-
 
 
 
         <div class="team-row">
 
           <div>
-
             <div class="team-name">
-
               G-Junioren
-
             </div>
-
           </div>
 
           <div class="team-arrow">
@@ -1629,39 +1257,24 @@
           </div>
 
         </div>
-
-
 
 
         <a
-
           href="https://www.fcwaengi1967.ch/mannschaften"
-
           target="_blank"
-
           rel="noopener"
-
           class="button"
-
         >
-
           Alle Teams ansehen
-
         </a>
 
-
       </div>
-
 
     </section>
 
 
 
-
-
-    <!-- ==============================
-         SPIELBETRIEB
-    ============================== -->
+    <!-- SPIELBETRIEB -->
 
 
     <section
@@ -1669,151 +1282,90 @@
       class="page"
     >
 
-
       <h1 class="page-title">
-
         Spielbetrieb
-
       </h1>
 
-
       <p class="page-description">
-
-        Spiele, Resultate und
-        Ranglisten.
-
+        Spiele, Resultate und Ranglisten.
       </p>
 
 
-
-
       <div class="card">
 
-
         <h3>
-
           📆 Vereinsspielplan
-
         </h3>
 
-
         <p>
-
           Alle kommenden Spiele
           des FC Wängi.
-
         </p>
 
-
         <a
-
           href="https://www.fcwaengi1967.ch/spielbetrieb"
-
           target="_blank"
-
           rel="noopener"
-
           class="button"
-
         >
-
           Spielplan öffnen
-
         </a>
-
 
       </div>
 
 
 
-
       <div class="card">
 
-
         <h3>
-
           🏆 Resultate & Ranglisten
-
         </h3>
 
-
         <p>
-
           Ergebnisse und Tabellen
           der FCW Mannschaften.
-
         </p>
 
-
         <a
-
           href="https://matchcenter.ofv.swiss/"
-
           target="_blank"
-
           rel="noopener"
-
           class="button button-yellow"
-
         >
-
           OFV Matchcenter
-
         </a>
 
-
       </div>
-
 
 
 
       <div class="card">
 
-
         <h3>
-
           🏠 Heimspiele
-
         </h3>
 
-
         <p>
-
           Übersicht über die
           kommenden Heimspiele.
-
         </p>
 
-
         <a
-
           href="https://www.fcwaengi1967.ch/spielbetrieb"
-
           target="_blank"
-
           rel="noopener"
-
           class="button button-outline"
-
         >
-
           Heimspiele anzeigen
-
         </a>
 
-
       </div>
-
 
     </section>
 
 
 
-
-
-    <!-- ==============================
-         MATCHBERICHTE
-    ============================== -->
+    <!-- MATCHBERICHTE -->
 
 
     <section
@@ -1821,77 +1373,46 @@
       class="page"
     >
 
-
       <h1 class="page-title">
-
         Matchberichte
-
       </h1>
 
-
       <p class="page-description">
-
         Berichte unserer Mannschaften.
-
       </p>
-
-
 
 
       <div class="card">
 
-
         <span class="tag">
-
           MATCHBERICHTE
-
         </span>
 
-
         <h3>
-
           ⚽ FC Wängi Spiele
-
         </h3>
 
-
         <p>
-
           Lies aktuelle Matchberichte
           der FCW-Mannschaften.
-
         </p>
 
-
         <a
-
           href="https://www.fcwaengi1967.ch/mannschaften"
-
           target="_blank"
-
           rel="noopener"
-
           class="button"
-
         >
-
           Matchberichte öffnen
-
         </a>
 
-
       </div>
-
 
     </section>
 
 
 
-
-
-    <!-- ==============================
-         KONTAKT
-    ============================== -->
+    <!-- KONTAKT -->
 
 
     <section
@@ -1899,21 +1420,13 @@
       class="page"
     >
 
-
       <h1 class="page-title">
-
         Kontakt
-
       </h1>
 
-
       <p class="page-description">
-
         FC Wängi 1967
-
       </p>
-
-
 
 
       <div class="card">
@@ -1921,72 +1434,45 @@
 
         <div class="contact-row">
 
-
           <div class="contact-label">
-
             📍 Verein
-
           </div>
 
-
           <div class="contact-value">
-
             FC Wängi 1967<br>
             9545 Wängi<br>
             Schweiz
-
           </div>
 
-
         </div>
-
 
 
 
         <div class="contact-row">
 
-
           <div class="contact-label">
-
             🌐 Homepage
-
           </div>
-
 
           <div class="contact-value">
-
             www.fcwaengi1967.ch
-
           </div>
-
 
         </div>
 
 
-
-
         <a
-
           href="https://www.fcwaengi1967.ch/kontakt"
-
           target="_blank"
-
           rel="noopener"
-
           class="button"
-
         >
-
           Kontakt öffnen
-
         </a>
-
 
       </div>
 
-
     </section>
-
 
 
   </main>
@@ -1996,26 +1482,13 @@
 
 
 
-
-
-<!-- ==============================
-     NAVIGATION
-============================== -->
-
-
 <nav class="bottom-nav">
 
 
   <button
-
     class="nav-button active"
-
     data-page="home"
-
-    onclick="
-      openPage('home')
-    "
-
+    onclick="openPage('home')"
   >
 
     <span class="nav-icon">
@@ -2027,18 +1500,10 @@
   </button>
 
 
-
-
   <button
-
     class="nav-button"
-
     data-page="news"
-
-    onclick="
-      openPage('news')
-    "
-
+    onclick="openPage('news')"
   >
 
     <span class="nav-icon">
@@ -2050,18 +1515,10 @@
   </button>
 
 
-
-
   <button
-
     class="nav-button"
-
     data-page="teams"
-
-    onclick="
-      openPage('teams')
-    "
-
+    onclick="openPage('teams')"
   >
 
     <span class="nav-icon">
@@ -2073,18 +1530,10 @@
   </button>
 
 
-
-
   <button
-
     class="nav-button"
-
     data-page="spielbetrieb"
-
-    onclick="
-      openPage('spielbetrieb')
-    "
-
+    onclick="openPage('spielbetrieb')"
   >
 
     <span class="nav-icon">
@@ -2096,18 +1545,10 @@
   </button>
 
 
-
-
   <button
-
     class="nav-button"
-
     data-page="matchberichte"
-
-    onclick="
-      openPage('matchberichte')
-    "
-
+    onclick="openPage('matchberichte')"
   >
 
     <span class="nav-icon">
@@ -2119,18 +1560,10 @@
   </button>
 
 
-
-
   <button
-
     class="nav-button"
-
     data-page="kontakt"
-
-    onclick="
-      openPage('kontakt')
-    "
-
+    onclick="openPage('kontakt')"
   >
 
     <span class="nav-icon">
@@ -2146,17 +1579,12 @@
 
 
 
-
-
-<!-- ==============================
-     FIREBASE
-============================== -->
+<!-- FIREBASE -->
 
 
 <script
   src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"
 ></script>
-
 
 <script
   src="https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"
@@ -2164,20 +1592,18 @@
 
 
 
-
-
 <script>
 
 
-/* ===================================
+/* ==============================
    FIREBASE CONFIG
-=================================== */
+============================== */
 
 
 const firebaseConfig = {
 
   apiKey:
-    "AIzaSyDEBoXvug5fwbB4_u-QxX6RtOQiwAerGG8",
+    "AIzaSyDFBoXvU05fwbB4_u-QxX6RtOQiwAerGG8",
 
   authDomain:
     "fc-waengi-1967.firebaseapp.com",
@@ -2197,29 +1623,23 @@ const firebaseConfig = {
 };
 
 
-
 firebase.initializeApp(
   firebaseConfig
 );
-
 
 
 const messaging =
   firebase.messaging();
 
 
-
 const VAPID_KEY =
-
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 
 
-
-
-/* ===================================
+/* ==============================
    NAVIGATION
-=================================== */
+============================== */
 
 
 function openPage(
@@ -2231,7 +1651,6 @@ function openPage(
     .querySelectorAll(
       ".page"
     )
-
     .forEach(
       page => {
 
@@ -2243,17 +1662,13 @@ function openPage(
     );
 
 
-
   const page =
-
     document.getElementById(
       pageName
     );
 
 
-  if (
-    page
-  ) {
+  if (page) {
 
     page.classList.add(
       "active"
@@ -2262,12 +1677,10 @@ function openPage(
   }
 
 
-
   document
     .querySelectorAll(
       ".nav-button"
     )
-
     .forEach(
       button => {
 
@@ -2278,10 +1691,8 @@ function openPage(
 
 
         if (
-
           button.dataset.page ===
           pageName
-
         ) {
 
           button.classList.add(
@@ -2295,64 +1706,43 @@ function openPage(
     );
 
 
-
   localStorage.setItem(
-
     "fcwPage",
-
     pageName
-
   );
 
 
-
   window.scrollTo({
-
     top: 0,
-
     behavior: "smooth"
-
   });
-
 
 }
 
 
 
-
-
-/* ===================================
+/* ==============================
    PUSH AKTIVIEREN
-=================================== */
+============================== */
 
 
 async function enableNotifications() {
 
 
   const status =
-
     document.getElementById(
       "notificationStatus"
     );
 
 
-
   try {
 
 
-
-    /* -------------------------------
-       IOS TEST
-    ------------------------------- */
-
-
     const isIOS =
-
       /iPhone|iPad|iPod/i
         .test(
           navigator.userAgent
         );
-
 
 
     const isStandalone =
@@ -2367,149 +1757,97 @@ async function enableNotifications() {
 
 
     if (
-
       isIOS &&
       !isStandalone
-
     ) {
 
 
       status.textContent =
-
-        "📱 Auf dem iPhone zuerst über Safari zum Home-Bildschirm hinzufügen.";
+        "📱 Auf dem iPhone zuerst zum Home-Bildschirm hinzufügen.";
 
 
       alert(
-
-        "Auf dem iPhone funktionieren Push-Mitteilungen erst, wenn du die FC-Wängi-App über Safari mit «Zum Home-Bildschirm» installiert hast."
-
+        "Öffne die Seite in Safari und wähle «Teilen → Zum Home-Bildschirm». Öffne danach die installierte FC-Wängi-App."
       );
 
 
       return;
 
-
     }
 
 
 
-
-    /* -------------------------------
-       SERVICE WORKER
-    ------------------------------- */
-
-
     if (
-
       !(
         "serviceWorker"
         in navigator
       )
-
     ) {
 
 
       status.textContent =
-
         "❌ Service Worker wird nicht unterstützt.";
 
 
       return;
 
-
     }
 
 
 
-
-    /* -------------------------------
-       NOTIFICATION API
-    ------------------------------- */
-
-
     if (
-
       !(
         "Notification"
         in window
       )
-
     ) {
 
 
       status.textContent =
-
         "❌ Dieses Gerät unterstützt keine Push-Mitteilungen.";
 
 
       return;
 
-
     }
 
 
 
-
-    /* -------------------------------
-       ERLAUBNIS
-    ------------------------------- */
-
-
     const permission =
-
       await Notification
         .requestPermission();
 
 
 
     if (
-
       permission !==
       "granted"
-
     ) {
 
 
       status.textContent =
-
         "❌ Mitteilungen wurden nicht erlaubt.";
 
 
       return;
-
 
     }
 
 
 
     status.textContent =
-
       "⏳ Gerät wird bei FC Wängi registriert...";
 
 
 
-
-    /* -------------------------------
-       SERVICE WORKER BEREIT
-    ------------------------------- */
-
-
     const registration =
-
       await navigator
         .serviceWorker
         .ready;
 
 
 
-
-    /* -------------------------------
-       FCM TOKEN
-    ------------------------------- */
-
-
     const token =
-
       await messaging
         .getToken({
 
@@ -2523,63 +1861,42 @@ async function enableNotifications() {
 
 
 
-
-    if (
-      token
-    ) {
+    if (token) {
 
 
       console.log(
-
         "FC Wängi Firebase Token:",
-
         token
-
       );
 
 
-
       localStorage.setItem(
-
         "fcwFirebaseToken",
-
         token
-
       );
-
 
 
       localStorage.setItem(
-
         "fcwNotifications",
-
         "yes"
-
       );
-
 
 
       status.textContent =
-
         "✅ FCW-Mitteilungen sind aktiviert";
 
 
-
       alert(
-
         "FC Wängi Mitteilungen wurden erfolgreich aktiviert! ⚽"
-
       );
 
 
     }
 
-
     else {
 
 
       status.textContent =
-
         "❌ Gerät konnte nicht registriert werden.";
 
 
@@ -2588,211 +1905,152 @@ async function enableNotifications() {
 
   }
 
-
-  catch (
-    error
-  ) {
+  catch (error) {
 
 
     console.error(
-
       "Firebase Push Fehler:",
-
       error
-
     );
 
 
-
     status.textContent =
-
       "❌ Fehler bei der Push-Registrierung";
 
 
-
     alert(
-
       "Push-Fehler: " +
       error.message
-
     );
 
 
   }
 
-
 }
 
 
 
-
-
-/* ===================================
-   PUSH STATUS
-=================================== */
+/* ==============================
+   STATUS
+============================== */
 
 
 function updateNotificationStatus() {
 
 
   const status =
-
     document.getElementById(
       "notificationStatus"
     );
 
 
-
   if (
-
     !(
       "Notification"
       in window
     )
-
   ) {
 
 
     status.textContent =
-
       "Mitteilungen aktuell nicht verfügbar.";
 
 
     return;
 
-
   }
 
 
 
   if (
-
     Notification.permission ===
     "granted"
-
   ) {
 
 
     const token =
-
       localStorage.getItem(
         "fcwFirebaseToken"
       );
 
 
-
-    if (
-      token
-    ) {
-
+    if (token) {
 
       status.textContent =
-
         "✅ FCW-Mitteilungen sind aktiviert";
-
 
     }
 
-
     else {
 
-
       status.textContent =
-
         "Mitteilungen erlaubt – Gerät noch nicht registriert";
-
 
     }
 
 
   }
 
-
   else if (
-
     Notification.permission ===
     "denied"
-
   ) {
 
 
     status.textContent =
-
       "❌ Mitteilungen wurden blockiert";
 
 
   }
 
-
   else {
 
 
     status.textContent =
-
       "Mitteilungen noch nicht aktiviert";
 
 
   }
 
-
 }
 
 
 
-
-
-/* ===================================
-   PUSH WENN APP OFFEN IST
-=================================== */
+/* ==============================
+   PUSH BEI GEÖFFNETER APP
+============================== */
 
 
 messaging.onMessage(
-
   payload => {
 
 
     console.log(
-
       "FCW Push im Vordergrund:",
-
       payload
-
     );
 
 
-
     const title =
-
       payload.notification?.title ||
-
       "FC Wängi 1967";
 
 
-
     const body =
-
       payload.notification?.body ||
-
       "Es gibt Neuigkeiten beim FC Wängi.";
-
-
-
 
 
     navigator
       .serviceWorker
       .ready
-
       .then(
-
         registration => {
 
 
           registration
             .showNotification(
-
               title,
-
               {
 
                 body:
@@ -2807,47 +2065,37 @@ messaging.onMessage(
                 data: {
 
                   url:
-
                     payload.data?.url ||
                     "./"
 
                 }
 
               }
-
             );
 
 
         }
-
       );
 
 
   }
-
 );
 
 
 
-
-
-/* ===================================
-   SERVICE WORKER REGISTRIEREN
-=================================== */
+/* ==============================
+   SERVICE WORKER
+============================== */
 
 
 if (
-
   "serviceWorker"
   in navigator
-
 ) {
 
 
   window.addEventListener(
-
     "load",
-
     async () => {
 
 
@@ -2855,7 +2103,6 @@ if (
 
 
         const registration =
-
           await navigator
             .serviceWorker
             .register(
@@ -2863,30 +2110,20 @@ if (
             );
 
 
-
         console.log(
-
           "FC Wängi Service Worker aktiv:",
-
           registration
-
         );
 
 
       }
 
-
-      catch (
-        error
-      ) {
+      catch (error) {
 
 
         console.error(
-
           "Service Worker Fehler:",
-
           error
-
         );
 
 
@@ -2894,7 +2131,6 @@ if (
 
 
     }
-
   );
 
 
@@ -2902,40 +2138,30 @@ if (
 
 
 
-
-
-/* ===================================
+/* ==============================
    APP START
-=================================== */
+============================== */
 
 
 window.addEventListener(
-
   "DOMContentLoaded",
-
   () => {
 
 
     updateNotificationStatus();
 
 
-
     const savedPage =
-
       localStorage.getItem(
         "fcwPage"
       );
 
 
-
     if (
-
       savedPage &&
-
       document.getElementById(
         savedPage
       )
-
     ) {
 
 
@@ -2948,7 +2174,6 @@ window.addEventListener(
 
 
   }
-
 );
 
 
