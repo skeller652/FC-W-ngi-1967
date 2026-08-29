@@ -10,7 +10,10 @@
   content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 >
 
-<meta name="theme-color" content="#f4c400">
+<meta
+  name="theme-color"
+  content="#f4c400"
+>
 
 <meta
   name="apple-mobile-web-app-capable"
@@ -29,33 +32,58 @@
 
 <title>FC Wängi 1967</title>
 
-<link rel="manifest" href="./manifest.json">
+<link
+  rel="manifest"
+  href="./manifest.json"
+>
 
 <link
   rel="apple-touch-icon"
   href="./icon-512.png"
 >
 
+
 <style>
 
+/* ========================================
+   GRUNDEINSTELLUNGEN
+======================================== */
+
 :root {
+
   --yellow:#f4c400;
+  --yellow-dark:#d3aa00;
+
   --black:#171717;
+  --dark:#292929;
+
+  --white:#ffffff;
+
   --grey:#f4f4f4;
-  --border:#e8e8e8;
+  --border:#e7e7e7;
+
   --green:#18864b;
   --red:#c93333;
+
 }
+
 
 * {
+
   box-sizing:border-box;
+
   margin:0;
   padding:0;
+
 }
 
+
 html {
+
   scroll-behavior:smooth;
+
 }
+
 
 body {
 
@@ -68,45 +96,67 @@ body {
     Arial,
     sans-serif;
 
-  background:#eee;
-  color:#171717;
+  background:#eeeeee;
+
+  color:var(--black);
 
   padding-bottom:
     calc(
       88px +
       env(safe-area-inset-bottom)
     );
+
 }
+
 
 button,
 input,
 textarea,
 select {
+
   font:inherit;
+
 }
+
 
 button {
+
   cursor:pointer;
+
 }
+
 
 .app {
+
   width:100%;
+
   max-width:720px;
+
   min-height:100vh;
+
   margin:auto;
+
   background:white;
+
 }
 
 
-/* HEADER */
+
+/* ========================================
+   HEADER
+======================================== */
+
 
 .header {
 
   position:sticky;
+
   top:0;
+
   z-index:100;
 
   display:flex;
+
   align-items:center;
 
   gap:14px;
@@ -129,7 +179,9 @@ button {
   box-shadow:
     0 4px 16px
     rgba(0,0,0,.14);
+
 }
+
 
 .club-logo {
 
@@ -143,63 +195,136 @@ button {
   border-radius:50%;
 
   background:white;
+
 }
+
 
 .header-info h1 {
+
   font-size:21px;
+
   font-weight:900;
+
 }
+
 
 .header-info p {
+
   margin-top:4px;
+
   font-size:11px;
+
   font-weight:650;
+
+  opacity:.7;
+
 }
 
 
-/* MAIN */
+
+/* ========================================
+   SEITEN
+======================================== */
+
 
 main {
+
   padding:17px;
+
 }
+
 
 .page {
+
   display:none;
+
 }
+
 
 .page.active {
+
   display:block;
+
+  animation:
+    fadeIn .2s ease;
+
 }
+
+
+@keyframes fadeIn {
+
+  from {
+
+    opacity:0;
+
+    transform:
+      translateY(5px);
+
+  }
+
+  to {
+
+    opacity:1;
+
+    transform:
+      translateY(0);
+
+  }
+
+}
+
 
 .page-title {
+
   margin-bottom:5px;
+
   font-size:28px;
+
   font-weight:900;
+
 }
+
 
 .page-description {
+
   margin-bottom:19px;
+
   color:#707070;
+
   font-size:14px;
+
 }
+
 
 .section-heading {
-  margin:22px 0 11px;
+
+  margin:
+    22px 0
+    11px;
+
   font-size:19px;
+
   font-weight:900;
+
 }
 
 
-/* HERO */
+
+/* ========================================
+   HERO
+======================================== */
+
 
 .hero {
 
   position:relative;
+
   overflow:hidden;
 
   margin-bottom:18px;
 
-  padding:25px 22px;
+  padding:
+    25px 22px;
 
   border-radius:23px;
 
@@ -211,7 +336,9 @@ main {
     );
 
   color:white;
+
 }
+
 
 .hero::after {
 
@@ -225,37 +352,52 @@ main {
   font-size:120px;
 
   opacity:.07;
+
 }
+
 
 .hero-label {
 
-  color:#f4c400;
+  color:var(--yellow);
 
   font-size:11px;
+
   font-weight:900;
 
   letter-spacing:1px;
+
 }
+
 
 .hero h2 {
 
-  margin:7px 0 8px;
+  margin:
+    7px 0
+    8px;
 
   font-size:29px;
+
   font-weight:900;
+
 }
+
 
 .hero p {
 
-  color:#ddd;
+  color:#dddddd;
 
   font-size:14px;
 
   line-height:1.5;
+
 }
 
 
-/* CARDS */
+
+/* ========================================
+   CARDS
+======================================== */
+
 
 .card {
 
@@ -263,7 +405,9 @@ main {
 
   padding:18px;
 
-  border:1px solid #e8e8e8;
+  border:
+    1px solid
+    var(--border);
 
   border-radius:18px;
 
@@ -272,11 +416,16 @@ main {
   box-shadow:
     0 4px 14px
     rgba(0,0,0,.05);
+
 }
 
+
 .card h3 {
+
   margin-bottom:7px;
+
 }
+
 
 .card p {
 
@@ -285,7 +434,9 @@ main {
   font-size:13px;
 
   line-height:1.55;
+
 }
+
 
 .tag {
 
@@ -293,7 +444,8 @@ main {
 
   margin-bottom:8px;
 
-  padding:5px 9px;
+  padding:
+    5px 9px;
 
   border-radius:30px;
 
@@ -302,10 +454,13 @@ main {
   color:#725900;
 
   font-size:10px;
+
   font-weight:900;
 
   text-transform:uppercase;
+
 }
+
 
 .meta {
 
@@ -314,119 +469,105 @@ main {
   color:#888;
 
   font-size:11px;
+
 }
 
 
-/* BUTTONS */
+
+/* ========================================
+   BUTTONS
+======================================== */
+
 
 .button {
 
   display:inline-flex;
 
   align-items:center;
+
   justify-content:center;
 
   min-height:44px;
 
   margin-top:12px;
 
-  padding:11px 16px;
+  padding:
+    11px 16px;
 
   border:none;
 
   border-radius:12px;
 
-  background:#171717;
+  background:var(--black);
 
   color:white;
 
   font-size:13px;
+
   font-weight:850;
 
   text-decoration:none;
+
 }
 
+
 .button-yellow {
-  background:#f4c400;
+
+  background:var(--yellow);
+
   color:#111;
+
 }
+
 
 .button-outline {
 
-  border:1px solid #ddd;
+  border:
+    1px solid
+    #dddddd;
 
   background:white;
 
   color:#111;
+
 }
 
-.button-red {
-  background:#c93333;
-}
 
 .button-green {
-  background:#18864b;
+
+  background:var(--green);
+
+  color:white;
+
 }
+
+
+.button-red {
+
+  background:var(--red);
+
+  color:white;
+
+}
+
 
 .button-small {
 
   min-height:36px;
 
-  padding:7px 11px;
+  padding:
+    7px 11px;
 
   font-size:11px;
+
 }
 
 
-/* QUICK */
 
-.quick-grid {
+/* ========================================
+   PUSH
+======================================== */
 
-  display:grid;
-
-  grid-template-columns:
-    repeat(
-      2,
-      minmax(0,1fr)
-    );
-
-  gap:11px;
-}
-
-.quick-button {
-
-  min-height:105px;
-
-  padding:17px;
-
-  border:none;
-
-  border-radius:18px;
-
-  background:#f4f4f4;
-
-  text-align:left;
-}
-
-.quick-icon {
-
-  display:block;
-
-  margin-bottom:12px;
-
-  font-size:28px;
-}
-
-.quick-button strong {
-  display:block;
-}
-
-.quick-button small {
-  color:#777;
-}
-
-
-/* PUSH */
 
 .notification-box {
 
@@ -442,62 +583,178 @@ main {
       #fff4b5,
       #ffe382
     );
+
 }
+
+
+.notification-box h3 {
+
+  margin-bottom:6px;
+
+}
+
 
 .notification-box p {
 
   color:#605500;
 
   font-size:13px;
+
+  line-height:1.45;
+
 }
+
 
 .notification-status {
 
   margin-top:10px;
 
+  color:#665a00;
+
   font-size:12px;
-  font-weight:700;
+
+  font-weight:650;
+
 }
 
 
-/* TEAMS */
+
+/* ========================================
+   SCHNELLZUGRIFF
+======================================== */
+
+
+.quick-grid {
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
+
+  gap:11px;
+
+}
+
+
+.quick-button {
+
+  min-height:105px;
+
+  padding:17px;
+
+  border:none;
+
+  border-radius:18px;
+
+  background:var(--grey);
+
+  text-align:left;
+
+}
+
+
+.quick-button:active {
+
+  transform:
+    scale(.97);
+
+}
+
+
+.quick-icon {
+
+  display:block;
+
+  margin-bottom:12px;
+
+  font-size:28px;
+
+}
+
+
+.quick-button strong {
+
+  display:block;
+
+  margin-bottom:3px;
+
+  font-size:15px;
+
+}
+
+
+.quick-button small {
+
+  color:#777;
+
+  font-size:11px;
+
+}
+
+
+
+/* ========================================
+   TEAMS
+======================================== */
+
 
 .team-card {
+
   padding:0;
+
   overflow:hidden;
+
 }
+
 
 .team-photo {
 
+  display:block;
+
   width:100%;
+
   height:210px;
 
   object-fit:cover;
 
-  display:block;
-
   background:#eee;
+
 }
+
 
 .team-content {
+
   padding:18px;
+
 }
+
 
 .team-title-row {
 
   display:flex;
 
-  justify-content:space-between;
   align-items:center;
 
+  justify-content:space-between;
+
   gap:10px;
+
+  cursor:pointer;
+
 }
+
 
 .team-name {
 
   font-size:19px;
+
   font-weight:900;
+
 }
+
 
 .team-liga {
 
@@ -506,7 +763,9 @@ main {
   color:#777;
 
   font-size:12px;
+
 }
+
 
 .team-details {
 
@@ -516,69 +775,102 @@ main {
 
   padding-top:15px;
 
-  border-top:1px solid #eee;
+  border-top:
+    1px solid
+    #eeeeee;
+
 }
+
 
 .team-details.visible {
+
   display:block;
+
 }
 
 
-/* PLAYER GRID */
+
+/* ========================================
+   SPIELER
+======================================== */
+
 
 .players-heading {
 
   margin-top:20px;
+
   margin-bottom:12px;
 
   font-size:16px;
+
   font-weight:900;
+
 }
+
 
 .player-grid {
 
   display:grid;
 
   grid-template-columns:
-    repeat(2,1fr);
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
 
   gap:10px;
+
 }
+
 
 .player-card {
 
   overflow:hidden;
 
-  border:1px solid #e8e8e8;
+  border:
+    1px solid
+    #e8e8e8;
 
   border-radius:14px;
 
   background:white;
 
   cursor:pointer;
+
 }
+
 
 .player-photo {
 
+  display:block;
+
   width:100%;
-  aspect-ratio:4 / 5;
+
+  aspect-ratio:
+    4 / 5;
 
   object-fit:cover;
 
-  display:block;
-
   background:#eee;
+
 }
+
 
 .player-info {
+
   padding:10px;
+
 }
+
 
 .player-name {
 
   font-size:13px;
+
   font-weight:900;
+
 }
+
 
 .player-number {
 
@@ -587,8 +879,11 @@ main {
   color:#a17d00;
 
   font-size:12px;
+
   font-weight:900;
+
 }
+
 
 .player-position {
 
@@ -597,86 +892,104 @@ main {
   color:#777;
 
   font-size:11px;
+
 }
 
 
-/* GAMES */
 
-.game-card {
+/* ========================================
+   OFV
+======================================== */
 
-  margin-bottom:13px;
+
+.ofv-card {
+
+  padding:0;
+
+  overflow:hidden;
+
+}
+
+
+.ofv-header {
 
   padding:18px;
 
-  border:1px solid #e8e8e8;
+  background:
+    linear-gradient(
+      135deg,
+      #171717,
+      #303030
+    );
 
-  border-radius:18px;
-}
+  color:white;
 
-.game-teams {
-
-  display:grid;
-
-  grid-template-columns:
-    1fr auto 1fr;
-
-  align-items:center;
-
-  gap:10px;
-
-  margin-top:12px;
-}
-
-.game-team {
-  font-size:14px;
-  font-weight:850;
-}
-
-.game-team.right {
-  text-align:right;
-}
-
-.game-score {
-
-  font-size:23px;
-  font-weight:900;
-}
-
-.game-vs {
-  color:#888;
-}
-
-.status {
-
-  display:inline-block;
-
-  padding:4px 8px;
-
-  border-radius:20px;
-
-  background:#e8f1ff;
-
-  color:#1457a7;
-
-  font-size:10px;
-  font-weight:850;
-
-  text-transform:uppercase;
-}
-
-.status-beendet {
-
-  background:#e7f6ed;
-
-  color:#16703a;
 }
 
 
-/* FORM */
+.ofv-header h3 {
+
+  margin-bottom:5px;
+
+}
+
+
+.ofv-header p {
+
+  color:#dddddd;
+
+}
+
+
+.ofv-widget-wrap {
+
+  width:100%;
+
+  min-height:1000px;
+
+  overflow:hidden;
+
+  background:white;
+
+}
+
+
+.ofv-widget-wrap iframe {
+
+  display:block;
+
+  width:100% !important;
+
+  min-height:1000px;
+
+  border:0;
+
+  background:white;
+
+}
+
+
+.sfvFullHeight {
+
+  width:100% !important;
+
+  min-height:1000px;
+
+}
+
+
+
+/* ========================================
+   FORMULARE
+======================================== */
+
 
 .form-group {
+
   margin-bottom:14px;
+
 }
+
 
 .form-group label {
 
@@ -685,26 +998,40 @@ main {
   margin-bottom:5px;
 
   font-size:12px;
+
   font-weight:800;
+
 }
+
 
 .form-input {
 
   width:100%;
+
   min-height:44px;
 
-  padding:10px 12px;
+  padding:
+    10px 12px;
 
-  border:1px solid #d8d8d8;
+  border:
+    1px solid
+    #d8d8d8;
 
   border-radius:11px;
 
   background:white;
+
 }
 
+
 textarea.form-input {
+
   min-height:130px;
+
+  resize:vertical;
+
 }
+
 
 .form-row {
 
@@ -714,11 +1041,24 @@ textarea.form-input {
     1fr 1fr;
 
   gap:10px;
+
 }
 
+
+
+/* ========================================
+   ADMIN
+======================================== */
+
+
 .admin-card {
-  border:2px solid #f1c400;
+
+  border:
+    2px solid
+    var(--yellow);
+
 }
+
 
 .admin-label {
 
@@ -726,7 +1066,8 @@ textarea.form-input {
 
   margin-bottom:8px;
 
-  padding:5px 9px;
+  padding:
+    5px 9px;
 
   border-radius:20px;
 
@@ -735,15 +1076,30 @@ textarea.form-input {
   color:#f4c400;
 
   font-size:10px;
+
   font-weight:900;
+
 }
+
 
 .admin-list-item {
 
-  padding:12px 0;
+  padding:
+    12px 0;
 
-  border-bottom:1px solid #eee;
+  border-bottom:
+    1px solid
+    #eeeeee;
+
 }
+
+
+.admin-list-item:last-child {
+
+  border-bottom:none;
+
+}
+
 
 .admin-actions {
 
@@ -752,118 +1108,15 @@ textarea.form-input {
   flex-wrap:wrap;
 
   gap:6px;
+
 }
 
 
-/* MODAL */
 
-.modal {
+/* ========================================
+   LEER
+======================================== */
 
-  display:none;
-
-  position:fixed;
-
-  inset:0;
-
-  z-index:500;
-
-  padding:20px;
-
-  background:
-    rgba(0,0,0,.6);
-
-  overflow-y:auto;
-}
-
-.modal.visible {
-
-  display:flex;
-
-  align-items:flex-end;
-  justify-content:center;
-}
-
-.modal-content {
-
-  width:100%;
-  max-width:680px;
-
-  max-height:88vh;
-
-  overflow-y:auto;
-
-  padding:22px;
-
-  border-radius:
-    24px 24px
-    12px 12px;
-
-  background:white;
-}
-
-.modal-close {
-
-  float:right;
-
-  width:36px;
-  height:36px;
-
-  border:none;
-
-  border-radius:50%;
-
-  background:#eee;
-
-  font-size:20px;
-}
-
-.modal-image {
-
-  display:none;
-
-  width:100%;
-
-  max-height:500px;
-
-  margin-bottom:15px;
-
-  object-fit:cover;
-
-  border-radius:16px;
-}
-
-.modal-image.visible {
-  display:block;
-}
-
-.modal-title {
-
-  margin-bottom:7px;
-
-  font-size:23px;
-  font-weight:900;
-}
-
-.modal-meta {
-
-  margin-bottom:18px;
-
-  color:#888;
-
-  font-size:12px;
-}
-
-.modal-text {
-
-  white-space:pre-wrap;
-
-  color:#444;
-
-  line-height:1.65;
-}
-
-
-/* EMPTY */
 
 .loading,
 .empty {
@@ -879,20 +1132,157 @@ textarea.form-input {
   text-align:center;
 
   font-size:13px;
+
 }
 
 
-/* CONTACT */
 
-.contact-row {
+/* ========================================
+   MODAL
+======================================== */
 
-  padding:14px 0;
 
-  border-bottom:1px solid #eee;
+.modal {
+
+  display:none;
+
+  position:fixed;
+
+  inset:0;
+
+  z-index:500;
+
+  padding:20px;
+
+  overflow-y:auto;
+
+  background:
+    rgba(
+      0,
+      0,
+      0,
+      .60
+    );
+
 }
 
 
-/* NAV */
+.modal.visible {
+
+  display:flex;
+
+  align-items:flex-end;
+
+  justify-content:center;
+
+}
+
+
+.modal-content {
+
+  width:100%;
+
+  max-width:680px;
+
+  max-height:88vh;
+
+  overflow-y:auto;
+
+  padding:22px;
+
+  border-radius:
+    24px 24px
+    12px 12px;
+
+  background:white;
+
+}
+
+
+.modal-close {
+
+  float:right;
+
+  width:36px;
+  height:36px;
+
+  border:none;
+
+  border-radius:50%;
+
+  background:#eeeeee;
+
+  font-size:20px;
+
+}
+
+
+.modal-image {
+
+  display:none;
+
+  width:100%;
+
+  max-height:500px;
+
+  margin-bottom:15px;
+
+  object-fit:cover;
+
+  border-radius:16px;
+
+}
+
+
+.modal-image.visible {
+
+  display:block;
+
+}
+
+
+.modal-title {
+
+  margin-bottom:7px;
+
+  padding-right:45px;
+
+  font-size:23px;
+
+  font-weight:900;
+
+}
+
+
+.modal-meta {
+
+  margin-bottom:18px;
+
+  color:#888;
+
+  font-size:12px;
+
+}
+
+
+.modal-text {
+
+  white-space:pre-wrap;
+
+  color:#444;
+
+  font-size:14px;
+
+  line-height:1.65;
+
+}
+
+
+
+/* ========================================
+   NAVIGATION
+======================================== */
+
 
 .bottom-nav {
 
@@ -907,12 +1297,16 @@ textarea.form-input {
   z-index:200;
 
   width:100%;
+
   max-width:720px;
 
   display:grid;
 
   grid-template-columns:
-    repeat(6,1fr);
+    repeat(
+      6,
+      1fr
+    );
 
   padding:
     7px
@@ -922,13 +1316,33 @@ textarea.form-input {
       env(safe-area-inset-bottom)
     );
 
-  border-top:1px solid #ddd;
+  border-top:
+    1px solid
+    #dedede;
 
   background:
-    rgba(255,255,255,.97);
+    rgba(
+      255,
+      255,
+      255,
+      .97
+    );
+
+  backdrop-filter:
+    blur(16px);
+
+  -webkit-backdrop-filter:
+    blur(16px);
+
 }
 
+
 .nav-button {
+
+  min-width:0;
+
+  padding:
+    5px 1px;
 
   border:none;
 
@@ -939,11 +1353,18 @@ textarea.form-input {
   font-size:8px;
 
   font-weight:700;
+
 }
 
+
 .nav-button.active {
+
   color:#a98300;
+
+  font-weight:900;
+
 }
+
 
 .nav-icon {
 
@@ -952,7 +1373,9 @@ textarea.form-input {
   margin-bottom:3px;
 
   font-size:19px;
+
 }
+
 
 </style>
 
@@ -992,12 +1415,16 @@ Fussball mit Herz & Tradition
 <main>
 
 
-<!-- HOME -->
+<!-- ========================================
+     HOME
+======================================== -->
+
 
 <section
   id="home"
   class="page active"
 >
+
 
 <div class="hero">
 
@@ -1010,11 +1437,13 @@ FC Wängi
 </h2>
 
 <p>
-Die Vereins-App für Mitglieder,
-Spieler, Eltern und Fans.
+Die Vereins-App für Spieler,
+Mitglieder, Eltern, Freunde
+und Fans des FC Wängi 1967.
 </p>
 
 </div>
+
 
 
 <div class="notification-box">
@@ -1024,8 +1453,10 @@ Spieler, Eltern und Fans.
 </h3>
 
 <p>
-News, Spiele, Resultate
-und Matchberichte.
+Erhalte wichtige News,
+Spielinformationen und
+Vereinsmitteilungen direkt
+auf dein iPhone.
 </p>
 
 <button
@@ -1038,62 +1469,56 @@ Mitteilungen aktivieren
 <div
   id="notificationStatus"
   class="notification-status"
-></div>
+>
+Status wird geprüft...
+</div>
 
 </div>
 
-
-<h2 class="section-heading">
-Nächstes Spiel
-</h2>
-
-<div id="homeNextGame">
-<div class="loading">
-Laden...
-</div>
-</div>
-
-
-<h2 class="section-heading">
-Letztes Resultat
-</h2>
-
-<div id="homeResult">
-<div class="loading">
-Laden...
-</div>
-</div>
 
 
 <h2 class="section-heading">
 Aktuelle News
 </h2>
 
+
 <div id="homeNews">
+
 <div class="loading">
-Laden...
+News werden geladen...
 </div>
+
 </div>
+
 
 
 <h2 class="section-heading">
 Schnellzugriff
 </h2>
 
+
 <div class="quick-grid">
+
 
 <button
   class="quick-button"
   onclick="openPage('news')"
 >
 
-<span class="quick-icon">📰</span>
+<span class="quick-icon">
+📰
+</span>
 
-<strong>News</strong>
+<strong>
+News
+</strong>
 
-<small>Neues vom Verein</small>
+<small>
+Neues vom Verein
+</small>
 
 </button>
+
 
 
 <button
@@ -1101,13 +1526,20 @@ Schnellzugriff
   onclick="openPage('teams')"
 >
 
-<span class="quick-icon">👕</span>
+<span class="quick-icon">
+👕
+</span>
 
-<strong>Teams</strong>
+<strong>
+Teams
+</strong>
 
-<small>Kader & Spieler</small>
+<small>
+Mannschaften & Spieler
+</small>
 
 </button>
+
 
 
 <button
@@ -1115,13 +1547,20 @@ Schnellzugriff
   onclick="openPage('spielbetrieb')"
 >
 
-<span class="quick-icon">⚽</span>
+<span class="quick-icon">
+⚽
+</span>
 
-<strong>Spielbetrieb</strong>
+<strong>
+Spielbetrieb
+</strong>
 
-<small>Spiele & Resultate</small>
+<small>
+Direkt vom OFV
+</small>
 
 </button>
+
 
 
 <button
@@ -1129,134 +1568,214 @@ Schnellzugriff
   onclick="openPage('matchberichte')"
 >
 
-<span class="quick-icon">📝</span>
+<span class="quick-icon">
+📝
+</span>
 
-<strong>Matchberichte</strong>
+<strong>
+Matchberichte
+</strong>
 
-<small>Berichte der Teams</small>
+<small>
+Berichte unserer Teams
+</small>
 
 </button>
 
+
 </div>
+
 
 </section>
 
 
 
-<!-- NEWS -->
+<!-- ========================================
+     NEWS
+======================================== -->
+
 
 <section
   id="news"
   class="page"
 >
 
+
 <h1 class="page-title">
 News
 </h1>
 
+
 <p class="page-description">
-Aktuelles rund um den FC Wängi.
+Aktuelles rund um den FC Wängi 1967.
 </p>
 
+
 <div id="newsList">
+
 <div class="loading">
 News werden geladen...
 </div>
+
 </div>
+
 
 </section>
 
 
 
-<!-- TEAMS -->
+<!-- ========================================
+     TEAMS
+======================================== -->
+
 
 <section
   id="teams"
   class="page"
 >
 
+
 <h1 class="page-title">
 Teams
 </h1>
+
 
 <p class="page-description">
 Mannschaften und Spieler des FC Wängi.
 </p>
 
+
 <div id="teamsList">
+
 <div class="loading">
 Teams werden geladen...
 </div>
+
 </div>
+
 
 </section>
 
 
 
-<!-- SPIELE -->
+<!-- ========================================
+     SPIELBETRIEB / OFV
+======================================== -->
+
 
 <section
   id="spielbetrieb"
   class="page"
 >
 
+
 <h1 class="page-title">
 Spielbetrieb
 </h1>
 
-<h2 class="section-heading">
-Kommende Spiele
-</h2>
 
-<div id="upcomingGames"></div>
+<p class="page-description">
+Offizieller Vereinsspielplan des FC Wängi.
+</p>
 
 
-<h2 class="section-heading">
-Resultate
-</h2>
+<div class="card ofv-card">
 
-<div id="resultsList"></div>
+
+<div class="ofv-header">
+
+<h3>
+⚽ Vereinsspielplan
+</h3>
+
+<p>
+Die Spiele und Resultate werden
+direkt vom OFV / football.ch geladen.
+</p>
+
+</div>
+
+
+<div class="ofv-widget-wrap">
+
+<iframe
+  class="sfvFullHeight"
+  frameborder="0"
+  scrolling="no"
+  src="https://widget.football.ch/Widgets.aspx/v-1800/a-as/"
+  title="FC Wängi Vereinsspielplan"
+></iframe>
+
+</div>
+
+
+</div>
+
 
 </section>
 
 
 
-<!-- MATCHBERICHTE -->
+<!-- ========================================
+     MATCHBERICHTE
+======================================== -->
+
 
 <section
   id="matchberichte"
   class="page"
 >
 
+
 <h1 class="page-title">
 Matchberichte
 </h1>
 
-<div id="reportsList"></div>
+
+<p class="page-description">
+Berichte unserer Mannschaften.
+</p>
+
+
+<div id="reportsList">
+
+<div class="loading">
+Matchberichte werden geladen...
+</div>
+
+</div>
+
 
 </section>
 
 
 
-<!-- KONTAKT -->
+<!-- ========================================
+     KONTAKT
+======================================== -->
+
 
 <section
   id="kontakt"
   class="page"
 >
 
+
 <h1 class="page-title">
 Kontakt
 </h1>
 
 
+<p class="page-description">
+FC Wängi 1967
+</p>
+
+
 <div class="card">
 
-<div class="contact-row">
-
-<strong>
+<h3>
 📍 FC Wängi 1967
-</strong>
+</h3>
 
 <p>
 9545 Wängi<br>
@@ -1265,7 +1784,6 @@ Schweiz
 
 </div>
 
-</div>
 
 
 <div class="card">
@@ -1275,28 +1793,34 @@ Schweiz
 </h3>
 
 <p>
-Nur für Vereinsverantwortliche.
+Geschützter Bereich für
+Vereinsverantwortliche.
 </p>
 
 <button
   class="button"
   onclick="openPage('admin')"
 >
-Admin öffnen
+Admin-Bereich öffnen
 </button>
 
 </div>
+
 
 </section>
 
 
 
-<!-- ADMIN -->
+<!-- ========================================
+     ADMIN
+======================================== -->
+
 
 <section
   id="admin"
   class="page"
 >
+
 
 <button
   class="button button-outline"
@@ -1314,14 +1838,25 @@ FCW Admin
 </h1>
 
 
+<p class="page-description">
+Vereinsinhalte verwalten.
+</p>
+
+
+
+<!-- LOGIN -->
+
+
 <div
   id="adminLogin"
   class="card admin-card"
 >
 
+
 <span class="admin-label">
-ADMIN
+ADMIN LOGIN
 </span>
+
 
 <h3>
 Anmelden
@@ -1338,9 +1873,11 @@ E-Mail
   id="adminEmail"
   type="email"
   class="form-input"
+  autocomplete="email"
 >
 
 </div>
+
 
 
 <div class="form-group">
@@ -1353,9 +1890,11 @@ Passwort
   id="adminPassword"
   type="password"
   class="form-input"
+  autocomplete="current-password"
 >
 
 </div>
+
 
 
 <button
@@ -1366,10 +1905,17 @@ Anmelden
 </button>
 
 
-<div id="loginStatus"></div>
+<div
+  id="loginStatus"
+  style="margin-top:10px;font-size:12px;"
+></div>
+
 
 </div>
 
+
+
+<!-- ADMIN PANEL -->
 
 
 <div
@@ -1384,6 +1930,10 @@ Anmelden
 ADMIN AKTIV
 </span>
 
+<h3>
+Angemeldet
+</h3>
+
 <p id="adminUserText"></p>
 
 <button
@@ -1397,13 +1947,125 @@ Abmelden
 
 
 
-<!-- TEAM VERWALTEN -->
+<!-- NEWS ADMIN -->
+
 
 <div class="card admin-card">
+
+
+<span class="admin-label">
+NEWS
+</span>
+
+
+<h3>
+News verwalten
+</h3>
+
+
+<input
+  id="newsEditId"
+  type="hidden"
+>
+
+
+<div class="form-group">
+
+<label>
+Titel
+</label>
+
+<input
+  id="newsTitle"
+  class="form-input"
+  placeholder="Titel der News"
+>
+
+</div>
+
+
+
+<div class="form-group">
+
+<label>
+Kategorie
+</label>
+
+<input
+  id="newsCategory"
+  class="form-input"
+  placeholder="z.B. 1. Mannschaft"
+>
+
+</div>
+
+
+
+<div class="form-group">
+
+<label>
+Datum & Zeit
+</label>
+
+<input
+  id="newsDate"
+  type="datetime-local"
+  class="form-input"
+>
+
+</div>
+
+
+
+<div class="form-group">
+
+<label>
+Text
+</label>
+
+<textarea
+  id="newsText"
+  class="form-input"
+  placeholder="News schreiben..."
+></textarea>
+
+</div>
+
+
+
+<button
+  class="button button-green"
+  onclick="saveNews()"
+>
+News speichern
+</button>
+
+
+<button
+  class="button button-outline"
+  onclick="resetNewsForm()"
+>
+Abbrechen
+</button>
+
+
+<div id="adminNewsList"></div>
+
+
+</div>
+
+
+
+<!-- TEAM ADMIN -->
+
+
+<div class="card admin-card">
+
 
 <span class="admin-label">
 TEAMS
 </span>
+
 
 <h3>
 Team verwalten
@@ -1431,6 +2093,7 @@ Teamname
 </div>
 
 
+
 <div class="form-group">
 
 <label>
@@ -1440,9 +2103,11 @@ Liga
 <input
   id="teamLeagueInput"
   class="form-input"
+  placeholder="z.B. 2. Liga"
 >
 
 </div>
+
 
 
 <div class="form-group">
@@ -1459,6 +2124,7 @@ Trainer
 </div>
 
 
+
 <div class="form-group">
 
 <label>
@@ -1468,9 +2134,11 @@ Training
 <input
   id="teamTrainingInput"
   class="form-input"
+  placeholder="Dienstag & Donnerstag 19:30"
 >
 
 </div>
+
 
 
 <div class="form-group">
@@ -1488,6 +2156,7 @@ Mannschaftsfoto
 </div>
 
 
+
 <div class="form-group">
 
 <label>
@@ -1502,6 +2171,7 @@ Sortierung
 >
 
 </div>
+
 
 
 <button
@@ -1522,17 +2192,21 @@ Abbrechen
 
 <div id="adminTeamsList"></div>
 
+
 </div>
 
 
 
-<!-- SPIELER VERWALTEN -->
+<!-- SPIELER ADMIN -->
+
 
 <div class="card admin-card">
+
 
 <span class="admin-label">
 SPIELER
 </span>
+
 
 <h3>
 Spieler verwalten
@@ -1555,12 +2229,15 @@ Mannschaft
   id="playerTeamSelect"
   class="form-input"
 >
+
 <option value="">
 Mannschaft auswählen
 </option>
+
 </select>
 
 </div>
+
 
 
 <div class="form-group">
@@ -1572,10 +2249,11 @@ Name
 <input
   id="playerNameInput"
   class="form-input"
-  placeholder="Max Muster"
+  placeholder="Vorname Nachname"
 >
 
 </div>
+
 
 
 <div class="form-row">
@@ -1584,7 +2262,7 @@ Name
 <div class="form-group">
 
 <label>
-Nummer
+Rückennummer
 </label>
 
 <input
@@ -1594,6 +2272,7 @@ Nummer
 >
 
 </div>
+
 
 
 <div class="form-group">
@@ -1631,10 +2310,11 @@ Stürmer
 </div>
 
 
+
 <div class="form-group">
 
 <label>
-Portrait-Datei
+Portrait
 </label>
 
 <input
@@ -1644,6 +2324,7 @@ Portrait-Datei
 >
 
 </div>
+
 
 
 <div class="form-group">
@@ -1660,6 +2341,7 @@ Sortierung
 >
 
 </div>
+
 
 
 <button
@@ -1680,109 +2362,24 @@ Abbrechen
 
 <div id="adminPlayersList"></div>
 
+
 </div>
 
 
 
-<!-- NEWS -->
+<!-- MATCHBERICHT ADMIN -->
+
 
 <div class="card admin-card">
 
-<span class="admin-label">
-NEWS
-</span>
-
-<h3>
-News veröffentlichen
-</h3>
-
-
-<input
-  id="newsEditId"
-  type="hidden"
->
-
-
-<div class="form-group">
-
-<label>
-Titel
-</label>
-
-<input
-  id="newsTitle"
-  class="form-input"
->
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-Kategorie
-</label>
-
-<input
-  id="newsCategory"
-  class="form-input"
->
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-Datum
-</label>
-
-<input
-  id="newsDate"
-  type="datetime-local"
-  class="form-input"
->
-
-</div>
-
-
-<div class="form-group">
-
-<label>
-Text
-</label>
-
-<textarea
-  id="newsText"
-  class="form-input"
-></textarea>
-
-</div>
-
-
-<button
-  class="button button-green"
-  onclick="saveNews()"
->
-News speichern
-</button>
-
-<div id="adminNewsList"></div>
-
-</div>
-
-
-
-<!-- MATCHBERICHT -->
-
-<div class="card admin-card">
 
 <span class="admin-label">
 MATCHBERICHT
 </span>
 
+
 <h3>
-Matchbericht erstellen
+Matchbericht verwalten
 </h3>
 
 
@@ -1806,6 +2403,7 @@ Titel
 </div>
 
 
+
 <div class="form-group">
 
 <label>
@@ -1815,15 +2413,17 @@ Mannschaft
 <input
   id="reportTeam"
   class="form-input"
+  placeholder="1. Mannschaft"
 >
 
 </div>
 
 
+
 <div class="form-group">
 
 <label>
-Datum
+Datum & Zeit
 </label>
 
 <input
@@ -1833,6 +2433,7 @@ Datum
 >
 
 </div>
+
 
 
 <div class="form-group">
@@ -1849,19 +2450,31 @@ Bericht
 </div>
 
 
+
 <button
   class="button button-green"
   onclick="saveReport()"
 >
-Bericht speichern
+Matchbericht speichern
 </button>
+
+
+<button
+  class="button button-outline"
+  onclick="resetReportForm()"
+>
+Abbrechen
+</button>
+
 
 <div id="adminReportsList"></div>
 
+
 </div>
 
 
 </div>
+
 
 </section>
 
@@ -1873,18 +2486,28 @@ Bericht speichern
 
 
 
-<!-- NAV -->
+<!-- ========================================
+     NAVIGATION
+======================================== -->
+
 
 <nav class="bottom-nav">
+
 
 <button
   class="nav-button active"
   data-page="home"
   onclick="openPage('home')"
 >
-<span class="nav-icon">🏠</span>
+
+<span class="nav-icon">
+🏠
+</span>
+
 Home
+
 </button>
+
 
 
 <button
@@ -1892,9 +2515,15 @@ Home
   data-page="news"
   onclick="openPage('news')"
 >
-<span class="nav-icon">📰</span>
+
+<span class="nav-icon">
+📰
+</span>
+
 News
+
 </button>
+
 
 
 <button
@@ -1902,9 +2531,15 @@ News
   data-page="teams"
   onclick="openPage('teams')"
 >
-<span class="nav-icon">👕</span>
+
+<span class="nav-icon">
+👕
+</span>
+
 Teams
+
 </button>
+
 
 
 <button
@@ -1912,9 +2547,15 @@ Teams
   data-page="spielbetrieb"
   onclick="openPage('spielbetrieb')"
 >
-<span class="nav-icon">⚽</span>
+
+<span class="nav-icon">
+⚽
+</span>
+
 Spiele
+
 </button>
+
 
 
 <button
@@ -1922,9 +2563,15 @@ Spiele
   data-page="matchberichte"
   onclick="openPage('matchberichte')"
 >
-<span class="nav-icon">📝</span>
+
+<span class="nav-icon">
+📝
+</span>
+
 Berichte
+
 </button>
+
 
 
 <button
@@ -1932,15 +2579,24 @@ Berichte
   data-page="kontakt"
   onclick="openPage('kontakt')"
 >
-<span class="nav-icon">☎️</span>
+
+<span class="nav-icon">
+☎️
+</span>
+
 Kontakt
+
 </button>
+
 
 </nav>
 
 
 
-<!-- MODAL -->
+<!-- ========================================
+     MODAL
+======================================== -->
+
 
 <div
   id="contentModal"
@@ -1948,7 +2604,9 @@ Kontakt
   onclick="modalBackgroundClick(event)"
 >
 
+
 <div class="modal-content">
+
 
 <button
   class="modal-close"
@@ -1988,25 +2646,43 @@ Kontakt
   class="modal-text"
 ></div>
 
-</div>
 
 </div>
 
 
+</div>
 
-<!-- FIREBASE -->
 
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+<!-- ========================================
+     FIREBASE
+======================================== -->
 
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"></script>
+<script
+  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"
+></script>
+
+<script
+  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"
+></script>
+
+<script
+  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"
+></script>
+
+<script
+  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"
+></script>
 
 
 
 <script>
+
+
+/* ========================================
+   FIREBASE KONFIGURATION
+======================================== */
 
 
 const firebaseConfig = {
@@ -2058,14 +2734,18 @@ const VAPID_KEY =
 
 
 let newsData = [];
-let gamesData = [];
+
 let reportsData = [];
+
 let teamsData = [];
+
 let playersData = [];
 
 
 
-/* HELPERS */
+/* ========================================
+   HILFSFUNKTIONEN
+======================================== */
 
 
 function esc(text) {
@@ -2083,11 +2763,15 @@ function esc(text) {
 }
 
 
+
 function toDate(value) {
 
   if (!value) {
+
     return null;
+
   }
+
 
   if (
     typeof value.toDate ===
@@ -2098,9 +2782,11 @@ function toDate(value) {
 
   }
 
+
   return new Date(value);
 
 }
+
 
 
 function formatDate(
@@ -2111,15 +2797,20 @@ function formatDate(
   const date =
     toDate(value);
 
+
   if (!date) {
+
     return "";
+
   }
 
 
   const options = {
 
     day:"2-digit",
+
     month:"2-digit",
+
     year:"numeric"
 
   };
@@ -2146,7 +2837,8 @@ function formatDate(
 }
 
 
-function timestampFromInput(id) {
+
+function inputTimestamp(id) {
 
   const value =
     document
@@ -2174,20 +2866,26 @@ function timestampFromInput(id) {
 }
 
 
-function inputDate(value) {
+
+function dateInputValue(value) {
 
   const date =
     toDate(value);
 
+
   if (!date) {
+
     return "";
+
   }
 
 
   const local =
     new Date(
-      date.getTime() -
-      date.getTimezoneOffset() *
+      date.getTime()
+      -
+      date.getTimezoneOffset()
+      *
       60000
     );
 
@@ -2200,13 +2898,17 @@ function inputDate(value) {
 
 
 
-/* NAVIGATION */
+/* ========================================
+   NAVIGATION
+======================================== */
 
 
 function openPage(name) {
 
   document
-    .querySelectorAll(".page")
+    .querySelectorAll(
+      ".page"
+    )
     .forEach(
       page =>
         page.classList.remove(
@@ -2215,10 +2917,19 @@ function openPage(name) {
     );
 
 
-  document
-    .getElementById(name)
-    ?.classList
-    .add("active");
+  const page =
+    document.getElementById(
+      name
+    );
+
+
+  if (page) {
+
+    page.classList.add(
+      "active"
+    );
+
+  }
 
 
   document
@@ -2226,6 +2937,7 @@ function openPage(name) {
       ".nav-button"
     )
     .forEach(button => {
+
 
       button.classList.remove(
         "active"
@@ -2243,242 +2955,100 @@ function openPage(name) {
 
       }
 
+
     });
 
 
   window.scrollTo({
+
     top:0,
+
     behavior:"smooth"
+
   });
 
 }
 
 
 
-/* NEWS LISTENER */
+/* ========================================
+   NEWS FIRESTORE
+======================================== */
 
 
 db.collection("news")
-.onSnapshot(snapshot => {
+.onSnapshot(
+  snapshot => {
 
-  newsData = [];
 
+    newsData = [];
 
-  snapshot.forEach(doc => {
 
-    const data =
-      doc.data();
+    snapshot.forEach(
+      doc => {
 
 
-    if (
-      data.aktiv === false
-    ) {
-      return;
-    }
+        const data =
+          doc.data();
 
 
-    newsData.push({
-      id:doc.id,
-      ...data
-    });
+        if (
+          data.aktiv === false
+        ) {
 
-  });
+          return;
 
+        }
 
-  newsData.sort(
-    (a,b) =>
-      (toDate(b.datum)?.getTime() || 0)
-      -
-      (toDate(a.datum)?.getTime() || 0)
-  );
 
+        newsData.push({
 
-  renderNews();
-  renderHome();
-  renderAdminLists();
+          id:doc.id,
 
-});
+          ...data
 
+        });
 
 
-/* SPIEL LISTENER */
+      }
+    );
 
 
-db.collection("spiele")
-.onSnapshot(snapshot => {
+    newsData.sort(
+      (a,b) =>
 
-  gamesData = [];
+        (
+          toDate(b.datum)
+          ?.getTime() || 0
+        )
 
+        -
 
-  snapshot.forEach(doc => {
+        (
+          toDate(a.datum)
+          ?.getTime() || 0
+        )
+    );
 
-    gamesData.push({
-      id:doc.id,
-      ...doc.data()
-    });
 
-  });
+    renderNews();
 
+    renderHomeNews();
 
-  renderGames();
-  renderHome();
+    renderAdminLists();
 
-});
 
+  },
+  error => {
 
+    console.error(
+      "News Fehler:",
+      error
+    );
 
-/* BERICHT LISTENER */
+  }
+);
 
-
-db.collection("matchberichte")
-.onSnapshot(snapshot => {
-
-  reportsData = [];
-
-
-  snapshot.forEach(doc => {
-
-    const data =
-      doc.data();
-
-
-    if (
-      data.aktiv === false
-    ) {
-      return;
-    }
-
-
-    reportsData.push({
-      id:doc.id,
-      ...data
-    });
-
-  });
-
-
-  reportsData.sort(
-    (a,b) =>
-      (toDate(b.datum)?.getTime() || 0)
-      -
-      (toDate(a.datum)?.getTime() || 0)
-  );
-
-
-  renderReports();
-  renderAdminLists();
-
-});
-
-
-
-/* TEAM LISTENER */
-
-
-db.collection("teams")
-.onSnapshot(snapshot => {
-
-  teamsData = [];
-
-
-  snapshot.forEach(doc => {
-
-    const data =
-      doc.data();
-
-
-    if (
-      data.aktiv === false
-    ) {
-      return;
-    }
-
-
-    teamsData.push({
-      id:doc.id,
-      ...data
-    });
-
-  });
-
-
-  teamsData.sort(
-    (a,b) =>
-      Number(
-        a.sortierung ?? 999
-      )
-      -
-      Number(
-        b.sortierung ?? 999
-      )
-  );
-
-
-  renderTeams();
-
-  updateTeamSelect();
-
-  renderAdminLists();
-
-});
-
-
-
-/* SPIELER LISTENER */
-
-
-db.collection("spieler")
-.onSnapshot(snapshot => {
-
-  playersData = [];
-
-
-  snapshot.forEach(doc => {
-
-    const data =
-      doc.data();
-
-
-    if (
-      data.aktiv === false
-    ) {
-      return;
-    }
-
-
-    playersData.push({
-      id:doc.id,
-      ...data
-    });
-
-  });
-
-
-  playersData.sort(
-    (a,b) =>
-      Number(
-        a.sortierung ??
-        a.nummer ??
-        999
-      )
-      -
-      Number(
-        b.sortierung ??
-        b.nummer ??
-        999
-      )
-  );
-
-
-  renderTeams();
-
-  renderAdminLists();
-
-});
-
-
-
-/* NEWS */
 
 
 function renderNews() {
@@ -2492,8 +3062,9 @@ function renderNews() {
   if (!newsData.length) {
 
     container.innerHTML =
+
       `<div class="empty">
-      Keine News vorhanden.
+      Aktuell sind keine News vorhanden.
       </div>`;
 
     return;
@@ -2503,67 +3074,335 @@ function renderNews() {
 
   container.innerHTML =
     newsData
-      .map(n => `
+      .map(
+        news => `
 
-      <div
-        class="card"
-        onclick="openNews('${n.id}')"
-      >
+        <div
+          class="card"
+          onclick="openNews('${news.id}')"
+        >
 
-      <span class="tag">
-      ${esc(n.kategorie || "News")}
-      </span>
+        <span class="tag">
 
-      <div class="meta">
-      ${formatDate(n.datum)}
-      </div>
+        ${esc(
+          news.kategorie ||
+          "News"
+        )}
 
-      <h3>
-      ${esc(n.titel)}
-      </h3>
+        </span>
 
-      <p>
-      ${esc(
-        String(
-          n.text || ""
-        ).substring(0,180)
-      )}
-      </p>
 
-      </div>
+        <div class="meta">
 
-      `)
+        ${formatDate(
+          news.datum
+        )}
+
+        </div>
+
+
+        <h3>
+
+        ${esc(
+          news.titel ||
+          ""
+        )}
+
+        </h3>
+
+
+        <p>
+
+        ${esc(
+          String(
+            news.text ||
+            ""
+          )
+          .substring(
+            0,
+            180
+          )
+        )}
+
+        </p>
+
+        </div>
+
+        `
+      )
       .join("");
 
 }
 
 
-function openNews(id) {
 
-  const item =
-    newsData.find(
-      n => n.id === id
+function renderHomeNews() {
+
+  const container =
+    document.getElementById(
+      "homeNews"
     );
 
 
-  if (!item) {
+  const news =
+    newsData[0];
+
+
+  if (!news) {
+
+    container.innerHTML =
+
+      `<div class="empty">
+      Aktuell sind keine News vorhanden.
+      </div>`;
+
     return;
+
+  }
+
+
+  container.innerHTML = `
+
+    <div
+      class="card"
+      onclick="openNews('${news.id}')"
+    >
+
+    <span class="tag">
+
+    ${esc(
+      news.kategorie ||
+      "News"
+    )}
+
+    </span>
+
+
+    <div class="meta">
+
+    ${formatDate(
+      news.datum
+    )}
+
+    </div>
+
+
+    <h3>
+
+    ${esc(
+      news.titel ||
+      ""
+    )}
+
+    </h3>
+
+
+    <p>
+
+    ${esc(
+      String(
+        news.text ||
+        ""
+      )
+      .substring(
+        0,
+        140
+      )
+    )}
+
+    </p>
+
+    </div>
+
+  `;
+
+}
+
+
+
+function openNews(id) {
+
+  const news =
+    newsData.find(
+      item =>
+        item.id === id
+    );
+
+
+  if (!news) {
+
+    return;
+
   }
 
 
   openModal({
+
     image:"",
-    tag:item.kategorie,
-    title:item.titel,
-    meta:formatDate(item.datum),
-    text:item.text
+
+    tag:
+      news.kategorie ||
+      "News",
+
+    title:
+      news.titel,
+
+    meta:
+      formatDate(
+        news.datum
+      ),
+
+    text:
+      news.text
+
   });
 
 }
 
 
 
-/* TEAMS + PLAYERS */
+/* ========================================
+   TEAMS FIRESTORE
+======================================== */
+
+
+db.collection("teams")
+.onSnapshot(
+  snapshot => {
+
+
+    teamsData = [];
+
+
+    snapshot.forEach(
+      doc => {
+
+
+        const data =
+          doc.data();
+
+
+        if (
+          data.aktiv === false
+        ) {
+
+          return;
+
+        }
+
+
+        teamsData.push({
+
+          id:doc.id,
+
+          ...data
+
+        });
+
+
+      }
+    );
+
+
+    teamsData.sort(
+      (a,b) =>
+
+        Number(
+          a.sortierung ??
+          999
+        )
+
+        -
+
+        Number(
+          b.sortierung ??
+          999
+        )
+    );
+
+
+    renderTeams();
+
+    updateTeamSelect();
+
+    renderAdminLists();
+
+
+  }
+);
+
+
+
+/* ========================================
+   SPIELER FIRESTORE
+======================================== */
+
+
+db.collection("spieler")
+.onSnapshot(
+  snapshot => {
+
+
+    playersData = [];
+
+
+    snapshot.forEach(
+      doc => {
+
+
+        const data =
+          doc.data();
+
+
+        if (
+          data.aktiv === false
+        ) {
+
+          return;
+
+        }
+
+
+        playersData.push({
+
+          id:doc.id,
+
+          ...data
+
+        });
+
+
+      }
+    );
+
+
+    playersData.sort(
+      (a,b) =>
+
+        Number(
+          a.sortierung ??
+          a.nummer ??
+          999
+        )
+
+        -
+
+        Number(
+          b.sortierung ??
+          b.nummer ??
+          999
+        )
+    );
+
+
+    renderTeams();
+
+    renderAdminLists();
+
+
+  }
+);
+
 
 
 function renderTeams() {
@@ -2577,8 +3416,9 @@ function renderTeams() {
   if (!teamsData.length) {
 
     container.innerHTML =
+
       `<div class="empty">
-      Keine Teams vorhanden.
+      Aktuell sind keine Teams eingetragen.
       </div>`;
 
     return;
@@ -2588,190 +3428,272 @@ function renderTeams() {
 
   container.innerHTML =
     teamsData
-      .map(team => {
+      .map(
+        team => {
 
 
-        const teamPlayers =
-          playersData.filter(
-            player =>
-              player.teamId ===
-              team.id
-              ||
-              (
-                !player.teamId &&
-                player.teamName ===
-                team.name
-              )
-          );
+          const players =
+            playersData.filter(
+              player =>
+
+                player.teamId ===
+                team.id
+
+                ||
+
+                (
+                  !player.teamId
+                  &&
+                  player.teamName ===
+                  team.name
+                )
+
+            );
 
 
-        const playersHtml =
-          teamPlayers.length
-          ?
-          `
+          let playerHtml = "";
 
-          <div class="players-heading">
-          Kader
-          </div>
 
-          <div class="player-grid">
+          if (
+            players.length
+          ) {
 
-          ${
-            teamPlayers
-              .map(player => `
 
-              <div
-                class="player-card"
-                onclick="
-                  event.stopPropagation();
-                  openPlayer('${player.id}');
-                "
-              >
+            playerHtml = `
 
-              <img
-                class="player-photo"
-                src="${esc(
-                  player.foto ||
-                  "./logo.png"
-                )}"
-                onerror="
-                  this.src='./logo.png'
-                "
-              >
-
-              <div class="player-info">
-
-              <div class="player-name">
-              ${esc(player.name)}
+              <div class="players-heading">
+              Kader
               </div>
 
-              <div class="player-number">
+              <div class="player-grid">
 
               ${
-                player.nummer !==
-                undefined
-                ?
-                "#" +
-                esc(player.nummer)
-                :
-                ""
+                players
+                  .map(
+                    player => `
+
+                    <div
+                      class="player-card"
+                      onclick="
+                        event.stopPropagation();
+                        openPlayer('${player.id}');
+                      "
+                    >
+
+                    <img
+                      src="${esc(
+                        player.foto ||
+                        "./logo.png"
+                      )}"
+                      class="player-photo"
+                      onerror="
+                        this.src='./logo.png'
+                      "
+                      alt="${esc(
+                        player.name ||
+                        "Spieler"
+                      )}"
+                    >
+
+
+                    <div class="player-info">
+
+
+                    <div class="player-name">
+
+                    ${esc(
+                      player.name ||
+                      ""
+                    )}
+
+                    </div>
+
+
+                    <div class="player-number">
+
+                    ${
+                      player.nummer !==
+                      undefined
+                      ?
+                      "#" +
+                      esc(
+                        player.nummer
+                      )
+                      :
+                      ""
+                    }
+
+                    </div>
+
+
+                    <div class="player-position">
+
+                    ${esc(
+                      player.position ||
+                      ""
+                    )}
+
+                    </div>
+
+
+                    </div>
+
+
+                    </div>
+
+                    `
+                  )
+                  .join("")
               }
 
               </div>
 
-              <div class="player-position">
-              ${esc(player.position || "")}
-              </div>
+            `;
 
-              </div>
 
-              </div>
-
-              `)
-              .join("")
           }
 
+          else {
+
+
+            playerHtml = `
+
+              <div class="players-heading">
+              Kader
+              </div>
+
+              <div class="empty">
+              Noch keine Spieler eingetragen.
+              </div>
+
+            `;
+
+
+          }
+
+
+          return `
+
+          <div class="card team-card">
+
+
+          <img
+            src="${esc(
+              team.bild ||
+              "./logo.png"
+            )}"
+            class="team-photo"
+            onerror="
+              this.src='./logo.png'
+            "
+            alt="${esc(
+              team.name ||
+              "FC Wängi"
+            )}"
+          >
+
+
+          <div class="team-content">
+
+
+          <div
+            class="team-title-row"
+            onclick="toggleTeam('${team.id}')"
+          >
+
+
+          <div>
+
+
+          <div class="team-name">
+
+          ${esc(
+            team.name ||
+            ""
+          )}
+
           </div>
 
-          `
-          :
-          `
 
-          <div class="players-heading">
-          Kader
+          <div class="team-liga">
+
+          ${esc(
+            team.liga ||
+            ""
+          )}
+
           </div>
 
-          <div class="empty">
-          Noch keine Spieler eingetragen.
+
+          </div>
+
+
+          <strong>
+          ›
+          </strong>
+
+
+          </div>
+
+
+          <div
+            id="team-${team.id}"
+            class="team-details"
+          >
+
+
+          ${
+            team.trainer
+            ?
+            `
+
+            <p>
+            <strong>Trainer</strong><br>
+            ${esc(team.trainer)}
+            </p>
+
+            `
+            :
+            ""
+          }
+
+
+          ${
+            team.training
+            ?
+            `
+
+            <p>
+            <strong>Training</strong><br>
+            ${esc(team.training)}
+            </p>
+
+            `
+            :
+            ""
+          }
+
+
+          ${playerHtml}
+
+
+          </div>
+
+
+          </div>
+
+
           </div>
 
           `;
 
 
-        return `
-
-        <div class="card team-card">
-
-        <img
-          src="${esc(
-            team.bild ||
-            "./logo.png"
-          )}"
-          class="team-photo"
-          onclick="toggleTeam('${team.id}')"
-          onerror="
-            this.src='./logo.png'
-          "
-        >
-
-
-        <div class="team-content">
-
-        <div
-          class="team-title-row"
-          onclick="toggleTeam('${team.id}')"
-        >
-
-        <div>
-
-        <div class="team-name">
-        ${esc(team.name)}
-        </div>
-
-        <div class="team-liga">
-        ${esc(team.liga || "")}
-        </div>
-
-        </div>
-
-        <strong>
-        ›
-        </strong>
-
-        </div>
-
-
-        <div
-          id="team-${team.id}"
-          class="team-details"
-        >
-
-        ${
-          team.trainer
-          ?
-          `<p>
-          <strong>Trainer</strong><br>
-          ${esc(team.trainer)}
-          </p>`
-          :
-          ""
         }
-
-        ${
-          team.training
-          ?
-          `<p>
-          <strong>Training</strong><br>
-          ${esc(team.training)}
-          </p>`
-          :
-          ""
-        }
-
-        ${playersHtml}
-
-        </div>
-
-        </div>
-
-        </div>
-
-        `;
-
-      })
+      )
       .join("");
 
 }
+
 
 
 function toggleTeam(id) {
@@ -2781,30 +3703,55 @@ function toggleTeam(id) {
       `team-${id}`
     )
     ?.classList
-    .toggle("visible");
+    .toggle(
+      "visible"
+    );
 
 }
+
 
 
 function openPlayer(id) {
 
   const player =
     playersData.find(
-      p => p.id === id
+      item =>
+        item.id === id
     );
 
 
   if (!player) {
+
     return;
+
   }
 
 
-  const numberText =
-    player.nummer !== undefined
-    ?
-    `#${player.nummer}`
-    :
-    "";
+  const meta = [];
+
+
+  if (
+    player.nummer !==
+    undefined
+  ) {
+
+    meta.push(
+      "#" +
+      player.nummer
+    );
+
+  }
+
+
+  if (
+    player.position
+  ) {
+
+    meta.push(
+      player.position
+    );
+
+  }
 
 
   openModal({
@@ -2821,17 +3768,15 @@ function openPlayer(id) {
       player.name,
 
     meta:
-      [
-        numberText,
-        player.position
-      ]
-      .filter(Boolean)
-      .join(" · "),
+      meta.join(
+        " · "
+      ),
 
     text:
       player.teamName
       ?
-      `Mannschaft: ${player.teamName}`
+      "Mannschaft: " +
+      player.teamName
       :
       ""
 
@@ -2841,390 +3786,209 @@ function openPlayer(id) {
 
 
 
-/* GAMES */
+/* ========================================
+   MATCHBERICHTE
+======================================== */
 
 
-function gameCard(
-  game,
-  score
-) {
-
-  return `
-
-  <div class="game-card">
-
-  <span class="
-    status
-    ${
-      game.status ===
-      "beendet"
-      ?
-      "status-beendet"
-      :
-      ""
-    }
-  ">
-
-  ${esc(
-    game.status ||
-    "kommend"
-  )}
-
-  </span>
+db.collection("matchberichte")
+.onSnapshot(
+  snapshot => {
 
 
-  <div
-    class="meta"
-    style="margin-top:8px;"
-  >
-
-  ${formatDate(
-    game.datum,
-    true
-  )}
-
-  </div>
+    reportsData = [];
 
 
-  <div class="game-teams">
-
-  <div class="game-team">
-  ${esc(game.heimteam)}
-  </div>
-
-  <div class="${
-    score
-    ?
-    "game-score"
-    :
-    "game-vs"
-  }">
-
-  ${
-    score
-    ?
-    `${Number(game.toreHeim || 0)}
-    :
-    ${Number(game.toreGast || 0)}`
-    :
-    "VS"
-  }
-
-  </div>
-
-  <div class="game-team right">
-  ${esc(game.gastteam)}
-  </div>
-
-  </div>
-
-  </div>
-
-  `;
-
-}
+    snapshot.forEach(
+      doc => {
 
 
-function renderGames() {
-
-  const upcoming =
-    gamesData
-      .filter(
-        g =>
-          g.status === "kommend"
-          ||
-          g.status === "verschoben"
-      );
+        const data =
+          doc.data();
 
 
-  const results =
-    gamesData
-      .filter(
-        g =>
-          g.status ===
-          "beendet"
-      )
-      .sort(
-        (a,b) =>
+        if (
+          data.aktiv === false
+        ) {
+
+          return;
+
+        }
+
+
+        reportsData.push({
+
+          id:doc.id,
+
+          ...data
+
+        });
+
+
+      }
+    );
+
+
+    reportsData.sort(
+      (a,b) =>
+
+        (
           toDate(b.datum)
-          -
+          ?.getTime() || 0
+        )
+
+        -
+
+        (
           toDate(a.datum)
-      );
-
-
-  document
-    .getElementById(
-      "upcomingGames"
-    )
-    .innerHTML =
-      upcoming.length
-      ?
-      upcoming
-        .map(
-          g =>
-            gameCard(
-              g,
-              false
-            )
+          ?.getTime() || 0
         )
-        .join("")
-      :
-      `<div class="empty">
-      Keine kommenden Spiele.
-      </div>`;
+    );
 
 
-  document
-    .getElementById(
-      "resultsList"
-    )
-    .innerHTML =
-      results.length
-      ?
-      results
-        .map(
-          g =>
-            gameCard(
-              g,
-              true
-            )
-        )
-        .join("")
-      :
-      `<div class="empty">
-      Noch keine Resultate.
-      </div>`;
+    renderReports();
 
-}
+    renderAdminLists();
 
 
+  }
+);
 
-/* REPORTS */
 
 
 function renderReports() {
 
-  document
-    .getElementById(
+  const container =
+    document.getElementById(
       "reportsList"
-    )
-    .innerHTML =
-      reportsData.length
-      ?
-      reportsData
-        .map(r => `
+    );
+
+
+  if (
+    !reportsData.length
+  ) {
+
+    container.innerHTML =
+
+      `<div class="empty">
+      Aktuell sind keine Matchberichte vorhanden.
+      </div>`;
+
+    return;
+
+  }
+
+
+  container.innerHTML =
+    reportsData
+      .map(
+        report => `
 
         <div
           class="card"
-          onclick="openReport('${r.id}')"
+          onclick="openReport('${report.id}')"
         >
 
+
         <span class="tag">
-        ${esc(r.team)}
+
+        ${esc(
+          report.team ||
+          "Matchbericht"
+        )}
+
         </span>
 
+
         <div class="meta">
-        ${formatDate(r.datum)}
+
+        ${formatDate(
+          report.datum
+        )}
+
         </div>
+
 
         <h3>
-        ${esc(r.titel)}
+
+        ${esc(
+          report.titel ||
+          ""
+        )}
+
         </h3>
 
+
         <p>
+
         ${esc(
           String(
-            r.text || ""
-          ).substring(0,180)
+            report.text ||
+            ""
+          )
+          .substring(
+            0,
+            180
+          )
         )}
+
         </p>
+
 
         </div>
 
-        `)
-        .join("")
-      :
-      `<div class="empty">
-      Keine Matchberichte.
-      </div>`;
+        `
+      )
+      .join("");
 
 }
+
 
 
 function openReport(id) {
 
   const report =
     reportsData.find(
-      r => r.id === id
+      item =>
+        item.id === id
     );
 
 
   if (!report) {
+
     return;
+
   }
 
 
   openModal({
+
     image:"",
-    tag:report.team,
-    title:report.titel,
-    meta:formatDate(report.datum),
-    text:report.text
+
+    tag:
+      report.team ||
+      "Matchbericht",
+
+    title:
+      report.titel,
+
+    meta:
+      formatDate(
+        report.datum
+      ),
+
+    text:
+      report.text
+
   });
 
 }
 
 
 
-/* HOME */
-
-
-function renderHome() {
-
-  const now =
-    new Date();
-
-
-  const nextGame =
-    [...gamesData]
-      .filter(g => {
-
-        const date =
-          toDate(g.datum);
-
-
-        return (
-          (
-            g.status === "kommend"
-            ||
-            g.status ===
-            "verschoben"
-          )
-          &&
-          date
-          &&
-          date >= now
-        );
-
-      })
-      .sort(
-        (a,b) =>
-          toDate(a.datum)
-          -
-          toDate(b.datum)
-      )[0];
-
-
-  document
-    .getElementById(
-      "homeNextGame"
-    )
-    .innerHTML =
-      nextGame
-      ?
-      gameCard(
-        nextGame,
-        false
-      )
-      :
-      `<div class="empty">
-      Kein kommendes Spiel.
-      </div>`;
-
-
-  const result =
-    [...gamesData]
-      .filter(
-        g =>
-          g.status ===
-          "beendet"
-      )
-      .sort(
-        (a,b) =>
-          toDate(b.datum)
-          -
-          toDate(a.datum)
-      )[0];
-
-
-  document
-    .getElementById(
-      "homeResult"
-    )
-    .innerHTML =
-      result
-      ?
-      gameCard(
-        result,
-        true
-      )
-      :
-      `<div class="empty">
-      Noch kein Resultat.
-      </div>`;
-
-
-  const latestNews =
-    newsData[0];
-
-
-  document
-    .getElementById(
-      "homeNews"
-    )
-    .innerHTML =
-      latestNews
-      ?
-      `
-
-      <div
-        class="card"
-        onclick="
-          openNews(
-            '${latestNews.id}'
-          )
-        "
-      >
-
-      <span class="tag">
-      ${esc(
-        latestNews.kategorie ||
-        "News"
-      )}
-      </span>
-
-      <div class="meta">
-      ${formatDate(
-        latestNews.datum
-      )}
-      </div>
-
-      <h3>
-      ${esc(latestNews.titel)}
-      </h3>
-
-      <p>
-      ${esc(
-        String(
-          latestNews.text ||
-          ""
-        ).substring(0,140)
-      )}
-      </p>
-
-      </div>
-
-      `
-      :
-      `<div class="empty">
-      Keine News.
-      </div>`;
-
-}
-
-
-
-/* MODAL */
+/* ========================================
+   MODAL
+======================================== */
 
 
 function openModal(data) {
@@ -3235,22 +3999,29 @@ function openModal(data) {
     );
 
 
-  if (data.image) {
+  if (
+    data.image
+  ) {
+
 
     image.src =
       data.image;
+
 
     image.classList.add(
       "visible"
     );
 
+
   }
 
   else {
 
+
     image.classList.remove(
       "visible"
     );
+
 
   }
 
@@ -3291,10 +4062,12 @@ function openModal(data) {
     .getElementById(
       "contentModal"
     )
-    .classList
-    .add("visible");
+    .classList.add(
+      "visible"
+    );
 
 }
+
 
 
 function closeModal() {
@@ -3303,13 +4076,17 @@ function closeModal() {
     .getElementById(
       "contentModal"
     )
-    .classList
-    .remove("visible");
+    .classList.remove(
+      "visible"
+    );
 
 }
 
 
-function modalBackgroundClick(event) {
+
+function modalBackgroundClick(
+  event
+) {
 
   if (
     event.target.id ===
@@ -3324,7 +4101,9 @@ function modalBackgroundClick(event) {
 
 
 
-/* AUTH */
+/* ========================================
+   ADMIN LOGIN
+======================================== */
 
 
 auth.onAuthStateChanged(
@@ -3349,8 +4128,10 @@ auth.onAuthStateChanged(
       ADMIN_UID
     ) {
 
+
       login.style.display =
         "none";
+
 
       panel.style.display =
         "block";
@@ -3365,6 +4146,7 @@ auth.onAuthStateChanged(
 
 
       renderAdminLists();
+
 
     }
 
@@ -3381,13 +4163,17 @@ auth.onAuthStateChanged(
       login.style.display =
         "block";
 
+
       panel.style.display =
         "none";
 
+
     }
+
 
   }
 );
+
 
 
 async function loginAdmin() {
@@ -3409,13 +4195,17 @@ async function loginAdmin() {
 
 
   const status =
-    document
-      .getElementById(
-        "loginStatus"
-      );
+    document.getElementById(
+      "loginStatus"
+    );
 
 
   try {
+
+
+    status.textContent =
+      "Anmeldung läuft...";
+
 
     const credential =
       await auth
@@ -3430,12 +4220,16 @@ async function loginAdmin() {
       ADMIN_UID
     ) {
 
+
       await auth.signOut();
+
 
       status.textContent =
         "❌ Kein Admin-Zugang.";
 
+
       return;
+
 
     }
 
@@ -3443,79 +4237,242 @@ async function loginAdmin() {
     status.textContent =
       "";
 
+
   }
 
   catch(error) {
 
+
+    console.error(error);
+
+
     status.textContent =
       "❌ Anmeldung fehlgeschlagen.";
+
 
   }
 
 }
+
 
 
 async function logoutAdmin() {
 
   await auth.signOut();
 
-  openPage("kontakt");
+  openPage(
+    "kontakt"
+  );
 
 }
 
 
 
-/* TEAM ADMIN */
+/* ========================================
+   NEWS ADMIN
+======================================== */
 
 
-function updateTeamSelect() {
+async function saveNews() {
 
-  const select =
-    document.getElementById(
-      "playerTeamSelect"
+  const id =
+    document
+      .getElementById(
+        "newsEditId"
+      )
+      .value;
+
+
+  const data = {
+
+    titel:
+      document
+        .getElementById(
+          "newsTitle"
+        )
+        .value.trim(),
+
+    kategorie:
+      document
+        .getElementById(
+          "newsCategory"
+        )
+        .value.trim(),
+
+    datum:
+      inputTimestamp(
+        "newsDate"
+      ),
+
+    text:
+      document
+        .getElementById(
+          "newsText"
+        )
+        .value.trim(),
+
+    aktiv:true
+
+  };
+
+
+  if (
+    !data.titel ||
+    !data.text
+  ) {
+
+    alert(
+      "Bitte Titel und Text eingeben."
+    );
+
+    return;
+
+  }
+
+
+  try {
+
+
+    if (id) {
+
+
+      await db
+        .collection("news")
+        .doc(id)
+        .update(data);
+
+
+    }
+
+    else {
+
+
+      await db
+        .collection("news")
+        .add(data);
+
+
+    }
+
+
+    resetNewsForm();
+
+
+    alert(
+      "✅ News gespeichert"
     );
 
 
-  if (!select) {
-    return;
   }
 
-
-  const selected =
-    select.value;
+  catch(error) {
 
 
-  select.innerHTML =
-    `
-
-    <option value="">
-    Mannschaft auswählen
-    </option>
-
-    `
-
-    +
-
-    teamsData
-      .map(team => `
-
-      <option
-        value="${team.id}"
-      >
-
-      ${esc(team.name)}
-
-      </option>
-
-      `)
-      .join("");
+    alert(
+      "Fehler: " +
+      error.message
+    );
 
 
-  if (selected) {
-    select.value = selected;
   }
 
 }
+
+
+
+function editNews(id) {
+
+  const news =
+    newsData.find(
+      item =>
+        item.id === id
+    );
+
+
+  if (!news) {
+
+    return;
+
+  }
+
+
+  document
+    .getElementById(
+      "newsEditId"
+    ).value = id;
+
+
+  document
+    .getElementById(
+      "newsTitle"
+    ).value =
+      news.titel || "";
+
+
+  document
+    .getElementById(
+      "newsCategory"
+    ).value =
+      news.kategorie || "";
+
+
+  document
+    .getElementById(
+      "newsDate"
+    ).value =
+      dateInputValue(
+        news.datum
+      );
+
+
+  document
+    .getElementById(
+      "newsText"
+    ).value =
+      news.text || "";
+
+}
+
+
+
+function resetNewsForm() {
+
+  document
+    .getElementById(
+      "newsEditId"
+    ).value = "";
+
+
+  document
+    .getElementById(
+      "newsTitle"
+    ).value = "";
+
+
+  document
+    .getElementById(
+      "newsCategory"
+    ).value = "";
+
+
+  document
+    .getElementById(
+      "newsDate"
+    ).value = "";
+
+
+  document
+    .getElementById(
+      "newsText"
+    ).value = "";
+
+}
+
+
+
+/* ========================================
+   TEAM ADMIN
+======================================== */
 
 
 async function saveTeam() {
@@ -3582,7 +4539,7 @@ async function saveTeam() {
   if (!data.name) {
 
     alert(
-      "Teamname eingeben."
+      "Bitte Teamname eingeben."
     );
 
     return;
@@ -3592,54 +4549,67 @@ async function saveTeam() {
 
   try {
 
+
     if (id) {
+
 
       await db
         .collection("teams")
         .doc(id)
         .update(data);
 
+
     }
 
     else {
 
+
       await db
         .collection("teams")
         .add(data);
+
 
     }
 
 
     resetTeamForm();
 
+
     alert(
       "✅ Team gespeichert"
     );
 
+
   }
 
   catch(error) {
+
 
     alert(
       "Fehler: " +
       error.message
     );
 
+
   }
 
 }
+
 
 
 function editTeam(id) {
 
   const team =
     teamsData.find(
-      t => t.id === id
+      item =>
+        item.id === id
     );
 
 
   if (!team) {
+
     return;
+
   }
 
 
@@ -3693,6 +4663,7 @@ function editTeam(id) {
 }
 
 
+
 function resetTeamForm() {
 
   document
@@ -3700,41 +4671,102 @@ function resetTeamForm() {
       "teamEditId"
     ).value = "";
 
+
   document
     .getElementById(
       "teamNameInput"
     ).value = "";
+
 
   document
     .getElementById(
       "teamLeagueInput"
     ).value = "";
 
+
   document
     .getElementById(
       "teamCoachInput"
     ).value = "";
+
 
   document
     .getElementById(
       "teamTrainingInput"
     ).value = "";
 
+
   document
     .getElementById(
       "teamImageInput"
     ).value = "";
 
+
+  document
+    .getElementById(
+      "teamSortInput"
+    ).value = "1";
+
 }
 
 
 
-/* PLAYER ADMIN */
+/* ========================================
+   SPIELER ADMIN
+======================================== */
+
+
+function updateTeamSelect() {
+
+  const select =
+    document.getElementById(
+      "playerTeamSelect"
+    );
+
+
+  const selected =
+    select.value;
+
+
+  select.innerHTML =
+
+    `<option value="">
+    Mannschaft auswählen
+    </option>`
+
+    +
+
+    teamsData
+      .map(
+        team => `
+
+        <option value="${team.id}">
+
+        ${esc(
+          team.name
+        )}
+
+        </option>
+
+        `
+      )
+      .join("");
+
+
+  if (selected) {
+
+    select.value =
+      selected;
+
+  }
+
+}
+
 
 
 async function savePlayer() {
 
-  const editId =
+  const id =
     document
       .getElementById(
         "playerEditId"
@@ -3752,7 +4784,8 @@ async function savePlayer() {
 
   const team =
     teamsData.find(
-      t => t.id === teamId
+      item =>
+        item.id === teamId
     );
 
 
@@ -3822,7 +4855,7 @@ async function savePlayer() {
   if (!data.name) {
 
     alert(
-      "Spielername eingeben."
+      "Bitte Spielername eingeben."
     );
 
     return;
@@ -3832,54 +4865,67 @@ async function savePlayer() {
 
   try {
 
-    if (editId) {
+
+    if (id) {
+
 
       await db
         .collection("spieler")
-        .doc(editId)
+        .doc(id)
         .update(data);
+
 
     }
 
     else {
 
+
       await db
         .collection("spieler")
         .add(data);
+
 
     }
 
 
     resetPlayerForm();
 
+
     alert(
       "✅ Spieler gespeichert"
     );
 
+
   }
 
   catch(error) {
+
 
     alert(
       "Fehler: " +
       error.message
     );
 
+
   }
 
 }
+
 
 
 function editPlayer(id) {
 
   const player =
     playersData.find(
-      p => p.id === id
+      item =>
+        item.id === id
     );
 
 
   if (!player) {
+
     return;
+
   }
 
 
@@ -3934,6 +4980,7 @@ function editPlayer(id) {
 }
 
 
+
 function resetPlayerForm() {
 
   document
@@ -3941,25 +4988,30 @@ function resetPlayerForm() {
       "playerEditId"
     ).value = "";
 
+
   document
     .getElementById(
       "playerTeamSelect"
     ).value = "";
+
 
   document
     .getElementById(
       "playerNameInput"
     ).value = "";
 
+
   document
     .getElementById(
       "playerNumberInput"
     ).value = "";
 
+
   document
     .getElementById(
       "playerPhotoInput"
     ).value = "";
+
 
   document
     .getElementById(
@@ -3970,85 +5022,9 @@ function resetPlayerForm() {
 
 
 
-/* NEWS ADMIN */
-
-
-async function saveNews() {
-
-  const id =
-    document
-      .getElementById(
-        "newsEditId"
-      )
-      .value;
-
-
-  const data = {
-
-    titel:
-      document
-        .getElementById(
-          "newsTitle"
-        )
-        .value.trim(),
-
-    kategorie:
-      document
-        .getElementById(
-          "newsCategory"
-        )
-        .value.trim(),
-
-    datum:
-      timestampFromInput(
-        "newsDate"
-      ),
-
-    text:
-      document
-        .getElementById(
-          "newsText"
-        )
-        .value.trim(),
-
-    aktiv:true
-
-  };
-
-
-  if (id) {
-
-    await db
-      .collection("news")
-      .doc(id)
-      .update(data);
-
-  }
-
-  else {
-
-    await db
-      .collection("news")
-      .add(data);
-
-  }
-
-
-  document
-    .getElementById(
-      "newsTitle"
-    ).value = "";
-
-  document
-    .getElementById(
-      "newsText"
-    ).value = "";
-
-}
-
-
-
-/* REPORT ADMIN */
+/* ========================================
+   MATCHBERICHT ADMIN
+======================================== */
 
 
 async function saveReport() {
@@ -4078,7 +5054,7 @@ async function saveReport() {
         .value.trim(),
 
     datum:
-      timestampFromInput(
+      inputTimestamp(
         "reportDate"
       ),
 
@@ -4094,24 +5070,67 @@ async function saveReport() {
   };
 
 
-  if (id) {
+  if (
+    !data.titel ||
+    !data.text
+  ) {
 
-    await db
-      .collection(
-        "matchberichte"
-      )
-      .doc(id)
-      .update(data);
+    alert(
+      "Bitte Titel und Bericht eingeben."
+    );
+
+    return;
 
   }
 
-  else {
 
-    await db
-      .collection(
-        "matchberichte"
-      )
-      .add(data);
+  try {
+
+
+    if (id) {
+
+
+      await db
+        .collection(
+          "matchberichte"
+        )
+        .doc(id)
+        .update(data);
+
+
+    }
+
+    else {
+
+
+      await db
+        .collection(
+          "matchberichte"
+        )
+        .add(data);
+
+
+    }
+
+
+    resetReportForm();
+
+
+    alert(
+      "✅ Matchbericht gespeichert"
+    );
+
+
+  }
+
+  catch(error) {
+
+
+    alert(
+      "Fehler: " +
+      error.message
+    );
+
 
   }
 
@@ -4119,7 +5138,99 @@ async function saveReport() {
 
 
 
-/* DELETE */
+function editReport(id) {
+
+  const report =
+    reportsData.find(
+      item =>
+        item.id === id
+    );
+
+
+  if (!report) {
+
+    return;
+
+  }
+
+
+  document
+    .getElementById(
+      "reportEditId"
+    ).value = id;
+
+
+  document
+    .getElementById(
+      "reportTitle"
+    ).value =
+      report.titel || "";
+
+
+  document
+    .getElementById(
+      "reportTeam"
+    ).value =
+      report.team || "";
+
+
+  document
+    .getElementById(
+      "reportDate"
+    ).value =
+      dateInputValue(
+        report.datum
+      );
+
+
+  document
+    .getElementById(
+      "reportText"
+    ).value =
+      report.text || "";
+
+}
+
+
+
+function resetReportForm() {
+
+  document
+    .getElementById(
+      "reportEditId"
+    ).value = "";
+
+
+  document
+    .getElementById(
+      "reportTitle"
+    ).value = "";
+
+
+  document
+    .getElementById(
+      "reportTeam"
+    ).value = "";
+
+
+  document
+    .getElementById(
+      "reportDate"
+    ).value = "";
+
+
+  document
+    .getElementById(
+      "reportText"
+    ).value = "";
+
+}
+
+
+
+/* ========================================
+   LÖSCHEN
+======================================== */
 
 
 async function deleteItem(
@@ -4138,66 +5249,148 @@ async function deleteItem(
   }
 
 
-  await db
-    .collection(collection)
-    .doc(id)
-    .delete();
+  try {
+
+
+    await db
+      .collection(
+        collection
+      )
+      .doc(id)
+      .delete();
+
+
+  }
+
+  catch(error) {
+
+
+    alert(
+      "Fehler: " +
+      error.message
+    );
+
+
+  }
 
 }
 
 
 
-/* ADMIN LISTS */
+/* ========================================
+   ADMIN LISTEN
+======================================== */
 
 
 function renderAdminLists() {
 
 
-  const teamsList =
+  const newsList =
+    document.getElementById(
+      "adminNewsList"
+    );
+
+
+  if (newsList) {
+
+
+    newsList.innerHTML =
+      newsData
+        .map(
+          news => `
+
+          <div class="admin-list-item">
+
+          <strong>
+          ${esc(news.titel)}
+          </strong>
+
+
+          <div class="admin-actions">
+
+          <button
+            class="button button-small"
+            onclick="editNews('${news.id}')"
+          >
+          Bearbeiten
+          </button>
+
+
+          <button
+            class="button button-red button-small"
+            onclick="
+              deleteItem(
+                'news',
+                '${news.id}'
+              )
+            "
+          >
+          Löschen
+          </button>
+
+          </div>
+
+          </div>
+
+          `
+        )
+        .join("");
+
+
+  }
+
+
+  const teamList =
     document.getElementById(
       "adminTeamsList"
     );
 
 
-  if (teamsList) {
+  if (teamList) {
 
-    teamsList.innerHTML =
+
+    teamList.innerHTML =
       teamsData
-        .map(team => `
+        .map(
+          team => `
 
-        <div class="admin-list-item">
+          <div class="admin-list-item">
 
-        <strong>
-        ${esc(team.name)}
-        </strong>
+          <strong>
+          ${esc(team.name)}
+          </strong>
 
-        <div class="admin-actions">
 
-        <button
-          class="button button-small"
-          onclick="editTeam('${team.id}')"
-        >
-        Bearbeiten
-        </button>
+          <div class="admin-actions">
 
-        <button
-          class="button button-red button-small"
-          onclick="
-            deleteItem(
-              'teams',
-              '${team.id}'
-            )
-          "
-        >
-        Löschen
-        </button>
+          <button
+            class="button button-small"
+            onclick="editTeam('${team.id}')"
+          >
+          Bearbeiten
+          </button>
 
-        </div>
 
-        </div>
+          <button
+            class="button button-red button-small"
+            onclick="
+              deleteItem(
+                'teams',
+                '${team.id}'
+              )
+            "
+          >
+          Löschen
+          </button>
 
-        `)
+          </div>
+
+          </div>
+
+          `
+        )
         .join("");
+
 
   }
 
@@ -4210,121 +5403,132 @@ function renderAdminLists() {
 
   if (playerList) {
 
+
     playerList.innerHTML =
       playersData
-        .map(player => `
+        .map(
+          player => `
 
-        <div class="admin-list-item">
+          <div class="admin-list-item">
 
-        <strong>
-        ${esc(player.name)}
-        </strong>
+          <strong>
+          ${esc(player.name)}
+          </strong>
 
-        <div class="meta">
 
-        ${esc(
-          player.teamName ||
-          ""
-        )}
+          <div class="meta">
 
-        ·
+          ${esc(
+            player.teamName ||
+            ""
+          )}
 
-        #${esc(
-          player.nummer ?? ""
-        )}
+          ·
 
-        ·
+          #${esc(
+            player.nummer ??
+            ""
+          )}
 
-        ${esc(
-          player.position ||
-          ""
-        )}
+          ·
 
-        </div>
+          ${esc(
+            player.position ||
+            ""
+          )}
 
-        <div class="admin-actions">
+          </div>
 
-        <button
-          class="button button-small"
-          onclick="
-            editPlayer(
-              '${player.id}'
-            )
-          "
-        >
-        Bearbeiten
-        </button>
 
-        <button
-          class="button button-red button-small"
-          onclick="
-            deleteItem(
-              'spieler',
-              '${player.id}'
-            )
-          "
-        >
-        Löschen
-        </button>
+          <div class="admin-actions">
 
-        </div>
+          <button
+            class="button button-small"
+            onclick="
+              editPlayer(
+                '${player.id}'
+              )
+            "
+          >
+          Bearbeiten
+          </button>
 
-        </div>
 
-        `)
+          <button
+            class="button button-red button-small"
+            onclick="
+              deleteItem(
+                'spieler',
+                '${player.id}'
+              )
+            "
+          >
+          Löschen
+          </button>
+
+          </div>
+
+          </div>
+
+          `
+        )
         .join("");
+
 
   }
 
 
-  const newsList =
-    document.getElementById(
-      "adminNewsList"
-    );
-
-
-  if (newsList) {
-
-    newsList.innerHTML =
-      newsData
-        .map(news => `
-
-        <div class="admin-list-item">
-
-        <strong>
-        ${esc(news.titel)}
-        </strong>
-
-        </div>
-
-        `)
-        .join("");
-
-  }
-
-
-  const reportsList =
+  const reportList =
     document.getElementById(
       "adminReportsList"
     );
 
 
-  if (reportsList) {
+  if (reportList) {
 
-    reportsList.innerHTML =
+
+    reportList.innerHTML =
       reportsData
-        .map(report => `
+        .map(
+          report => `
 
-        <div class="admin-list-item">
+          <div class="admin-list-item">
 
-        <strong>
-        ${esc(report.titel)}
-        </strong>
+          <strong>
+          ${esc(report.titel)}
+          </strong>
 
-        </div>
 
-        `)
+          <div class="admin-actions">
+
+          <button
+            class="button button-small"
+            onclick="editReport('${report.id}')"
+          >
+          Bearbeiten
+          </button>
+
+
+          <button
+            class="button button-red button-small"
+            onclick="
+              deleteItem(
+                'matchberichte',
+                '${report.id}'
+              )
+            "
+          >
+          Löschen
+          </button>
+
+          </div>
+
+          </div>
+
+          `
+        )
         .join("");
+
 
   }
 
@@ -4332,7 +5536,9 @@ function renderAdminLists() {
 
 
 
-/* PUSH */
+/* ========================================
+   PUSH
+======================================== */
 
 
 async function enableNotifications() {
@@ -4346,6 +5552,24 @@ async function enableNotifications() {
   try {
 
 
+    if (
+      !(
+        "Notification"
+        in window
+      )
+    ) {
+
+
+      status.textContent =
+        "❌ Mitteilungen werden nicht unterstützt.";
+
+
+      return;
+
+
+    }
+
+
     const permission =
       await Notification
         .requestPermission();
@@ -4356,10 +5580,13 @@ async function enableNotifications() {
       "granted"
     ) {
 
+
       status.textContent =
-        "❌ Mitteilungen nicht erlaubt";
+        "❌ Mitteilungen wurden nicht erlaubt.";
+
 
       return;
+
 
     }
 
@@ -4385,6 +5612,7 @@ async function enableNotifications() {
 
     if (token) {
 
+
       localStorage.setItem(
         "fcwFirebaseToken",
         token
@@ -4392,7 +5620,8 @@ async function enableNotifications() {
 
 
       status.textContent =
-        "✅ Mitteilungen aktiviert";
+        "✅ FCW-Mitteilungen sind aktiviert";
+
 
     }
 
@@ -4401,10 +5630,13 @@ async function enableNotifications() {
 
   catch(error) {
 
+
     console.error(error);
 
+
     status.textContent =
-      "❌ Push-Fehler";
+      "❌ Fehler bei Push-Mitteilungen";
+
 
   }
 
@@ -4412,30 +5644,135 @@ async function enableNotifications() {
 
 
 
-/* SERVICE WORKER */
+function updateNotificationStatus() {
+
+  const status =
+    document.getElementById(
+      "notificationStatus"
+    );
 
 
-if (
-  "serviceWorker" in navigator
-) {
+  if (
+    !(
+      "Notification"
+      in window
+    )
+  ) {
 
-  window.addEventListener(
-    "load",
-    () => {
+    status.textContent =
+      "Mitteilungen nicht verfügbar.";
 
-      navigator
-        .serviceWorker
-        .register(
-          "./sw.js"
-        );
+    return;
 
-    }
-  );
+  }
+
+
+  if (
+    Notification.permission ===
+    "granted"
+  ) {
+
+    status.textContent =
+      "✅ Mitteilungen erlaubt";
+
+  }
+
+  else if (
+    Notification.permission ===
+    "denied"
+  ) {
+
+    status.textContent =
+      "❌ Mitteilungen blockiert";
+
+  }
+
+  else {
+
+    status.textContent =
+      "Mitteilungen noch nicht aktiviert";
+
+  }
 
 }
 
 
+
+/* ========================================
+   SERVICE WORKER
+======================================== */
+
+
+if (
+  "serviceWorker"
+  in navigator
+) {
+
+
+  window.addEventListener(
+    "load",
+    async () => {
+
+
+      try {
+
+
+        await navigator
+          .serviceWorker
+          .register(
+            "./sw.js"
+          );
+
+
+      }
+
+      catch(error) {
+
+
+        console.error(
+          "Service Worker Fehler:",
+          error
+        );
+
+
+      }
+
+
+    }
+  );
+
+
+}
+
+
+
+/* ========================================
+   START
+======================================== */
+
+
+window.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    updateNotificationStatus();
+
+  }
+);
+
+
 </script>
+
+
+
+<!-- ========================================
+     OFFIZIELLES OFV VEREINS-WIDGET
+======================================== -->
+
+
+<script
+  src="https://widget.football.ch/portaldata/30/scripts/sfvVereinWidget.js"
+></script>
 
 
 </body>
