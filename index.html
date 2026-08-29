@@ -3,1305 +3,1325 @@
 
 <head>
 
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  >
+<meta charset="UTF-8">
 
-  <meta
-    name="theme-color"
-    content="#f4c400"
-  >
+<meta
+  name="viewport"
+  content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+>
 
-  <meta
-    name="apple-mobile-web-app-capable"
-    content="yes"
-  >
+<meta
+  name="theme-color"
+  content="#f4c400"
+>
 
-  <meta
-    name="apple-mobile-web-app-status-bar-style"
-    content="black-translucent"
-  >
+<meta
+  name="apple-mobile-web-app-capable"
+  content="yes"
+>
 
-  <meta
-    name="apple-mobile-web-app-title"
-    content="FC Wängi"
-  >
+<meta
+  name="apple-mobile-web-app-status-bar-style"
+  content="black-translucent"
+>
 
-  <title>FC Wängi 1967</title>
+<meta
+  name="apple-mobile-web-app-title"
+  content="FC Wängi"
+>
 
-  <link
-    rel="manifest"
-    href="./manifest.json"
-  >
+<title>FC Wängi 1967</title>
 
-  <link
-    rel="apple-touch-icon"
-    href="./icon-512.png"
-  >
+<link
+  rel="manifest"
+  href="./manifest.json"
+>
 
+<link
+  rel="apple-touch-icon"
+  href="./icon-512.png"
+>
 
-  <style>
 
-    :root {
-      --yellow: #f4c400;
-      --yellow-dark: #cfa600;
-      --orange: #e7672d;
-      --black: #171717;
-      --dark: #282828;
-      --white: #ffffff;
-      --grey: #f3f3f3;
-      --light-grey: #fafafa;
-      --text-grey: #666666;
-      --green: #198754;
-      --red: #c93434;
-      --blue: #1967d2;
-    }
+<style>
 
+:root {
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
+  --yellow:#f4c400;
+  --yellow-dark:#cda400;
 
+  --black:#171717;
+  --dark:#292929;
 
-    html {
-      scroll-behavior: smooth;
-    }
+  --white:#ffffff;
 
+  --grey:#f4f4f4;
+  --border:#e8e8e8;
 
-    body {
+  --green:#18864b;
+  --red:#c93333;
+  --blue:#1769c2;
 
-      font-family:
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        Roboto,
-        Helvetica,
-        Arial,
-        sans-serif;
+}
 
-      background: #eeeeee;
-      color: var(--black);
 
-      padding-bottom:
-        calc(
-          88px +
-          env(safe-area-inset-bottom)
-        );
+* {
 
-    }
+  box-sizing:border-box;
 
+  margin:0;
+  padding:0;
 
-    button,
-    input,
-    textarea {
-      font: inherit;
-    }
+}
 
 
-    button {
-      cursor: pointer;
-    }
+html {
 
+  scroll-behavior:smooth;
 
-    .app {
+}
 
-      width: 100%;
-      max-width: 720px;
 
-      margin: auto;
+body {
 
-      min-height: 100vh;
+  font-family:
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Helvetica,
+    Arial,
+    sans-serif;
 
-      background: white;
+  background:#eeeeee;
 
-    }
+  color:var(--black);
 
+  padding-bottom:
+    calc(
+      88px +
+      env(safe-area-inset-bottom)
+    );
 
+}
 
-    /* =========================
-       HEADER
-    ========================= */
 
+button,
+input,
+textarea,
+select {
 
-    .header {
+  font:inherit;
 
-      position: sticky;
+}
 
-      top: 0;
 
-      z-index: 100;
+button {
 
-      display: flex;
+  cursor:pointer;
 
-      align-items: center;
+}
 
-      gap: 14px;
 
-      padding:
+.app {
 
-        calc(
-          12px +
-          env(safe-area-inset-top)
-        )
+  width:100%;
 
-        16px
+  max-width:720px;
 
-        13px;
+  min-height:100vh;
 
-      background:
+  margin:auto;
 
-        linear-gradient(
-          135deg,
-          #f6ce1d,
-          #ecb500
-        );
+  background:white;
 
-      box-shadow:
+}
 
-        0 4px 16px
-        rgba(0,0,0,.14);
 
-    }
 
+/* HEADER */
 
-    .club-logo {
 
-      width: 61px;
-      height: 61px;
+.header {
 
-      object-fit: contain;
+  position:sticky;
 
-      border-radius: 50%;
+  top:0;
 
-      background: white;
+  z-index:100;
 
-      padding: 4px;
+  display:flex;
 
-      box-shadow:
+  align-items:center;
 
-        0 3px 8px
-        rgba(0,0,0,.14);
+  gap:14px;
 
-    }
+  padding:
+    calc(
+      12px +
+      env(safe-area-inset-top)
+    )
+    16px
+    13px;
 
+  background:
+    linear-gradient(
+      135deg,
+      #f6ce1d,
+      #ecb500
+    );
 
-    .header-info {
+  box-shadow:
+    0 4px 16px
+    rgba(0,0,0,.14);
 
-      flex: 1;
+}
 
-    }
 
+.club-logo {
 
-    .header-info h1 {
+  width:61px;
+  height:61px;
 
-      font-size: 21px;
-      font-weight: 900;
+  object-fit:contain;
 
-    }
+  padding:4px;
 
+  border-radius:50%;
 
-    .header-info p {
+  background:white;
 
-      margin-top: 4px;
+  box-shadow:
+    0 3px 8px
+    rgba(0,0,0,.14);
 
-      font-size: 11px;
-      font-weight: 650;
+}
 
-      opacity: .72;
 
-    }
+.header-info h1 {
 
+  font-size:21px;
 
+  font-weight:900;
 
-    /* =========================
-       MAIN
-    ========================= */
+}
 
 
-    main {
+.header-info p {
 
-      padding: 17px;
+  margin-top:4px;
 
-    }
+  font-size:11px;
 
+  font-weight:650;
 
-    .page {
+  opacity:.72;
 
-      display: none;
+}
 
-    }
 
 
-    .page.active {
+/* MAIN */
 
-      display: block;
 
-      animation:
-        fadeIn .2s ease;
+main {
 
-    }
+  padding:17px;
 
+}
 
-    @keyframes fadeIn {
 
-      from {
+.page {
 
-        opacity: 0;
+  display:none;
 
-        transform:
-          translateY(4px);
+}
 
-      }
 
-      to {
+.page.active {
 
-        opacity: 1;
+  display:block;
 
-        transform:
-          translateY(0);
+  animation:
+    fadeIn .2s ease;
 
-      }
+}
 
-    }
 
+@keyframes fadeIn {
 
-    .page-title {
+  from {
 
-      font-size: 28px;
-      font-weight: 900;
+    opacity:0;
 
-      margin-bottom: 5px;
+    transform:
+      translateY(4px);
 
-    }
+  }
 
+  to {
 
-    .page-description {
+    opacity:1;
 
-      color: #707070;
+    transform:
+      translateY(0);
 
-      font-size: 14px;
+  }
 
-      margin-bottom: 19px;
+}
 
-    }
 
+.page-title {
 
-    .section-heading {
+  margin-bottom:5px;
 
-      font-size: 19px;
-      font-weight: 900;
+  font-size:28px;
 
-      margin-bottom: 11px;
+  font-weight:900;
 
-    }
+}
 
 
+.page-description {
 
-    /* =========================
-       HERO
-    ========================= */
+  margin-bottom:19px;
 
+  color:#707070;
 
-    .hero {
+  font-size:14px;
 
-      position: relative;
+}
 
-      overflow: hidden;
 
-      padding: 25px 22px;
+.section-heading {
 
-      margin-bottom: 18px;
+  margin:
+    22px 0
+    11px;
 
-      border-radius: 23px;
+  font-size:19px;
 
-      background:
+  font-weight:900;
 
-        linear-gradient(
-          135deg,
-          #151515,
-          #363636
-        );
+}
 
-      color: white;
 
-      box-shadow:
 
-        0 5px 16px
-        rgba(0,0,0,.12);
+/* HERO */
 
-    }
 
+.hero {
 
-    .hero::after {
+  position:relative;
 
-      content: "⚽";
+  overflow:hidden;
 
-      position: absolute;
+  margin-bottom:18px;
 
-      right: -15px;
-      bottom: -30px;
+  padding:
+    25px 22px;
 
-      font-size: 120px;
+  border-radius:23px;
 
-      opacity: .07;
+  background:
+    linear-gradient(
+      135deg,
+      #151515,
+      #363636
+    );
 
-    }
+  color:white;
 
+}
 
-    .hero-label {
 
-      color: var(--yellow);
+.hero::after {
 
-      font-size: 11px;
-      font-weight: 900;
+  content:"⚽";
 
-      letter-spacing: 1px;
+  position:absolute;
 
-      text-transform: uppercase;
+  right:-15px;
+  bottom:-30px;
 
-    }
+  font-size:120px;
 
+  opacity:.07;
 
-    .hero h2 {
+}
 
-      margin:
-        7px 0
-        8px;
 
-      font-size: 29px;
-      font-weight: 900;
+.hero-label {
 
-    }
+  color:var(--yellow);
 
+  font-size:11px;
 
-    .hero p {
+  font-weight:900;
 
-      max-width: 440px;
+  letter-spacing:1px;
 
-      color: #e3e3e3;
+}
 
-      font-size: 14px;
 
-      line-height: 1.5;
+.hero h2 {
 
-    }
+  margin:
+    7px 0
+    8px;
 
+  font-size:29px;
 
+  font-weight:900;
 
-    /* =========================
-       CARDS
-    ========================= */
+}
 
 
-    .card {
+.hero p {
 
-      padding: 18px;
+  color:#dddddd;
 
-      margin-bottom: 13px;
+  font-size:14px;
 
-      border:
-        1px solid #ececec;
+  line-height:1.5;
 
-      border-radius: 18px;
+}
 
-      background: white;
 
-      box-shadow:
 
-        0 4px 14px
-        rgba(0,0,0,.05);
+/* CARDS */
 
-    }
 
+.card {
 
-    .card h3 {
+  margin-bottom:13px;
 
-      margin-bottom: 7px;
+  padding:18px;
 
-      font-size: 17px;
+  border:
+    1px solid
+    var(--border);
 
-    }
+  border-radius:18px;
 
+  background:white;
 
-    .card p {
+  box-shadow:
+    0 4px 14px
+    rgba(0,0,0,.05);
 
-      color: #666;
+}
 
-      font-size: 13px;
 
-      line-height: 1.55;
+.card h3 {
 
-    }
+  margin-bottom:7px;
 
+  font-size:17px;
 
-    .tag {
+}
 
-      display: inline-block;
 
-      padding:
-        5px 9px;
+.card p {
 
-      margin-bottom: 8px;
+  color:#666;
 
-      border-radius: 30px;
+  font-size:13px;
 
-      background: #fff0a7;
+  line-height:1.55;
 
-      color: #725900;
+}
 
-      font-size: 10px;
-      font-weight: 900;
 
-      text-transform: uppercase;
+.tag {
 
-    }
+  display:inline-block;
 
+  margin-bottom:8px;
 
-    .meta {
+  padding:
+    5px 9px;
 
-      color: #888;
+  border-radius:30px;
 
-      font-size: 11px;
+  background:#fff0a7;
 
-      margin-bottom: 8px;
+  color:#725900;
 
-    }
+  font-size:10px;
 
+  font-weight:900;
 
+  text-transform:uppercase;
 
-    /* =========================
-       BUTTONS
-    ========================= */
+}
 
 
-    .button {
+.meta {
 
-      display: inline-flex;
+  margin-bottom:8px;
 
-      align-items: center;
-      justify-content: center;
+  color:#888;
 
-      min-height: 44px;
+  font-size:11px;
 
-      padding:
-        11px 16px;
+}
 
-      margin-top: 12px;
 
-      border: none;
 
-      border-radius: 12px;
+/* BUTTONS */
 
-      background: var(--black);
 
-      color: white;
+.button {
 
-      font-size: 13px;
-      font-weight: 850;
+  display:inline-flex;
 
-      text-decoration: none;
+  align-items:center;
 
-    }
+  justify-content:center;
 
+  min-height:44px;
 
-    .button-yellow {
+  margin-top:12px;
 
-      background: var(--yellow);
+  padding:
+    11px 16px;
 
-      color: #111;
+  border:none;
 
-    }
+  border-radius:12px;
 
+  background:var(--black);
 
-    .button-outline {
+  color:white;
 
-      border:
-        1px solid #ddd;
+  font-size:13px;
 
-      background: white;
+  font-weight:850;
 
-      color: #111;
+  text-decoration:none;
 
-    }
+}
 
 
-    .button-small {
+.button-yellow {
 
-      min-height: 38px;
+  background:var(--yellow);
 
-      padding:
-        8px 12px;
+  color:#111;
 
-      margin-right: 6px;
+}
 
-      font-size: 11px;
 
-    }
+.button-outline {
 
+  border:
+    1px solid
+    #ddd;
 
+  background:white;
 
-    /* =========================
-       PUSH
-    ========================= */
+  color:#111;
 
+}
 
-    .notification-box {
 
-      padding: 18px;
+.button-red {
 
-      margin-bottom: 20px;
+  background:var(--red);
 
-      border-radius: 19px;
+  color:white;
 
-      background:
+}
 
-        linear-gradient(
-          135deg,
-          #fff4b5,
-          #ffe382
-        );
 
-    }
+.button-green {
 
+  background:var(--green);
 
-    .notification-box h3 {
+  color:white;
 
-      margin-bottom: 6px;
+}
 
-      font-size: 17px;
 
-    }
+.button-small {
 
+  min-height:36px;
 
-    .notification-box p {
+  padding:
+    7px 11px;
 
-      color: #605500;
+  font-size:11px;
 
-      font-size: 13px;
+}
 
-      line-height: 1.45;
 
-    }
 
+/* QUICK ACCESS */
 
-    .notification-status {
 
-      margin-top: 10px;
+.quick-grid {
 
-      color: #665a00;
+  display:grid;
 
-      font-size: 12px;
-      font-weight: 650;
+  grid-template-columns:
+    repeat(
+      2,
+      minmax(0,1fr)
+    );
 
-    }
+  gap:11px;
 
+  margin-bottom:21px;
 
-    .token-box {
+}
 
-      display: none;
 
-      margin-top: 14px;
+.quick-button {
 
-      padding: 12px;
+  min-height:105px;
 
-      border:
+  padding:17px;
 
-        1px solid
-        rgba(0,0,0,.12);
+  border:none;
 
-      border-radius: 12px;
+  border-radius:18px;
 
-      background:
-        rgba(255,255,255,.7);
+  background:var(--grey);
 
-    }
+  text-align:left;
 
+}
 
-    .token-box.visible {
 
-      display: block;
+.quick-button:active {
 
-    }
+  transform:
+    scale(.97);
 
+}
 
-    .token-text {
 
-      width: 100%;
+.quick-icon {
 
-      min-height: 100px;
+  display:block;
 
-      padding: 10px;
+  margin-bottom:12px;
 
-      border:
-        1px solid #ccc;
+  font-size:28px;
 
-      border-radius: 9px;
+}
 
-      background: white;
 
-      resize: vertical;
+.quick-button strong {
 
-      font-size: 10px;
+  display:block;
 
-    }
+  margin-bottom:3px;
 
+  font-size:15px;
 
+}
 
-    /* =========================
-       QUICK ACCESS
-    ========================= */
 
+.quick-button small {
 
-    .quick-grid {
+  color:#777;
 
-      display: grid;
+  font-size:11px;
 
-      grid-template-columns:
-        repeat(
-          2,
-          minmax(0,1fr)
-        );
+}
 
-      gap: 11px;
 
-      margin-bottom: 21px;
 
-    }
+/* PUSH */
 
 
-    .quick-button {
+.notification-box {
 
-      min-height: 105px;
+  margin-bottom:20px;
 
-      padding: 17px;
+  padding:18px;
 
-      border: none;
-      border-radius: 18px;
+  border-radius:19px;
 
-      background: var(--grey);
+  background:
+    linear-gradient(
+      135deg,
+      #fff4b5,
+      #ffe382
+    );
 
-      text-align: left;
+}
 
-    }
 
+.notification-box h3 {
 
-    .quick-button:active {
+  margin-bottom:6px;
 
-      transform:
-        scale(.97);
+}
 
-    }
 
+.notification-box p {
 
-    .quick-icon {
+  color:#605500;
 
-      display: block;
+  font-size:13px;
 
-      margin-bottom: 12px;
+  line-height:1.45;
 
-      font-size: 28px;
+}
 
-    }
 
+.notification-status {
 
-    .quick-button strong {
+  margin-top:10px;
 
-      display: block;
+  color:#665a00;
 
-      margin-bottom: 3px;
+  font-size:12px;
 
-      font-size: 15px;
+  font-weight:650;
 
-    }
+}
 
 
-    .quick-button small {
+.token-box {
 
-      color: #777;
+  display:none;
 
-      font-size: 11px;
+  margin-top:14px;
 
-    }
+  padding:12px;
 
+  border:
+    1px solid
+    rgba(0,0,0,.12);
 
+  border-radius:12px;
 
-    /* =========================
-       HOME GAME CARD
-    ========================= */
+  background:
+    rgba(255,255,255,.7);
 
+}
 
-    .game-box {
 
-      padding: 18px;
+.token-box.visible {
 
-      margin-bottom: 15px;
+  display:block;
 
-      border-radius: 19px;
+}
 
-      background:
 
-        linear-gradient(
-          135deg,
-          #171717,
-          #303030
-        );
+.token-text {
 
-      color: white;
+  width:100%;
 
-    }
+  min-height:100px;
 
+  padding:10px;
 
-    .game-label {
+  border:
+    1px solid
+    #ccc;
 
-      color: var(--yellow);
+  border-radius:9px;
 
-      font-size: 10px;
-      font-weight: 900;
+  background:white;
 
-      text-transform: uppercase;
+  font-size:10px;
 
-      margin-bottom: 8px;
+}
 
-    }
 
 
-    .game-date {
+/* GAME */
 
-      font-size: 12px;
 
-      color: #ccc;
+.game-card {
 
-      margin-bottom: 12px;
+  margin-bottom:13px;
 
-    }
+  padding:18px;
 
+  border:
+    1px solid
+    var(--border);
 
-    .game-teams {
+  border-radius:18px;
 
-      display: grid;
+}
 
-      grid-template-columns:
-        1fr auto 1fr;
 
-      align-items: center;
+.game-teams {
 
-      gap: 10px;
+  display:grid;
 
-    }
+  grid-template-columns:
+    1fr auto 1fr;
 
+  align-items:center;
 
-    .game-team {
+  gap:10px;
 
-      font-size: 15px;
-      font-weight: 850;
+  margin-top:12px;
 
-    }
+}
 
 
-    .game-team.right {
+.game-team {
 
-      text-align: right;
+  font-size:15px;
 
-    }
+  font-weight:850;
 
+}
 
-    .game-vs {
 
-      font-size: 13px;
+.game-team.right {
 
-      color: #aaa;
+  text-align:right;
 
-      font-weight: 800;
+}
 
-    }
 
+.game-vs {
 
-    .game-score {
+  color:#999;
 
-      font-size: 27px;
-      font-weight: 900;
+  font-size:12px;
 
-      text-align: center;
+  font-weight:800;
 
-    }
+}
 
 
+.game-score {
 
-    /* =========================
-       NEWS
-    ========================= */
+  font-size:25px;
 
+  font-weight:900;
 
-    .news-card {
+}
 
-      cursor: pointer;
 
-    }
+.status {
 
+  display:inline-block;
 
-    .news-card:active {
+  padding:
+    4px 8px;
 
-      transform:
-        scale(.99);
+  border-radius:20px;
 
-    }
+  background:#e8f1ff;
 
+  color:#1457a7;
 
+  font-size:10px;
 
-    /* =========================
-       TEAM
-    ========================= */
+  font-weight:850;
 
+  text-transform:uppercase;
 
-    .team-card {
+}
 
-      cursor: pointer;
 
-    }
+.status-beendet {
 
+  background:#e7f6ed;
 
-    .team-header {
+  color:#16703a;
 
-      display: flex;
+}
 
-      justify-content: space-between;
 
-      align-items: center;
+.status-abgesagt {
 
-      gap: 10px;
+  background:#ffeaea;
 
-    }
+  color:#a72424;
 
+}
 
-    .team-name {
 
-      font-size: 16px;
-      font-weight: 900;
+.status-verschoben {
 
-    }
+  background:#fff3d8;
 
+  color:#946700;
 
-    .team-league {
+}
 
-      margin-top: 4px;
 
-      color: #777;
 
-      font-size: 12px;
+/* TEAM */
 
-    }
 
+.team-card {
 
-    .team-arrow {
+  cursor:pointer;
 
-      color: #aaa;
+}
 
-      font-size: 24px;
 
-    }
+.team-head {
 
+  display:flex;
 
-    .team-details {
+  align-items:center;
 
-      display: none;
+  justify-content:space-between;
 
-      padding-top: 13px;
+}
 
-      margin-top: 13px;
 
-      border-top:
-        1px solid #eee;
+.team-name {
 
-    }
+  font-weight:900;
 
+}
 
-    .team-details.visible {
 
-      display: block;
+.team-liga {
 
-    }
+  margin-top:4px;
 
+  color:#777;
 
-    .team-detail-row {
+  font-size:12px;
 
-      margin-bottom: 9px;
+}
 
-      font-size: 13px;
 
-    }
+.team-details {
 
+  display:none;
 
-    .team-detail-row strong {
+  margin-top:13px;
 
-      display: block;
+  padding-top:13px;
 
-      margin-bottom: 2px;
+  border-top:
+    1px solid
+    #eee;
 
-    }
+}
 
 
+.team-details.visible {
 
-    /* =========================
-       STATUS
-    ========================= */
+  display:block;
 
+}
 
-    .status {
 
-      display: inline-block;
+.team-details p {
 
-      padding:
-        4px 8px;
+  margin-bottom:8px;
 
-      border-radius: 20px;
+}
 
-      font-size: 10px;
-      font-weight: 850;
 
-      text-transform: uppercase;
 
-    }
+/* EMPTY */
 
 
-    .status-kommend {
+.loading,
+.empty {
 
-      background: #e8f1ff;
-      color: #1457a7;
+  padding:20px;
 
-    }
+  border-radius:15px;
 
+  background:#f7f7f7;
 
-    .status-beendet {
+  color:#777;
 
-      background: #e7f6ed;
-      color: #16703a;
+  text-align:center;
 
-    }
+  font-size:13px;
 
+}
 
-    .status-abgesagt {
 
-      background: #ffeaea;
-      color: #a72424;
 
-    }
+/* FORM */
 
 
-    .status-verschoben {
+.form-group {
 
-      background: #fff3d8;
-      color: #946700;
+  margin-bottom:14px;
 
-    }
+}
 
 
+.form-group label {
 
-    /* =========================
-       LOADING / EMPTY
-    ========================= */
+  display:block;
 
+  margin-bottom:5px;
 
-    .loading {
+  font-size:12px;
 
-      padding: 25px 10px;
+  font-weight:800;
 
-      text-align: center;
+}
 
-      color: #888;
 
-      font-size: 13px;
+.form-input {
 
-    }
+  width:100%;
 
+  min-height:44px;
 
-    .empty {
+  padding:
+    10px 12px;
 
-      padding: 20px;
+  border:
+    1px solid
+    #d8d8d8;
 
-      border-radius: 15px;
+  border-radius:11px;
 
-      background: #f7f7f7;
+  background:white;
 
-      color: #777;
+}
 
-      text-align: center;
 
-      font-size: 13px;
+textarea.form-input {
 
-    }
+  min-height:130px;
 
+  resize:vertical;
 
-    .error-box {
+}
 
-      padding: 14px;
 
-      border-radius: 14px;
+.form-row {
 
-      background: #fff0f0;
+  display:grid;
 
-      color: #9b2929;
+  grid-template-columns:
+    1fr 1fr;
 
-      font-size: 12px;
+  gap:10px;
 
-      margin-bottom: 15px;
+}
 
-    }
 
+.admin-card {
 
+  border:
+    2px solid
+    #f1c400;
 
-    /* =========================
-       MODAL
-    ========================= */
+}
 
 
-    .modal {
+.admin-label {
 
-      display: none;
+  display:inline-block;
 
-      position: fixed;
+  padding:
+    5px 9px;
 
-      inset: 0;
+  margin-bottom:8px;
 
-      z-index: 500;
+  border-radius:20px;
 
-      background:
-        rgba(0,0,0,.55);
+  background:#171717;
 
-      padding:
-        20px;
+  color:#f4c400;
 
-      overflow-y: auto;
+  font-size:10px;
 
-    }
+  font-weight:900;
 
+}
 
-    .modal.visible {
 
-      display: flex;
+.admin-actions {
 
-      align-items: flex-end;
+  display:flex;
 
-      justify-content: center;
+  flex-wrap:wrap;
 
-    }
+  gap:7px;
 
+  margin-top:10px;
 
-    .modal-content {
+}
 
-      width: 100%;
-      max-width: 680px;
 
-      max-height: 85vh;
+.admin-list-item {
 
-      overflow-y: auto;
+  padding:
+    12px 0;
 
-      padding: 22px;
+  border-bottom:
+    1px solid
+    #eee;
 
-      border-radius:
-        24px 24px 12px 12px;
+}
 
-      background: white;
 
-      box-shadow:
-        0 10px 40px
-        rgba(0,0,0,.3);
+.admin-list-item:last-child {
 
-    }
+  border-bottom:none;
 
+}
 
-    .modal-close {
 
-      float: right;
+.login-status {
 
-      width: 36px;
-      height: 36px;
+  margin-top:10px;
 
-      border: none;
+  font-size:12px;
 
-      border-radius: 50%;
+  font-weight:700;
 
-      background: #eee;
+}
 
-      font-size: 20px;
 
-    }
 
+/* MODAL */
 
-    .modal-title {
 
-      padding-right: 45px;
+.modal {
 
-      margin-bottom: 7px;
+  display:none;
 
-      font-size: 23px;
-      font-weight: 900;
+  position:fixed;
 
-    }
+  inset:0;
 
+  z-index:500;
 
-    .modal-meta {
+  padding:20px;
 
-      color: #888;
+  background:
+    rgba(0,0,0,.55);
 
-      font-size: 11px;
+  overflow-y:auto;
 
-      margin-bottom: 18px;
+}
 
-    }
 
+.modal.visible {
 
-    .modal-text {
+  display:flex;
 
-      white-space: pre-wrap;
+  align-items:flex-end;
 
-      font-size: 14px;
+  justify-content:center;
 
-      line-height: 1.65;
+}
 
-      color: #444;
 
-    }
+.modal-content {
 
+  width:100%;
 
+  max-width:680px;
 
-    /* =========================
-       CONTACT
-    ========================= */
+  max-height:85vh;
 
+  overflow-y:auto;
 
-    .contact-row {
+  padding:22px;
 
-      padding:
-        14px 0;
+  border-radius:
+    24px 24px
+    12px 12px;
 
-      border-bottom:
-        1px solid #ededed;
+  background:white;
 
-    }
+}
 
 
-    .contact-label {
+.modal-close {
 
-      font-size: 13px;
-      font-weight: 850;
+  float:right;
 
-    }
+  width:36px;
+  height:36px;
 
+  border:none;
 
-    .contact-value {
+  border-radius:50%;
 
-      margin-top: 4px;
+  background:#eee;
 
-      color: #666;
+  font-size:20px;
 
-      font-size: 13px;
+}
 
-      line-height: 1.45;
 
-    }
+.modal-title {
 
+  margin-bottom:7px;
 
+  padding-right:45px;
 
-    /* =========================
-       NAV
-    ========================= */
+  font-size:23px;
 
+  font-weight:900;
 
-    .bottom-nav {
+}
 
-      position: fixed;
 
-      left: 50%;
-      bottom: 0;
+.modal-meta {
 
-      transform:
-        translateX(-50%);
+  margin-bottom:18px;
 
-      z-index: 200;
+  color:#888;
 
-      width: 100%;
-      max-width: 720px;
+  font-size:11px;
 
-      display: grid;
+}
 
-      grid-template-columns:
-        repeat(6,1fr);
 
-      padding:
+.modal-text {
 
-        7px
-        4px
+  white-space:pre-wrap;
 
-        calc(
-          7px +
-          env(safe-area-inset-bottom)
-        );
+  color:#444;
 
-      border-top:
-        1px solid #dedede;
+  font-size:14px;
 
-      background:
+  line-height:1.65;
 
-        rgba(
-          255,
-          255,
-          255,
-          .97
-        );
+}
 
-      backdrop-filter:
-        blur(16px);
 
-      -webkit-backdrop-filter:
-        blur(16px);
 
-    }
+/* CONTACT */
 
 
-    .nav-button {
+.contact-row {
 
-      min-width: 0;
+  padding:
+    14px 0;
 
-      padding:
-        5px 1px;
+  border-bottom:
+    1px solid
+    #ededed;
 
-      border: none;
+}
 
-      background: transparent;
 
-      color: #777;
+.contact-label {
 
-      font-size: 8px;
-      font-weight: 700;
+  font-size:13px;
 
-    }
+  font-weight:850;
 
+}
 
-    .nav-button.active {
 
-      color: #a98300;
+.contact-value {
 
-      font-weight: 900;
+  margin-top:4px;
 
-    }
+  color:#666;
 
+  font-size:13px;
 
-    .nav-icon {
+}
 
-      display: block;
 
-      margin-bottom: 3px;
 
-      font-size: 19px;
+/* NAV */
 
-    }
 
-  </style>
+.bottom-nav {
+
+  position:fixed;
+
+  left:50%;
+  bottom:0;
+
+  transform:
+    translateX(-50%);
+
+  z-index:200;
+
+  width:100%;
+  max-width:720px;
+
+  display:grid;
+
+  grid-template-columns:
+    repeat(6,1fr);
+
+  padding:
+    7px
+    4px
+    calc(
+      7px +
+      env(safe-area-inset-bottom)
+    );
+
+  border-top:
+    1px solid
+    #dedede;
+
+  background:
+    rgba(
+      255,
+      255,
+      255,
+      .97
+    );
+
+  backdrop-filter:
+    blur(16px);
+
+}
+
+
+.nav-button {
+
+  min-width:0;
+
+  padding:
+    5px 1px;
+
+  border:none;
+
+  background:transparent;
+
+  color:#777;
+
+  font-size:8px;
+
+  font-weight:700;
+
+}
+
+
+.nav-button.active {
+
+  color:#a98300;
+
+  font-weight:900;
+
+}
+
+
+.nav-icon {
+
+  display:block;
+
+  margin-bottom:3px;
+
+  font-size:19px;
+
+}
+
+
+</style>
 
 </head>
 
@@ -1312,590 +1332,1120 @@
 <div class="app">
 
 
-  <header class="header">
+<header class="header">
 
-    <img
-      src="./logo.png"
-      alt="FC Wängi Logo"
-      class="club-logo"
-    >
+  <img
+    src="./logo.png"
+    class="club-logo"
+    alt="FC Wängi"
+  >
 
-    <div class="header-info">
+  <div class="header-info">
 
-      <h1>
-        FC Wängi 1967
-      </h1>
+    <h1>
+      FC Wängi 1967
+    </h1>
 
-      <p>
-        Fussball mit Herz & Tradition
-      </p>
+    <p>
+      Fussball mit Herz & Tradition
+    </p>
 
-    </div>
+  </div>
 
-  </header>
+</header>
 
 
 
-  <main>
+<main>
 
 
-    <!-- =========================
-         HOME
-    ========================= -->
+<!-- HOME -->
 
 
-    <section
-      id="home"
-      class="page active"
-    >
+<section
+  id="home"
+  class="page active"
+>
 
 
-      <div class="hero">
+<div class="hero">
 
-        <div class="hero-label">
-          Willkommen beim FCW
-        </div>
+  <div class="hero-label">
+    WILLKOMMEN BEIM FCW
+  </div>
 
-        <h2>
-          FC Wängi
-        </h2>
+  <h2>
+    FC Wängi
+  </h2>
 
-        <p>
-          Die Vereins-App für Spieler,
-          Mitglieder, Eltern, Freunde
-          und Fans des FC Wängi 1967.
-        </p>
+  <p>
+    Die Vereins-App für Spieler,
+    Mitglieder, Eltern, Freunde
+    und Fans des FC Wängi 1967.
+  </p>
 
-      </div>
+</div>
 
 
 
-      <div class="notification-box">
+<div class="notification-box">
 
-        <h3>
-          🔔 FCW Mitteilungen
-        </h3>
+  <h3>
+    🔔 FCW Mitteilungen
+  </h3>
 
-        <p>
-          Erhalte Push-Mitteilungen über
-          Vereinsnews, Spiele,
-          Resultate, Matchberichte
-          und wichtige Aktivitäten.
-        </p>
+  <p>
+    Push-Mitteilungen für News,
+    Spiele, Resultate und
+    Matchberichte.
+  </p>
 
-        <button
-          class="button"
-          onclick="enableNotifications()"
-        >
-          Mitteilungen aktivieren
-        </button>
+  <button
+    class="button"
+    onclick="enableNotifications()"
+  >
+    Mitteilungen aktivieren
+  </button>
 
-        <button
-          class="button button-outline"
-          onclick="showPushToken()"
-        >
-          Push-Token anzeigen
-        </button>
+  <div
+    id="notificationStatus"
+    class="notification-status"
+  ></div>
 
-        <div
-          id="notificationStatus"
-          class="notification-status"
-        >
-          Status wird geprüft...
-        </div>
+</div>
 
-        <div
-          id="tokenBox"
-          class="token-box"
-        >
 
-          <textarea
-            id="tokenText"
-            class="token-text"
-            readonly
-          ></textarea>
 
-          <button
-            class="button button-small"
-            onclick="copyPushToken()"
-          >
-            Token kopieren
-          </button>
+<h2 class="section-heading">
+  Nächstes Spiel
+</h2>
 
-          <button
-            class="button button-outline button-small"
-            onclick="hidePushToken()"
-          >
-            Ausblenden
-          </button>
+<div id="homeNextGame">
 
-        </div>
+  <div class="loading">
+    Wird geladen...
+  </div>
 
-      </div>
+</div>
 
 
 
-      <h2 class="section-heading">
-        Nächstes Spiel
-      </h2>
+<h2 class="section-heading">
+  Letztes Resultat
+</h2>
 
-      <div id="homeNextGame">
+<div id="homeResult">
 
-        <div class="loading">
-          Spiel wird geladen...
-        </div>
+  <div class="loading">
+    Wird geladen...
+  </div>
 
-      </div>
+</div>
 
 
 
-      <h2 class="section-heading">
-        Letztes Resultat
-      </h2>
+<h2 class="section-heading">
+  Aktuelle News
+</h2>
 
-      <div id="homeLastResult">
+<div id="homeNews">
 
-        <div class="loading">
-          Resultat wird geladen...
-        </div>
+  <div class="loading">
+    Wird geladen...
+  </div>
 
-      </div>
+</div>
 
 
 
-      <h2 class="section-heading">
-        Aktuelle News
-      </h2>
+<h2 class="section-heading">
+  Schnellzugriff
+</h2>
 
-      <div id="homeNews">
 
-        <div class="loading">
-          News werden geladen...
-        </div>
+<div class="quick-grid">
 
-      </div>
 
+<button
+  class="quick-button"
+  onclick="openPage('news')"
+>
 
+<span class="quick-icon">
+📰
+</span>
 
-      <h2 class="section-heading">
-        Schnellzugriff
-      </h2>
+<strong>
+News
+</strong>
 
+<small>
+Neues vom Verein
+</small>
 
-      <div class="quick-grid">
+</button>
 
 
-        <button
-          class="quick-button"
-          onclick="openPage('news')"
-        >
+<button
+  class="quick-button"
+  onclick="openPage('teams')"
+>
 
-          <span class="quick-icon">
-            📰
-          </span>
+<span class="quick-icon">
+👕
+</span>
 
-          <strong>
-            News
-          </strong>
+<strong>
+Teams
+</strong>
 
-          <small>
-            Neues vom Verein
-          </small>
+<small>
+Mannschaften
+</small>
 
-        </button>
+</button>
 
 
-        <button
-          class="quick-button"
-          onclick="openPage('teams')"
-        >
+<button
+  class="quick-button"
+  onclick="openPage('spielbetrieb')"
+>
 
-          <span class="quick-icon">
-            👕
-          </span>
+<span class="quick-icon">
+⚽
+</span>
 
-          <strong>
-            Teams
-          </strong>
+<strong>
+Spielbetrieb
+</strong>
 
-          <small>
-            Unsere Mannschaften
-          </small>
+<small>
+Spiele & Resultate
+</small>
 
-        </button>
+</button>
 
 
-        <button
-          class="quick-button"
-          onclick="openPage('spielbetrieb')"
-        >
+<button
+  class="quick-button"
+  onclick="openPage('matchberichte')"
+>
 
-          <span class="quick-icon">
-            ⚽
-          </span>
+<span class="quick-icon">
+📝
+</span>
 
-          <strong>
-            Spielbetrieb
-          </strong>
+<strong>
+Matchberichte
+</strong>
 
-          <small>
-            Spiele & Resultate
-          </small>
+<small>
+Berichte unserer Teams
+</small>
 
-        </button>
+</button>
 
 
-        <button
-          class="quick-button"
-          onclick="openPage('matchberichte')"
-        >
+</div>
 
-          <span class="quick-icon">
-            📝
-          </span>
 
-          <strong>
-            Matchberichte
-          </strong>
+</section>
 
-          <small>
-            Berichte unserer Teams
-          </small>
 
-        </button>
 
+<!-- NEWS -->
 
-      </div>
 
+<section
+  id="news"
+  class="page"
+>
 
-    </section>
+<h1 class="page-title">
+News
+</h1>
 
+<p class="page-description">
+Aktuelles rund um den FC Wängi.
+</p>
 
+<div id="newsList">
+<div class="loading">
+News werden geladen...
+</div>
+</div>
 
-    <!-- =========================
-         NEWS
-    ========================= -->
+</section>
 
 
-    <section
-      id="news"
-      class="page"
-    >
 
-      <h1 class="page-title">
-        News
-      </h1>
+<!-- TEAMS -->
 
-      <p class="page-description">
-        Aktuelles rund um den FC Wängi 1967.
-      </p>
 
+<section
+  id="teams"
+  class="page"
+>
 
-      <div id="newsList">
+<h1 class="page-title">
+Teams
+</h1>
 
-        <div class="loading">
-          News werden geladen...
-        </div>
+<p class="page-description">
+Unsere Mannschaften.
+</p>
 
-      </div>
+<div id="teamsList">
+<div class="loading">
+Teams werden geladen...
+</div>
+</div>
 
-    </section>
+</section>
 
 
 
-    <!-- =========================
-         TEAMS
-    ========================= -->
+<!-- SPIELE -->
 
 
-    <section
-      id="teams"
-      class="page"
-    >
+<section
+  id="spielbetrieb"
+  class="page"
+>
 
-      <h1 class="page-title">
-        Teams
-      </h1>
+<h1 class="page-title">
+Spielbetrieb
+</h1>
 
-      <p class="page-description">
-        Unsere Mannschaften.
-      </p>
+<p class="page-description">
+Spiele und Resultate.
+</p>
 
 
-      <div id="teamsList">
+<h2 class="section-heading">
+Kommende Spiele
+</h2>
 
-        <div class="loading">
-          Teams werden geladen...
-        </div>
+<div id="upcomingGames">
+<div class="loading">
+Wird geladen...
+</div>
+</div>
 
-      </div>
 
-    </section>
+<h2 class="section-heading">
+Resultate
+</h2>
 
+<div id="resultsList">
+<div class="loading">
+Wird geladen...
+</div>
+</div>
 
 
-    <!-- =========================
-         SPIELBETRIEB
-    ========================= -->
+</section>
 
 
-    <section
-      id="spielbetrieb"
-      class="page"
-    >
 
-      <h1 class="page-title">
-        Spielbetrieb
-      </h1>
+<!-- MATCHBERICHTE -->
 
-      <p class="page-description">
-        Spiele und Resultate des FC Wängi.
-      </p>
 
+<section
+  id="matchberichte"
+  class="page"
+>
 
-      <h2 class="section-heading">
-        Kommende Spiele
-      </h2>
+<h1 class="page-title">
+Matchberichte
+</h1>
 
-      <div id="upcomingGames">
+<p class="page-description">
+Berichte unserer Mannschaften.
+</p>
 
-        <div class="loading">
-          Spiele werden geladen...
-        </div>
+<div id="reportsList">
+<div class="loading">
+Wird geladen...
+</div>
+</div>
 
-      </div>
+</section>
 
 
-      <h2
-        class="section-heading"
-        style="margin-top:24px;"
-      >
-        Resultate
-      </h2>
 
-      <div id="resultsList">
+<!-- KONTAKT -->
 
-        <div class="loading">
-          Resultate werden geladen...
-        </div>
 
-      </div>
+<section
+  id="kontakt"
+  class="page"
+>
 
-    </section>
+<h1 class="page-title">
+Kontakt
+</h1>
 
+<p class="page-description">
+FC Wängi 1967
+</p>
 
 
-    <!-- =========================
-         MATCHBERICHTE
-    ========================= -->
+<div class="card">
 
+<div class="contact-row">
 
-    <section
-      id="matchberichte"
-      class="page"
-    >
+<div class="contact-label">
+📍 Verein
+</div>
 
-      <h1 class="page-title">
-        Matchberichte
-      </h1>
+<div class="contact-value">
+FC Wängi 1967<br>
+9545 Wängi<br>
+Schweiz
+</div>
 
-      <p class="page-description">
-        Berichte unserer Mannschaften.
-      </p>
+</div>
 
 
-      <div id="reportsList">
+<div class="contact-row">
 
-        <div class="loading">
-          Matchberichte werden geladen...
-        </div>
+<div class="contact-label">
+⚽ Verband
+</div>
 
-      </div>
+<div class="contact-value">
+Ostschweizer Fussballverband
+</div>
 
-    </section>
+</div>
 
+</div>
 
 
-    <!-- =========================
-         KONTAKT
-    ========================= -->
 
+<div class="card">
 
-    <section
-      id="kontakt"
-      class="page"
-    >
+<h3>
+🔐 Administration
+</h3>
 
-      <h1 class="page-title">
-        Kontakt
-      </h1>
+<p>
+Nur für berechtigte
+FC-Wängi-Verantwortliche.
+</p>
 
-      <p class="page-description">
-        FC Wängi 1967
-      </p>
+<button
+  class="button"
+  onclick="openPage('admin')"
+>
+Admin-Bereich öffnen
+</button>
 
+</div>
 
-      <div class="card">
 
+</section>
 
-        <div class="contact-row">
 
-          <div class="contact-label">
-            📍 Verein
-          </div>
 
-          <div class="contact-value">
-            FC Wängi 1967<br>
-            9545 Wängi<br>
-            Schweiz
-          </div>
+<!-- ADMIN -->
 
-        </div>
 
+<section
+  id="admin"
+  class="page"
+>
 
-        <div class="contact-row">
+<button
+  class="button button-outline"
+  onclick="openPage('kontakt')"
+>
+← Zurück
+</button>
 
-          <div class="contact-label">
-            🌐 Vereins-App
-          </div>
 
-          <div class="contact-value">
-            FC Wängi 1967
-          </div>
+<h1
+  class="page-title"
+  style="margin-top:20px;"
+>
+FCW Admin
+</h1>
 
-        </div>
+<p class="page-description">
+Vereinsinhalte direkt verwalten.
+</p>
 
 
-        <div class="contact-row">
 
-          <div class="contact-label">
-            ⚽ Verband
-          </div>
+<div
+  id="adminLogin"
+  class="card admin-card"
+>
 
-          <div class="contact-value">
-            Ostschweizer Fussballverband
-          </div>
+<span class="admin-label">
+ADMIN LOGIN
+</span>
 
-        </div>
+<h3>
+Anmelden
+</h3>
 
 
-      </div>
+<div class="form-group">
 
-    </section>
+<label>
+E-Mail
+</label>
 
+<input
+  id="adminEmail"
+  type="email"
+  class="form-input"
+>
 
-  </main>
+</div>
+
+
+<div class="form-group">
+
+<label>
+Passwort
+</label>
+
+<input
+  id="adminPassword"
+  type="password"
+  class="form-input"
+>
+
+</div>
+
+
+<button
+  class="button button-yellow"
+  onclick="loginAdmin()"
+>
+Anmelden
+</button>
+
+
+<div
+  id="loginStatus"
+  class="login-status"
+></div>
 
 
 </div>
 
 
 
-<!-- =========================
-     BOTTOM NAV
-========================= -->
+<div
+  id="adminPanel"
+  style="display:none;"
+>
+
+
+<div class="card admin-card">
+
+<span class="admin-label">
+ANGEMELDET
+</span>
+
+<h3>
+FCW Administration
+</h3>
+
+<p id="adminUserText"></p>
+
+<button
+  class="button button-outline"
+  onclick="logoutAdmin()"
+>
+Abmelden
+</button>
+
+</div>
+
+
+
+<!-- NEWS ADMIN -->
+
+
+<div class="card admin-card">
+
+<span class="admin-label">
+NEWS
+</span>
+
+<h3>
+News veröffentlichen
+</h3>
+
+<input
+  id="newsEditId"
+  type="hidden"
+>
+
+
+<div class="form-group">
+
+<label>
+Titel
+</label>
+
+<input
+  id="newsTitle"
+  class="form-input"
+  placeholder="z.B. Saisonstart"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Kategorie
+</label>
+
+<input
+  id="newsCategory"
+  class="form-input"
+  placeholder="z.B. 1. Mannschaft"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Datum & Zeit
+</label>
+
+<input
+  id="newsDate"
+  type="datetime-local"
+  class="form-input"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Text
+</label>
+
+<textarea
+  id="newsText"
+  class="form-input"
+  placeholder="News schreiben..."
+></textarea>
+
+</div>
+
+
+<button
+  class="button button-green"
+  onclick="saveNews()"
+>
+News speichern
+</button>
+
+<button
+  class="button button-outline"
+  onclick="resetNewsForm()"
+>
+Abbrechen
+</button>
+
+
+<div id="adminNewsList"></div>
+
+
+</div>
+
+
+
+<!-- SPIEL ADMIN -->
+
+
+<div class="card admin-card">
+
+<span class="admin-label">
+SPIELBETRIEB
+</span>
+
+<h3>
+Spiel / Resultat erfassen
+</h3>
+
+
+<input
+  id="gameEditId"
+  type="hidden"
+>
+
+
+<div class="form-group">
+
+<label>
+Mannschaft
+</label>
+
+<input
+  id="gameTeam"
+  class="form-input"
+  placeholder="1. Mannschaft"
+>
+
+</div>
+
+
+<div class="form-row">
+
+
+<div class="form-group">
+
+<label>
+Heimteam
+</label>
+
+<input
+  id="gameHome"
+  class="form-input"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Gastteam
+</label>
+
+<input
+  id="gameAway"
+  class="form-input"
+>
+
+</div>
+
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Datum & Zeit
+</label>
+
+<input
+  id="gameDate"
+  type="datetime-local"
+  class="form-input"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Status
+</label>
+
+<select
+  id="gameStatus"
+  class="form-input"
+>
+
+<option value="kommend">
+Kommend
+</option>
+
+<option value="beendet">
+Beendet
+</option>
+
+<option value="verschoben">
+Verschoben
+</option>
+
+<option value="abgesagt">
+Abgesagt
+</option>
+
+</select>
+
+</div>
+
+
+<div class="form-row">
+
+
+<div class="form-group">
+
+<label>
+Tore Heim
+</label>
+
+<input
+  id="gameHomeGoals"
+  type="number"
+  class="form-input"
+  value="0"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Tore Gast
+</label>
+
+<input
+  id="gameAwayGoals"
+  type="number"
+  class="form-input"
+  value="0"
+>
+
+</div>
+
+
+</div>
+
+
+<button
+  class="button button-green"
+  onclick="saveGame()"
+>
+Spiel speichern
+</button>
+
+<button
+  class="button button-outline"
+  onclick="resetGameForm()"
+>
+Abbrechen
+</button>
+
+
+<div id="adminGamesList"></div>
+
+
+</div>
+
+
+
+<!-- MATCHBERICHT ADMIN -->
+
+
+<div class="card admin-card">
+
+<span class="admin-label">
+MATCHBERICHT
+</span>
+
+<h3>
+Matchbericht veröffentlichen
+</h3>
+
+
+<input
+  id="reportEditId"
+  type="hidden"
+>
+
+
+<div class="form-group">
+
+<label>
+Titel
+</label>
+
+<input
+  id="reportTitle"
+  class="form-input"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Mannschaft
+</label>
+
+<input
+  id="reportTeam"
+  class="form-input"
+  placeholder="1. Mannschaft"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Datum
+</label>
+
+<input
+  id="reportDate"
+  type="datetime-local"
+  class="form-input"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Bericht
+</label>
+
+<textarea
+  id="reportText"
+  class="form-input"
+></textarea>
+
+</div>
+
+
+<button
+  class="button button-green"
+  onclick="saveReport()"
+>
+Bericht speichern
+</button>
+
+<button
+  class="button button-outline"
+  onclick="resetReportForm()"
+>
+Abbrechen
+</button>
+
+
+<div id="adminReportsList"></div>
+
+
+</div>
+
+
+
+<!-- TEAM ADMIN -->
+
+
+<div class="card admin-card">
+
+<span class="admin-label">
+TEAMS
+</span>
+
+<h3>
+Team verwalten
+</h3>
+
+
+<input
+  id="teamEditId"
+  type="hidden"
+>
+
+
+<div class="form-group">
+
+<label>
+Name
+</label>
+
+<input
+  id="teamNameInput"
+  class="form-input"
+  placeholder="1. Mannschaft"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Liga
+</label>
+
+<input
+  id="teamLeagueInput"
+  class="form-input"
+  placeholder="2. Liga"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Trainer
+</label>
+
+<input
+  id="teamCoachInput"
+  class="form-input"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Training
+</label>
+
+<input
+  id="teamTrainingInput"
+  class="form-input"
+  placeholder="Di & Do 19:30"
+>
+
+</div>
+
+
+<div class="form-group">
+
+<label>
+Sortierung
+</label>
+
+<input
+  id="teamSortInput"
+  type="number"
+  class="form-input"
+  value="1"
+>
+
+</div>
+
+
+<button
+  class="button button-green"
+  onclick="saveTeam()"
+>
+Team speichern
+</button>
+
+<button
+  class="button button-outline"
+  onclick="resetTeamForm()"
+>
+Abbrechen
+</button>
+
+
+<div id="adminTeamsList"></div>
+
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+</div>
+
+
+
+<!-- NAV -->
 
 
 <nav class="bottom-nav">
 
 
-  <button
-    class="nav-button active"
-    data-page="home"
-    onclick="openPage('home')"
-  >
-
-    <span class="nav-icon">
-      🏠
-    </span>
-
-    Home
-
-  </button>
+<button
+  class="nav-button active"
+  data-page="home"
+  onclick="openPage('home')"
+>
+<span class="nav-icon">🏠</span>
+Home
+</button>
 
 
-  <button
-    class="nav-button"
-    data-page="news"
-    onclick="openPage('news')"
-  >
-
-    <span class="nav-icon">
-      📰
-    </span>
-
-    News
-
-  </button>
+<button
+  class="nav-button"
+  data-page="news"
+  onclick="openPage('news')"
+>
+<span class="nav-icon">📰</span>
+News
+</button>
 
 
-  <button
-    class="nav-button"
-    data-page="teams"
-    onclick="openPage('teams')"
-  >
-
-    <span class="nav-icon">
-      👕
-    </span>
-
-    Teams
-
-  </button>
+<button
+  class="nav-button"
+  data-page="teams"
+  onclick="openPage('teams')"
+>
+<span class="nav-icon">👕</span>
+Teams
+</button>
 
 
-  <button
-    class="nav-button"
-    data-page="spielbetrieb"
-    onclick="openPage('spielbetrieb')"
-  >
-
-    <span class="nav-icon">
-      ⚽
-    </span>
-
-    Spiele
-
-  </button>
+<button
+  class="nav-button"
+  data-page="spielbetrieb"
+  onclick="openPage('spielbetrieb')"
+>
+<span class="nav-icon">⚽</span>
+Spiele
+</button>
 
 
-  <button
-    class="nav-button"
-    data-page="matchberichte"
-    onclick="openPage('matchberichte')"
-  >
-
-    <span class="nav-icon">
-      📝
-    </span>
-
-    Berichte
-
-  </button>
+<button
+  class="nav-button"
+  data-page="matchberichte"
+  onclick="openPage('matchberichte')"
+>
+<span class="nav-icon">📝</span>
+Berichte
+</button>
 
 
-  <button
-    class="nav-button"
-    data-page="kontakt"
-    onclick="openPage('kontakt')"
-  >
-
-    <span class="nav-icon">
-      ☎️
-    </span>
-
-    Kontakt
-
-  </button>
+<button
+  class="nav-button"
+  data-page="kontakt"
+  onclick="openPage('kontakt')"
+>
+<span class="nav-icon">☎️</span>
+Kontakt
+</button>
 
 
 </nav>
 
 
 
-<!-- =========================
-     MODAL
-========================= -->
+<!-- MODAL -->
 
 
 <div
@@ -1904,66 +2454,66 @@
   onclick="modalBackgroundClick(event)"
 >
 
-  <div class="modal-content">
+<div class="modal-content">
 
-    <button
-      class="modal-close"
-      onclick="closeModal()"
-    >
-      ×
-    </button>
+<button
+  class="modal-close"
+  onclick="closeModal()"
+>
+×
+</button>
 
-    <div
-      id="modalTag"
-      class="tag"
-    ></div>
+<div
+  id="modalTag"
+  class="tag"
+></div>
 
-    <h2
-      id="modalTitle"
-      class="modal-title"
-    ></h2>
+<h2
+  id="modalTitle"
+  class="modal-title"
+></h2>
 
-    <div
-      id="modalMeta"
-      class="modal-meta"
-    ></div>
+<div
+  id="modalMeta"
+  class="modal-meta"
+></div>
 
-    <div
-      id="modalText"
-      class="modal-text"
-    ></div>
+<div
+  id="modalText"
+  class="modal-text"
+></div>
 
-  </div>
+</div>
 
 </div>
 
 
 
-<!-- =========================
-     FIREBASE SDK
-========================= -->
+<!-- FIREBASE -->
 
 
 <script
-  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"
-></script>
+src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js">
+</script>
 
 <script
-  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"
-></script>
+src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js">
+</script>
 
 <script
-  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"
-></script>
+src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js">
+</script>
+
+<script
+src="https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js">
+</script>
 
 
 
 <script>
 
 
-/* =========================
-   FIREBASE CONFIG
-========================= */
+/* FIREBASE CONFIG */
 
 
 const firebaseConfig = {
@@ -1994,235 +2544,176 @@ firebase.initializeApp(
 );
 
 
-const messaging =
-  firebase.messaging();
+const auth =
+  firebase.auth();
 
 
 const db =
   firebase.firestore();
 
 
+const messaging =
+  firebase.messaging();
+
+
 const VAPID_KEY =
-  "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
+"BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 
 
-/* =========================
-   DATA CACHE
-========================= */
-
-
-let newsData = [];
-let gamesData = [];
-let reportsData = [];
-let teamsData = [];
+let newsData=[];
+let gamesData=[];
+let reportsData=[];
+let teamsData=[];
 
 
 
-/* =========================
-   HELPER
-========================= */
+/* HELPERS */
 
 
-function timestampToDate(
-  timestamp
-) {
+function esc(text){
 
+  const d=
+    document.createElement("div");
 
-  if (!timestamp) {
-    return null;
-  }
+  d.textContent=
+    text ?? "";
 
-
-  if (
-    typeof timestamp.toDate ===
-    "function"
-  ) {
-
-    return timestamp.toDate();
-
-  }
-
-
-  return new Date(
-    timestamp
-  );
+  return d.innerHTML;
 
 }
 
 
+function toDate(timestamp){
+
+  if(!timestamp){
+    return null;
+  }
+
+  if(
+    typeof timestamp.toDate ===
+    "function"
+  ){
+    return timestamp.toDate();
+  }
+
+  return new Date(timestamp);
+
+}
+
 
 function formatDate(
   timestamp,
-  includeTime = false
-) {
+  time=false
+){
 
+  const date=
+    toDate(timestamp);
 
-  const date =
-    timestampToDate(
-      timestamp
-    );
-
-
-  if (
-    !date ||
-    Number.isNaN(
-      date.getTime()
-    )
-  ) {
-
+  if(!date){
     return "";
-
   }
 
+  const options={
 
-  const options = {
-
-    day:
-      "2-digit",
-
-    month:
-      "2-digit",
-
-    year:
-      "numeric"
+    day:"2-digit",
+    month:"2-digit",
+    year:"numeric"
 
   };
 
+  if(time){
 
-  if (
-    includeTime
-  ) {
-
-    options.hour =
+    options.hour=
       "2-digit";
 
-    options.minute =
+    options.minute=
       "2-digit";
 
   }
-
 
   return new Intl
     .DateTimeFormat(
       "de-CH",
       options
     )
-    .format(
-      date
+    .format(date);
+
+}
+
+
+function dateInputValue(
+  timestamp
+){
+
+  const date=
+    toDate(timestamp);
+
+  if(!date){
+    return "";
+  }
+
+  const local=
+    new Date(
+      date.getTime() -
+      date.getTimezoneOffset()*60000
+    );
+
+  return local
+    .toISOString()
+    .slice(0,16);
+
+}
+
+
+function inputTimestamp(
+  id
+){
+
+  const value=
+    document
+      .getElementById(id)
+      .value;
+
+  if(!value){
+
+    return firebase
+      .firestore
+      .Timestamp
+      .now();
+
+  }
+
+  return firebase
+    .firestore
+    .Timestamp
+    .fromDate(
+      new Date(value)
     );
 
 }
 
 
 
-function escapeHtml(
-  text
-) {
+/* NAV */
 
 
-  const div =
-    document.createElement(
-      "div"
-    );
-
-
-  div.textContent =
-    text ?? "";
-
-
-  return div.innerHTML;
-
-}
-
-
-
-function normalizeStatus(
-  status
-) {
-
-  return String(
-    status || ""
-  )
-  .trim()
-  .toLowerCase();
-
-}
-
-
-
-function statusClass(
-  status
-) {
-
-
-  const clean =
-    normalizeStatus(
-      status
-    );
-
-
-  if (
-    clean === "beendet"
-  ) {
-    return "status-beendet";
-  }
-
-
-  if (
-    clean === "abgesagt"
-  ) {
-    return "status-abgesagt";
-  }
-
-
-  if (
-    clean === "verschoben"
-  ) {
-    return "status-verschoben";
-  }
-
-
-  return "status-kommend";
-
-}
-
-
-
-/* =========================
-   NAVIGATION
-========================= */
-
-
-function openPage(
-  pageName
-) {
-
+function openPage(name){
 
   document
-    .querySelectorAll(
-      ".page"
-    )
+    .querySelectorAll(".page")
     .forEach(
-      page => {
-
-        page.classList.remove(
+      p =>
+        p.classList.remove(
           "active"
-        );
-
-      }
+        )
     );
 
 
-  const page =
-    document.getElementById(
-      pageName
-    );
+  const page=
+    document.getElementById(name);
 
-
-  if (
-    page
-  ) {
+  if(page){
 
     page.classList.add(
       "active"
@@ -2236,1522 +2727,772 @@ function openPage(
       ".nav-button"
     )
     .forEach(
-      button => {
+      b => {
 
-
-        button.classList.remove(
+        b.classList.remove(
           "active"
         );
 
+        if(
+          b.dataset.page ===
+          name
+        ){
 
-        if (
-          button.dataset.page ===
-          pageName
-        ) {
-
-          button.classList.add(
+          b.classList.add(
             "active"
           );
 
         }
 
-
       }
     );
 
 
-  localStorage.setItem(
-    "fcwPage",
-    pageName
-  );
-
-
   window.scrollTo({
-    top: 0,
-    behavior: "smooth"
+    top:0,
+    behavior:"smooth"
   });
 
 }
 
 
 
-/* =========================
-   FIRESTORE NEWS
-========================= */
+/* FIRESTORE LISTENERS */
 
 
-function listenToNews() {
+db.collection("news")
+.onSnapshot(snapshot=>{
 
+  newsData=[];
 
-  db.collection(
-    "news"
-  )
-  .onSnapshot(
+  snapshot.forEach(doc=>{
 
-    snapshot => {
+    const d=doc.data();
 
-
-      newsData = [];
-
-
-      snapshot.forEach(
-        doc => {
-
-
-          const data =
-            doc.data();
-
-
-          if (
-            data.aktiv === false
-          ) {
-
-            return;
-
-          }
-
-
-          newsData.push({
-
-            id:
-              doc.id,
-
-            ...data
-
-          });
-
-
-        }
-      );
-
-
-      newsData.sort(
-        (a,b) => {
-
-          const dateA =
-            timestampToDate(
-              a.datum
-            )?.getTime() || 0;
-
-          const dateB =
-            timestampToDate(
-              b.datum
-            )?.getTime() || 0;
-
-
-          return dateB - dateA;
-
-        }
-      );
-
-
-      renderNews();
-
-      renderHomeNews();
-
-
-    },
-
-    error => {
-
-
-      console.error(
-        "News Fehler:",
-        error
-      );
-
-
-      document
-        .getElementById(
-          "newsList"
-        )
-        .innerHTML =
-
-        `<div class="error-box">
-          News konnten nicht geladen werden.
-        </div>`;
-
-
+    if(d.aktiv===false){
+      return;
     }
 
+    newsData.push({
+      id:doc.id,
+      ...d
+    });
+
+  });
+
+
+  newsData.sort(
+    (a,b)=>
+      (toDate(b.datum)?.getTime()||0) -
+      (toDate(a.datum)?.getTime()||0)
   );
 
-}
+
+  renderNews();
+  renderHome();
+  renderAdminLists();
+
+});
 
 
 
-function renderNews() {
+db.collection("spiele")
+.onSnapshot(snapshot=>{
+
+  gamesData=[];
+
+  snapshot.forEach(doc=>{
+
+    gamesData.push({
+      id:doc.id,
+      ...doc.data()
+    });
+
+  });
 
 
-  const container =
+  gamesData.sort(
+    (a,b)=>
+      (toDate(a.datum)?.getTime()||0) -
+      (toDate(b.datum)?.getTime()||0)
+  );
+
+
+  renderGames();
+  renderHome();
+  renderAdminLists();
+
+});
+
+
+
+db.collection("matchberichte")
+.onSnapshot(snapshot=>{
+
+  reportsData=[];
+
+  snapshot.forEach(doc=>{
+
+    const d=doc.data();
+
+    if(d.aktiv===false){
+      return;
+    }
+
+    reportsData.push({
+      id:doc.id,
+      ...d
+    });
+
+  });
+
+
+  reportsData.sort(
+    (a,b)=>
+      (toDate(b.datum)?.getTime()||0) -
+      (toDate(a.datum)?.getTime()||0)
+  );
+
+
+  renderReports();
+  renderAdminLists();
+
+});
+
+
+
+db.collection("teams")
+.onSnapshot(snapshot=>{
+
+  teamsData=[];
+
+  snapshot.forEach(doc=>{
+
+    const d=doc.data();
+
+    if(d.aktiv===false){
+      return;
+    }
+
+    teamsData.push({
+      id:doc.id,
+      ...d
+    });
+
+  });
+
+
+  teamsData.sort(
+    (a,b)=>
+      Number(
+        a.sortierung||999
+      ) -
+      Number(
+        b.sortierung||999
+      )
+  );
+
+
+  renderTeams();
+  renderAdminLists();
+
+});
+
+
+
+/* NEWS */
+
+
+function renderNews(){
+
+  const c=
     document.getElementById(
       "newsList"
     );
 
 
-  if (
-    newsData.length === 0
-  ) {
+  if(!newsData.length){
 
-
-    container.innerHTML =
-
+    c.innerHTML=
       `<div class="empty">
-        Aktuell sind keine News vorhanden.
+      Keine News vorhanden.
       </div>`;
-
 
     return;
 
   }
 
 
-  container.innerHTML =
-    newsData
-      .map(
-        item => {
+  c.innerHTML=
+    newsData.map(n=>`
 
-          return `
-
-            <div
-              class="card news-card"
-              onclick="openNews('${item.id}')"
-            >
-
-              <span class="tag">
-                ${escapeHtml(
-                  item.kategorie ||
-                  "News"
-                )}
-              </span>
-
-              <div class="meta">
-                ${formatDate(
-                  item.datum
-                )}
-              </div>
-
-              <h3>
-                ${escapeHtml(
-                  item.titel ||
-                  "FC Wängi News"
-                )}
-              </h3>
-
-              <p>
-                ${escapeHtml(
-                  String(
-                    item.text || ""
-                  )
-                  .substring(
-                    0,
-                    180
-                  )
-                )}
-
-                ${
-                  String(
-                    item.text || ""
-                  ).length > 180
-                  ?
-                  "..."
-                  :
-                  ""
-                }
-              </p>
-
-              <button
-                class="button"
-              >
-                Weiterlesen
-              </button>
-
-            </div>
-
-          `;
-
-        }
-      )
-      .join("");
-
-}
-
-
-
-function renderHomeNews() {
-
-
-  const container =
-    document.getElementById(
-      "homeNews"
-    );
-
-
-  if (
-    newsData.length === 0
-  ) {
-
-
-    container.innerHTML =
-
-      `<div class="empty">
-        Noch keine News vorhanden.
-      </div>`;
-
-
-    return;
-
-  }
-
-
-  const item =
-    newsData[0];
-
-
-  container.innerHTML = `
-
-    <div
-      class="card news-card"
-      onclick="openNews('${item.id}')"
-    >
+      <div
+        class="card"
+        onclick="openNews('${n.id}')"
+      >
 
       <span class="tag">
-        ${escapeHtml(
-          item.kategorie ||
-          "News"
-        )}
+      ${esc(n.kategorie||"News")}
       </span>
 
       <div class="meta">
-        ${formatDate(
-          item.datum
-        )}
+      ${formatDate(n.datum)}
       </div>
 
       <h3>
-        ${escapeHtml(
-          item.titel ||
-          "FC Wängi News"
-        )}
+      ${esc(n.titel)}
       </h3>
 
       <p>
-        ${escapeHtml(
-          String(
-            item.text || ""
-          )
-          .substring(
-            0,
-            130
-          )
-        )}
-
-        ${
-          String(
-            item.text || ""
-          ).length > 130
-          ?
-          "..."
-          :
-          ""
-        }
+      ${esc(
+        String(n.text||"")
+        .substring(0,180)
+      )}
       </p>
 
-    </div>
+      </div>
 
-  `;
+    `).join("");
 
 }
 
 
+function openNews(id){
 
-function openNews(
-  id
-) {
-
-
-  const item =
+  const n=
     newsData.find(
-      news =>
-        news.id === id
+      x=>x.id===id
     );
 
-
-  if (!item) {
+  if(!n){
     return;
   }
 
-
-  openModal({
-
-    tag:
-      item.kategorie ||
-      "News",
-
-    title:
-      item.titel ||
-      "FC Wängi News",
-
-    meta:
-      formatDate(
-        item.datum
-      ),
-
-    text:
-      item.text ||
-      ""
-
-  });
-
-}
-
-
-
-/* =========================
-   FIRESTORE GAMES
-========================= */
-
-
-function listenToGames() {
-
-
-  db.collection(
-    "spiele"
-  )
-  .onSnapshot(
-
-    snapshot => {
-
-
-      gamesData = [];
-
-
-      snapshot.forEach(
-        doc => {
-
-
-          gamesData.push({
-
-            id:
-              doc.id,
-
-            ...doc.data()
-
-          });
-
-
-        }
-      );
-
-
-      gamesData.sort(
-        (a,b) => {
-
-          const dateA =
-            timestampToDate(
-              a.datum
-            )?.getTime() || 0;
-
-          const dateB =
-            timestampToDate(
-              b.datum
-            )?.getTime() || 0;
-
-
-          return dateA - dateB;
-
-        }
-      );
-
-
-      renderGames();
-
-      renderHomeGame();
-
-
-    },
-
-    error => {
-
-
-      console.error(
-        "Spiel Fehler:",
-        error
-      );
-
-
-      document
-        .getElementById(
-          "upcomingGames"
-        )
-        .innerHTML =
-
-        `<div class="error-box">
-          Spiele konnten nicht geladen werden.
-        </div>`;
-
-
-    }
-
+  openModal(
+    n.kategorie||"News",
+    n.titel,
+    formatDate(n.datum),
+    n.text
   );
 
 }
 
 
 
-function renderGames() {
+/* GAMES */
 
 
-  const upcoming =
-    gamesData.filter(
-      game => {
+function gameCard(
+  g,
+  score
+){
 
-        const status =
-          normalizeStatus(
-            game.status
-          );
-
-
-        return (
-          status === "kommend" ||
-          status === "verschoben"
-        );
-
-      }
-    );
-
-
-  const finished =
-    gamesData
-      .filter(
-        game =>
-          normalizeStatus(
-            game.status
-          ) ===
-          "beendet"
-      )
-      .sort(
-        (a,b) => {
-
-          const dateA =
-            timestampToDate(
-              a.datum
-            )?.getTime() || 0;
-
-          const dateB =
-            timestampToDate(
-              b.datum
-            )?.getTime() || 0;
-
-
-          return dateB - dateA;
-
-        }
-      );
-
-
-  const upcomingContainer =
-    document.getElementById(
-      "upcomingGames"
-    );
-
-
-  const resultsContainer =
-    document.getElementById(
-      "resultsList"
-    );
-
-
-  if (
-    upcoming.length === 0
-  ) {
-
-
-    upcomingContainer.innerHTML =
-
-      `<div class="empty">
-        Aktuell sind keine kommenden Spiele eingetragen.
-      </div>`;
-
-
-  }
-
-  else {
-
-
-    upcomingContainer.innerHTML =
-      upcoming
-        .map(
-          game =>
-            createGameCard(
-              game,
-              false
-            )
-        )
-        .join("");
-
-
-  }
-
-
-  if (
-    finished.length === 0
-  ) {
-
-
-    resultsContainer.innerHTML =
-
-      `<div class="empty">
-        Noch keine Resultate eingetragen.
-      </div>`;
-
-
-  }
-
-  else {
-
-
-    resultsContainer.innerHTML =
-      finished
-        .map(
-          game =>
-            createGameCard(
-              game,
-              true
-            )
-        )
-        .join("");
-
-
-  }
-
-}
-
-
-
-function createGameCard(
-  game,
-  showScore
-) {
-
-
-  const status =
-    normalizeStatus(
-      game.status
-    );
+  const status=
+    String(
+      g.status||"kommend"
+    ).toLowerCase();
 
 
   return `
 
-    <div class="card">
+  <div class="game-card">
 
-      <div
-        class="status ${statusClass(status)}"
-      >
-        ${escapeHtml(
-          status ||
-          "kommend"
-        )}
-      </div>
+  <span
+    class="status
+    ${
+      status==="beendet"
+      ? "status-beendet"
+      :
+      status==="abgesagt"
+      ? "status-abgesagt"
+      :
+      status==="verschoben"
+      ? "status-verschoben"
+      :
+      ""
+    }"
+  >
 
-      <div
-        class="meta"
-        style="margin-top:10px;"
-      >
+  ${esc(status)}
 
-        ${formatDate(
-          game.datum,
-          true
-        )}
+  </span>
 
-        ${
-          game.team
-          ?
-          " · " +
-          escapeHtml(
-            game.team
-          )
-          :
-          ""
-        }
+  <div class="meta"
+       style="margin-top:8px;">
 
-      </div>
+  ${formatDate(g.datum,true)}
 
-      <div class="game-teams">
+  ${
+    g.team
+    ? " · "+esc(g.team)
+    : ""
+  }
 
-        <div class="game-team">
+  </div>
 
-          ${escapeHtml(
-            game.heimteam ||
-            "Heimteam"
-          )}
+  <div class="game-teams">
 
-        </div>
+  <div class="game-team">
+  ${esc(g.heimteam)}
+  </div>
 
-        <div class="${
-          showScore
-          ?
-          "game-score"
-          :
-          "game-vs"
-        }">
+  <div class="${
+    score
+    ? "game-score"
+    : "game-vs"
+  }">
 
-          ${
-            showScore
-            ?
-            `${Number(
-              game.toreHeim ?? 0
-            )} : ${Number(
-              game.toreGast ?? 0
-            )}`
-            :
-            "VS"
-          }
+  ${
+    score
+    ?
+    `${Number(g.toreHeim||0)}
+     :
+     ${Number(g.toreGast||0)}`
+    :
+    "VS"
+  }
 
-        </div>
+  </div>
 
-        <div
-          class="game-team right"
-        >
+  <div class="game-team right">
+  ${esc(g.gastteam)}
+  </div>
 
-          ${escapeHtml(
-            game.gastteam ||
-            "Gastteam"
-          )}
+  </div>
 
-        </div>
-
-      </div>
-
-    </div>
+  </div>
 
   `;
 
 }
 
 
+function renderGames(){
 
-function renderHomeGame() {
-
-
-  const now =
-    new Date();
-
-
-  const upcoming =
-    gamesData
-      .filter(
-        game => {
-
-          const status =
-            normalizeStatus(
-              game.status
-            );
-
-
-          const date =
-            timestampToDate(
-              game.datum
-            );
-
-
-          return (
-
-            (
-              status === "kommend" ||
-              status === "verschoben"
-            )
-
-            &&
-
-            date
-
-            &&
-
-            date >= now
-
-          );
-
-        }
-      )
-      .sort(
-        (a,b) =>
-
-          timestampToDate(
-            a.datum
-          ) -
-
-          timestampToDate(
-            b.datum
-          )
-
-      );
-
-
-  const finished =
-    gamesData
-      .filter(
-        game =>
-          normalizeStatus(
-            game.status
-          ) ===
-          "beendet"
-      )
-      .sort(
-        (a,b) =>
-
-          timestampToDate(
-            b.datum
-          ) -
-
-          timestampToDate(
-            a.datum
-          )
-
-      );
-
-
-  const nextContainer =
-    document.getElementById(
-      "homeNextGame"
+  const upcoming=
+    gamesData.filter(
+      g =>
+        g.status==="kommend" ||
+        g.status==="verschoben"
     );
 
 
-  const resultContainer =
-    document.getElementById(
-      "homeLastResult"
-    );
-
-
-  if (
-    upcoming.length > 0
-  ) {
-
-
-    const game =
-      upcoming[0];
-
-
-    nextContainer.innerHTML = `
-
-      <div class="game-box">
-
-        <div class="game-label">
-          ${escapeHtml(
-            game.team ||
-            "Nächstes Spiel"
-          )}
-        </div>
-
-        <div class="game-date">
-
-          ${formatDate(
-            game.datum,
-            true
-          )}
-
-        </div>
-
-        <div class="game-teams">
-
-          <div class="game-team">
-
-            ${escapeHtml(
-              game.heimteam ||
-              ""
-            )}
-
-          </div>
-
-          <div class="game-vs">
-            VS
-          </div>
-
-          <div class="game-team right">
-
-            ${escapeHtml(
-              game.gastteam ||
-              ""
-            )}
-
-          </div>
-
-        </div>
-
-      </div>
-
-    `;
-
-
-  }
-
-  else {
-
-
-    nextContainer.innerHTML =
-
-      `<div class="empty">
-        Aktuell ist kein kommendes Spiel eingetragen.
-      </div>`;
-
-
-  }
-
-
-  if (
-    finished.length > 0
-  ) {
-
-
-    resultContainer.innerHTML =
-      createGameCard(
-        finished[0],
-        true
+  const results=
+    gamesData
+      .filter(
+        g=>g.status==="beendet"
+      )
+      .sort(
+        (a,b)=>
+          toDate(b.datum) -
+          toDate(a.datum)
       );
 
 
-  }
-
-  else {
-
-
-    resultContainer.innerHTML =
-
-      `<div class="empty">
-        Noch kein Resultat eingetragen.
-      </div>`;
-
-
-  }
-
-}
-
-
-
-/* =========================
-   MATCH REPORTS
-========================= */
-
-
-function listenToReports() {
-
-
-  db.collection(
-    "matchberichte"
-  )
-  .onSnapshot(
-
-    snapshot => {
-
-
-      reportsData = [];
-
-
-      snapshot.forEach(
-        doc => {
-
-
-          const data =
-            doc.data();
-
-
-          if (
-            data.aktiv === false
-          ) {
-
-            return;
-
-          }
-
-
-          reportsData.push({
-
-            id:
-              doc.id,
-
-            ...data
-
-          });
-
-
-        }
-      );
-
-
-      reportsData.sort(
-        (a,b) => {
-
-          const dateA =
-            timestampToDate(
-              a.datum
-            )?.getTime() || 0;
-
-          const dateB =
-            timestampToDate(
-              b.datum
-            )?.getTime() || 0;
-
-
-          return dateB - dateA;
-
-        }
-      );
-
-
-      renderReports();
-
-
-    },
-
-    error => {
-
-
-      console.error(
-        "Matchberichte Fehler:",
-        error
-      );
-
-
-      document
-        .getElementById(
-          "reportsList"
+  document
+    .getElementById(
+      "upcomingGames"
+    )
+    .innerHTML=
+      upcoming.length
+      ?
+      upcoming
+        .map(
+          g=>gameCard(g,false)
         )
-        .innerHTML =
+        .join("")
+      :
+      `<div class="empty">
+      Keine kommenden Spiele.
+      </div>`;
 
-        `<div class="error-box">
-          Matchberichte konnten nicht geladen werden.
-        </div>`;
 
-
-    }
-
-  );
+  document
+    .getElementById(
+      "resultsList"
+    )
+    .innerHTML=
+      results.length
+      ?
+      results
+        .map(
+          g=>gameCard(g,true)
+        )
+        .join("")
+      :
+      `<div class="empty">
+      Noch keine Resultate.
+      </div>`;
 
 }
 
 
 
-function renderReports() {
+/* REPORTS */
 
 
-  const container =
+function renderReports(){
+
+  const c=
     document.getElementById(
       "reportsList"
     );
 
 
-  if (
-    reportsData.length === 0
-  ) {
+  if(!reportsData.length){
 
-
-    container.innerHTML =
-
+    c.innerHTML=
       `<div class="empty">
-        Aktuell sind keine Matchberichte vorhanden.
+      Keine Matchberichte.
       </div>`;
 
-
     return;
 
   }
 
 
-  container.innerHTML =
-    reportsData
-      .map(
-        report => {
+  c.innerHTML=
+    reportsData.map(r=>`
 
-          return `
+      <div
+        class="card"
+        onclick="openReport('${r.id}')"
+      >
 
-            <div
-              class="card news-card"
-              onclick="openReport('${report.id}')"
-            >
+      <span class="tag">
+      ${esc(r.team)}
+      </span>
 
-              <span class="tag">
+      <div class="meta">
+      ${formatDate(r.datum)}
+      </div>
 
-                ${escapeHtml(
-                  report.team ||
-                  "Matchbericht"
-                )}
+      <h3>
+      ${esc(r.titel)}
+      </h3>
 
-              </span>
+      <p>
+      ${esc(
+        String(r.text||"")
+        .substring(0,180)
+      )}
+      </p>
 
-              <div class="meta">
+      </div>
 
-                ${formatDate(
-                  report.datum
-                )}
-
-              </div>
-
-              <h3>
-
-                ${escapeHtml(
-                  report.titel ||
-                  "Matchbericht"
-                )}
-
-              </h3>
-
-              <p>
-
-                ${escapeHtml(
-                  String(
-                    report.text || ""
-                  )
-                  .substring(
-                    0,
-                    180
-                  )
-                )}
-
-                ${
-                  String(
-                    report.text || ""
-                  ).length > 180
-                  ?
-                  "..."
-                  :
-                  ""
-                }
-
-              </p>
-
-              <button class="button">
-                Bericht lesen
-              </button>
-
-            </div>
-
-          `;
-
-        }
-      )
-      .join("");
+    `).join("");
 
 }
 
 
+function openReport(id){
 
-function openReport(
-  id
-) {
-
-
-  const report =
+  const r=
     reportsData.find(
-      item =>
-        item.id === id
+      x=>x.id===id
     );
 
-
-  if (!report) {
+  if(!r){
     return;
   }
 
-
-  openModal({
-
-    tag:
-      report.team ||
-      "Matchbericht",
-
-    title:
-      report.titel ||
-      "Matchbericht",
-
-    meta:
-      formatDate(
-        report.datum
-      ),
-
-    text:
-      report.text ||
-      ""
-
-  });
-
-}
-
-
-
-/* =========================
-   TEAMS
-========================= */
-
-
-function listenToTeams() {
-
-
-  db.collection(
-    "teams"
-  )
-  .onSnapshot(
-
-    snapshot => {
-
-
-      teamsData = [];
-
-
-      snapshot.forEach(
-        doc => {
-
-
-          const data =
-            doc.data();
-
-
-          if (
-            data.aktiv === false
-          ) {
-
-            return;
-
-          }
-
-
-          teamsData.push({
-
-            id:
-              doc.id,
-
-            ...data
-
-          });
-
-
-        }
-      );
-
-
-      teamsData.sort(
-        (a,b) =>
-
-          Number(
-            a.sortierung ?? 999
-          )
-
-          -
-
-          Number(
-            b.sortierung ?? 999
-          )
-
-      );
-
-
-      renderTeams();
-
-
-    },
-
-    error => {
-
-
-      console.error(
-        "Teams Fehler:",
-        error
-      );
-
-
-      document
-        .getElementById(
-          "teamsList"
-        )
-        .innerHTML =
-
-        `<div class="error-box">
-          Teams konnten nicht geladen werden.
-        </div>`;
-
-
-    }
-
+  openModal(
+    r.team,
+    r.titel,
+    formatDate(r.datum),
+    r.text
   );
 
 }
 
 
 
-function renderTeams() {
+/* TEAMS */
 
 
-  const container =
+function renderTeams(){
+
+  const c=
     document.getElementById(
       "teamsList"
     );
 
 
-  if (
-    teamsData.length === 0
-  ) {
+  if(!teamsData.length){
 
-
-    container.innerHTML =
-
+    c.innerHTML=
       `<div class="empty">
-        Aktuell sind keine Teams eingetragen.
+      Keine Teams vorhanden.
+      </div>`;
+
+    return;
+
+  }
+
+
+  c.innerHTML=
+    teamsData.map(t=>`
+
+      <div
+        class="card team-card"
+        onclick="toggleTeam('${t.id}')"
+      >
+
+      <div class="team-head">
+
+      <div>
+
+      <div class="team-name">
+      ${esc(t.name)}
+      </div>
+
+      <div class="team-liga">
+      ${esc(t.liga||"")}
+      </div>
+
+      </div>
+
+      <div>
+      ›
+      </div>
+
+      </div>
+
+      <div
+        id="team-${t.id}"
+        class="team-details"
+      >
+
+      ${
+        t.trainer
+        ?
+        `<p>
+        <strong>Trainer:</strong><br>
+        ${esc(t.trainer)}
+        </p>`
+        :
+        ""
+      }
+
+      ${
+        t.training
+        ?
+        `<p>
+        <strong>Training:</strong><br>
+        ${esc(t.training)}
+        </p>`
+        :
+        ""
+      }
+
+      </div>
+
+      </div>
+
+    `).join("");
+
+}
+
+
+function toggleTeam(id){
+
+  document
+    .getElementById(
+      `team-${id}`
+    )
+    ?.classList
+    .toggle("visible");
+
+}
+
+
+
+/* HOME */
+
+
+function renderHome(){
+
+  const now=
+    new Date();
+
+
+  const next=
+    gamesData
+      .filter(g=>
+
+        (
+          g.status==="kommend" ||
+          g.status==="verschoben"
+        )
+
+        &&
+
+        toDate(g.datum)>=now
+
+      )
+      [0];
+
+
+  document
+    .getElementById(
+      "homeNextGame"
+    )
+    .innerHTML=
+      next
+      ?
+      gameCard(next,false)
+      :
+      `<div class="empty">
+      Kein kommendes Spiel.
       </div>`;
 
 
-    return;
-
-  }
-
-
-  container.innerHTML =
-    teamsData
-      .map(
-        team => {
-
-          return `
-
-            <div
-              class="card team-card"
-              onclick="toggleTeam('${team.id}')"
-            >
-
-              <div class="team-header">
-
-                <div>
-
-                  <div class="team-name">
-
-                    ${escapeHtml(
-                      team.name ||
-                      "FC Wängi Team"
-                    )}
-
-                  </div>
-
-                  ${
-                    team.liga
-                    ?
-                    `
-
-                      <div class="team-league">
-
-                        ${escapeHtml(
-                          team.liga
-                        )}
-
-                      </div>
-
-                    `
-                    :
-                    ""
-                  }
-
-                </div>
-
-                <div class="team-arrow">
-                  ›
-                </div>
-
-              </div>
-
-              <div
-                id="team-${team.id}"
-                class="team-details"
-              >
-
-                ${
-                  team.trainer
-                  ?
-                  `
-
-                    <div class="team-detail-row">
-
-                      <strong>
-                        Trainer
-                      </strong>
-
-                      ${escapeHtml(
-                        team.trainer
-                      )}
-
-                    </div>
-
-                  `
-                  :
-                  ""
-                }
-
-                ${
-                  team.training
-                  ?
-                  `
-
-                    <div class="team-detail-row">
-
-                      <strong>
-                        Training
-                      </strong>
-
-                      ${escapeHtml(
-                        team.training
-                      )}
-
-                    </div>
-
-                  `
-                  :
-                  ""
-                }
-
-                ${
-                  team.liga
-                  ?
-                  `
-
-                    <div class="team-detail-row">
-
-                      <strong>
-                        Liga
-                      </strong>
-
-                      ${escapeHtml(
-                        team.liga
-                      )}
-
-                    </div>
-
-                  `
-                  :
-                  ""
-                }
-
-              </div>
-
-            </div>
-
-          `;
-
-        }
+  const result=
+    [...gamesData]
+      .filter(
+        g=>g.status==="beendet"
       )
-      .join("");
+      .sort(
+        (a,b)=>
+          toDate(b.datum) -
+          toDate(a.datum)
+      )
+      [0];
+
+
+  document
+    .getElementById(
+      "homeResult"
+    )
+    .innerHTML=
+      result
+      ?
+      gameCard(result,true)
+      :
+      `<div class="empty">
+      Noch kein Resultat.
+      </div>`;
+
+
+  const n=
+    newsData[0];
+
+
+  document
+    .getElementById(
+      "homeNews"
+    )
+    .innerHTML=
+      n
+      ?
+      `
+
+      <div
+        class="card"
+        onclick="openNews('${n.id}')"
+      >
+
+      <span class="tag">
+      ${esc(n.kategorie)}
+      </span>
+
+      <div class="meta">
+      ${formatDate(n.datum)}
+      </div>
+
+      <h3>
+      ${esc(n.titel)}
+      </h3>
+
+      <p>
+      ${esc(
+        String(n.text||"")
+        .substring(0,140)
+      )}
+      </p>
+
+      </div>
+
+      `
+      :
+      `<div class="empty">
+      Keine News.
+      </div>`;
 
 }
 
 
 
-function toggleTeam(
-  id
-) {
-
-
-  const details =
-    document.getElementById(
-      `team-${id}`
-    );
-
-
-  if (!details) {
-    return;
-  }
-
-
-  details.classList.toggle(
-    "visible"
-  );
-
-}
-
-
-
-/* =========================
-   MODAL
-========================= */
+/* MODAL */
 
 
 function openModal(
-  data
-) {
-
+  tag,
+  title,
+  meta,
+  text
+){
 
   document
     .getElementById(
       "modalTag"
     )
-    .textContent =
-      data.tag ||
-      "";
+    .textContent=
+      tag||"";
 
 
   document
     .getElementById(
       "modalTitle"
     )
-    .textContent =
-      data.title ||
-      "";
+    .textContent=
+      title||"";
 
 
   document
     .getElementById(
       "modalMeta"
     )
-    .textContent =
-      data.meta ||
-      "";
+    .textContent=
+      meta||"";
 
 
   document
     .getElementById(
       "modalText"
     )
-    .textContent =
-      data.text ||
-      "";
+    .textContent=
+      text||"";
 
 
   document
     .getElementById(
       "contentModal"
     )
-    .classList.add(
-      "visible"
-    );
-
-
-  document.body.style.overflow =
-    "hidden";
+    .classList
+    .add("visible");
 
 }
 
 
-
-function closeModal() {
-
+function closeModal(){
 
   document
     .getElementById(
       "contentModal"
     )
-    .classList.remove(
-      "visible"
-    );
-
-
-  document.body.style.overflow =
-    "";
+    .classList
+    .remove("visible");
 
 }
 
 
+function modalBackgroundClick(e){
 
-function modalBackgroundClick(
-  event
-) {
-
-
-  if (
-    event.target.id ===
+  if(
+    e.target.id===
     "contentModal"
-  ) {
+  ){
 
     closeModal();
 
@@ -3761,129 +3502,1144 @@ function modalBackgroundClick(
 
 
 
-/* =========================
-   PUSH
-========================= */
+/* AUTH */
 
 
-async function enableNotifications() {
+auth.onAuthStateChanged(
+  user=>{
+
+    const login=
+      document.getElementById(
+        "adminLogin"
+      );
+
+    const panel=
+      document.getElementById(
+        "adminPanel"
+      );
 
 
-  const status =
+    if(user){
+
+      login.style.display=
+        "none";
+
+      panel.style.display=
+        "block";
+
+      document
+        .getElementById(
+          "adminUserText"
+        )
+        .textContent=
+          user.email;
+
+    }
+
+    else{
+
+      login.style.display=
+        "block";
+
+      panel.style.display=
+        "none";
+
+    }
+
+  }
+);
+
+
+
+async function loginAdmin(){
+
+  const email=
+    document
+      .getElementById(
+        "adminEmail"
+      )
+      .value.trim();
+
+
+  const password=
+    document
+      .getElementById(
+        "adminPassword"
+      )
+      .value;
+
+
+  const status=
+    document.getElementById(
+      "loginStatus"
+    );
+
+
+  try{
+
+    status.textContent=
+      "Anmeldung läuft...";
+
+
+    await auth
+      .signInWithEmailAndPassword(
+        email,
+        password
+      );
+
+
+    status.textContent=
+      "";
+
+  }
+
+  catch(error){
+
+    status.textContent=
+      "❌ Anmeldung fehlgeschlagen.";
+
+    console.error(error);
+
+  }
+
+}
+
+
+async function logoutAdmin(){
+
+  await auth.signOut();
+
+  openPage("kontakt");
+
+}
+
+
+
+/* SAVE NEWS */
+
+
+async function saveNews(){
+
+  const id=
+    document
+      .getElementById(
+        "newsEditId"
+      )
+      .value;
+
+
+  const data={
+
+    titel:
+      document
+        .getElementById(
+          "newsTitle"
+        )
+        .value.trim(),
+
+    kategorie:
+      document
+        .getElementById(
+          "newsCategory"
+        )
+        .value.trim(),
+
+    text:
+      document
+        .getElementById(
+          "newsText"
+        )
+        .value.trim(),
+
+    datum:
+      inputTimestamp(
+        "newsDate"
+      ),
+
+    aktiv:true,
+
+    updatedAt:
+      firebase
+        .firestore
+        .FieldValue
+        .serverTimestamp()
+
+  };
+
+
+  if(
+    !data.titel ||
+    !data.text
+  ){
+
+    alert(
+      "Titel und Text eingeben."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    if(id){
+
+      await db
+        .collection("news")
+        .doc(id)
+        .update(data);
+
+    }
+
+    else{
+
+      data.createdAt=
+        firebase
+          .firestore
+          .FieldValue
+          .serverTimestamp();
+
+
+      await db
+        .collection("news")
+        .add(data);
+
+    }
+
+
+    resetNewsForm();
+
+    alert(
+      "✅ News veröffentlicht"
+    );
+
+  }
+
+  catch(error){
+
+    alert(
+      "Fehler: "+
+      error.message
+    );
+
+  }
+
+}
+
+
+function resetNewsForm(){
+
+  document
+    .getElementById(
+      "newsEditId"
+    )
+    .value="";
+
+  document
+    .getElementById(
+      "newsTitle"
+    )
+    .value="";
+
+  document
+    .getElementById(
+      "newsCategory"
+    )
+    .value="";
+
+  document
+    .getElementById(
+      "newsText"
+    )
+    .value="";
+
+  document
+    .getElementById(
+      "newsDate"
+    )
+    .value="";
+
+}
+
+
+
+/* SAVE GAME */
+
+
+async function saveGame(){
+
+  const id=
+    document
+      .getElementById(
+        "gameEditId"
+      )
+      .value;
+
+
+  const data={
+
+    team:
+      document
+        .getElementById(
+          "gameTeam"
+        )
+        .value.trim(),
+
+    heimteam:
+      document
+        .getElementById(
+          "gameHome"
+        )
+        .value.trim(),
+
+    gastteam:
+      document
+        .getElementById(
+          "gameAway"
+        )
+        .value.trim(),
+
+    datum:
+      inputTimestamp(
+        "gameDate"
+      ),
+
+    status:
+      document
+        .getElementById(
+          "gameStatus"
+        )
+        .value,
+
+    toreHeim:
+      Number(
+        document
+          .getElementById(
+            "gameHomeGoals"
+          )
+          .value||0
+      ),
+
+    toreGast:
+      Number(
+        document
+          .getElementById(
+            "gameAwayGoals"
+          )
+          .value||0
+      )
+
+  };
+
+
+  if(
+    !data.heimteam ||
+    !data.gastteam
+  ){
+
+    alert(
+      "Heim- und Gastteam eingeben."
+    );
+
+    return;
+
+  }
+
+
+  try{
+
+    if(id){
+
+      await db
+        .collection("spiele")
+        .doc(id)
+        .update(data);
+
+    }
+
+    else{
+
+      await db
+        .collection("spiele")
+        .add(data);
+
+    }
+
+
+    resetGameForm();
+
+    alert(
+      "✅ Spiel gespeichert"
+    );
+
+  }
+
+  catch(error){
+
+    alert(
+      "Fehler: "+
+      error.message
+    );
+
+  }
+
+}
+
+
+function resetGameForm(){
+
+  document
+    .getElementById(
+      "gameEditId"
+    ).value="";
+
+  document
+    .getElementById(
+      "gameTeam"
+    ).value="";
+
+  document
+    .getElementById(
+      "gameHome"
+    ).value="FC Wängi";
+
+  document
+    .getElementById(
+      "gameAway"
+    ).value="";
+
+  document
+    .getElementById(
+      "gameDate"
+    ).value="";
+
+  document
+    .getElementById(
+      "gameStatus"
+    ).value="kommend";
+
+  document
+    .getElementById(
+      "gameHomeGoals"
+    ).value="0";
+
+  document
+    .getElementById(
+      "gameAwayGoals"
+    ).value="0";
+
+}
+
+
+
+/* SAVE REPORT */
+
+
+async function saveReport(){
+
+  const id=
+    document
+      .getElementById(
+        "reportEditId"
+      )
+      .value;
+
+
+  const data={
+
+    titel:
+      document
+        .getElementById(
+          "reportTitle"
+        )
+        .value.trim(),
+
+    team:
+      document
+        .getElementById(
+          "reportTeam"
+        )
+        .value.trim(),
+
+    text:
+      document
+        .getElementById(
+          "reportText"
+        )
+        .value.trim(),
+
+    datum:
+      inputTimestamp(
+        "reportDate"
+      ),
+
+    aktiv:true
+
+  };
+
+
+  try{
+
+    if(id){
+
+      await db
+        .collection(
+          "matchberichte"
+        )
+        .doc(id)
+        .update(data);
+
+    }
+
+    else{
+
+      await db
+        .collection(
+          "matchberichte"
+        )
+        .add(data);
+
+    }
+
+
+    resetReportForm();
+
+    alert(
+      "✅ Matchbericht veröffentlicht"
+    );
+
+  }
+
+  catch(error){
+
+    alert(
+      "Fehler: "+
+      error.message
+    );
+
+  }
+
+}
+
+
+function resetReportForm(){
+
+  document
+    .getElementById(
+      "reportEditId"
+    ).value="";
+
+  document
+    .getElementById(
+      "reportTitle"
+    ).value="";
+
+  document
+    .getElementById(
+      "reportTeam"
+    ).value="";
+
+  document
+    .getElementById(
+      "reportText"
+    ).value="";
+
+  document
+    .getElementById(
+      "reportDate"
+    ).value="";
+
+}
+
+
+
+/* SAVE TEAM */
+
+
+async function saveTeam(){
+
+  const id=
+    document
+      .getElementById(
+        "teamEditId"
+      )
+      .value;
+
+
+  const data={
+
+    name:
+      document
+        .getElementById(
+          "teamNameInput"
+        )
+        .value.trim(),
+
+    liga:
+      document
+        .getElementById(
+          "teamLeagueInput"
+        )
+        .value.trim(),
+
+    trainer:
+      document
+        .getElementById(
+          "teamCoachInput"
+        )
+        .value.trim(),
+
+    training:
+      document
+        .getElementById(
+          "teamTrainingInput"
+        )
+        .value.trim(),
+
+    sortierung:
+      Number(
+        document
+          .getElementById(
+            "teamSortInput"
+          )
+          .value||999
+      ),
+
+    aktiv:true
+
+  };
+
+
+  try{
+
+    if(id){
+
+      await db
+        .collection("teams")
+        .doc(id)
+        .update(data);
+
+    }
+
+    else{
+
+      await db
+        .collection("teams")
+        .add(data);
+
+    }
+
+
+    resetTeamForm();
+
+    alert(
+      "✅ Team gespeichert"
+    );
+
+  }
+
+  catch(error){
+
+    alert(
+      "Fehler: "+
+      error.message
+    );
+
+  }
+
+}
+
+
+function resetTeamForm(){
+
+  document
+    .getElementById(
+      "teamEditId"
+    ).value="";
+
+  document
+    .getElementById(
+      "teamNameInput"
+    ).value="";
+
+  document
+    .getElementById(
+      "teamLeagueInput"
+    ).value="";
+
+  document
+    .getElementById(
+      "teamCoachInput"
+    ).value="";
+
+  document
+    .getElementById(
+      "teamTrainingInput"
+    ).value="";
+
+  document
+    .getElementById(
+      "teamSortInput"
+    ).value="1";
+
+}
+
+
+
+/* EDIT */
+
+
+function editNews(id){
+
+  const n=
+    newsData.find(
+      x=>x.id===id
+    );
+
+  if(!n)return;
+
+
+  document
+    .getElementById(
+      "newsEditId"
+    ).value=id;
+
+  document
+    .getElementById(
+      "newsTitle"
+    ).value=n.titel||"";
+
+  document
+    .getElementById(
+      "newsCategory"
+    ).value=n.kategorie||"";
+
+  document
+    .getElementById(
+      "newsText"
+    ).value=n.text||"";
+
+  document
+    .getElementById(
+      "newsDate"
+    ).value=
+      dateInputValue(n.datum);
+
+}
+
+
+function editGame(id){
+
+  const g=
+    gamesData.find(
+      x=>x.id===id
+    );
+
+  if(!g)return;
+
+
+  document
+    .getElementById(
+      "gameEditId"
+    ).value=id;
+
+  document
+    .getElementById(
+      "gameTeam"
+    ).value=g.team||"";
+
+  document
+    .getElementById(
+      "gameHome"
+    ).value=g.heimteam||"";
+
+  document
+    .getElementById(
+      "gameAway"
+    ).value=g.gastteam||"";
+
+  document
+    .getElementById(
+      "gameDate"
+    ).value=
+      dateInputValue(g.datum);
+
+  document
+    .getElementById(
+      "gameStatus"
+    ).value=
+      g.status||"kommend";
+
+  document
+    .getElementById(
+      "gameHomeGoals"
+    ).value=
+      g.toreHeim||0;
+
+  document
+    .getElementById(
+      "gameAwayGoals"
+    ).value=
+      g.toreGast||0;
+
+}
+
+
+function editReport(id){
+
+  const r=
+    reportsData.find(
+      x=>x.id===id
+    );
+
+  if(!r)return;
+
+
+  document
+    .getElementById(
+      "reportEditId"
+    ).value=id;
+
+  document
+    .getElementById(
+      "reportTitle"
+    ).value=r.titel||"";
+
+  document
+    .getElementById(
+      "reportTeam"
+    ).value=r.team||"";
+
+  document
+    .getElementById(
+      "reportText"
+    ).value=r.text||"";
+
+  document
+    .getElementById(
+      "reportDate"
+    ).value=
+      dateInputValue(r.datum);
+
+}
+
+
+function editTeam(id){
+
+  const t=
+    teamsData.find(
+      x=>x.id===id
+    );
+
+  if(!t)return;
+
+
+  document
+    .getElementById(
+      "teamEditId"
+    ).value=id;
+
+  document
+    .getElementById(
+      "teamNameInput"
+    ).value=t.name||"";
+
+  document
+    .getElementById(
+      "teamLeagueInput"
+    ).value=t.liga||"";
+
+  document
+    .getElementById(
+      "teamCoachInput"
+    ).value=t.trainer||"";
+
+  document
+    .getElementById(
+      "teamTrainingInput"
+    ).value=t.training||"";
+
+  document
+    .getElementById(
+      "teamSortInput"
+    ).value=t.sortierung||1;
+
+}
+
+
+
+/* DELETE */
+
+
+async function deleteItem(
+  collection,
+  id
+){
+
+  if(
+    !confirm(
+      "Wirklich löschen?"
+    )
+  ){
+    return;
+  }
+
+
+  try{
+
+    await db
+      .collection(collection)
+      .doc(id)
+      .delete();
+
+  }
+
+  catch(error){
+
+    alert(
+      "Fehler: "+
+      error.message
+    );
+
+  }
+
+}
+
+
+
+/* ADMIN LISTS */
+
+
+function renderAdminLists(){
+
+  const news=
+    document.getElementById(
+      "adminNewsList"
+    );
+
+  const games=
+    document.getElementById(
+      "adminGamesList"
+    );
+
+  const reports=
+    document.getElementById(
+      "adminReportsList"
+    );
+
+  const teams=
+    document.getElementById(
+      "adminTeamsList"
+    );
+
+
+  if(news){
+
+    news.innerHTML=
+      newsData.map(n=>`
+
+      <div class="admin-list-item">
+
+      <strong>
+      ${esc(n.titel)}
+      </strong>
+
+      <div class="admin-actions">
+
+      <button
+        class="button button-small"
+        onclick="editNews('${n.id}')"
+      >
+      Bearbeiten
+      </button>
+
+      <button
+        class="button button-red button-small"
+        onclick="
+        deleteItem(
+          'news',
+          '${n.id}'
+        )"
+      >
+      Löschen
+      </button>
+
+      </div>
+
+      </div>
+
+      `).join("");
+
+  }
+
+
+  if(games){
+
+    games.innerHTML=
+      gamesData.map(g=>`
+
+      <div class="admin-list-item">
+
+      <strong>
+      ${esc(g.heimteam)}
+      -
+      ${esc(g.gastteam)}
+      </strong>
+
+      <div class="meta">
+      ${formatDate(g.datum,true)}
+      </div>
+
+      <div class="admin-actions">
+
+      <button
+        class="button button-small"
+        onclick="editGame('${g.id}')"
+      >
+      Bearbeiten
+      </button>
+
+      <button
+        class="button button-red button-small"
+        onclick="
+        deleteItem(
+          'spiele',
+          '${g.id}'
+        )"
+      >
+      Löschen
+      </button>
+
+      </div>
+
+      </div>
+
+      `).join("");
+
+  }
+
+
+  if(reports){
+
+    reports.innerHTML=
+      reportsData.map(r=>`
+
+      <div class="admin-list-item">
+
+      <strong>
+      ${esc(r.titel)}
+      </strong>
+
+      <div class="admin-actions">
+
+      <button
+        class="button button-small"
+        onclick="editReport('${r.id}')"
+      >
+      Bearbeiten
+      </button>
+
+      <button
+        class="button button-red button-small"
+        onclick="
+        deleteItem(
+          'matchberichte',
+          '${r.id}'
+        )"
+      >
+      Löschen
+      </button>
+
+      </div>
+
+      </div>
+
+      `).join("");
+
+  }
+
+
+  if(teams){
+
+    teams.innerHTML=
+      teamsData.map(t=>`
+
+      <div class="admin-list-item">
+
+      <strong>
+      ${esc(t.name)}
+      </strong>
+
+      <div class="admin-actions">
+
+      <button
+        class="button button-small"
+        onclick="editTeam('${t.id}')"
+      >
+      Bearbeiten
+      </button>
+
+      <button
+        class="button button-red button-small"
+        onclick="
+        deleteItem(
+          'teams',
+          '${t.id}'
+        )"
+      >
+      Löschen
+      </button>
+
+      </div>
+
+      </div>
+
+      `).join("");
+
+  }
+
+}
+
+
+
+/* PUSH */
+
+
+async function enableNotifications(){
+
+  const status=
     document.getElementById(
       "notificationStatus"
     );
 
 
-  try {
+  try{
 
-
-    const isIOS =
-
-      /iPhone|iPad|iPod/i
-        .test(
-          navigator.userAgent
-        );
-
-
-    const isStandalone =
-
-      window.matchMedia(
-        "(display-mode: standalone)"
-      ).matches ||
-
-      window.navigator.standalone ===
-      true;
-
-
-    if (
-      isIOS &&
-      !isStandalone
-    ) {
-
-
-      status.textContent =
-        "📱 Auf dem iPhone zuerst zum Home-Bildschirm hinzufügen.";
-
-
-      alert(
-        "Öffne die Seite in Safari und wähle «Teilen → Zum Home-Bildschirm»."
-      );
-
-
-      return;
-
-    }
-
-
-    if (
-      !(
-        "serviceWorker"
-        in navigator
-      )
-    ) {
-
-
-      status.textContent =
-        "❌ Service Worker wird nicht unterstützt.";
-
-
-      return;
-
-    }
-
-
-    if (
-      !(
-        "Notification"
-        in window
-      )
-    ) {
-
-
-      status.textContent =
-        "❌ Push-Mitteilungen werden nicht unterstützt.";
-
-
-      return;
-
-    }
-
-
-    const permission =
-
+    const permission=
       await Notification
         .requestPermission();
 
 
-    if (
-      permission !==
-      "granted"
-    ) {
+    if(
+      permission!=="granted"
+    ){
 
-
-      status.textContent =
-        "❌ Mitteilungen wurden nicht erlaubt.";
-
+      status.textContent=
+        "❌ Mitteilungen nicht erlaubt";
 
       return;
 
     }
 
 
-    status.textContent =
-      "⏳ Gerät wird registriert...";
-
-
-    const registration =
-
+    const registration=
       await navigator
         .serviceWorker
         .ready;
 
 
-    const token =
-
+    const token=
       await messaging
         .getToken({
 
@@ -3896,59 +4652,26 @@ async function enableNotifications() {
         });
 
 
-    if (
-      token
-    ) {
-
+    if(token){
 
       localStorage.setItem(
         "fcwFirebaseToken",
         token
       );
 
-
-      status.textContent =
-        "✅ FCW-Mitteilungen sind aktiviert";
-
-
-      alert(
-        "FC Wängi Mitteilungen wurden erfolgreich aktiviert! ⚽"
-      );
-
+      status.textContent=
+        "✅ Mitteilungen aktiviert";
 
     }
 
-    else {
-
-
-      status.textContent =
-        "❌ Gerät konnte nicht registriert werden.";
-
-
-    }
-
-
   }
 
-  catch (
-    error
-  ) {
+  catch(error){
 
+    status.textContent=
+      "❌ Push-Fehler";
 
-    console.error(
-      error
-    );
-
-
-    status.textContent =
-      "❌ Fehler bei der Push-Registrierung";
-
-
-    alert(
-      "Push-Fehler: " +
-      error.message
-    );
-
+    console.error(error);
 
   }
 
@@ -3956,338 +4679,28 @@ async function enableNotifications() {
 
 
 
-function showPushToken() {
+/* SERVICE WORKER */
 
 
-  const token =
-    localStorage.getItem(
-      "fcwFirebaseToken"
-    );
-
-
-  if (!token) {
-
-
-    alert(
-      "Noch kein Push-Token vorhanden. Aktiviere zuerst die Mitteilungen."
-    );
-
-
-    return;
-
-  }
-
-
-  document
-    .getElementById(
-      "tokenText"
-    )
-    .value =
-      token;
-
-
-  document
-    .getElementById(
-      "tokenBox"
-    )
-    .classList.add(
-      "visible"
-    );
-
-}
-
-
-
-function hidePushToken() {
-
-
-  document
-    .getElementById(
-      "tokenBox"
-    )
-    .classList.remove(
-      "visible"
-    );
-
-}
-
-
-
-async function copyPushToken() {
-
-
-  const token =
-    localStorage.getItem(
-      "fcwFirebaseToken"
-    );
-
-
-  if (!token) {
-    return;
-  }
-
-
-  try {
-
-
-    await navigator.clipboard
-      .writeText(
-        token
-      );
-
-
-    alert(
-      "FCM Token wurde kopiert."
-    );
-
-
-  }
-
-  catch {
-
-
-    const text =
-      document.getElementById(
-        "tokenText"
-      );
-
-
-    text.focus();
-
-    text.select();
-
-
-    alert(
-      "Token wurde markiert. Bitte manuell kopieren."
-    );
-
-
-  }
-
-}
-
-
-
-function updateNotificationStatus() {
-
-
-  const status =
-    document.getElementById(
-      "notificationStatus"
-    );
-
-
-  if (
-    !(
-      "Notification"
-      in window
-    )
-  ) {
-
-
-    status.textContent =
-      "Mitteilungen aktuell nicht verfügbar.";
-
-
-    return;
-
-  }
-
-
-  if (
-    Notification.permission ===
-    "granted"
-  ) {
-
-
-    const token =
-      localStorage.getItem(
-        "fcwFirebaseToken"
-      );
-
-
-    status.textContent =
-      token
-      ?
-      "✅ FCW-Mitteilungen sind aktiviert"
-      :
-      "Mitteilungen erlaubt – Gerät noch nicht registriert";
-
-
-  }
-
-  else if (
-    Notification.permission ===
-    "denied"
-  ) {
-
-
-    status.textContent =
-      "❌ Mitteilungen wurden blockiert";
-
-
-  }
-
-  else {
-
-
-    status.textContent =
-      "Mitteilungen noch nicht aktiviert";
-
-
-  }
-
-}
-
-
-
-messaging.onMessage(
-  payload => {
-
-
-    const title =
-
-      payload.notification?.title ||
-      "FC Wängi 1967";
-
-
-    const body =
-
-      payload.notification?.body ||
-      "Es gibt Neuigkeiten beim FC Wängi.";
-
-
-    navigator
-      .serviceWorker
-      .ready
-
-      .then(
-        registration => {
-
-
-          registration
-            .showNotification(
-              title,
-              {
-
-                body:
-                  body,
-
-                icon:
-                  "./icon-512.png",
-
-                badge:
-                  "./icon-512.png"
-
-              }
-            );
-
-
-        }
-      );
-
-
-  }
-);
-
-
-
-/* =========================
-   SERVICE WORKER
-========================= */
-
-
-if (
+if(
   "serviceWorker"
   in navigator
-) {
-
+){
 
   window.addEventListener(
     "load",
-    async () => {
+    ()=>{
 
-
-      try {
-
-
-        await navigator
-          .serviceWorker
-          .register(
-            "./sw.js"
-          );
-
-
-      }
-
-      catch (
-        error
-      ) {
-
-
-        console.error(
-          "Service Worker Fehler:",
-          error
+      navigator
+        .serviceWorker
+        .register(
+          "./sw.js"
         );
-
-
-      }
-
 
     }
   );
 
-
 }
-
-
-
-/* =========================
-   START
-========================= */
-
-
-window.addEventListener(
-  "DOMContentLoaded",
-  () => {
-
-
-    updateNotificationStatus();
-
-
-    const savedPage =
-      localStorage.getItem(
-        "fcwPage"
-      );
-
-
-    if (
-      savedPage &&
-      document.getElementById(
-        savedPage
-      )
-    ) {
-
-
-      openPage(
-        savedPage
-      );
-
-
-    }
-
-
-    listenToNews();
-
-    listenToGames();
-
-    listenToReports();
-
-    listenToTeams();
-
-
-  }
-);
 
 
 </script>
