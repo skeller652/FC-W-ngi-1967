@@ -1,8 +1,241 @@
-/* ==========================================
-   FC WÄNGI 1967
-   SERVICE WORKER + FIREBASE CLOUD MESSAGING
-========================================== */
+/* =========================================
+   FC WÄNGI 1967 SERVICE WORKER
+========================================= */
 
+const CACHE_NAME =
+  "fc-waengi-app-v5";
+
+
+const APP_SHELL = [
+
+  "./",
+
+  "./index.html",
+
+  "./manifest.json",
+
+  "./logo.png",
+
+  "./icon-512.png"
+
+];
+
+
+
+/* =========================================
+   INSTALL
+========================================= */
+
+self.addEventListener(
+  "install",
+  event => {
+
+    event.waitUntil(
+
+      caches
+        .open(
+          CACHE_NAME
+        )
+        .then(
+          cache => {
+
+            return cache.addAll(
+              APP_SHELL
+            );
+
+          }
+        )
+
+    );
+
+
+    self.skipWaiting();
+
+  }
+);
+
+
+
+/* =========================================
+   ACTIVATE
+========================================= */
+
+self.addEventListener(
+  "activate",
+  event => {
+
+    event.waitUntil(
+
+      caches
+        .keys()
+        .then(
+          cacheNames => {
+
+            return Promise.all(
+
+              cacheNames
+                .filter(
+                  name =>
+                    name !==
+                    CACHE_NAME
+                )
+                .map(
+                  name =>
+                    caches.delete(
+                      name
+                    )
+                )
+
+            );
+
+          }
+        )
+        .then(
+          () =>
+            self.clients.claim()
+        )
+
+    );
+
+  }
+);
+
+
+
+/* =========================================
+   FETCH
+   NETWORK FIRST
+========================================= */
+
+self.addEventListener(
+  "fetch",
+  event => {
+
+
+    if(
+      event.request.method !==
+      "GET"
+    ){
+
+      return;
+
+    }
+
+
+    const requestUrl =
+      new URL(
+        event.request.url
+      );
+
+
+    /*
+    Nur eigene GitHub-Pages-Dateien
+    cachen.
+
+    Firebase, OFV usw. laufen direkt
+    über das Netzwerk.
+    */
+
+    if(
+      requestUrl.origin !==
+      self.location.origin
+    ){
+
+      return;
+
+    }
+
+
+    event.respondWith(
+
+      fetch(
+        event.request
+      )
+
+      .then(
+        response => {
+
+
+          if(
+            response
+            &&
+            response.status ===
+            200
+          ){
+
+            const clone =
+              response.clone();
+
+
+            caches
+              .open(
+                CACHE_NAME
+              )
+              .then(
+                cache => {
+
+                  cache.put(
+                    event.request,
+                    clone
+                  );
+
+                }
+              );
+
+          }
+
+
+          return response;
+
+        }
+      )
+
+      .catch(
+        async () => {
+
+
+          const cached =
+            await caches.match(
+              event.request
+            );
+
+
+          if(cached){
+
+            return cached;
+
+          }
+
+
+          if(
+            event.request.mode ===
+            "navigate"
+          ){
+
+            return caches.match(
+              "./index.html"
+            );
+
+          }
+
+
+          throw new Error(
+            "Offline und keine Cache-Datei vorhanden."
+          );
+
+        }
+      )
+
+    );
+
+  }
+);
+
+
+
+/* =========================================
+   FIREBASE MESSAGING
+========================================= */
 
 importScripts(
   "https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"
@@ -13,11 +246,6 @@ importScripts(
   "https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"
 );
 
-
-
-/* ==========================================
-   FIREBASE
-========================================== */
 
 
 firebase.initializeApp({
@@ -48,427 +276,22 @@ const messaging =
 
 
 
-/* ==========================================
-   CACHE
-========================================== */
-
-
-const CACHE_NAME =
-  "fc-waengi-app-v3";
-
-
-const FILES_TO_CACHE = [
-
-  "./",
-
-  "./index.html",
-
-  "./manifest.json",
-
-  "./logo.png",
-
-  "./icon-512.png"
-
-];
-
-
-
-/* ==========================================
-   INSTALL
-========================================== */
-
-
-self.addEventListener(
-  "install",
-  event => {
-
-
-    event.waitUntil(
-
-      caches
-        .open(
-          CACHE_NAME
-        )
-
-        .then(
-          cache => {
-
-            return cache.addAll(
-              FILES_TO_CACHE
-            );
-
-          }
-        )
-
-    );
-
-
-    self.skipWaiting();
-
-
-  }
-);
-
-
-
-/* ==========================================
-   ACTIVATE
-========================================== */
-
-
-self.addEventListener(
-  "activate",
-  event => {
-
-
-    event.waitUntil(
-
-      caches
-        .keys()
-
-        .then(
-          cacheNames => {
-
-
-            return Promise.all(
-
-              cacheNames.map(
-                cacheName => {
-
-
-                  if (
-                    cacheName !==
-                    CACHE_NAME
-                  ) {
-
-
-                    return caches.delete(
-                      cacheName
-                    );
-
-
-                  }
-
-
-                }
-              )
-
-            );
-
-
-          }
-        )
-
-    );
-
-
-    self.clients.claim();
-
-
-  }
-);
-
-
-
-/* ==========================================
-   FETCH / OFFLINE
-========================================== */
-
-
-self.addEventListener(
-  "fetch",
-  event => {
-
-
-    if (
-      event.request.method !==
-      "GET"
-    ) {
-
-      return;
-
-    }
-
-
-    if (
-      !event.request.url.startsWith(
-        "http"
-      )
-    ) {
-
-      return;
-
-    }
-
-
-    event.respondWith(
-
-      fetch(
-        event.request
-      )
-
-      .then(
-        response => {
-
-
-          const responseCopy =
-            response.clone();
-
-
-          caches
-            .open(
-              CACHE_NAME
-            )
-
-            .then(
-              cache => {
-
-
-                cache.put(
-                  event.request,
-                  responseCopy
-                );
-
-
-              }
-            );
-
-
-          return response;
-
-
-        }
-      )
-
-      .catch(
-        async () => {
-
-
-          const cachedResponse =
-            await caches.match(
-              event.request
-            );
-
-
-          if (
-            cachedResponse
-          ) {
-
-            return cachedResponse;
-
-          }
-
-
-          if (
-            event.request.mode ===
-            "navigate"
-          ) {
-
-
-            return caches.match(
-              "./index.html"
-            );
-
-
-          }
-
-
-          return Response.error();
-
-
-        }
-      )
-
-    );
-
-
-  }
-);
-
-
-
-/* ==========================================
-   FIREBASE BACKGROUND PUSH
-========================================== */
-
+/*
+Bei Notification-Payloads zeigt Firebase
+die Benachrichtigung im Hintergrund bereits
+automatisch an.
+
+Wir erzeugen deshalb hier NICHT nochmals
+manuell eine zweite Benachrichtigung.
+*/
 
 messaging.onBackgroundMessage(
   payload => {
 
-
     console.log(
-      "FCW Push im Hintergrund:",
+      "[FCW Service Worker] Push empfangen:",
       payload
     );
-
-
-    const title =
-
-      payload.notification?.title ||
-
-      payload.data?.title ||
-
-      "FC Wängi 1967";
-
-
-
-    const body =
-
-      payload.notification?.body ||
-
-      payload.data?.body ||
-
-      "Es gibt Neuigkeiten beim FC Wängi.";
-
-
-
-    const url =
-
-      payload.data?.url ||
-
-      "./";
-
-
-
-    const options = {
-
-
-      body:
-        body,
-
-
-      icon:
-        "./icon-512.png",
-
-
-      badge:
-        "./icon-512.png",
-
-
-      data: {
-
-        url:
-          url
-
-      },
-
-
-      vibrate: [
-        200,
-        100,
-        200
-      ],
-
-
-      tag:
-        "fc-waengi-push"
-
-
-    };
-
-
-    return self.registration
-      .showNotification(
-        title,
-        options
-      );
-
-
-  }
-);
-
-
-
-/* ==========================================
-   NOTIFICATION ANKLICKEN
-========================================== */
-
-
-self.addEventListener(
-  "notificationclick",
-  event => {
-
-
-    event.notification.close();
-
-
-    const targetUrl =
-
-      event.notification
-        .data?.url ||
-
-      "./";
-
-
-    event.waitUntil(
-
-      clients
-        .matchAll({
-
-          type:
-            "window",
-
-          includeUncontrolled:
-            true
-
-        })
-
-        .then(
-          windowClients => {
-
-
-            for (
-              const client
-              of windowClients
-            ) {
-
-
-              if (
-                "focus" in client
-              ) {
-
-
-                if (
-                  "navigate" in client
-                ) {
-
-
-                  client.navigate(
-                    targetUrl
-                  );
-
-
-                }
-
-
-                return client.focus();
-
-
-              }
-
-
-            }
-
-
-            if (
-              clients.openWindow
-            ) {
-
-
-              return clients
-                .openWindow(
-                  targetUrl
-                );
-
-
-            }
-
-
-          }
-        )
-
-    );
-
 
   }
 );
