@@ -492,11 +492,8 @@ main{
 
 .character-counter{
   margin-top:5px;
-
   color:#999;
-
   font-size:10px;
-
   text-align:right;
 }
 
@@ -507,25 +504,16 @@ main{
 
 .quick-grid{
   display:grid;
-
-  grid-template-columns:
-    repeat(
-      2,
-      minmax(0,1fr)
-    );
-
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:11px;
 }
 
 .quick-button{
   min-height:105px;
   padding:17px;
-
   border:none;
   border-radius:18px;
-
   background:#f4f4f4;
-
   text-align:left;
 }
 
@@ -557,16 +545,11 @@ main{
 
 .news-image{
   display:block;
-
   width:100%;
   height:210px;
-
   object-fit:cover;
-
   border-radius:14px;
-
   margin-bottom:14px;
-
   background:#eee;
 }
 
@@ -591,12 +574,9 @@ main{
 
 .team-photo{
   display:block;
-
   width:100%;
   height:220px;
-
   object-fit:cover;
-
   background:#eee;
 }
 
@@ -608,9 +588,7 @@ main{
   display:flex;
   align-items:center;
   justify-content:space-between;
-
   gap:10px;
-
   cursor:pointer;
 }
 
@@ -627,10 +605,8 @@ main{
 
 .team-details{
   display:none;
-
   margin-top:15px;
   padding-top:15px;
-
   border-top:1px solid #eee;
 }
 
@@ -646,45 +622,45 @@ main{
 .players-heading{
   margin-top:20px;
   margin-bottom:12px;
-
   font-size:16px;
   font-weight:900;
 }
 
 .player-grid{
   display:grid;
-
-  grid-template-columns:
-    repeat(
-      2,
-      minmax(0,1fr)
-    );
-
+  grid-template-columns:repeat(2,minmax(0,1fr));
   gap:10px;
 }
 
 .player-card{
   overflow:hidden;
-
   border:1px solid #e8e8e8;
   border-radius:14px;
-
   background:white;
-
   cursor:pointer;
 }
+
+
+/*
+=============================================
+NEU:
+Spielerbild wird vollständig angezeigt.
+Kein Abschneiden mehr.
+=============================================
+*/
 
 .player-photo{
   display:block;
 
   width:100%;
+  height:auto;
 
-  aspect-ratio:4/5;
+  object-fit:contain;
+  object-position:center;
 
-  object-fit:cover;
-
-  background:#eee;
+  background:white;
 }
+
 
 .player-info{
   padding:10px;
@@ -697,18 +673,14 @@ main{
 
 .player-number{
   margin-top:3px;
-
   color:#a17d00;
-
   font-size:12px;
   font-weight:900;
 }
 
 .player-position{
   margin-top:2px;
-
   color:#777;
-
   font-size:11px;
 }
 
@@ -724,14 +696,7 @@ main{
 
 .ofv-header{
   padding:18px;
-
-  background:
-    linear-gradient(
-      135deg,
-      #171717,
-      #303030
-    );
-
+  background:linear-gradient(135deg,#171717,#303030);
   color:white;
 }
 
@@ -742,18 +707,14 @@ main{
 .ofv-widget-wrap{
   width:100%;
   min-height:1100px;
-
   overflow:hidden;
-
   background:white;
 }
 
 .ofv-widget-wrap iframe{
   display:block;
-
   width:100% !important;
   min-height:1100px;
-
   border:0;
 }
 
@@ -773,9 +734,7 @@ main{
 
 .form-group label{
   display:block;
-
   margin-bottom:5px;
-
   font-size:12px;
   font-weight:800;
 }
@@ -783,12 +742,9 @@ main{
 .form-input{
   width:100%;
   min-height:44px;
-
   padding:10px 12px;
-
   border:1px solid #d8d8d8;
   border-radius:11px;
-
   background:white;
 }
 
@@ -810,10 +766,8 @@ textarea.form-input{
 
 .photo-upload{
   padding:14px;
-
   border:2px dashed #d6d6d6;
   border-radius:14px;
-
   background:#fafafa;
 }
 
@@ -824,17 +778,12 @@ textarea.form-input{
 
 .photo-preview{
   display:none;
-
   width:100%;
   max-height:330px;
-
   margin-top:12px;
-
-  object-fit:cover;
-
+  object-fit:contain;
   border-radius:12px;
-
-  background:#eee;
+  background:white;
 }
 
 .photo-preview.visible{
@@ -843,25 +792,18 @@ textarea.form-input{
 
 .upload-status{
   margin-top:9px;
-
   color:#666;
-
   font-size:12px;
   font-weight:700;
 }
 
 .upload-progress{
   display:none;
-
   width:100%;
   height:8px;
-
   margin-top:10px;
-
   overflow:hidden;
-
   border-radius:999px;
-
   background:#e8e8e8;
 }
 
@@ -872,9 +814,7 @@ textarea.form-input{
 .upload-progress-bar{
   height:100%;
   width:0%;
-
   background:#18864b;
-
   transition:width .2s ease;
 }
 
@@ -889,22 +829,17 @@ textarea.form-input{
 
 .admin-label{
   display:inline-block;
-
   margin-bottom:8px;
   padding:5px 9px;
-
   border-radius:20px;
-
   background:#171717;
   color:#f4c400;
-
   font-size:10px;
   font-weight:900;
 }
 
 .admin-list-item{
   padding:12px 0;
-
   border-bottom:1px solid #eee;
 }
 
@@ -921,14 +856,10 @@ textarea.form-input{
 .admin-thumb{
   width:54px;
   height:54px;
-
-  object-fit:cover;
-
+  object-fit:contain;
   border-radius:9px;
-
   margin-right:10px;
-
-  background:#eee;
+  background:white;
 }
 
 .admin-list-head{
@@ -944,14 +875,10 @@ textarea.form-input{
 .loading,
 .empty{
   padding:20px;
-
   border-radius:15px;
-
   background:#f7f7f7;
   color:#777;
-
   text-align:center;
-
   font-size:13px;
 }
 
@@ -968,7 +895,10 @@ textarea.form-input{
 
   z-index:500;
 
-  padding:20px;
+  padding:
+    calc(12px + env(safe-area-inset-top))
+    16px
+    calc(12px + env(safe-area-inset-bottom));
 
   overflow-y:auto;
 
@@ -977,79 +907,105 @@ textarea.form-input{
 
 .modal.visible{
   display:flex;
-  align-items:flex-end;
+  align-items:center;
   justify-content:center;
 }
 
 .modal-content{
+  position:relative;
+
   width:100%;
   max-width:680px;
 
-  max-height:88vh;
+  max-height:
+    calc(
+      100dvh
+      - 32px
+      - env(safe-area-inset-top)
+      - env(safe-area-inset-bottom)
+    );
 
   overflow-y:auto;
 
-  padding:22px;
+  padding:20px;
 
-  border-radius:
-    24px 24px
-    12px 12px;
+  border-radius:24px;
 
   background:white;
+
+  -webkit-overflow-scrolling:touch;
 }
 
 .modal-close{
+  position:sticky;
+  top:0;
   float:right;
 
-  width:36px;
-  height:36px;
+  z-index:10;
+
+  width:42px;
+  height:42px;
 
   border:none;
   border-radius:50%;
 
-  background:#eee;
+  background:#f1f1f1;
 
-  font-size:20px;
+  font-size:24px;
 }
+
+
+/*
+=============================================
+NEU:
+Grosses Spielerportrait wird vollständig
+angezeigt und proportional an das iPhone
+angepasst.
+=============================================
+*/
 
 .modal-image{
   display:none;
 
-  width:100%;
-  max-height:520px;
+  width:auto;
+  max-width:100%;
 
-  margin-bottom:15px;
+  height:auto;
+  max-height:58dvh;
 
-  object-fit:cover;
+  margin:
+    4px auto
+    16px;
+
+  object-fit:contain;
+  object-position:center;
 
   border-radius:16px;
+
+  background:white;
 }
 
 .modal-image.visible{
   display:block;
 }
 
+
 .modal-title{
   margin-bottom:7px;
   padding-right:45px;
-
   font-size:23px;
   font-weight:900;
 }
 
 .modal-meta{
   margin-bottom:18px;
-
   color:#888;
-
   font-size:12px;
 }
 
 .modal-text{
   white-space:pre-wrap;
-
   color:#444;
-
   font-size:14px;
   line-height:1.65;
 }
@@ -1061,7 +1017,6 @@ textarea.form-input{
 
 .bottom-nav{
   position:fixed;
-
   left:50%;
   bottom:0;
 
@@ -1090,14 +1045,10 @@ textarea.form-input{
 
 .nav-button{
   min-width:0;
-
   padding:5px 1px;
-
   border:none;
-
   background:transparent;
   color:#777;
-
   font-size:8px;
   font-weight:700;
 }
@@ -1109,9 +1060,7 @@ textarea.form-input{
 
 .nav-icon{
   display:block;
-
   margin-bottom:3px;
-
   font-size:19px;
 }
 
@@ -1149,9 +1098,7 @@ Fussball mit Herz & Tradition
 <main>
 
 
-<!-- =========================
-     HOME
-========================= -->
+<!-- HOME -->
 
 <section
   id="home"
@@ -1231,17 +1178,9 @@ Schnellzugriff
   onclick="openPage('news')"
 >
 
-<span class="quick-icon">
-📰
-</span>
-
-<strong>
-News
-</strong>
-
-<small>
-Neues vom Verein
-</small>
+<span class="quick-icon">📰</span>
+<strong>News</strong>
+<small>Neues vom Verein</small>
 
 </button>
 
@@ -1251,17 +1190,9 @@ Neues vom Verein
   onclick="openPage('teams')"
 >
 
-<span class="quick-icon">
-👕
-</span>
-
-<strong>
-Teams
-</strong>
-
-<small>
-Mannschaften & Spieler
-</small>
+<span class="quick-icon">👕</span>
+<strong>Teams</strong>
+<small>Mannschaften & Spieler</small>
 
 </button>
 
@@ -1271,17 +1202,9 @@ Mannschaften & Spieler
   onclick="openPage('spielbetrieb')"
 >
 
-<span class="quick-icon">
-⚽
-</span>
-
-<strong>
-Spielbetrieb
-</strong>
-
-<small>
-Direkt vom OFV
-</small>
+<span class="quick-icon">⚽</span>
+<strong>Spielbetrieb</strong>
+<small>Direkt vom OFV</small>
 
 </button>
 
@@ -1291,17 +1214,9 @@ Direkt vom OFV
   onclick="openPage('matchberichte')"
 >
 
-<span class="quick-icon">
-📝
-</span>
-
-<strong>
-Matchberichte
-</strong>
-
-<small>
-Berichte unserer Teams
-</small>
+<span class="quick-icon">📝</span>
+<strong>Matchberichte</strong>
+<small>Berichte unserer Teams</small>
 
 </button>
 
@@ -1310,14 +1225,9 @@ Berichte unserer Teams
 </section>
 
 
-<!-- =========================
-     NEWS
-========================= -->
+<!-- NEWS -->
 
-<section
-  id="news"
-  class="page"
->
+<section id="news" class="page">
 
 <h1 class="page-title">
 News
@@ -1338,14 +1248,9 @@ News werden geladen...
 </section>
 
 
-<!-- =========================
-     TEAMS
-========================= -->
+<!-- TEAMS -->
 
-<section
-  id="teams"
-  class="page"
->
+<section id="teams" class="page">
 
 <h1 class="page-title">
 Teams
@@ -1366,14 +1271,9 @@ Teams werden geladen...
 </section>
 
 
-<!-- =========================
-     OFV
-========================= -->
+<!-- SPIELBETRIEB -->
 
-<section
-  id="spielbetrieb"
-  class="page"
->
+<section id="spielbetrieb" class="page">
 
 <h1 class="page-title">
 Spielbetrieb
@@ -1415,14 +1315,9 @@ vom OFV / football.ch geladen.
 </section>
 
 
-<!-- =========================
-     MATCHBERICHTE
-========================= -->
+<!-- MATCHBERICHTE -->
 
-<section
-  id="matchberichte"
-  class="page"
->
+<section id="matchberichte" class="page">
 
 <h1 class="page-title">
 Matchberichte
@@ -1443,14 +1338,9 @@ Matchberichte werden geladen...
 </section>
 
 
-<!-- =========================
-     KONTAKT
-========================= -->
+<!-- KONTAKT -->
 
-<section
-  id="kontakt"
-  class="page"
->
+<section id="kontakt" class="page">
 
 <h1 class="page-title">
 Kontakt
@@ -1482,8 +1372,7 @@ Schweiz
 </h3>
 
 <p>
-Geschützter Bereich für
-Vereinsverantwortliche.
+Geschützter Bereich für Vereinsverantwortliche.
 </p>
 
 <button
@@ -1498,14 +1387,9 @@ Admin-Bereich öffnen
 </section>
 
 
-<!-- =========================
-     ADMIN
-========================= -->
+<!-- ADMIN -->
 
-<section
-  id="admin"
-  class="page"
->
+<section id="admin" class="page">
 
 <button
   class="button button-outline"
@@ -1526,8 +1410,6 @@ FCW Admin
 Vereinsinhalte verwalten.
 </p>
 
-
-<!-- LOGIN -->
 
 <div
   id="adminLogin"
@@ -1585,17 +1467,11 @@ Anmelden
 
 <div
   id="loginStatus"
-  style="
-    margin-top:10px;
-    font-size:12px;
-    font-weight:700;
-  "
+  style="margin-top:10px;font-size:12px;font-weight:700;"
 ></div>
 
 </div>
 
-
-<!-- ADMIN PANEL -->
 
 <div
   id="adminPanel"
@@ -1625,10 +1501,6 @@ Abmelden
 </div>
 
 
-<!-- =========================
-     PUSH ADMIN
-========================= -->
-
 <div class="card push-admin">
 
 <div class="push-admin-header">
@@ -1654,9 +1526,7 @@ An alle registrierten FCW-App-Geräte
 
 <div class="form-group">
 
-<label>
-Titel
-</label>
+<label>Titel</label>
 
 <input
   id="pushTitle"
@@ -1708,14 +1578,9 @@ Nachricht
 🚀 Push an alle senden
 </button>
 
-
 <div class="push-warning">
-
-⚠️ Nach dem Senden kann eine Push-Nachricht
-nicht zurückgerufen werden.
-
+⚠️ Nach dem Senden kann eine Push-Nachricht nicht zurückgerufen werden.
 </div>
-
 
 <div
   id="pushSendStatus"
@@ -1725,9 +1590,7 @@ nicht zurückgerufen werden.
 </div>
 
 
-<!-- =========================
-     NEWS ADMIN
-========================= -->
+<!-- NEWS ADMIN -->
 
 <div class="card admin-card">
 
@@ -1739,17 +1602,11 @@ NEWS
 News veröffentlichen
 </h3>
 
-<input
-  id="newsEditId"
-  type="hidden"
->
-
+<input id="newsEditId" type="hidden">
 
 <div class="form-group">
 
-<label>
-Titel
-</label>
+<label>Titel</label>
 
 <input
   id="newsTitle"
@@ -1762,9 +1619,7 @@ Titel
 
 <div class="form-group">
 
-<label>
-Kategorie
-</label>
+<label>Kategorie</label>
 
 <input
   id="newsCategory"
@@ -1777,9 +1632,7 @@ Kategorie
 
 <div class="form-group">
 
-<label>
-Datum & Zeit
-</label>
+<label>Datum & Zeit</label>
 
 <input
   id="newsDate"
@@ -1792,9 +1645,7 @@ Datum & Zeit
 
 <div class="form-group">
 
-<label>
-Text
-</label>
+<label>Text</label>
 
 <textarea
   id="newsText"
@@ -1807,9 +1658,7 @@ Text
 
 <div class="form-group">
 
-<label>
-News-Foto
-</label>
+<label>News-Foto</label>
 
 <div class="photo-upload">
 
@@ -1821,12 +1670,7 @@ News-Foto
   id="newsImageFile"
   type="file"
   accept="image/*"
-  onchange="
-    previewSelectedImage(
-      this,
-      'newsImagePreview'
-    )
-  "
+  onchange="previewSelectedImage(this,'newsImagePreview')"
 >
 
 <img
@@ -1839,7 +1683,6 @@ News-Foto
   id="newsUploadStatus"
   class="upload-status"
 ></div>
-
 
 <div
   id="newsUploadProgress"
@@ -1857,14 +1700,12 @@ News-Foto
 
 </div>
 
-
 <button
   class="button button-green"
   onclick="saveNews()"
 >
 News veröffentlichen
 </button>
-
 
 <button
   class="button button-outline"
@@ -1873,15 +1714,12 @@ News veröffentlichen
 Abbrechen
 </button>
 
-
 <div id="adminNewsList"></div>
 
 </div>
 
 
-<!-- =========================
-     TEAM ADMIN
-========================= -->
+<!-- TEAM ADMIN -->
 
 <div class="card admin-card">
 
@@ -1893,17 +1731,11 @@ TEAMS
 Team verwalten
 </h3>
 
-<input
-  id="teamEditId"
-  type="hidden"
->
-
+<input id="teamEditId" type="hidden">
 
 <div class="form-group">
 
-<label>
-Teamname
-</label>
+<label>Teamname</label>
 
 <input
   id="teamNameInput"
@@ -1913,12 +1745,9 @@ Teamname
 
 </div>
 
-
 <div class="form-group">
 
-<label>
-Liga
-</label>
+<label>Liga</label>
 
 <input
   id="teamLeagueInput"
@@ -1928,12 +1757,9 @@ Liga
 
 </div>
 
-
 <div class="form-group">
 
-<label>
-Trainer
-</label>
+<label>Trainer</label>
 
 <input
   id="teamCoachInput"
@@ -1942,12 +1768,9 @@ Trainer
 
 </div>
 
-
 <div class="form-group">
 
-<label>
-Training
-</label>
+<label>Training</label>
 
 <input
   id="teamTrainingInput"
@@ -1959,9 +1782,7 @@ Training
 
 <div class="form-group">
 
-<label>
-Mannschaftsfoto
-</label>
+<label>Mannschaftsfoto</label>
 
 <div class="photo-upload">
 
@@ -1973,12 +1794,7 @@ Mannschaftsfoto
   id="teamImageFile"
   type="file"
   accept="image/*"
-  onchange="
-    previewSelectedImage(
-      this,
-      'teamImagePreview'
-    )
-  "
+  onchange="previewSelectedImage(this,'teamImagePreview')"
 >
 
 <img
@@ -1991,7 +1807,6 @@ Mannschaftsfoto
   id="teamUploadStatus"
   class="upload-status"
 ></div>
-
 
 <div
   id="teamUploadProgress"
@@ -2012,9 +1827,7 @@ Mannschaftsfoto
 
 <div class="form-group">
 
-<label>
-Sortierung
-</label>
+<label>Sortierung</label>
 
 <input
   id="teamSortInput"
@@ -2025,14 +1838,12 @@ Sortierung
 
 </div>
 
-
 <button
   class="button button-green"
   onclick="saveTeam()"
 >
 Team speichern
 </button>
-
 
 <button
   class="button button-outline"
@@ -2041,15 +1852,12 @@ Team speichern
 Abbrechen
 </button>
 
-
 <div id="adminTeamsList"></div>
 
 </div>
 
 
-<!-- =========================
-     SPIELER ADMIN
-========================= -->
+<!-- SPIELER ADMIN -->
 
 <div class="card admin-card">
 
@@ -2061,10 +1869,7 @@ SPIELER
 Spieler verwalten
 </h3>
 
-<input
-  id="playerEditId"
-  type="hidden"
->
+<input id="playerEditId" type="hidden">
 
 
 <div class="form-group">
@@ -2089,9 +1894,7 @@ Mannschaft auswählen
 
 <div class="form-group">
 
-<label>
-Name
-</label>
+<label>Name</label>
 
 <input
   id="playerNameInput"
@@ -2106,9 +1909,7 @@ Name
 
 <div class="form-group">
 
-<label>
-Rückennummer
-</label>
+<label>Rückennummer</label>
 
 <input
   id="playerNumberInput"
@@ -2118,33 +1919,19 @@ Rückennummer
 
 </div>
 
-
 <div class="form-group">
 
-<label>
-Position
-</label>
+<label>Position</label>
 
 <select
   id="playerPositionInput"
   class="form-input"
 >
 
-<option value="Torhüter">
-Torhüter
-</option>
-
-<option value="Verteidiger">
-Verteidiger
-</option>
-
-<option value="Mittelfeld">
-Mittelfeld
-</option>
-
-<option value="Stürmer">
-Stürmer
-</option>
+<option value="Torhüter">Torhüter</option>
+<option value="Verteidiger">Verteidiger</option>
+<option value="Mittelfeld">Mittelfeld</option>
+<option value="Stürmer">Stürmer</option>
 
 </select>
 
@@ -2169,12 +1956,7 @@ Spielerportrait
   id="playerPhotoFile"
   type="file"
   accept="image/*"
-  onchange="
-    previewSelectedImage(
-      this,
-      'playerPhotoPreview'
-    )
-  "
+  onchange="previewSelectedImage(this,'playerPhotoPreview')"
 >
 
 <img
@@ -2187,7 +1969,6 @@ Spielerportrait
   id="playerUploadStatus"
   class="upload-status"
 ></div>
-
 
 <div
   id="playerUploadProgress"
@@ -2221,14 +2002,12 @@ Sortierung
 
 </div>
 
-
 <button
   class="button button-green"
   onclick="savePlayer()"
 >
 Spieler speichern
 </button>
-
 
 <button
   class="button button-outline"
@@ -2237,15 +2016,12 @@ Spieler speichern
 Abbrechen
 </button>
 
-
 <div id="adminPlayersList"></div>
 
 </div>
 
 
-<!-- =========================
-     MATCHBERICHT ADMIN
-========================= -->
+<!-- MATCHBERICHT ADMIN -->
 
 <div class="card admin-card">
 
@@ -2257,17 +2033,11 @@ MATCHBERICHT
 Matchbericht verwalten
 </h3>
 
-<input
-  id="reportEditId"
-  type="hidden"
->
-
+<input id="reportEditId" type="hidden">
 
 <div class="form-group">
 
-<label>
-Titel
-</label>
+<label>Titel</label>
 
 <input
   id="reportTitle"
@@ -2276,12 +2046,9 @@ Titel
 
 </div>
 
-
 <div class="form-group">
 
-<label>
-Mannschaft
-</label>
+<label>Mannschaft</label>
 
 <input
   id="reportTeam"
@@ -2290,12 +2057,9 @@ Mannschaft
 
 </div>
 
-
 <div class="form-group">
 
-<label>
-Datum & Zeit
-</label>
+<label>Datum & Zeit</label>
 
 <input
   id="reportDate"
@@ -2305,12 +2069,9 @@ Datum & Zeit
 
 </div>
 
-
 <div class="form-group">
 
-<label>
-Bericht
-</label>
+<label>Bericht</label>
 
 <textarea
   id="reportText"
@@ -2319,14 +2080,12 @@ Bericht
 
 </div>
 
-
 <button
   class="button button-green"
   onclick="saveReport()"
 >
 Matchbericht speichern
 </button>
-
 
 <button
   class="button button-outline"
@@ -2335,11 +2094,9 @@ Matchbericht speichern
 Abbrechen
 </button>
 
-
 <div id="adminReportsList"></div>
 
 </div>
-
 
 </div>
 
@@ -2350,10 +2107,6 @@ Abbrechen
 </div>
 
 
-<!-- =========================
-     NAVIGATION
-========================= -->
-
 <nav class="bottom-nav">
 
 <button
@@ -2361,96 +2114,57 @@ Abbrechen
   data-page="home"
   onclick="openPage('home')"
 >
-
-<span class="nav-icon">
-🏠
-</span>
-
+<span class="nav-icon">🏠</span>
 Home
-
 </button>
-
 
 <button
   class="nav-button"
   data-page="news"
   onclick="openPage('news')"
 >
-
-<span class="nav-icon">
-📰
-</span>
-
+<span class="nav-icon">📰</span>
 News
-
 </button>
-
 
 <button
   class="nav-button"
   data-page="teams"
   onclick="openPage('teams')"
 >
-
-<span class="nav-icon">
-👕
-</span>
-
+<span class="nav-icon">👕</span>
 Teams
-
 </button>
-
 
 <button
   class="nav-button"
   data-page="spielbetrieb"
   onclick="openPage('spielbetrieb')"
 >
-
-<span class="nav-icon">
-⚽
-</span>
-
+<span class="nav-icon">⚽</span>
 Spiele
-
 </button>
-
 
 <button
   class="nav-button"
   data-page="matchberichte"
   onclick="openPage('matchberichte')"
 >
-
-<span class="nav-icon">
-📝
-</span>
-
+<span class="nav-icon">📝</span>
 Berichte
-
 </button>
-
 
 <button
   class="nav-button"
   data-page="kontakt"
   onclick="openPage('kontakt')"
 >
-
-<span class="nav-icon">
-☎️
-</span>
-
+<span class="nav-icon">☎️</span>
 Kontakt
-
 </button>
 
 </nav>
 
-
-<!-- =========================
-     MODAL
-========================= -->
 
 <div
   id="contentModal"
@@ -2467,31 +2181,26 @@ Kontakt
 ×
 </button>
 
-
 <img
   id="modalImage"
   class="modal-image"
   alt=""
 >
 
-
 <span
   id="modalTag"
   class="tag"
 ></span>
-
 
 <h2
   id="modalTitle"
   class="modal-title"
 ></h2>
 
-
 <div
   id="modalMeta"
   class="modal-meta"
 ></div>
-
 
 <div
   id="modalText"
@@ -2503,40 +2212,15 @@ Kontakt
 </div>
 
 
-<!-- =========================
-     FIREBASE SDK
-========================= -->
-
-<script
-  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"
-></script>
-
-<script
-  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"
-></script>
-
-<script
-  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"
-></script>
-
-<script
-  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"
-></script>
-
-<script
-  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"
-></script>
-
-<script
-  src="https://www.gstatic.com/firebasejs/10.13.2/firebase-functions-compat.js"
-></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-functions-compat.js"></script>
 
 
 <script>
-
-/* =========================
-   FIREBASE
-========================= */
 
 const firebaseConfig = {
 
@@ -2561,75 +2245,44 @@ const firebaseConfig = {
 };
 
 
-firebase.initializeApp(
-  firebaseConfig
-);
+firebase.initializeApp(firebaseConfig);
 
-
-const db =
-  firebase.firestore();
-
-
-const auth =
-  firebase.auth();
-
-
-const storage =
-  firebase.storage();
-
-
-const messaging =
-  firebase.messaging();
-
+const db = firebase.firestore();
+const auth = firebase.auth();
+const storage = firebase.storage();
+const messaging = firebase.messaging();
 
 const functions =
   firebase
     .app()
-    .functions(
-      "europe-west6"
-    );
-
+    .functions("europe-west6");
 
 const registerPushTokenCallable =
   functions.httpsCallable(
     "registerPushToken"
   );
 
-
 const sendPushCallable =
   functions.httpsCallable(
     "sendPush"
   );
 
-
 const ADMIN_UID =
   "Ml4BJbbv4AOKZUCC4rutXv1HxWJ3";
-
 
 const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
-
 let newsData = [];
-
 let teamsData = [];
-
 let playersData = [];
-
 let reportsData = [];
 
-
-
-/* =========================
-   HILFSFUNKTIONEN
-========================= */
 
 function esc(text){
 
   const div =
-    document.createElement(
-      "div"
-    );
+    document.createElement("div");
 
   div.textContent =
     text ?? "";
@@ -2649,9 +2302,7 @@ function toDate(value){
     typeof value.toDate ===
     "function"
   ){
-
     return value.toDate();
-
   }
 
   return new Date(value);
@@ -2672,24 +2323,15 @@ function formatDate(
   }
 
   const options = {
-
     day:"2-digit",
     month:"2-digit",
     year:"numeric"
-
   };
 
-
   if(withTime){
-
-    options.hour =
-      "2-digit";
-
-    options.minute =
-      "2-digit";
-
+    options.hour="2-digit";
+    options.minute="2-digit";
   }
-
 
   return new Intl
     .DateTimeFormat(
@@ -2708,7 +2350,6 @@ function inputTimestamp(id){
       .getElementById(id)
       .value;
 
-
   if(!value){
 
     return firebase
@@ -2717,7 +2358,6 @@ function inputTimestamp(id){
       .now();
 
   }
-
 
   return firebase
     .firestore
@@ -2738,20 +2378,14 @@ function dateInputValue(value){
     return "";
   }
 
-
   const local =
     new Date(
-
       date.getTime()
-
       -
-
       date.getTimezoneOffset()
       *
       60000
-
     );
-
 
   return local
     .toISOString()
@@ -2760,58 +2394,34 @@ function dateInputValue(value){
 }
 
 
-
-/* =========================
-   NAVIGATION
-========================= */
-
 function openPage(name){
 
   document
-    .querySelectorAll(
-      ".page"
-    )
+    .querySelectorAll(".page")
     .forEach(page => {
 
-      page.classList.remove(
-        "active"
-      );
+      page.classList.remove("active");
 
     });
-
 
   document
     .getElementById(name)
     ?.classList
-    .add(
-      "active"
-    );
-
+    .add("active");
 
   document
-    .querySelectorAll(
-      ".nav-button"
-    )
+    .querySelectorAll(".nav-button")
     .forEach(button => {
 
-      button.classList.remove(
-        "active"
-      );
-
+      button.classList.remove("active");
 
       if(
-        button.dataset.page ===
-        name
+        button.dataset.page === name
       ){
-
-        button.classList.add(
-          "active"
-        );
-
+        button.classList.add("active");
       }
 
     });
-
 
   window.scrollTo({
     top:0,
@@ -2820,11 +2430,6 @@ function openPage(name){
 
 }
 
-
-
-/* =========================
-   FOTO VORSCHAU
-========================= */
 
 function previewSelectedImage(
   input,
@@ -2836,10 +2441,8 @@ function previewSelectedImage(
       previewId
     );
 
-
   const file =
     input.files?.[0];
-
 
   if(!file){
 
@@ -2852,48 +2455,28 @@ function previewSelectedImage(
     );
 
     return;
-
   }
 
-
   if(
-    !file.type.startsWith(
-      "image/"
-    )
+    !file.type.startsWith("image/")
   ){
 
     alert(
       "Bitte eine Bilddatei auswählen."
     );
 
-    input.value = "";
-
+    input.value="";
     return;
-
   }
 
-
   const url =
-    URL.createObjectURL(
-      file
-    );
+    URL.createObjectURL(file);
 
-
-  preview.src =
-    url;
-
-
-  preview.classList.add(
-    "visible"
-  );
+  preview.src=url;
+  preview.classList.add("visible");
 
 }
 
-
-
-/* =========================
-   STORAGE UPLOAD
-========================= */
 
 async function uploadImage(
   file,
@@ -2911,10 +2494,8 @@ async function uploadImage(
 
   }
 
-
   if(
-    auth.currentUser.uid !==
-    ADMIN_UID
+    auth.currentUser.uid !== ADMIN_UID
   ){
 
     throw new Error(
@@ -2923,18 +2504,12 @@ async function uploadImage(
 
   }
 
-
   if(!file){
-
     return null;
-
   }
 
-
   if(
-    !file.type.startsWith(
-      "image/"
-    )
+    !file.type.startsWith("image/")
   ){
 
     throw new Error(
@@ -2943,14 +2518,10 @@ async function uploadImage(
 
   }
 
-
   const maxSize =
     15 * 1024 * 1024;
 
-
-  if(
-    file.size > maxSize
-  ){
+  if(file.size > maxSize){
 
     throw new Error(
       "Das Bild ist grösser als 15 MB."
@@ -2958,41 +2529,24 @@ async function uploadImage(
 
   }
 
-
   const status =
-    document.getElementById(
-      statusId
-    );
-
+    document.getElementById(statusId);
 
   const progress =
-    document.getElementById(
-      progressId
-    );
-
+    document.getElementById(progressId);
 
   const bar =
-    document.getElementById(
-      barId
-    );
-
+    document.getElementById(barId);
 
   status.textContent =
     "⏳ Bild wird hochgeladen...";
 
+  progress.classList.add("visible");
 
-  progress.classList.add(
-    "visible"
-  );
-
-
-  bar.style.width =
-    "0%";
-
+  bar.style.width="0%";
 
   const originalName =
     file.name || "foto.jpg";
-
 
   const extension =
     originalName.includes(".")
@@ -3004,65 +2558,35 @@ async function uploadImage(
     :
     "jpg";
 
-
   const safeExtension =
     extension
-      .replace(
-        /[^a-z0-9]/g,
-        ""
-      )
-      .substring(
-        0,
-        5
-      )
+      .replace(/[^a-z0-9]/g,"")
+      .substring(0,5)
       ||
       "jpg";
 
-
   const fileName =
-
     Date.now()
-
     +
-
     "-"
-
     +
-
     Math.random()
       .toString(36)
       .substring(2,10)
-
     +
-
     "."
-
     +
-
     safeExtension;
 
-
   const storagePath =
-    folder
-    +
-    "/"
-    +
-    fileName;
-
+    folder + "/" + fileName;
 
   const ref =
-    storage.ref(
-      storagePath
-    );
-
+    storage.ref(storagePath);
 
   const metadata = {
-
-    contentType:
-      file.type
-
+    contentType:file.type
   };
-
 
   const task =
     ref.put(
@@ -3070,41 +2594,30 @@ async function uploadImage(
       metadata
     );
 
-
   return new Promise(
-    (resolve,reject) => {
-
+    (resolve,reject)=>{
 
       task.on(
 
         "state_changed",
 
-        snapshot => {
-
+        snapshot=>{
 
           const percentage =
             snapshot.totalBytes
             ?
             Math.round(
-
               (
                 snapshot.bytesTransferred
                 /
                 snapshot.totalBytes
-              )
-              *
-              100
-
+              ) * 100
             )
             :
             0;
 
-
           bar.style.width =
-            percentage
-            +
-            "%";
-
+            percentage + "%";
 
           status.textContent =
             "⏳ Upload "
@@ -3115,8 +2628,7 @@ async function uploadImage(
 
         },
 
-
-        error => {
+        error=>{
 
           progress.classList.remove(
             "visible"
@@ -3129,8 +2641,7 @@ async function uploadImage(
 
         },
 
-
-        async () => {
+        async ()=>{
 
           try{
 
@@ -3140,42 +2651,29 @@ async function uploadImage(
                 .ref
                 .getDownloadURL();
 
-
-            bar.style.width =
-              "100%";
-
+            bar.style.width="100%";
 
             status.textContent =
               "✅ Foto hochgeladen";
 
-
             setTimeout(
-              () => {
-
-                progress
-                  .classList
-                  .remove(
-                    "visible"
-                  );
-
+              ()=>{
+                progress.classList.remove(
+                  "visible"
+                );
               },
               800
             );
 
-
             resolve({
-
               url:url,
               path:storagePath
-
             });
 
           }
 
           catch(error){
-
             reject(error);
-
           }
 
         }
@@ -3195,7 +2693,6 @@ async function deleteStorageFile(
   if(!storagePath){
     return;
   }
-
 
   try{
 
@@ -3217,322 +2714,153 @@ async function deleteStorageFile(
 }
 
 
+/* FIRESTORE LISTENER */
 
-/* =========================
-   NEWS LISTENER
-========================= */
+db.collection("news")
+.onSnapshot(snapshot=>{
 
-db
-.collection("news")
-.onSnapshot(
+  newsData=[];
 
-  snapshot => {
+  snapshot.forEach(doc=>{
 
-    newsData = [];
+    const data=doc.data();
 
+    if(data.aktiv===false){
+      return;
+    }
 
-    snapshot.forEach(
-      doc => {
+    newsData.push({
+      id:doc.id,
+      ...data
+    });
 
-        const data =
-          doc.data();
+  });
 
+  newsData.sort(
+    (a,b)=>
+      (toDate(b.datum)?.getTime()||0)
+      -
+      (toDate(a.datum)?.getTime()||0)
+  );
 
-        if(
-          data.aktiv ===
-          false
-        ){
-          return;
-        }
+  renderNews();
+  renderHomeNews();
+  renderAdminLists();
 
+});
 
-        newsData.push({
 
-          id:doc.id,
-          ...data
+db.collection("teams")
+.onSnapshot(snapshot=>{
 
-        });
+  teamsData=[];
 
-      }
-    );
+  snapshot.forEach(doc=>{
 
+    const data=doc.data();
 
-    newsData.sort(
-      (a,b) =>
+    if(data.aktiv===false){
+      return;
+    }
 
-        (
-          toDate(b.datum)
-          ?.getTime() || 0
-        )
+    teamsData.push({
+      id:doc.id,
+      ...data
+    });
 
-        -
+  });
 
-        (
-          toDate(a.datum)
-          ?.getTime() || 0
-        )
-    );
+  teamsData.sort(
+    (a,b)=>
+      Number(a.sortierung??999)
+      -
+      Number(b.sortierung??999)
+  );
 
+  renderTeams();
+  updateTeamSelect();
+  renderAdminLists();
 
-    renderNews();
+});
 
-    renderHomeNews();
 
-    renderAdminLists();
+db.collection("spieler")
+.onSnapshot(snapshot=>{
 
-  },
+  playersData=[];
 
+  snapshot.forEach(doc=>{
 
-  error => {
+    const data=doc.data();
 
-    console.error(
-      "News Fehler:",
-      error
-    );
+    if(data.aktiv===false){
+      return;
+    }
 
-  }
+    playersData.push({
+      id:doc.id,
+      ...data
+    });
 
-);
+  });
 
+  playersData.sort(
+    (a,b)=>
+      Number(
+        a.sortierung
+        ??
+        a.nummer
+        ??
+        999
+      )
+      -
+      Number(
+        b.sortierung
+        ??
+        b.nummer
+        ??
+        999
+      )
+  );
 
+  renderTeams();
+  renderAdminLists();
 
-/* =========================
-   TEAMS LISTENER
-========================= */
+});
 
-db
-.collection("teams")
-.onSnapshot(
 
-  snapshot => {
+db.collection("matchberichte")
+.onSnapshot(snapshot=>{
 
-    teamsData = [];
+  reportsData=[];
 
+  snapshot.forEach(doc=>{
 
-    snapshot.forEach(
-      doc => {
+    const data=doc.data();
 
-        const data =
-          doc.data();
+    if(data.aktiv===false){
+      return;
+    }
 
+    reportsData.push({
+      id:doc.id,
+      ...data
+    });
 
-        if(
-          data.aktiv ===
-          false
-        ){
-          return;
-        }
+  });
 
+  reportsData.sort(
+    (a,b)=>
+      (toDate(b.datum)?.getTime()||0)
+      -
+      (toDate(a.datum)?.getTime()||0)
+  );
 
-        teamsData.push({
+  renderReports();
+  renderAdminLists();
 
-          id:doc.id,
-          ...data
+});
 
-        });
-
-      }
-    );
-
-
-    teamsData.sort(
-      (a,b) =>
-
-        Number(
-          a.sortierung ?? 999
-        )
-
-        -
-
-        Number(
-          b.sortierung ?? 999
-        )
-    );
-
-
-    renderTeams();
-
-    updateTeamSelect();
-
-    renderAdminLists();
-
-  },
-
-
-  error => {
-
-    console.error(
-      "Teams Fehler:",
-      error
-    );
-
-  }
-
-);
-
-
-
-/* =========================
-   SPIELER LISTENER
-========================= */
-
-db
-.collection("spieler")
-.onSnapshot(
-
-  snapshot => {
-
-    playersData = [];
-
-
-    snapshot.forEach(
-      doc => {
-
-        const data =
-          doc.data();
-
-
-        if(
-          data.aktiv ===
-          false
-        ){
-          return;
-        }
-
-
-        playersData.push({
-
-          id:doc.id,
-          ...data
-
-        });
-
-      }
-    );
-
-
-    playersData.sort(
-      (a,b) =>
-
-        Number(
-          a.sortierung
-          ??
-          a.nummer
-          ??
-          999
-        )
-
-        -
-
-        Number(
-          b.sortierung
-          ??
-          b.nummer
-          ??
-          999
-        )
-    );
-
-
-    renderTeams();
-
-    renderAdminLists();
-
-  },
-
-
-  error => {
-
-    console.error(
-      "Spieler Fehler:",
-      error
-    );
-
-  }
-
-);
-
-
-
-/* =========================
-   MATCHBERICHTE LISTENER
-========================= */
-
-db
-.collection("matchberichte")
-.onSnapshot(
-
-  snapshot => {
-
-    reportsData = [];
-
-
-    snapshot.forEach(
-      doc => {
-
-        const data =
-          doc.data();
-
-
-        if(
-          data.aktiv ===
-          false
-        ){
-          return;
-        }
-
-
-        reportsData.push({
-
-          id:doc.id,
-          ...data
-
-        });
-
-      }
-    );
-
-
-    reportsData.sort(
-      (a,b) =>
-
-        (
-          toDate(b.datum)
-          ?.getTime() || 0
-        )
-
-        -
-
-        (
-          toDate(a.datum)
-          ?.getTime() || 0
-        )
-    );
-
-
-    renderReports();
-
-    renderAdminLists();
-
-  },
-
-
-  error => {
-
-    console.error(
-      "Matchbericht Fehler:",
-      error
-    );
-
-  }
-
-);
-
-
-
-/* =========================
-   NEWS ANZEIGEN
-========================= */
 
 function renderNews(){
 
@@ -3541,142 +2869,66 @@ function renderNews(){
       "newsList"
     );
 
-
   if(!newsData.length){
 
     container.innerHTML =
-
       `<div class="empty">
       Aktuell sind keine News vorhanden.
       </div>`;
 
     return;
-
   }
 
-
   container.innerHTML =
-    newsData
-      .map(news => {
+    newsData.map(news=>{
 
+      const image =
+        news.bild
+        ?
+        `<img
+          src="${esc(news.bild)}"
+          class="news-image"
+          alt=""
+        >`
+        :
+        "";
 
-        if(news.bild){
+      return `
 
-          return `
+      <div
+        class="card"
+        onclick="openNews('${news.id}')"
+      >
 
-          <div
-            class="card news-card-with-image"
-            onclick="openNews('${news.id}')"
-          >
+      ${image}
 
-          <img
-            src="${esc(news.bild)}"
-            class="news-image"
-            style="
-              border-radius:0;
-              margin-bottom:0;
-            "
-            alt=""
-          >
+      <span class="tag">
+      ${esc(news.kategorie||"News")}
+      </span>
 
-          <div class="news-content">
+      <div class="meta">
+      ${formatDate(news.datum)}
+      </div>
 
-          <span class="tag">
-          ${esc(
-            news.kategorie ||
-            "News"
-          )}
-          </span>
+      <h3>
+      ${esc(news.titel||"")}
+      </h3>
 
-          <div class="meta">
-          ${formatDate(
-            news.datum
-          )}
-          </div>
+      <p>
+      ${esc(
+        String(news.text||"")
+        .substring(0,180)
+      )}
+      </p>
 
-          <h3>
-          ${esc(
-            news.titel ||
-            ""
-          )}
-          </h3>
+      </div>
 
-          <p>
-          ${esc(
-            String(
-              news.text ||
-              ""
-            )
-            .substring(
-              0,
-              180
-            )
-          )}
-          </p>
+      `;
 
-          </div>
-
-          </div>
-
-          `;
-
-        }
-
-
-        return `
-
-        <div
-          class="card"
-          onclick="openNews('${news.id}')"
-        >
-
-        <span class="tag">
-        ${esc(
-          news.kategorie ||
-          "News"
-        )}
-        </span>
-
-        <div class="meta">
-        ${formatDate(
-          news.datum
-        )}
-        </div>
-
-        <h3>
-        ${esc(
-          news.titel ||
-          ""
-        )}
-        </h3>
-
-        <p>
-        ${esc(
-          String(
-            news.text ||
-            ""
-          )
-          .substring(
-            0,
-            180
-          )
-        )}
-        </p>
-
-        </div>
-
-        `;
-
-      })
-      .join("");
+    }).join("");
 
 }
 
-
-
-/* =========================
-   HOME NEWS
-========================= */
 
 function renderHomeNews(){
 
@@ -3685,39 +2937,29 @@ function renderHomeNews(){
       "homeNews"
     );
 
-
   const news =
     newsData[0];
-
 
   if(!news){
 
     container.innerHTML =
-
       `<div class="empty">
       Aktuell sind keine News vorhanden.
       </div>`;
 
     return;
-
   }
-
 
   const image =
     news.bild
     ?
-    `
-
-    <img
+    `<img
       src="${esc(news.bild)}"
       class="news-image"
       alt=""
-    >
-
-    `
+    >`
     :
     "";
-
 
   container.innerHTML = `
 
@@ -3729,35 +2971,21 @@ function renderHomeNews(){
     ${image}
 
     <span class="tag">
-    ${esc(
-      news.kategorie ||
-      "News"
-    )}
+    ${esc(news.kategorie||"News")}
     </span>
 
     <div class="meta">
-    ${formatDate(
-      news.datum
-    )}
+    ${formatDate(news.datum)}
     </div>
 
     <h3>
-    ${esc(
-      news.titel ||
-      ""
-    )}
+    ${esc(news.titel||"")}
     </h3>
 
     <p>
     ${esc(
-      String(
-        news.text ||
-        ""
-      )
-      .substring(
-        0,
-        140
-      )
+      String(news.text||"")
+      .substring(0,140)
     )}
     </p>
 
@@ -3772,45 +3000,23 @@ function openNews(id){
 
   const news =
     newsData.find(
-      item =>
-        item.id === id
+      item=>item.id===id
     );
-
 
   if(!news){
     return;
   }
 
-
   openModal({
-
-    image:
-      news.bild || "",
-
-    tag:
-      news.kategorie ||
-      "News",
-
-    title:
-      news.titel || "",
-
-    meta:
-      formatDate(
-        news.datum
-      ),
-
-    text:
-      news.text || ""
-
+    image:news.bild||"",
+    tag:news.kategorie||"News",
+    title:news.titel||"",
+    meta:formatDate(news.datum),
+    text:news.text||""
   });
 
 }
 
-
-
-/* =========================
-   TEAMS ANZEIGEN
-========================= */
 
 function renderTeams(){
 
@@ -3819,233 +3025,181 @@ function renderTeams(){
       "teamsList"
     );
 
-
   if(!teamsData.length){
 
     container.innerHTML =
-
       `<div class="empty">
       Aktuell sind keine Teams eingetragen.
       </div>`;
 
     return;
-
   }
 
-
   container.innerHTML =
-    teamsData
-      .map(team => {
+    teamsData.map(team=>{
 
+      const players =
+        playersData.filter(
+          player=>
+            player.teamId===team.id
+            ||
+            (
+              !player.teamId
+              &&
+              player.teamName===team.name
+            )
+        );
 
-        const players =
-          playersData.filter(
-            player =>
+      const playersHtml =
+        players.length
+        ?
+        `
 
-              player.teamId ===
-              team.id
+        <div class="players-heading">
+        Kader
+        </div>
 
-              ||
+        <div class="player-grid">
 
-              (
-                !player.teamId
-                &&
-                player.teamName ===
-                team.name
-              )
-          );
+        ${
+          players.map(player=>`
 
+          <div
+            class="player-card"
+            onclick="
+              event.stopPropagation();
+              openPlayer('${player.id}');
+            "
+          >
 
-        const playersHtml =
-          players.length
-          ?
-          `
+          <img
+            src="${esc(
+              player.foto||
+              "./logo.png"
+            )}"
+            class="player-photo"
+            onerror="this.src='./logo.png'"
+            alt=""
+          >
 
-          <div class="players-heading">
-          Kader
+          <div class="player-info">
+
+          <div class="player-name">
+          ${esc(player.name||"")}
           </div>
 
-          <div class="player-grid">
+          <div class="player-number">
 
           ${
-            players
-              .map(player => `
-
-              <div
-                class="player-card"
-                onclick="
-                  event.stopPropagation();
-                  openPlayer('${player.id}');
-                "
-              >
-
-              <img
-                src="${esc(
-                  player.foto ||
-                  "./logo.png"
-                )}"
-                class="player-photo"
-                onerror="
-                  this.src='./logo.png'
-                "
-                alt=""
-              >
-
-              <div class="player-info">
-
-              <div class="player-name">
-              ${esc(
-                player.name ||
-                ""
-              )}
-              </div>
-
-              <div class="player-number">
-
-              ${
-                player.nummer !==
-                undefined
-                ?
-                "#"
-                +
-                esc(
-                  player.nummer
-                )
-                :
-                ""
-              }
-
-              </div>
-
-              <div class="player-position">
-              ${esc(
-                player.position ||
-                ""
-              )}
-              </div>
-
-              </div>
-
-              </div>
-
-              `)
-              .join("")
+            player.nummer!==undefined
+            ?
+            "#"+esc(player.nummer)
+            :
+            ""
           }
 
           </div>
 
-          `
-          :
-          `
-
-          <div class="players-heading">
-          Kader
+          <div class="player-position">
+          ${esc(player.position||"")}
           </div>
 
-          <div class="empty">
-          Noch keine Spieler eingetragen.
           </div>
 
-          `;
+          </div>
 
-
-        return `
-
-        <div class="card team-card">
-
-        <img
-          src="${esc(
-            team.bild ||
-            "./logo.png"
-          )}"
-          class="team-photo"
-          onerror="
-            this.src='./logo.png'
-          "
-          alt=""
-        >
-
-        <div class="team-content">
-
-        <div
-          class="team-title-row"
-          onclick="toggleTeam('${team.id}')"
-        >
-
-        <div>
-
-        <div class="team-name">
-        ${esc(
-          team.name ||
-          ""
-        )}
-        </div>
-
-        <div class="team-liga">
-        ${esc(
-          team.liga ||
-          ""
-        )}
-        </div>
-
-        </div>
-
-        <strong>
-        ›
-        </strong>
-
-        </div>
-
-
-        <div
-          id="team-${team.id}"
-          class="team-details"
-        >
-
-        ${
-          team.trainer
-          ?
-          `
-
-          <p>
-          <strong>Trainer</strong><br>
-          ${esc(team.trainer)}
-          </p>
-
-          `
-          :
-          ""
+          `).join("")
         }
 
-
-        ${
-          team.training
-          ?
-          `
-
-          <p>
-          <strong>Training</strong><br>
-          ${esc(team.training)}
-          </p>
-
-          `
-          :
-          ""
-        }
-
-
-        ${playersHtml}
-
         </div>
 
+        `
+        :
+        `
+        <div class="players-heading">
+        Kader
         </div>
 
+        <div class="empty">
+        Noch keine Spieler eingetragen.
         </div>
-
         `;
 
-      })
-      .join("");
+      return `
+
+      <div class="card team-card">
+
+      <img
+        src="${esc(
+          team.bild||
+          "./logo.png"
+        )}"
+        class="team-photo"
+        onerror="this.src='./logo.png'"
+        alt=""
+      >
+
+      <div class="team-content">
+
+      <div
+        class="team-title-row"
+        onclick="toggleTeam('${team.id}')"
+      >
+
+      <div>
+
+      <div class="team-name">
+      ${esc(team.name||"")}
+      </div>
+
+      <div class="team-liga">
+      ${esc(team.liga||"")}
+      </div>
+
+      </div>
+
+      <strong>›</strong>
+
+      </div>
+
+      <div
+        id="team-${team.id}"
+        class="team-details"
+      >
+
+      ${
+        team.trainer
+        ?
+        `<p>
+        <strong>Trainer</strong><br>
+        ${esc(team.trainer)}
+        </p>`
+        :
+        ""
+      }
+
+      ${
+        team.training
+        ?
+        `<p>
+        <strong>Training</strong><br>
+        ${esc(team.training)}
+        </p>`
+        :
+        ""
+      }
+
+      ${playersHtml}
+
+      </div>
+
+      </div>
+
+      </div>
+
+      `;
+
+    }).join("");
 
 }
 
@@ -4057,9 +3211,7 @@ function toggleTeam(id){
       `team-${id}`
     )
     ?.classList
-    .toggle(
-      "visible"
-    );
+    .toggle("visible");
 
 }
 
@@ -4068,60 +3220,38 @@ function openPlayer(id){
 
   const player =
     playersData.find(
-      item =>
-        item.id === id
+      item=>item.id===id
     );
-
 
   if(!player){
     return;
   }
 
+  const meta=[];
 
-  const meta = [];
-
-
-  if(
-    player.nummer !==
-    undefined
-  ){
-
-    meta.push(
-      "#"
-      +
-      player.nummer
-    );
-
+  if(player.nummer!==undefined){
+    meta.push("#"+player.nummer);
   }
-
 
   if(player.position){
-
-    meta.push(
-      player.position
-    );
-
+    meta.push(player.position);
   }
-
 
   openModal({
 
     image:
-      player.foto ||
+      player.foto||
       "./logo.png",
 
     tag:
-      player.teamName ||
+      player.teamName||
       "FC Wängi",
 
     title:
-      player.name ||
-      "",
+      player.name||"",
 
     meta:
-      meta.join(
-        " · "
-      ),
+      meta.join(" · "),
 
     text:
       player.teamName
@@ -4137,11 +3267,6 @@ function openPlayer(id){
 }
 
 
-
-/* =========================
-   MATCHBERICHTE
-========================= */
-
 function renderReports(){
 
   const container =
@@ -4149,66 +3274,46 @@ function renderReports(){
       "reportsList"
     );
 
-
   if(!reportsData.length){
 
     container.innerHTML =
-
       `<div class="empty">
       Aktuell sind keine Matchberichte vorhanden.
       </div>`;
 
     return;
-
   }
 
-
   container.innerHTML =
-    reportsData
-      .map(report => `
+    reportsData.map(report=>`
 
-      <div
-        class="card"
-        onclick="openReport('${report.id}')"
-      >
+    <div
+      class="card"
+      onclick="openReport('${report.id}')"
+    >
 
-      <span class="tag">
-      ${esc(
-        report.team ||
-        "Matchbericht"
-      )}
-      </span>
+    <span class="tag">
+    ${esc(report.team||"Matchbericht")}
+    </span>
 
-      <div class="meta">
-      ${formatDate(
-        report.datum
-      )}
-      </div>
+    <div class="meta">
+    ${formatDate(report.datum)}
+    </div>
 
-      <h3>
-      ${esc(
-        report.titel ||
-        ""
-      )}
-      </h3>
+    <h3>
+    ${esc(report.titel||"")}
+    </h3>
 
-      <p>
-      ${esc(
-        String(
-          report.text ||
-          ""
-        )
-        .substring(
-          0,
-          180
-        )
-      )}
-      </p>
+    <p>
+    ${esc(
+      String(report.text||"")
+      .substring(0,180)
+    )}
+    </p>
 
-      </div>
+    </div>
 
-      `)
-      .join("");
+    `).join("");
 
 }
 
@@ -4217,46 +3322,25 @@ function openReport(id){
 
   const report =
     reportsData.find(
-      item =>
-        item.id === id
+      item=>item.id===id
     );
-
 
   if(!report){
     return;
   }
 
-
   openModal({
-
     image:"",
-
-    tag:
-      report.team ||
-      "Matchbericht",
-
-    title:
-      report.titel ||
-      "",
-
-    meta:
-      formatDate(
-        report.datum
-      ),
-
-    text:
-      report.text ||
-      ""
-
+    tag:report.team||"Matchbericht",
+    title:report.titel||"",
+    meta:formatDate(report.datum),
+    text:report.text||""
   });
 
 }
 
 
-
-/* =========================
-   MODAL
-========================= */
+/* MODAL */
 
 function openModal(data){
 
@@ -4265,12 +3349,9 @@ function openModal(data){
       "modalImage"
     );
 
-
   if(data.image){
 
-    image.src =
-      data.image;
-
+    image.src=data.image;
 
     image.classList.add(
       "visible"
@@ -4284,53 +3365,36 @@ function openModal(data){
       "src"
     );
 
-
     image.classList.remove(
       "visible"
     );
 
   }
 
-
   document
-    .getElementById(
-      "modalTag"
-    )
+    .getElementById("modalTag")
     .textContent =
-      data.tag || "";
-
+      data.tag||"";
 
   document
-    .getElementById(
-      "modalTitle"
-    )
+    .getElementById("modalTitle")
     .textContent =
-      data.title || "";
-
+      data.title||"";
 
   document
-    .getElementById(
-      "modalMeta"
-    )
+    .getElementById("modalMeta")
     .textContent =
-      data.meta || "";
-
+      data.meta||"";
 
   document
-    .getElementById(
-      "modalText"
-    )
+    .getElementById("modalText")
     .textContent =
-      data.text || "";
-
+      data.text||"";
 
   document
-    .getElementById(
-      "contentModal"
-    )
-    .classList.add(
-      "visible"
-    );
+    .getElementById("contentModal")
+    .classList
+    .add("visible");
 
 }
 
@@ -4338,67 +3402,47 @@ function openModal(data){
 function closeModal(){
 
   document
-    .getElementById(
-      "contentModal"
-    )
-    .classList.remove(
-      "visible"
-    );
+    .getElementById("contentModal")
+    .classList
+    .remove("visible");
 
 }
 
 
-function modalBackgroundClick(
-  event
-){
+function modalBackgroundClick(event){
 
   if(
-    event.target.id ===
-    "contentModal"
+    event.target.id==="contentModal"
   ){
-
     closeModal();
-
   }
 
 }
 
 
-
-/* =========================
-   AUTH
-========================= */
+/* AUTH */
 
 auth.onAuthStateChanged(
-  async user => {
-
+  async user=>{
 
     const login =
       document.getElementById(
         "adminLogin"
       );
 
-
     const panel =
       document.getElementById(
         "adminPanel"
       );
 
-
     if(
       user
       &&
-      user.uid ===
-      ADMIN_UID
+      user.uid===ADMIN_UID
     ){
 
-      login.style.display =
-        "none";
-
-
-      panel.style.display =
-        "block";
-
+      login.style.display="none";
+      panel.style.display="block";
 
       document
         .getElementById(
@@ -4407,7 +3451,6 @@ auth.onAuthStateChanged(
         .textContent =
           user.email;
 
-
       renderAdminLists();
 
     }
@@ -4415,18 +3458,11 @@ auth.onAuthStateChanged(
     else{
 
       if(user){
-
         await auth.signOut();
-
       }
 
-
-      login.style.display =
-        "block";
-
-
-      panel.style.display =
-        "none";
+      login.style.display="block";
+      panel.style.display="none";
 
     }
 
@@ -4443,7 +3479,6 @@ async function loginAdmin(){
       )
       .value.trim();
 
-
   const password =
     document
       .getElementById(
@@ -4451,18 +3486,15 @@ async function loginAdmin(){
       )
       .value;
 
-
   const status =
     document.getElementById(
       "loginStatus"
     );
 
-
   try{
 
     status.textContent =
       "Anmeldung läuft...";
-
 
     const credential =
       await auth
@@ -4471,35 +3503,26 @@ async function loginAdmin(){
           password
         );
 
-
     if(
-      credential.user.uid !==
-      ADMIN_UID
+      credential.user.uid!==ADMIN_UID
     ){
 
       await auth.signOut();
 
-
       status.textContent =
         "❌ Kein Admin-Zugang.";
-
 
       return;
 
     }
 
-
-    status.textContent =
-      "";
+    status.textContent="";
 
   }
 
   catch(error){
 
-    console.error(
-      error
-    );
-
+    console.error(error);
 
     status.textContent =
       "❌ Anmeldung fehlgeschlagen.";
@@ -4513,18 +3536,12 @@ async function logoutAdmin(){
 
   await auth.signOut();
 
-
-  openPage(
-    "kontakt"
-  );
+  openPage("kontakt");
 
 }
 
 
-
-/* =========================
-   PUSH REGISTRIEREN
-========================= */
+/* PUSH */
 
 async function registerCurrentDeviceForPush(
   showSuccess=false
@@ -4535,12 +3552,8 @@ async function registerCurrentDeviceForPush(
       "notificationStatus"
     );
 
-
   if(
-    !(
-      "serviceWorker"
-      in navigator
-    )
+    !("serviceWorker" in navigator)
   ){
 
     throw new Error(
@@ -4549,12 +3562,10 @@ async function registerCurrentDeviceForPush(
 
   }
 
-
   const registration =
     await navigator
       .serviceWorker
       .ready;
-
 
   const token =
     await messaging
@@ -4568,7 +3579,6 @@ async function registerCurrentDeviceForPush(
 
       });
 
-
   if(!token){
 
     throw new Error(
@@ -4577,26 +3587,19 @@ async function registerCurrentDeviceForPush(
 
   }
 
-
   await registerPushTokenCallable({
-
-    token:
-      token
-
+    token:token
   });
-
 
   localStorage.setItem(
     "fcwFirebaseToken",
     token
   );
 
-
   localStorage.setItem(
     "fcwPushRegistered",
     "1"
   );
-
 
   if(status){
 
@@ -4604,7 +3607,6 @@ async function registerCurrentDeviceForPush(
       "✅ FCW-Mitteilungen sind aktiviert";
 
   }
-
 
   if(showSuccess){
 
@@ -4614,16 +3616,10 @@ async function registerCurrentDeviceForPush(
 
   }
 
-
   return token;
 
 }
 
-
-
-/* =========================
-   PUSH AKTIVIEREN
-========================= */
 
 async function enableNotifications(){
 
@@ -4632,28 +3628,20 @@ async function enableNotifications(){
       "notificationStatus"
     );
 
-
   try{
-
 
     const isIOS =
       /iPhone|iPad|iPod/i
-        .test(
-          navigator.userAgent
-        );
-
+      .test(
+        navigator.userAgent
+      );
 
     const standalone =
-
       window.matchMedia(
         "(display-mode: standalone)"
       ).matches
-
       ||
-
-      window.navigator.standalone ===
-      true;
-
+      window.navigator.standalone===true;
 
     if(
       isIOS
@@ -4664,55 +3652,39 @@ async function enableNotifications(){
       status.textContent =
         "📱 App zuerst zum Home-Bildschirm hinzufügen.";
 
-
       alert(
         "Öffne die Seite in Safari und füge sie zuerst zum Home-Bildschirm hinzu."
       );
 
-
       return;
-
     }
 
-
     if(
-      !(
-        "Notification"
-        in window
-      )
+      !("Notification" in window)
     ){
 
       status.textContent =
         "Push wird auf diesem Gerät nicht unterstützt.";
 
-
       return;
-
     }
-
 
     const permission =
       await Notification
         .requestPermission();
 
-
     if(
-      permission !==
-      "granted"
+      permission!=="granted"
     ){
 
       status.textContent =
         "❌ Mitteilungen wurden nicht erlaubt.";
 
-
       return;
-
     }
-
 
     status.textContent =
       "⏳ Gerät wird registriert...";
-
 
     await registerCurrentDeviceForPush(
       true
@@ -4727,17 +3699,17 @@ async function enableNotifications(){
       error
     );
 
-
     status.textContent =
       "❌ Push-Registrierung fehlgeschlagen";
-
 
     alert(
       "Push-Fehler: "
       +
       (
-        error.message ||
-        error.code ||
+        error.message
+        ||
+        error.code
+        ||
         "Unbekannter Fehler"
       )
     );
@@ -4747,41 +3719,24 @@ async function enableNotifications(){
 }
 
 
-
-/* =========================
-   BESTEHENDES PUSH-GERÄT
-   AUTOMATISCH SYNCHRONISIEREN
-========================= */
-
 async function syncExistingPushRegistration(){
 
   if(
-    !(
-      "Notification"
-      in window
-    )
+    !("Notification" in window)
   ){
     return;
   }
-
 
   if(
-    Notification.permission !==
-    "granted"
+    Notification.permission!=="granted"
   ){
     return;
   }
-
 
   try{
 
     await registerCurrentDeviceForPush(
       false
-    );
-
-
-    console.log(
-      "Push-Gerät synchronisiert."
     );
 
   }
@@ -4798,11 +3753,6 @@ async function syncExistingPushRegistration(){
 }
 
 
-
-/* =========================
-   PUSH STATUS
-========================= */
-
 function updateNotificationStatus(){
 
   const status =
@@ -4810,32 +3760,24 @@ function updateNotificationStatus(){
       "notificationStatus"
     );
 
-
   if(
-    !(
-      "Notification"
-      in window
-    )
+    !("Notification" in window)
   ){
 
     status.textContent =
       "Mitteilungen nicht verfügbar.";
 
     return;
-
   }
 
-
   if(
-    Notification.permission ===
-    "granted"
+    Notification.permission==="granted"
   ){
 
     if(
       localStorage.getItem(
         "fcwPushRegistered"
-      ) ===
-      "1"
+      )==="1"
     ){
 
       status.textContent =
@@ -4853,8 +3795,7 @@ function updateNotificationStatus(){
   }
 
   else if(
-    Notification.permission ===
-    "denied"
+    Notification.permission==="denied"
   ){
 
     status.textContent =
@@ -4872,57 +3813,31 @@ function updateNotificationStatus(){
 }
 
 
-
-/* =========================
-   PUSH ADMIN SENDEN
-========================= */
-
 function updatePushCounters(){
 
   const title =
     document.getElementById(
       "pushTitle"
-    )
-    ?.value || "";
-
+    )?.value||"";
 
   const message =
     document.getElementById(
       "pushMessage"
-    )
-    ?.value || "";
+    )?.value||"";
 
-
-  const titleCounter =
-    document.getElementById(
+  document
+    .getElementById(
       "pushTitleCounter"
-    );
+    )
+    .textContent =
+      title.length+" / 100";
 
-
-  const messageCounter =
-    document.getElementById(
+  document
+    .getElementById(
       "pushMessageCounter"
-    );
-
-
-  if(titleCounter){
-
-    titleCounter.textContent =
-      title.length
-      +
-      " / 100";
-
-  }
-
-
-  if(messageCounter){
-
-    messageCounter.textContent =
-      message.length
-      +
-      " / 500";
-
-  }
+    )
+    .textContent =
+      message.length+" / 500";
 
 }
 
@@ -4937,15 +3852,10 @@ function setPushSendStatus(
       "pushSendStatus"
     );
 
-
   status.className =
-    "push-status visible "
-    +
-    type;
+    "push-status visible "+type;
 
-
-  status.textContent =
-    text;
+  status.textContent=text;
 
 }
 
@@ -4955,8 +3865,7 @@ async function sendPushFromAdmin(){
   if(
     !auth.currentUser
     ||
-    auth.currentUser.uid !==
-    ADMIN_UID
+    auth.currentUser.uid!==ADMIN_UID
   ){
 
     alert(
@@ -4964,9 +3873,7 @@ async function sendPushFromAdmin(){
     );
 
     return;
-
   }
-
 
   const title =
     document
@@ -4975,14 +3882,12 @@ async function sendPushFromAdmin(){
       )
       .value.trim();
 
-
   const body =
     document
       .getElementById(
         "pushMessage"
       )
       .value.trim();
-
 
   if(!title){
 
@@ -4991,9 +3896,7 @@ async function sendPushFromAdmin(){
     );
 
     return;
-
   }
-
 
   if(!body){
 
@@ -5002,9 +3905,7 @@ async function sendPushFromAdmin(){
     );
 
     return;
-
   }
-
 
   const confirmed =
     confirm(
@@ -5017,102 +3918,67 @@ async function sendPushFromAdmin(){
       body
     );
 
-
   if(!confirmed){
     return;
   }
-
 
   const button =
     document.getElementById(
       "pushSendButton"
     );
 
-
-  button.disabled =
-    true;
-
+  button.disabled=true;
 
   button.textContent =
     "⏳ Push wird gesendet...";
-
 
   setPushSendStatus(
     "⏳ Push-Mitteilung wird über Firebase versendet...",
     "sending"
   );
 
-
   try{
 
-    /*
-    Auth-Token sicherheitshalber aktualisieren.
-    */
-
     await auth.currentUser
-      .getIdToken(
-        true
-      );
-
+      .getIdToken(true);
 
     const result =
       await sendPushCallable({
-
-        title:
-          title,
-
-        body:
-          body
-
+        title:title,
+        body:body
       });
 
-
     const data =
-      result.data || {};
-
+      result.data||{};
 
     setPushSendStatus(
-
       "✅ Push versendet\n"
       +
       "Registrierte Geräte: "
       +
-      (
-        data.devices ?? 0
-      )
+      (data.devices??0)
       +
       " | Erfolgreich: "
       +
-      (
-        data.successCount ?? 0
-      )
+      (data.successCount??0)
       +
       " | Fehler: "
       +
-      (
-        data.failureCount ?? 0
-      ),
-
+      (data.failureCount??0),
       "success"
-
     );
-
 
     document
       .getElementById(
         "pushTitle"
       )
-      .value =
-        "";
-
+      .value="";
 
     document
       .getElementById(
         "pushMessage"
       )
-      .value =
-        "";
-
+      .value="";
 
     updatePushCounters();
 
@@ -5125,40 +3991,24 @@ async function sendPushFromAdmin(){
       error
     );
 
-
-    let message =
-      error.message
-      ||
-      "Push konnte nicht gesendet werden.";
-
-
-    if(
-      error.details
-    ){
-
-      message =
-        error.details;
-
-    }
-
-
     setPushSendStatus(
-
       "❌ "
       +
-      message,
-
+      (
+        error.details
+        ||
+        error.message
+        ||
+        "Push konnte nicht gesendet werden."
+      ),
       "error"
-
     );
 
   }
 
   finally{
 
-    button.disabled =
-      false;
-
+    button.disabled=false;
 
     button.textContent =
       "🚀 Push an alle senden";
@@ -5168,58 +4018,33 @@ async function sendPushFromAdmin(){
 }
 
 
-
-/* =========================
-   FOREGROUND PUSH
-========================= */
-
 messaging.onMessage(
-  payload => {
-
-
-    console.log(
-      "Push im Vordergrund:",
-      payload
-    );
-
+  payload=>{
 
     const title =
       payload.notification?.title
       ||
       "FC Wängi 1967";
 
-
     const body =
       payload.notification?.body
       ||
       "Es gibt Neuigkeiten beim FC Wängi.";
 
-
     navigator
       .serviceWorker
       .ready
       .then(
-        registration => {
+        registration=>{
 
-          registration
-            .showNotification(
-
-              title,
-
-              {
-
-                body:
-                  body,
-
-                icon:
-                  "./icon-512.png",
-
-                badge:
-                  "./icon-512.png"
-
-              }
-
-            );
+          registration.showNotification(
+            title,
+            {
+              body:body,
+              icon:"./icon-512.png",
+              badge:"./icon-512.png"
+            }
+          );
 
         }
       );
@@ -5228,18 +4053,14 @@ messaging.onMessage(
 );
 
 
-
-/* =========================
-   NEWS SPEICHERN
-========================= */
+/* ADMIN SPEICHERN */
 
 async function saveNews(){
 
   if(
     !auth.currentUser
     ||
-    auth.currentUser.uid !==
-    ADMIN_UID
+    auth.currentUser.uid!==ADMIN_UID
   ){
 
     alert(
@@ -5247,9 +4068,7 @@ async function saveNews(){
     );
 
     return;
-
   }
-
 
   const id =
     document
@@ -5258,17 +4077,14 @@ async function saveNews(){
       )
       .value;
 
-
   const existing =
     id
     ?
     newsData.find(
-      item =>
-        item.id === id
+      item=>item.id===id
     )
     :
     null;
-
 
   const title =
     document
@@ -5277,7 +4093,6 @@ async function saveNews(){
       )
       .value.trim();
 
-
   const text =
     document
       .getElementById(
@@ -5285,31 +4100,22 @@ async function saveNews(){
       )
       .value.trim();
 
-
-  if(
-    !title
-    ||
-    !text
-  ){
+  if(!title||!text){
 
     alert(
       "Bitte Titel und Text eingeben."
     );
 
     return;
-
   }
-
 
   try{
 
     let imageUrl =
-      existing?.bild || "";
-
+      existing?.bild||"";
 
     let storagePath =
-      existing?.storagePath || "";
-
+      existing?.storagePath||"";
 
     const file =
       document
@@ -5318,42 +4124,27 @@ async function saveNews(){
         )
         .files?.[0];
 
-
     if(file){
 
       const oldPath =
         storagePath;
 
-
       const upload =
         await uploadImage(
-
           file,
-
           "news",
-
           "newsUploadStatus",
-
           "newsUploadProgress",
-
           "newsUploadProgressBar"
-
         );
 
-
-      imageUrl =
-        upload.url;
-
-
-      storagePath =
-        upload.path;
-
+      imageUrl=upload.url;
+      storagePath=upload.path;
 
       if(
         oldPath
         &&
-        oldPath !==
-        storagePath
+        oldPath!==storagePath
       ){
 
         await deleteStorageFile(
@@ -5364,11 +4155,9 @@ async function saveNews(){
 
     }
 
-
     const data = {
 
-      titel:
-        title,
+      titel:title,
 
       kategorie:
         document
@@ -5382,17 +4171,13 @@ async function saveNews(){
           "newsDate"
         ),
 
-      text:
-        text,
+      text:text,
 
-      bild:
-        imageUrl,
+      bild:imageUrl,
 
-      storagePath:
-        storagePath,
+      storagePath:storagePath,
 
-      aktiv:
-        true,
+      aktiv:true,
 
       updatedAt:
         firebase
@@ -5402,13 +4187,10 @@ async function saveNews(){
 
     };
 
-
     if(id){
 
       await db
-        .collection(
-          "news"
-        )
+        .collection("news")
         .doc(id)
         .update(data);
 
@@ -5422,18 +4204,13 @@ async function saveNews(){
           .FieldValue
           .serverTimestamp();
 
-
       await db
-        .collection(
-          "news"
-        )
+        .collection("news")
         .add(data);
 
     }
 
-
     resetNewsForm();
-
 
     alert(
       "✅ News wurde veröffentlicht"
@@ -5443,16 +4220,14 @@ async function saveNews(){
 
   catch(error){
 
-    console.error(
-      error
-    );
-
+    console.error(error);
 
     alert(
       "Fehler: "
       +
       (
-        error.message ||
+        error.message
+        ||
         error.code
       )
     );
@@ -5462,206 +4237,71 @@ async function saveNews(){
 }
 
 
-
-/* =========================
-   NEWS BEARBEITEN
-========================= */
-
 function editNews(id){
 
   const news =
     newsData.find(
-      item =>
-        item.id === id
+      item=>item.id===id
     );
-
 
   if(!news){
     return;
   }
 
-
-  document
-    .getElementById(
-      "newsEditId"
-    )
-    .value =
-      id;
-
-
-  document
-    .getElementById(
-      "newsTitle"
-    )
-    .value =
-      news.titel || "";
-
-
-  document
-    .getElementById(
-      "newsCategory"
-    )
-    .value =
-      news.kategorie || "";
-
-
-  document
-    .getElementById(
-      "newsDate"
-    )
-    .value =
-      dateInputValue(
-        news.datum
-      );
-
-
-  document
-    .getElementById(
-      "newsText"
-    )
-    .value =
-      news.text || "";
-
-
-  document
-    .getElementById(
-      "newsImageFile"
-    )
-    .value =
-      "";
-
+  document.getElementById("newsEditId").value=id;
+  document.getElementById("newsTitle").value=news.titel||"";
+  document.getElementById("newsCategory").value=news.kategorie||"";
+  document.getElementById("newsDate").value=dateInputValue(news.datum);
+  document.getElementById("newsText").value=news.text||"";
+  document.getElementById("newsImageFile").value="";
 
   const preview =
     document.getElementById(
       "newsImagePreview"
     );
 
-
   if(news.bild){
 
-    preview.src =
-      news.bild;
-
-
-    preview.classList.add(
-      "visible"
-    );
+    preview.src=news.bild;
+    preview.classList.add("visible");
 
   }
 
   else{
 
-    preview.removeAttribute(
-      "src"
-    );
-
-
-    preview.classList.remove(
-      "visible"
-    );
+    preview.removeAttribute("src");
+    preview.classList.remove("visible");
 
   }
-
-
-  document
-    .getElementById(
-      "newsUploadStatus"
-    )
-    .textContent =
-      news.bild
-      ?
-      "Aktuelles Foto"
-      :
-      "";
 
 }
 
 
-
-/* =========================
-   NEWS RESET
-========================= */
-
 function resetNewsForm(){
 
-  document
-    .getElementById(
-      "newsEditId"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "newsTitle"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "newsCategory"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "newsDate"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "newsText"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "newsImageFile"
-    )
-    .value =
-      "";
-
+  document.getElementById("newsEditId").value="";
+  document.getElementById("newsTitle").value="";
+  document.getElementById("newsCategory").value="";
+  document.getElementById("newsDate").value="";
+  document.getElementById("newsText").value="";
+  document.getElementById("newsImageFile").value="";
 
   const preview =
     document.getElementById(
       "newsImagePreview"
     );
 
-
-  preview.removeAttribute(
-    "src"
-  );
-
-
-  preview.classList.remove(
-    "visible"
-  );
-
+  preview.removeAttribute("src");
+  preview.classList.remove("visible");
 
   document
     .getElementById(
       "newsUploadStatus"
     )
-    .textContent =
-      "";
+    .textContent="";
 
 }
 
-
-
-/* =========================
-   TEAM SELECT
-========================= */
 
 function updateTeamSelect(){
 
@@ -5670,49 +4310,30 @@ function updateTeamSelect(){
       "playerTeamSelect"
     );
 
-
   if(!select){
     return;
   }
 
-
   const selected =
     select.value;
 
-
   select.innerHTML =
-
     `<option value="">
     Mannschaft auswählen
     </option>`
-
     +
-
-    teamsData
-      .map(team => `
-
-      <option value="${team.id}">
-      ${esc(team.name)}
-      </option>
-
-      `)
-      .join("");
-
+    teamsData.map(team=>`
+    <option value="${team.id}">
+    ${esc(team.name)}
+    </option>
+    `).join("");
 
   if(selected){
-
-    select.value =
-      selected;
-
+    select.value=selected;
   }
 
 }
 
-
-
-/* =========================
-   TEAM SPEICHERN
-========================= */
 
 async function saveTeam(){
 
@@ -5723,17 +4344,14 @@ async function saveTeam(){
       )
       .value;
 
-
   const existing =
     id
     ?
     teamsData.find(
-      item =>
-        item.id === id
+      item=>item.id===id
     )
     :
     null;
-
 
   const name =
     document
@@ -5742,7 +4360,6 @@ async function saveTeam(){
       )
       .value.trim();
 
-
   if(!name){
 
     alert(
@@ -5750,19 +4367,15 @@ async function saveTeam(){
     );
 
     return;
-
   }
-
 
   try{
 
     let imageUrl =
-      existing?.bild || "";
-
+      existing?.bild||"";
 
     let storagePath =
-      existing?.storagePath || "";
-
+      existing?.storagePath||"";
 
     const file =
       document
@@ -5771,42 +4384,27 @@ async function saveTeam(){
         )
         .files?.[0];
 
-
     if(file){
 
       const oldPath =
         storagePath;
 
-
       const upload =
         await uploadImage(
-
           file,
-
           "teams",
-
           "teamUploadStatus",
-
           "teamUploadProgress",
-
           "teamUploadProgressBar"
-
         );
 
-
-      imageUrl =
-        upload.url;
-
-
-      storagePath =
-        upload.path;
-
+      imageUrl=upload.url;
+      storagePath=upload.path;
 
       if(
         oldPath
         &&
-        oldPath !==
-        storagePath
+        oldPath!==storagePath
       ){
 
         await deleteStorageFile(
@@ -5817,11 +4415,9 @@ async function saveTeam(){
 
     }
 
-
     const data = {
 
-      name:
-        name,
+      name:name,
 
       liga:
         document
@@ -5844,11 +4440,9 @@ async function saveTeam(){
           )
           .value.trim(),
 
-      bild:
-        imageUrl,
+      bild:imageUrl,
 
-      storagePath:
-        storagePath,
+      storagePath:storagePath,
 
       sortierung:
         Number(
@@ -5861,18 +4455,14 @@ async function saveTeam(){
           999
         ),
 
-      aktiv:
-        true
+      aktiv:true
 
     };
-
 
     if(id){
 
       await db
-        .collection(
-          "teams"
-        )
+        .collection("teams")
         .doc(id)
         .update(data);
 
@@ -5881,16 +4471,12 @@ async function saveTeam(){
     else{
 
       await db
-        .collection(
-          "teams"
-        )
+        .collection("teams")
         .add(data);
 
     }
 
-
     resetTeamForm();
-
 
     alert(
       "✅ Team gespeichert"
@@ -5900,16 +4486,12 @@ async function saveTeam(){
 
   catch(error){
 
-    console.error(
-      error
-    );
-
-
     alert(
       "Fehler: "
       +
       (
-        error.message ||
+        error.message
+        ||
         error.code
       )
     );
@@ -5923,100 +4505,37 @@ function editTeam(id){
 
   const team =
     teamsData.find(
-      item =>
-        item.id === id
+      item=>item.id===id
     );
-
 
   if(!team){
     return;
   }
 
-
-  document
-    .getElementById(
-      "teamEditId"
-    )
-    .value =
-      id;
-
-
-  document
-    .getElementById(
-      "teamNameInput"
-    )
-    .value =
-      team.name || "";
-
-
-  document
-    .getElementById(
-      "teamLeagueInput"
-    )
-    .value =
-      team.liga || "";
-
-
-  document
-    .getElementById(
-      "teamCoachInput"
-    )
-    .value =
-      team.trainer || "";
-
-
-  document
-    .getElementById(
-      "teamTrainingInput"
-    )
-    .value =
-      team.training || "";
-
-
-  document
-    .getElementById(
-      "teamSortInput"
-    )
-    .value =
-      team.sortierung || 1;
-
-
-  document
-    .getElementById(
-      "teamImageFile"
-    )
-    .value =
-      "";
-
+  document.getElementById("teamEditId").value=id;
+  document.getElementById("teamNameInput").value=team.name||"";
+  document.getElementById("teamLeagueInput").value=team.liga||"";
+  document.getElementById("teamCoachInput").value=team.trainer||"";
+  document.getElementById("teamTrainingInput").value=team.training||"";
+  document.getElementById("teamSortInput").value=team.sortierung||1;
+  document.getElementById("teamImageFile").value="";
 
   const preview =
     document.getElementById(
       "teamImagePreview"
     );
 
-
   if(team.bild){
 
-    preview.src =
-      team.bild;
-
-
-    preview.classList.add(
-      "visible"
-    );
+    preview.src=team.bild;
+    preview.classList.add("visible");
 
   }
 
   else{
 
-    preview.removeAttribute(
-      "src"
-    );
-
-
-    preview.classList.remove(
-      "visible"
-    );
+    preview.removeAttribute("src");
+    preview.classList.remove("visible");
 
   }
 
@@ -6025,92 +4544,24 @@ function editTeam(id){
 
 function resetTeamForm(){
 
-  document
-    .getElementById(
-      "teamEditId"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "teamNameInput"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "teamLeagueInput"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "teamCoachInput"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "teamTrainingInput"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "teamSortInput"
-    )
-    .value =
-      "1";
-
-
-  document
-    .getElementById(
-      "teamImageFile"
-    )
-    .value =
-      "";
-
+  document.getElementById("teamEditId").value="";
+  document.getElementById("teamNameInput").value="";
+  document.getElementById("teamLeagueInput").value="";
+  document.getElementById("teamCoachInput").value="";
+  document.getElementById("teamTrainingInput").value="";
+  document.getElementById("teamSortInput").value="1";
+  document.getElementById("teamImageFile").value="";
 
   const preview =
     document.getElementById(
       "teamImagePreview"
     );
 
-
-  preview.removeAttribute(
-    "src"
-  );
-
-
-  preview.classList.remove(
-    "visible"
-  );
-
-
-  document
-    .getElementById(
-      "teamUploadStatus"
-    )
-    .textContent =
-      "";
+  preview.removeAttribute("src");
+  preview.classList.remove("visible");
 
 }
 
-
-
-/* =========================
-   SPIELER SPEICHERN
-========================= */
 
 async function savePlayer(){
 
@@ -6121,17 +4572,14 @@ async function savePlayer(){
       )
       .value;
 
-
   const existing =
     id
     ?
     playersData.find(
-      item =>
-        item.id === id
+      item=>item.id===id
     )
     :
     null;
-
 
   const teamId =
     document
@@ -6140,13 +4588,10 @@ async function savePlayer(){
       )
       .value;
 
-
   const team =
     teamsData.find(
-      item =>
-        item.id === teamId
+      item=>item.id===teamId
     );
-
 
   if(!team){
 
@@ -6155,9 +4600,7 @@ async function savePlayer(){
     );
 
     return;
-
   }
-
 
   const name =
     document
@@ -6166,7 +4609,6 @@ async function savePlayer(){
       )
       .value.trim();
 
-
   if(!name){
 
     alert(
@@ -6174,19 +4616,15 @@ async function savePlayer(){
     );
 
     return;
-
   }
-
 
   try{
 
     let imageUrl =
-      existing?.foto || "";
-
+      existing?.foto||"";
 
     let storagePath =
-      existing?.storagePath || "";
-
+      existing?.storagePath||"";
 
     const file =
       document
@@ -6195,42 +4633,27 @@ async function savePlayer(){
         )
         .files?.[0];
 
-
     if(file){
 
       const oldPath =
         storagePath;
 
-
       const upload =
         await uploadImage(
-
           file,
-
           "spieler",
-
           "playerUploadStatus",
-
           "playerUploadProgress",
-
           "playerUploadProgressBar"
-
         );
 
-
-      imageUrl =
-        upload.url;
-
-
-      storagePath =
-        upload.path;
-
+      imageUrl=upload.url;
+      storagePath=upload.path;
 
       if(
         oldPath
         &&
-        oldPath !==
-        storagePath
+        oldPath!==storagePath
       ){
 
         await deleteStorageFile(
@@ -6241,17 +4664,13 @@ async function savePlayer(){
 
     }
 
-
     const data = {
 
-      name:
-        name,
+      name:name,
 
-      teamId:
-        team.id,
+      teamId:team.id,
 
-      teamName:
-        team.name,
+      teamName:team.name,
 
       nummer:
         Number(
@@ -6271,11 +4690,9 @@ async function savePlayer(){
           )
           .value,
 
-      foto:
-        imageUrl,
+      foto:imageUrl,
 
-      storagePath:
-        storagePath,
+      storagePath:storagePath,
 
       sortierung:
         Number(
@@ -6288,18 +4705,14 @@ async function savePlayer(){
           999
         ),
 
-      aktiv:
-        true
+      aktiv:true
 
     };
-
 
     if(id){
 
       await db
-        .collection(
-          "spieler"
-        )
+        .collection("spieler")
         .doc(id)
         .update(data);
 
@@ -6308,16 +4721,12 @@ async function savePlayer(){
     else{
 
       await db
-        .collection(
-          "spieler"
-        )
+        .collection("spieler")
         .add(data);
 
     }
 
-
     resetPlayerForm();
-
 
     alert(
       "✅ Spieler gespeichert"
@@ -6327,16 +4736,12 @@ async function savePlayer(){
 
   catch(error){
 
-    console.error(
-      error
-    );
-
-
     alert(
       "Fehler: "
       +
       (
-        error.message ||
+        error.message
+        ||
         error.code
       )
     );
@@ -6350,101 +4755,37 @@ function editPlayer(id){
 
   const player =
     playersData.find(
-      item =>
-        item.id === id
+      item=>item.id===id
     );
-
 
   if(!player){
     return;
   }
 
-
-  document
-    .getElementById(
-      "playerEditId"
-    )
-    .value =
-      id;
-
-
-  document
-    .getElementById(
-      "playerTeamSelect"
-    )
-    .value =
-      player.teamId || "";
-
-
-  document
-    .getElementById(
-      "playerNameInput"
-    )
-    .value =
-      player.name || "";
-
-
-  document
-    .getElementById(
-      "playerNumberInput"
-    )
-    .value =
-      player.nummer ?? "";
-
-
-  document
-    .getElementById(
-      "playerPositionInput"
-    )
-    .value =
-      player.position ||
-      "Mittelfeld";
-
-
-  document
-    .getElementById(
-      "playerSortInput"
-    )
-    .value =
-      player.sortierung || 1;
-
-
-  document
-    .getElementById(
-      "playerPhotoFile"
-    )
-    .value =
-      "";
-
+  document.getElementById("playerEditId").value=id;
+  document.getElementById("playerTeamSelect").value=player.teamId||"";
+  document.getElementById("playerNameInput").value=player.name||"";
+  document.getElementById("playerNumberInput").value=player.nummer??"";
+  document.getElementById("playerPositionInput").value=player.position||"Mittelfeld";
+  document.getElementById("playerSortInput").value=player.sortierung||1;
+  document.getElementById("playerPhotoFile").value="";
 
   const preview =
     document.getElementById(
       "playerPhotoPreview"
     );
 
-
   if(player.foto){
 
-    preview.src =
-      player.foto;
-
-
-    preview.classList.add(
-      "visible"
-    );
+    preview.src=player.foto;
+    preview.classList.add("visible");
 
   }
 
   else{
 
-    preview.removeAttribute(
-      "src"
-    );
-
-
-    preview.classList.remove(
-      "visible"
-    );
+    preview.removeAttribute("src");
+    preview.classList.remove("visible");
 
   }
 
@@ -6453,84 +4794,23 @@ function editPlayer(id){
 
 function resetPlayerForm(){
 
-  document
-    .getElementById(
-      "playerEditId"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "playerTeamSelect"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "playerNameInput"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "playerNumberInput"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "playerPhotoFile"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "playerSortInput"
-    )
-    .value =
-      "1";
-
+  document.getElementById("playerEditId").value="";
+  document.getElementById("playerTeamSelect").value="";
+  document.getElementById("playerNameInput").value="";
+  document.getElementById("playerNumberInput").value="";
+  document.getElementById("playerPhotoFile").value="";
+  document.getElementById("playerSortInput").value="1";
 
   const preview =
     document.getElementById(
       "playerPhotoPreview"
     );
 
-
-  preview.removeAttribute(
-    "src"
-  );
-
-
-  preview.classList.remove(
-    "visible"
-  );
-
-
-  document
-    .getElementById(
-      "playerUploadStatus"
-    )
-    .textContent =
-      "";
+  preview.removeAttribute("src");
+  preview.classList.remove("visible");
 
 }
 
-
-
-/* =========================
-   MATCHBERICHT SPEICHERN
-========================= */
 
 async function saveReport(){
 
@@ -6540,7 +4820,6 @@ async function saveReport(){
         "reportEditId"
       )
       .value;
-
 
   const data = {
 
@@ -6570,11 +4849,9 @@ async function saveReport(){
         )
         .value.trim(),
 
-    aktiv:
-      true
+    aktiv:true
 
   };
-
 
   if(
     !data.titel
@@ -6587,18 +4864,14 @@ async function saveReport(){
     );
 
     return;
-
   }
-
 
   try{
 
     if(id){
 
       await db
-        .collection(
-          "matchberichte"
-        )
+        .collection("matchberichte")
         .doc(id)
         .update(data);
 
@@ -6607,16 +4880,12 @@ async function saveReport(){
     else{
 
       await db
-        .collection(
-          "matchberichte"
-        )
+        .collection("matchberichte")
         .add(data);
 
     }
 
-
     resetReportForm();
-
 
     alert(
       "✅ Matchbericht gespeichert"
@@ -6626,16 +4895,12 @@ async function saveReport(){
 
   catch(error){
 
-    console.error(
-      error
-    );
-
-
     alert(
       "Fehler: "
       +
       (
-        error.message ||
+        error.message
+        ||
         error.code
       )
     );
@@ -6649,108 +4914,32 @@ function editReport(id){
 
   const report =
     reportsData.find(
-      item =>
-        item.id === id
+      item=>item.id===id
     );
-
 
   if(!report){
     return;
   }
 
-
-  document
-    .getElementById(
-      "reportEditId"
-    )
-    .value =
-      id;
-
-
-  document
-    .getElementById(
-      "reportTitle"
-    )
-    .value =
-      report.titel || "";
-
-
-  document
-    .getElementById(
-      "reportTeam"
-    )
-    .value =
-      report.team || "";
-
-
-  document
-    .getElementById(
-      "reportDate"
-    )
-    .value =
-      dateInputValue(
-        report.datum
-      );
-
-
-  document
-    .getElementById(
-      "reportText"
-    )
-    .value =
-      report.text || "";
+  document.getElementById("reportEditId").value=id;
+  document.getElementById("reportTitle").value=report.titel||"";
+  document.getElementById("reportTeam").value=report.team||"";
+  document.getElementById("reportDate").value=dateInputValue(report.datum);
+  document.getElementById("reportText").value=report.text||"";
 
 }
 
 
 function resetReportForm(){
 
-  document
-    .getElementById(
-      "reportEditId"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "reportTitle"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "reportTeam"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "reportDate"
-    )
-    .value =
-      "";
-
-
-  document
-    .getElementById(
-      "reportText"
-    )
-    .value =
-      "";
+  document.getElementById("reportEditId").value="";
+  document.getElementById("reportTitle").value="";
+  document.getElementById("reportTeam").value="";
+  document.getElementById("reportDate").value="";
+  document.getElementById("reportText").value="";
 
 }
 
-
-
-/* =========================
-   LÖSCHEN
-========================= */
 
 async function deleteItem(
   collection,
@@ -6758,65 +4947,28 @@ async function deleteItem(
 ){
 
   if(
-    !confirm(
-      "Wirklich löschen?"
-    )
+    !confirm("Wirklich löschen?")
   ){
     return;
   }
 
+  let item=null;
 
-  let item =
-    null;
-
-
-  if(
-    collection ===
-    "news"
-  ){
-
-    item =
-      newsData.find(
-        x =>
-          x.id === id
-      );
-
+  if(collection==="news"){
+    item=newsData.find(x=>x.id===id);
   }
 
-
-  if(
-    collection ===
-    "teams"
-  ){
-
-    item =
-      teamsData.find(
-        x =>
-          x.id === id
-      );
-
+  if(collection==="teams"){
+    item=teamsData.find(x=>x.id===id);
   }
 
-
-  if(
-    collection ===
-    "spieler"
-  ){
-
-    item =
-      playersData.find(
-        x =>
-          x.id === id
-      );
-
+  if(collection==="spieler"){
+    item=playersData.find(x=>x.id===id);
   }
-
 
   try{
 
-    if(
-      item?.storagePath
-    ){
+    if(item?.storagePath){
 
       await deleteStorageFile(
         item.storagePath
@@ -6824,11 +4976,8 @@ async function deleteItem(
 
     }
 
-
     await db
-      .collection(
-        collection
-      )
+      .collection(collection)
       .doc(id)
       .delete();
 
@@ -6836,16 +4985,12 @@ async function deleteItem(
 
   catch(error){
 
-    console.error(
-      error
-    );
-
-
     alert(
       "Fehler: "
       +
       (
-        error.message ||
+        error.message
+        ||
         error.code
       )
     );
@@ -6855,84 +5000,61 @@ async function deleteItem(
 }
 
 
-
-/* =========================
-   ADMIN LISTEN
-========================= */
-
 function renderAdminLists(){
-
 
   const newsList =
     document.getElementById(
       "adminNewsList"
     );
 
-
   if(newsList){
 
     newsList.innerHTML =
-      newsData
-        .map(news => `
+      newsData.map(news=>`
 
-        <div class="admin-list-item">
+      <div class="admin-list-item">
 
-        <div class="admin-list-head">
+      <div class="admin-list-head">
 
-        ${
-          news.bild
-          ?
-          `
+      ${
+        news.bild
+        ?
+        `<img
+          src="${esc(news.bild)}"
+          class="admin-thumb"
+          alt=""
+        >`
+        :
+        ""
+      }
 
-          <img
-            src="${esc(news.bild)}"
-            class="admin-thumb"
-            alt=""
-          >
+      <strong>
+      ${esc(news.titel||"")}
+      </strong>
 
-          `
-          :
-          ""
-        }
+      </div>
 
-        <strong>
-        ${esc(
-          news.titel ||
-          ""
-        )}
-        </strong>
+      <div class="admin-actions">
 
-        </div>
+      <button
+        class="button button-small"
+        onclick="editNews('${news.id}')"
+      >
+      Bearbeiten
+      </button>
 
+      <button
+        class="button button-red button-small"
+        onclick="deleteItem('news','${news.id}')"
+      >
+      Löschen
+      </button>
 
-        <div class="admin-actions">
+      </div>
 
-        <button
-          class="button button-small"
-          onclick="editNews('${news.id}')"
-        >
-        Bearbeiten
-        </button>
+      </div>
 
-
-        <button
-          class="button button-red button-small"
-          onclick="
-            deleteItem(
-              'news',
-              '${news.id}'
-            )
-          "
-        >
-        Löschen
-        </button>
-
-        </div>
-
-        </div>
-
-        `)
-        .join("");
+      `).join("");
 
   }
 
@@ -6942,71 +5064,54 @@ function renderAdminLists(){
       "adminTeamsList"
     );
 
-
   if(teamList){
 
     teamList.innerHTML =
-      teamsData
-        .map(team => `
+      teamsData.map(team=>`
 
-        <div class="admin-list-item">
+      <div class="admin-list-item">
 
-        <div class="admin-list-head">
+      <div class="admin-list-head">
 
-        ${
-          team.bild
-          ?
-          `
+      ${
+        team.bild
+        ?
+        `<img
+          src="${esc(team.bild)}"
+          class="admin-thumb"
+          alt=""
+        >`
+        :
+        ""
+      }
 
-          <img
-            src="${esc(team.bild)}"
-            class="admin-thumb"
-            alt=""
-          >
+      <strong>
+      ${esc(team.name||"")}
+      </strong>
 
-          `
-          :
-          ""
-        }
+      </div>
 
-        <strong>
-        ${esc(
-          team.name ||
-          ""
-        )}
-        </strong>
+      <div class="admin-actions">
 
-        </div>
+      <button
+        class="button button-small"
+        onclick="editTeam('${team.id}')"
+      >
+      Bearbeiten
+      </button>
 
+      <button
+        class="button button-red button-small"
+        onclick="deleteItem('teams','${team.id}')"
+      >
+      Löschen
+      </button>
 
-        <div class="admin-actions">
+      </div>
 
-        <button
-          class="button button-small"
-          onclick="editTeam('${team.id}')"
-        >
-        Bearbeiten
-        </button>
+      </div>
 
-
-        <button
-          class="button button-red button-small"
-          onclick="
-            deleteItem(
-              'teams',
-              '${team.id}'
-            )
-          "
-        >
-        Löschen
-        </button>
-
-        </div>
-
-        </div>
-
-        `)
-        .join("");
+      `).join("");
 
   }
 
@@ -7016,99 +5121,66 @@ function renderAdminLists(){
       "adminPlayersList"
     );
 
-
   if(playerList){
 
     playerList.innerHTML =
-      playersData
-        .map(player => `
+      playersData.map(player=>`
 
-        <div class="admin-list-item">
+      <div class="admin-list-item">
 
-        <div class="admin-list-head">
+      <div class="admin-list-head">
 
-        ${
-          player.foto
-          ?
-          `
+      ${
+        player.foto
+        ?
+        `<img
+          src="${esc(player.foto)}"
+          class="admin-thumb"
+          alt=""
+        >`
+        :
+        ""
+      }
 
-          <img
-            src="${esc(player.foto)}"
-            class="admin-thumb"
-            alt=""
-          >
+      <div>
 
-          `
-          :
-          ""
-        }
+      <strong>
+      ${esc(player.name||"")}
+      </strong>
 
-        <div>
+      <div class="meta">
+      ${esc(player.teamName||"")}
+      ·
+      #${esc(player.nummer??"")}
+      ·
+      ${esc(player.position||"")}
+      </div>
 
-        <strong>
-        ${esc(
-          player.name ||
-          ""
-        )}
-        </strong>
+      </div>
 
+      </div>
 
-        <div class="meta">
+      <div class="admin-actions">
 
-        ${esc(
-          player.teamName ||
-          ""
-        )}
+      <button
+        class="button button-small"
+        onclick="editPlayer('${player.id}')"
+      >
+      Bearbeiten
+      </button>
 
-        ·
+      <button
+        class="button button-red button-small"
+        onclick="deleteItem('spieler','${player.id}')"
+      >
+      Löschen
+      </button>
 
-        #${esc(
-          player.nummer ??
-          ""
-        )}
+      </div>
 
-        ·
+      </div>
 
-        ${esc(
-          player.position ||
-          ""
-        )}
-
-        </div>
-
-        </div>
-
-        </div>
-
-
-        <div class="admin-actions">
-
-        <button
-          class="button button-small"
-          onclick="editPlayer('${player.id}')"
-        >
-        Bearbeiten
-        </button>
-
-
-        <button
-          class="button button-red button-small"
-          onclick="
-            deleteItem(
-              'spieler',
-              '${player.id}'
-            )
-          "
-        >
-        Löschen
-        </button>
-
-        </div>
-
-        </div>
-
-        `)
-        .join("");
+      `).join("");
 
   }
 
@@ -7118,84 +5190,63 @@ function renderAdminLists(){
       "adminReportsList"
     );
 
-
   if(reportList){
 
     reportList.innerHTML =
-      reportsData
-        .map(report => `
+      reportsData.map(report=>`
 
-        <div class="admin-list-item">
+      <div class="admin-list-item">
 
-        <strong>
-        ${esc(
-          report.titel ||
-          ""
-        )}
-        </strong>
+      <strong>
+      ${esc(report.titel||"")}
+      </strong>
 
+      <div class="admin-actions">
 
-        <div class="admin-actions">
+      <button
+        class="button button-small"
+        onclick="editReport('${report.id}')"
+      >
+      Bearbeiten
+      </button>
 
-        <button
-          class="button button-small"
-          onclick="editReport('${report.id}')"
-        >
-        Bearbeiten
-        </button>
+      <button
+        class="button button-red button-small"
+        onclick="deleteItem('matchberichte','${report.id}')"
+      >
+      Löschen
+      </button>
 
+      </div>
 
-        <button
-          class="button button-red button-small"
-          onclick="
-            deleteItem(
-              'matchberichte',
-              '${report.id}'
-            )
-          "
-        >
-        Löschen
-        </button>
+      </div>
 
-        </div>
-
-        </div>
-
-        `)
-        .join("");
+      `).join("");
 
   }
 
 }
 
 
-
-/* =========================
-   SERVICE WORKER
-========================= */
+/* SERVICE WORKER */
 
 if(
-  "serviceWorker"
-  in navigator
+  "serviceWorker" in navigator
 ){
 
   window.addEventListener(
     "load",
-    async () => {
+    async ()=>{
 
       try{
 
         await navigator
           .serviceWorker
-          .register(
-            "./sw.js"
-          );
-
+          .register("./sw.js");
 
         await navigator
           .serviceWorker
           .ready;
-
 
         syncExistingPushRegistration();
 
@@ -7216,17 +5267,11 @@ if(
 }
 
 
-
-/* =========================
-   START
-========================= */
-
 window.addEventListener(
   "DOMContentLoaded",
-  () => {
+  ()=>{
 
     updateNotificationStatus();
-
     updatePushCounters();
 
   }
@@ -7234,10 +5279,6 @@ window.addEventListener(
 
 </script>
 
-
-<!-- =========================
-     OFV
-========================= -->
 
 <script
   src="https://widget.football.ch/portaldata/30/scripts/sfvVereinWidget.js"
