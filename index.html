@@ -215,11 +215,9 @@ main{
 
 .hero::after{
   content:"⚽";
-
   position:absolute;
   right:-15px;
   bottom:-30px;
-
   font-size:120px;
   opacity:.07;
 }
@@ -251,12 +249,9 @@ main{
 .card{
   margin-bottom:13px;
   padding:18px;
-
   border:1px solid var(--border);
   border-radius:18px;
-
   background:white;
-
   box-shadow:
     0 4px 14px
     rgba(0,0,0,.05);
@@ -274,18 +269,13 @@ main{
 
 .tag{
   display:inline-block;
-
   margin-bottom:8px;
   padding:5px 9px;
-
   border-radius:30px;
-
   background:#fff0a7;
   color:#725900;
-
   font-size:10px;
   font-weight:900;
-
   text-transform:uppercase;
 }
 
@@ -365,9 +355,7 @@ main{
 .notification-box{
   margin-bottom:20px;
   padding:18px;
-
   border-radius:19px;
-
   background:
     linear-gradient(
       135deg,
@@ -388,9 +376,7 @@ main{
 
 .notification-status{
   margin-top:10px;
-
   color:#665a00;
-
   font-size:12px;
   font-weight:700;
 }
@@ -402,7 +388,6 @@ main{
 
 .push-admin{
   border:2px solid #171717;
-
   background:
     linear-gradient(
       145deg,
@@ -415,7 +400,6 @@ main{
   display:flex;
   align-items:center;
   gap:12px;
-
   margin-bottom:16px;
 }
 
@@ -428,9 +412,7 @@ main{
   height:48px;
 
   border-radius:14px;
-
   background:#171717;
-
   font-size:23px;
 }
 
@@ -448,24 +430,18 @@ main{
 .push-warning{
   margin-top:12px;
   padding:11px;
-
   border-radius:11px;
-
   background:#fff5d5;
   color:#735a00;
-
   font-size:11px;
   line-height:1.45;
 }
 
 .push-status{
   display:none;
-
   margin-top:14px;
   padding:12px;
-
   border-radius:11px;
-
   font-size:12px;
   font-weight:750;
   line-height:1.5;
@@ -640,27 +616,14 @@ main{
   cursor:pointer;
 }
 
-
-/*
-=============================================
-NEU:
-Spielerbild wird vollständig angezeigt.
-Kein Abschneiden mehr.
-=============================================
-*/
-
 .player-photo{
   display:block;
-
   width:100%;
   height:auto;
-
   object-fit:contain;
   object-position:center;
-
   background:white;
 }
-
 
 .player-info{
   padding:10px;
@@ -954,16 +917,6 @@ textarea.form-input{
   font-size:24px;
 }
 
-
-/*
-=============================================
-NEU:
-Grosses Spielerportrait wird vollständig
-angezeigt und proportional an das iPhone
-angepasst.
-=============================================
-*/
-
 .modal-image{
   display:none;
 
@@ -973,9 +926,7 @@ angepasst.
   height:auto;
   max-height:58dvh;
 
-  margin:
-    4px auto
-    16px;
+  margin:4px auto 16px;
 
   object-fit:contain;
   object-position:center;
@@ -988,7 +939,6 @@ angepasst.
 .modal-image.visible{
   display:block;
 }
-
 
 .modal-title{
   margin-bottom:7px;
@@ -1019,9 +969,7 @@ angepasst.
   position:fixed;
   left:50%;
   bottom:0;
-
   transform:translateX(-50%);
-
   z-index:200;
 
   width:100%;
@@ -1098,12 +1046,7 @@ Fussball mit Herz & Tradition
 <main>
 
 
-<!-- HOME -->
-
-<section
-  id="home"
-  class="page active"
->
+<section id="home" class="page active">
 
 <div class="hero">
 
@@ -1177,11 +1120,9 @@ Schnellzugriff
   class="quick-button"
   onclick="openPage('news')"
 >
-
 <span class="quick-icon">📰</span>
 <strong>News</strong>
 <small>Neues vom Verein</small>
-
 </button>
 
 
@@ -1189,11 +1130,9 @@ Schnellzugriff
   class="quick-button"
   onclick="openPage('teams')"
 >
-
 <span class="quick-icon">👕</span>
 <strong>Teams</strong>
 <small>Mannschaften & Spieler</small>
-
 </button>
 
 
@@ -1201,11 +1140,9 @@ Schnellzugriff
   class="quick-button"
   onclick="openPage('spielbetrieb')"
 >
-
 <span class="quick-icon">⚽</span>
 <strong>Spielbetrieb</strong>
 <small>Direkt vom OFV</small>
-
 </button>
 
 
@@ -1213,19 +1150,15 @@ Schnellzugriff
   class="quick-button"
   onclick="openPage('matchberichte')"
 >
-
 <span class="quick-icon">📝</span>
 <strong>Matchberichte</strong>
 <small>Berichte unserer Teams</small>
-
 </button>
 
 </div>
 
 </section>
 
-
-<!-- NEWS -->
 
 <section id="news" class="page">
 
@@ -1248,8 +1181,6 @@ News werden geladen...
 </section>
 
 
-<!-- TEAMS -->
-
 <section id="teams" class="page">
 
 <h1 class="page-title">
@@ -1270,8 +1201,6 @@ Teams werden geladen...
 
 </section>
 
-
-<!-- SPIELBETRIEB -->
 
 <section id="spielbetrieb" class="page">
 
@@ -1315,8 +1244,6 @@ vom OFV / football.ch geladen.
 </section>
 
 
-<!-- MATCHBERICHTE -->
-
 <section id="matchberichte" class="page">
 
 <h1 class="page-title">
@@ -1337,8 +1264,6 @@ Matchberichte werden geladen...
 
 </section>
 
-
-<!-- KONTAKT -->
 
 <section id="kontakt" class="page">
 
@@ -1386,8 +1311,6 @@ Admin-Bereich öffnen
 
 </section>
 
-
-<!-- ADMIN -->
 
 <section id="admin" class="page">
 
@@ -1590,8 +1513,6 @@ Nachricht
 </div>
 
 
-<!-- NEWS ADMIN -->
-
 <div class="card admin-card">
 
 <span class="admin-label">
@@ -1718,8 +1639,6 @@ Abbrechen
 
 </div>
 
-
-<!-- TEAM ADMIN -->
 
 <div class="card admin-card">
 
@@ -1856,8 +1775,6 @@ Abbrechen
 
 </div>
 
-
-<!-- SPIELER ADMIN -->
 
 <div class="card admin-card">
 
@@ -2020,8 +1937,6 @@ Abbrechen
 
 </div>
 
-
-<!-- MATCHBERICHT ADMIN -->
 
 <div class="card admin-card">
 
@@ -2223,27 +2138,13 @@ Kontakt
 <script>
 
 const firebaseConfig = {
-
-  apiKey:
-    "AIzaSyDFBoXvU05fwbB4_u-QxX6RtOQiwAerGG8",
-
-  authDomain:
-    "fc-waengi-1967.firebaseapp.com",
-
-  projectId:
-    "fc-waengi-1967",
-
-  storageBucket:
-    "fc-waengi-1967.firebasestorage.app",
-
-  messagingSenderId:
-    "625120624112",
-
-  appId:
-    "1:625120624112:web:62277738190781734bf135"
-
+  apiKey:"AIzaSyDFBoXvU05fwbB4_u-QxX6RtOQiwAerGG8",
+  authDomain:"fc-waengi-1967.firebaseapp.com",
+  projectId:"fc-waengi-1967",
+  storageBucket:"fc-waengi-1967.firebasestorage.app",
+  messagingSenderId:"625120624112",
+  appId:"1:625120624112:web:62277738190781734bf135"
 };
-
 
 firebase.initializeApp(firebaseConfig);
 
@@ -2273,22 +2174,16 @@ const ADMIN_UID =
 const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
-let newsData = [];
-let teamsData = [];
-let playersData = [];
-let reportsData = [];
+let newsData=[];
+let teamsData=[];
+let playersData=[];
+let reportsData=[];
 
 
 function esc(text){
-
-  const div =
-    document.createElement("div");
-
-  div.textContent =
-    text ?? "";
-
+  const div=document.createElement("div");
+  div.textContent=text??"";
   return div.innerHTML;
-
 }
 
 
@@ -2299,14 +2194,12 @@ function toDate(value){
   }
 
   if(
-    typeof value.toDate ===
-    "function"
+    typeof value.toDate==="function"
   ){
     return value.toDate();
   }
 
   return new Date(value);
-
 }
 
 
@@ -2315,14 +2208,13 @@ function formatDate(
   withTime=false
 ){
 
-  const date =
-    toDate(value);
+  const date=toDate(value);
 
   if(!date){
     return "";
   }
 
-  const options = {
+  const options={
     day:"2-digit",
     month:"2-digit",
     year:"numeric"
@@ -2339,24 +2231,21 @@ function formatDate(
       options
     )
     .format(date);
-
 }
 
 
 function inputTimestamp(id){
 
-  const value =
+  const value=
     document
       .getElementById(id)
       .value;
 
   if(!value){
-
     return firebase
       .firestore
       .Timestamp
       .now();
-
   }
 
   return firebase
@@ -2365,20 +2254,18 @@ function inputTimestamp(id){
     .fromDate(
       new Date(value)
     );
-
 }
 
 
 function dateInputValue(value){
 
-  const date =
-    toDate(value);
+  const date=toDate(value);
 
   if(!date){
     return "";
   }
 
-  const local =
+  const local=
     new Date(
       date.getTime()
       -
@@ -2390,7 +2277,6 @@ function dateInputValue(value){
   return local
     .toISOString()
     .slice(0,16);
-
 }
 
 
@@ -2398,10 +2284,8 @@ function openPage(name){
 
   document
     .querySelectorAll(".page")
-    .forEach(page => {
-
+    .forEach(page=>{
       page.classList.remove("active");
-
     });
 
   document
@@ -2411,12 +2295,12 @@ function openPage(name){
 
   document
     .querySelectorAll(".nav-button")
-    .forEach(button => {
+    .forEach(button=>{
 
       button.classList.remove("active");
 
       if(
-        button.dataset.page === name
+        button.dataset.page===name
       ){
         button.classList.add("active");
       }
@@ -2427,7 +2311,6 @@ function openPage(name){
     top:0,
     behavior:"smooth"
   });
-
 }
 
 
@@ -2436,12 +2319,12 @@ function previewSelectedImage(
   previewId
 ){
 
-  const preview =
+  const preview=
     document.getElementById(
       previewId
     );
 
-  const file =
+  const file=
     input.files?.[0];
 
   if(!file){
@@ -2469,12 +2352,11 @@ function previewSelectedImage(
     return;
   }
 
-  const url =
+  const url=
     URL.createObjectURL(file);
 
   preview.src=url;
   preview.classList.add("visible");
-
 }
 
 
@@ -2495,7 +2377,7 @@ async function uploadImage(
   }
 
   if(
-    auth.currentUser.uid !== ADMIN_UID
+    auth.currentUser.uid!==ADMIN_UID
   ){
 
     throw new Error(
@@ -2518,10 +2400,10 @@ async function uploadImage(
 
   }
 
-  const maxSize =
-    15 * 1024 * 1024;
+  const maxSize=
+    15*1024*1024;
 
-  if(file.size > maxSize){
+  if(file.size>maxSize){
 
     throw new Error(
       "Das Bild ist grösser als 15 MB."
@@ -2529,26 +2411,25 @@ async function uploadImage(
 
   }
 
-  const status =
+  const status=
     document.getElementById(statusId);
 
-  const progress =
+  const progress=
     document.getElementById(progressId);
 
-  const bar =
+  const bar=
     document.getElementById(barId);
 
-  status.textContent =
+  status.textContent=
     "⏳ Bild wird hochgeladen...";
 
   progress.classList.add("visible");
-
   bar.style.width="0%";
 
-  const originalName =
-    file.name || "foto.jpg";
+  const originalName=
+    file.name||"foto.jpg";
 
-  const extension =
+  const extension=
     originalName.includes(".")
     ?
     originalName
@@ -2558,14 +2439,14 @@ async function uploadImage(
     :
     "jpg";
 
-  const safeExtension =
+  const safeExtension=
     extension
       .replace(/[^a-z0-9]/g,"")
       .substring(0,5)
       ||
       "jpg";
 
-  const fileName =
+  const fileName=
     Date.now()
     +
     "-"
@@ -2578,17 +2459,17 @@ async function uploadImage(
     +
     safeExtension;
 
-  const storagePath =
-    folder + "/" + fileName;
+  const storagePath=
+    folder+"/"+fileName;
 
-  const ref =
+  const ref=
     storage.ref(storagePath);
 
-  const metadata = {
+  const metadata={
     contentType:file.type
   };
 
-  const task =
+  const task=
     ref.put(
       file,
       metadata
@@ -2603,7 +2484,7 @@ async function uploadImage(
 
         snapshot=>{
 
-          const percentage =
+          const percentage=
             snapshot.totalBytes
             ?
             Math.round(
@@ -2611,21 +2492,22 @@ async function uploadImage(
                 snapshot.bytesTransferred
                 /
                 snapshot.totalBytes
-              ) * 100
+              )
+              *
+              100
             )
             :
             0;
 
-          bar.style.width =
-            percentage + "%";
+          bar.style.width=
+            percentage+"%";
 
-          status.textContent =
+          status.textContent=
             "⏳ Upload "
             +
             percentage
             +
             "%";
-
         },
 
         error=>{
@@ -2634,18 +2516,17 @@ async function uploadImage(
             "visible"
           );
 
-          status.textContent =
+          status.textContent=
             "❌ Upload fehlgeschlagen";
 
           reject(error);
-
         },
 
         async ()=>{
 
           try{
 
-            const url =
+            const url=
               await task
                 .snapshot
                 .ref
@@ -2653,7 +2534,7 @@ async function uploadImage(
 
             bar.style.width="100%";
 
-            status.textContent =
+            status.textContent=
               "✅ Foto hochgeladen";
 
             setTimeout(
@@ -2682,7 +2563,6 @@ async function uploadImage(
 
     }
   );
-
 }
 
 
@@ -2708,13 +2588,9 @@ async function deleteStorageFile(
       "Altes Bild konnte nicht gelöscht werden:",
       error
     );
-
   }
-
 }
 
-
-/* FIRESTORE LISTENER */
 
 db.collection("news")
 .onSnapshot(snapshot=>{
@@ -2733,7 +2609,6 @@ db.collection("news")
       id:doc.id,
       ...data
     });
-
   });
 
   newsData.sort(
@@ -2746,7 +2621,6 @@ db.collection("news")
   renderNews();
   renderHomeNews();
   renderAdminLists();
-
 });
 
 
@@ -2767,7 +2641,6 @@ db.collection("teams")
       id:doc.id,
       ...data
     });
-
   });
 
   teamsData.sort(
@@ -2780,7 +2653,6 @@ db.collection("teams")
   renderTeams();
   updateTeamSelect();
   renderAdminLists();
-
 });
 
 
@@ -2801,7 +2673,6 @@ db.collection("spieler")
       id:doc.id,
       ...data
     });
-
   });
 
   playersData.sort(
@@ -2825,7 +2696,6 @@ db.collection("spieler")
 
   renderTeams();
   renderAdminLists();
-
 });
 
 
@@ -2846,7 +2716,6 @@ db.collection("matchberichte")
       id:doc.id,
       ...data
     });
-
   });
 
   reportsData.sort(
@@ -2858,20 +2727,19 @@ db.collection("matchberichte")
 
   renderReports();
   renderAdminLists();
-
 });
 
 
 function renderNews(){
 
-  const container =
+  const container=
     document.getElementById(
       "newsList"
     );
 
   if(!newsData.length){
 
-    container.innerHTML =
+    container.innerHTML=
       `<div class="empty">
       Aktuell sind keine News vorhanden.
       </div>`;
@@ -2879,10 +2747,10 @@ function renderNews(){
     return;
   }
 
-  container.innerHTML =
+  container.innerHTML=
     newsData.map(news=>{
 
-      const image =
+      const image=
         news.bild
         ?
         `<img
@@ -2926,23 +2794,21 @@ function renderNews(){
       `;
 
     }).join("");
-
 }
 
 
 function renderHomeNews(){
 
-  const container =
+  const container=
     document.getElementById(
       "homeNews"
     );
 
-  const news =
-    newsData[0];
+  const news=newsData[0];
 
   if(!news){
 
-    container.innerHTML =
+    container.innerHTML=
       `<div class="empty">
       Aktuell sind keine News vorhanden.
       </div>`;
@@ -2950,7 +2816,7 @@ function renderHomeNews(){
     return;
   }
 
-  const image =
+  const image=
     news.bild
     ?
     `<img
@@ -2961,7 +2827,7 @@ function renderHomeNews(){
     :
     "";
 
-  container.innerHTML = `
+  container.innerHTML=`
 
     <div
       class="card"
@@ -2992,13 +2858,12 @@ function renderHomeNews(){
     </div>
 
   `;
-
 }
 
 
 function openNews(id){
 
-  const news =
+  const news=
     newsData.find(
       item=>item.id===id
     );
@@ -3014,20 +2879,19 @@ function openNews(id){
     meta:formatDate(news.datum),
     text:news.text||""
   });
-
 }
 
 
 function renderTeams(){
 
-  const container =
+  const container=
     document.getElementById(
       "teamsList"
     );
 
   if(!teamsData.length){
 
-    container.innerHTML =
+    container.innerHTML=
       `<div class="empty">
       Aktuell sind keine Teams eingetragen.
       </div>`;
@@ -3035,10 +2899,10 @@ function renderTeams(){
     return;
   }
 
-  container.innerHTML =
+  container.innerHTML=
     teamsData.map(team=>{
 
-      const players =
+      const players=
         playersData.filter(
           player=>
             player.teamId===team.id
@@ -3050,7 +2914,7 @@ function renderTeams(){
             )
         );
 
-      const playersHtml =
+      const playersHtml=
         players.length
         ?
         `
@@ -3089,7 +2953,6 @@ function renderTeams(){
           </div>
 
           <div class="player-number">
-
           ${
             player.nummer!==undefined
             ?
@@ -3097,7 +2960,6 @@ function renderTeams(){
             :
             ""
           }
-
           </div>
 
           <div class="player-position">
@@ -3162,6 +3024,7 @@ function renderTeams(){
 
       </div>
 
+
       <div
         id="team-${team.id}"
         class="team-details"
@@ -3200,7 +3063,6 @@ function renderTeams(){
       `;
 
     }).join("");
-
 }
 
 
@@ -3212,13 +3074,12 @@ function toggleTeam(id){
     )
     ?.classList
     .toggle("visible");
-
 }
 
 
 function openPlayer(id){
 
-  const player =
+  const player=
     playersData.find(
       item=>item.id===id
     );
@@ -3238,45 +3099,30 @@ function openPlayer(id){
   }
 
   openModal({
-
-    image:
-      player.foto||
-      "./logo.png",
-
-    tag:
-      player.teamName||
-      "FC Wängi",
-
-    title:
-      player.name||"",
-
-    meta:
-      meta.join(" · "),
-
+    image:player.foto||"./logo.png",
+    tag:player.teamName||"FC Wängi",
+    title:player.name||"",
+    meta:meta.join(" · "),
     text:
       player.teamName
       ?
-      "Mannschaft: "
-      +
-      player.teamName
+      "Mannschaft: "+player.teamName
       :
       ""
-
   });
-
 }
 
 
 function renderReports(){
 
-  const container =
+  const container=
     document.getElementById(
       "reportsList"
     );
 
   if(!reportsData.length){
 
-    container.innerHTML =
+    container.innerHTML=
       `<div class="empty">
       Aktuell sind keine Matchberichte vorhanden.
       </div>`;
@@ -3284,7 +3130,7 @@ function renderReports(){
     return;
   }
 
-  container.innerHTML =
+  container.innerHTML=
     reportsData.map(report=>`
 
     <div
@@ -3314,13 +3160,12 @@ function renderReports(){
     </div>
 
     `).join("");
-
 }
 
 
 function openReport(id){
 
-  const report =
+  const report=
     reportsData.find(
       item=>item.id===id
     );
@@ -3336,15 +3181,12 @@ function openReport(id){
     meta:formatDate(report.datum),
     text:report.text||""
   });
-
 }
 
 
-/* MODAL */
-
 function openModal(data){
 
-  const image =
+  const image=
     document.getElementById(
       "modalImage"
     );
@@ -3352,7 +3194,6 @@ function openModal(data){
   if(data.image){
 
     image.src=data.image;
-
     image.classList.add(
       "visible"
     );
@@ -3368,34 +3209,32 @@ function openModal(data){
     image.classList.remove(
       "visible"
     );
-
   }
 
   document
     .getElementById("modalTag")
-    .textContent =
+    .textContent=
       data.tag||"";
 
   document
     .getElementById("modalTitle")
-    .textContent =
+    .textContent=
       data.title||"";
 
   document
     .getElementById("modalMeta")
-    .textContent =
+    .textContent=
       data.meta||"";
 
   document
     .getElementById("modalText")
-    .textContent =
+    .textContent=
       data.text||"";
 
   document
     .getElementById("contentModal")
     .classList
     .add("visible");
-
 }
 
 
@@ -3405,7 +3244,6 @@ function closeModal(){
     .getElementById("contentModal")
     .classList
     .remove("visible");
-
 }
 
 
@@ -3416,21 +3254,18 @@ function modalBackgroundClick(event){
   ){
     closeModal();
   }
-
 }
 
-
-/* AUTH */
 
 auth.onAuthStateChanged(
   async user=>{
 
-    const login =
+    const login=
       document.getElementById(
         "adminLogin"
       );
 
-    const panel =
+    const panel=
       document.getElementById(
         "adminPanel"
       );
@@ -3448,8 +3283,7 @@ auth.onAuthStateChanged(
         .getElementById(
           "adminUserText"
         )
-        .textContent =
-          user.email;
+        .textContent=user.email;
 
       renderAdminLists();
 
@@ -3463,40 +3297,38 @@ auth.onAuthStateChanged(
 
       login.style.display="block";
       panel.style.display="none";
-
     }
-
   }
 );
 
 
 async function loginAdmin(){
 
-  const email =
+  const email=
     document
       .getElementById(
         "adminEmail"
       )
       .value.trim();
 
-  const password =
+  const password=
     document
       .getElementById(
         "adminPassword"
       )
       .value;
 
-  const status =
+  const status=
     document.getElementById(
       "loginStatus"
     );
 
   try{
 
-    status.textContent =
+    status.textContent=
       "Anmeldung läuft...";
 
-    const credential =
+    const credential=
       await auth
         .signInWithEmailAndPassword(
           email,
@@ -3509,11 +3341,10 @@ async function loginAdmin(){
 
       await auth.signOut();
 
-      status.textContent =
+      status.textContent=
         "❌ Kein Admin-Zugang.";
 
       return;
-
     }
 
     status.textContent="";
@@ -3524,30 +3355,24 @@ async function loginAdmin(){
 
     console.error(error);
 
-    status.textContent =
+    status.textContent=
       "❌ Anmeldung fehlgeschlagen.";
-
   }
-
 }
 
 
 async function logoutAdmin(){
 
   await auth.signOut();
-
   openPage("kontakt");
-
 }
 
-
-/* PUSH */
 
 async function registerCurrentDeviceForPush(
   showSuccess=false
 ){
 
-  const status =
+  const status=
     document.getElementById(
       "notificationStatus"
     );
@@ -3559,24 +3384,18 @@ async function registerCurrentDeviceForPush(
     throw new Error(
       "Service Worker nicht verfügbar."
     );
-
   }
 
-  const registration =
+  const registration=
     await navigator
       .serviceWorker
       .ready;
 
-  const token =
+  const token=
     await messaging
       .getToken({
-
-        vapidKey:
-          VAPID_KEY,
-
-        serviceWorkerRegistration:
-          registration
-
+        vapidKey:VAPID_KEY,
+        serviceWorkerRegistration:registration
       });
 
   if(!token){
@@ -3584,7 +3403,6 @@ async function registerCurrentDeviceForPush(
     throw new Error(
       "Firebase konnte dieses Gerät nicht registrieren."
     );
-
   }
 
   await registerPushTokenCallable({
@@ -3603,9 +3421,8 @@ async function registerCurrentDeviceForPush(
 
   if(status){
 
-    status.textContent =
+    status.textContent=
       "✅ FCW-Mitteilungen sind aktiviert";
-
   }
 
   if(showSuccess){
@@ -3613,30 +3430,28 @@ async function registerCurrentDeviceForPush(
     alert(
       "✅ Dieses Gerät ist jetzt für FCW-Push-Mitteilungen registriert."
     );
-
   }
 
   return token;
-
 }
 
 
 async function enableNotifications(){
 
-  const status =
+  const status=
     document.getElementById(
       "notificationStatus"
     );
 
   try{
 
-    const isIOS =
+    const isIOS=
       /iPhone|iPad|iPod/i
       .test(
         navigator.userAgent
       );
 
-    const standalone =
+    const standalone=
       window.matchMedia(
         "(display-mode: standalone)"
       ).matches
@@ -3649,7 +3464,7 @@ async function enableNotifications(){
       !standalone
     ){
 
-      status.textContent =
+      status.textContent=
         "📱 App zuerst zum Home-Bildschirm hinzufügen.";
 
       alert(
@@ -3663,13 +3478,13 @@ async function enableNotifications(){
       !("Notification" in window)
     ){
 
-      status.textContent =
+      status.textContent=
         "Push wird auf diesem Gerät nicht unterstützt.";
 
       return;
     }
 
-    const permission =
+    const permission=
       await Notification
         .requestPermission();
 
@@ -3677,13 +3492,13 @@ async function enableNotifications(){
       permission!=="granted"
     ){
 
-      status.textContent =
+      status.textContent=
         "❌ Mitteilungen wurden nicht erlaubt.";
 
       return;
     }
 
-    status.textContent =
+    status.textContent=
       "⏳ Gerät wird registriert...";
 
     await registerCurrentDeviceForPush(
@@ -3699,7 +3514,7 @@ async function enableNotifications(){
       error
     );
 
-    status.textContent =
+    status.textContent=
       "❌ Push-Registrierung fehlgeschlagen";
 
     alert(
@@ -3713,9 +3528,7 @@ async function enableNotifications(){
         "Unbekannter Fehler"
       )
     );
-
   }
-
 }
 
 
@@ -3747,15 +3560,13 @@ async function syncExistingPushRegistration(){
       "Automatische Push-Synchronisierung fehlgeschlagen:",
       error
     );
-
   }
-
 }
 
 
 function updateNotificationStatus(){
 
-  const status =
+  const status=
     document.getElementById(
       "notificationStatus"
     );
@@ -3764,7 +3575,7 @@ function updateNotificationStatus(){
     !("Notification" in window)
   ){
 
-    status.textContent =
+    status.textContent=
       "Mitteilungen nicht verfügbar.";
 
     return;
@@ -3780,16 +3591,15 @@ function updateNotificationStatus(){
       )==="1"
     ){
 
-      status.textContent =
+      status.textContent=
         "✅ FCW-Mitteilungen sind aktiviert";
 
     }
 
     else{
 
-      status.textContent =
+      status.textContent=
         "⏳ Mitteilungen erlaubt – Registrierung wird geprüft...";
-
     }
 
   }
@@ -3798,29 +3608,27 @@ function updateNotificationStatus(){
     Notification.permission==="denied"
   ){
 
-    status.textContent =
+    status.textContent=
       "❌ Mitteilungen blockiert";
 
   }
 
   else{
 
-    status.textContent =
+    status.textContent=
       "Mitteilungen noch nicht aktiviert";
-
   }
-
 }
 
 
 function updatePushCounters(){
 
-  const title =
+  const title=
     document.getElementById(
       "pushTitle"
     )?.value||"";
 
-  const message =
+  const message=
     document.getElementById(
       "pushMessage"
     )?.value||"";
@@ -3829,16 +3637,15 @@ function updatePushCounters(){
     .getElementById(
       "pushTitleCounter"
     )
-    .textContent =
+    .textContent=
       title.length+" / 100";
 
   document
     .getElementById(
       "pushMessageCounter"
     )
-    .textContent =
+    .textContent=
       message.length+" / 500";
-
 }
 
 
@@ -3847,16 +3654,15 @@ function setPushSendStatus(
   type
 ){
 
-  const status =
+  const status=
     document.getElementById(
       "pushSendStatus"
     );
 
-  status.className =
+  status.className=
     "push-status visible "+type;
 
   status.textContent=text;
-
 }
 
 
@@ -3875,14 +3681,14 @@ async function sendPushFromAdmin(){
     return;
   }
 
-  const title =
+  const title=
     document
       .getElementById(
         "pushTitle"
       )
       .value.trim();
 
-  const body =
+  const body=
     document
       .getElementById(
         "pushMessage"
@@ -3907,7 +3713,7 @@ async function sendPushFromAdmin(){
     return;
   }
 
-  const confirmed =
+  const confirmed=
     confirm(
       "Push jetzt wirklich an ALLE registrierten FCW-App-Geräte senden?\n\n"
       +
@@ -3922,14 +3728,14 @@ async function sendPushFromAdmin(){
     return;
   }
 
-  const button =
+  const button=
     document.getElementById(
       "pushSendButton"
     );
 
   button.disabled=true;
 
-  button.textContent =
+  button.textContent=
     "⏳ Push wird gesendet...";
 
   setPushSendStatus(
@@ -3942,13 +3748,13 @@ async function sendPushFromAdmin(){
     await auth.currentUser
       .getIdToken(true);
 
-    const result =
+    const result=
       await sendPushCallable({
         title:title,
         body:body
       });
 
-    const data =
+    const data=
       result.data||{};
 
     setPushSendStatus(
@@ -4010,23 +3816,21 @@ async function sendPushFromAdmin(){
 
     button.disabled=false;
 
-    button.textContent =
+    button.textContent=
       "🚀 Push an alle senden";
-
   }
-
 }
 
 
 messaging.onMessage(
   payload=>{
 
-    const title =
+    const title=
       payload.notification?.title
       ||
       "FC Wängi 1967";
 
-    const body =
+    const body=
       payload.notification?.body
       ||
       "Es gibt Neuigkeiten beim FC Wängi.";
@@ -4045,15 +3849,16 @@ messaging.onMessage(
               badge:"./icon-512.png"
             }
           );
-
         }
       );
-
   }
 );
 
 
-/* ADMIN SPEICHERN */
+/* =========================
+   NEWS SPEICHERN
+   + AUTOMATISCHER PUSH
+========================= */
 
 async function saveNews(){
 
@@ -4070,14 +3875,17 @@ async function saveNews(){
     return;
   }
 
-  const id =
+  const id=
     document
       .getElementById(
         "newsEditId"
       )
       .value;
 
-  const existing =
+  const isNewNews=
+    !id;
+
+  const existing=
     id
     ?
     newsData.find(
@@ -4086,21 +3894,32 @@ async function saveNews(){
     :
     null;
 
-  const title =
+  const title=
     document
       .getElementById(
         "newsTitle"
       )
       .value.trim();
 
-  const text =
+  const text=
     document
       .getElementById(
         "newsText"
       )
       .value.trim();
 
-  if(!title||!text){
+  const category=
+    document
+      .getElementById(
+        "newsCategory"
+      )
+      .value.trim();
+
+  if(
+    !title
+    ||
+    !text
+  ){
 
     alert(
       "Bitte Titel und Text eingeben."
@@ -4111,13 +3930,13 @@ async function saveNews(){
 
   try{
 
-    let imageUrl =
+    let imageUrl=
       existing?.bild||"";
 
-    let storagePath =
+    let storagePath=
       existing?.storagePath||"";
 
-    const file =
+    const file=
       document
         .getElementById(
           "newsImageFile"
@@ -4126,10 +3945,10 @@ async function saveNews(){
 
     if(file){
 
-      const oldPath =
+      const oldPath=
         storagePath;
 
-      const upload =
+      const upload=
         await uploadImage(
           file,
           "news",
@@ -4138,8 +3957,11 @@ async function saveNews(){
           "newsUploadProgressBar"
         );
 
-      imageUrl=upload.url;
-      storagePath=upload.path;
+      imageUrl=
+        upload.url;
+
+      storagePath=
+        upload.path;
 
       if(
         oldPath
@@ -4150,21 +3972,14 @@ async function saveNews(){
         await deleteStorageFile(
           oldPath
         );
-
       }
-
     }
 
-    const data = {
+    const data={
 
       titel:title,
 
-      kategorie:
-        document
-          .getElementById(
-            "newsCategory"
-          )
-          .value.trim(),
+      kategorie:category,
 
       datum:
         inputTimestamp(
@@ -4187,6 +4002,7 @@ async function saveNews(){
 
     };
 
+
     if(id){
 
       await db
@@ -4194,52 +4010,161 @@ async function saveNews(){
         .doc(id)
         .update(data);
 
+      resetNewsForm();
+
+      alert(
+        "✅ News wurde aktualisiert."
+      );
+
+      return;
     }
 
-    else{
 
-      data.createdAt =
-        firebase
-          .firestore
-          .FieldValue
-          .serverTimestamp();
+    data.createdAt=
+      firebase
+        .firestore
+        .FieldValue
+        .serverTimestamp();
 
-      await db
-        .collection("news")
-        .add(data);
 
-    }
+    await db
+      .collection("news")
+      .add(data);
+
 
     resetNewsForm();
 
-    alert(
-      "✅ News wurde veröffentlicht"
-    );
+
+    if(isNewNews){
+
+      try{
+
+        await auth
+          .currentUser
+          .getIdToken(true);
+
+
+        let pushText=
+          text;
+
+
+        if(
+          pushText.length>180
+        ){
+
+          pushText=
+            pushText
+              .substring(
+                0,
+                177
+              )
+            +
+            "...";
+        }
+
+
+        let pushTitle=
+          "📰 Neue News";
+
+
+        if(category){
+
+          pushTitle+=
+            " · "
+            +
+            category;
+        }
+
+
+        const pushResult=
+          await sendPushCallable({
+
+            title:pushTitle,
+
+            body:
+              title
+              +
+              "\n"
+              +
+              pushText
+
+          });
+
+
+        const pushData=
+          pushResult.data||{};
+
+
+        alert(
+          "✅ News veröffentlicht\n\n"
+          +
+          "🔔 Push automatisch versendet\n\n"
+          +
+          "Registrierte Geräte: "
+          +
+          (pushData.devices??0)
+          +
+          "\nErfolgreich: "
+          +
+          (pushData.successCount??0)
+          +
+          "\nFehler: "
+          +
+          (pushData.failureCount??0)
+        );
+
+      }
+
+      catch(pushError){
+
+        console.error(
+          "Automatischer News-Push fehlgeschlagen:",
+          pushError
+        );
+
+        alert(
+          "✅ News wurde veröffentlicht.\n\n"
+          +
+          "⚠️ Die automatische Push-Nachricht konnte jedoch nicht versendet werden.\n\n"
+          +
+          (
+            pushError.details
+            ||
+            pushError.message
+            ||
+            "Unbekannter Push-Fehler"
+          )
+        );
+      }
+    }
 
   }
 
   catch(error){
 
-    console.error(error);
+    console.error(
+      "News speichern:",
+      error
+    );
 
     alert(
-      "Fehler: "
+      "❌ News konnte nicht veröffentlicht werden.\n\n"
       +
       (
         error.message
         ||
         error.code
+        ||
+        "Unbekannter Fehler"
       )
     );
-
   }
-
 }
 
 
 function editNews(id){
 
-  const news =
+  const news=
     newsData.find(
       item=>item.id===id
     );
@@ -4255,7 +4180,7 @@ function editNews(id){
   document.getElementById("newsText").value=news.text||"";
   document.getElementById("newsImageFile").value="";
 
-  const preview =
+  const preview=
     document.getElementById(
       "newsImagePreview"
     );
@@ -4271,9 +4196,7 @@ function editNews(id){
 
     preview.removeAttribute("src");
     preview.classList.remove("visible");
-
   }
-
 }
 
 
@@ -4286,7 +4209,7 @@ function resetNewsForm(){
   document.getElementById("newsText").value="";
   document.getElementById("newsImageFile").value="";
 
-  const preview =
+  const preview=
     document.getElementById(
       "newsImagePreview"
     );
@@ -4299,13 +4222,12 @@ function resetNewsForm(){
       "newsUploadStatus"
     )
     .textContent="";
-
 }
 
 
 function updateTeamSelect(){
 
-  const select =
+  const select=
     document.getElementById(
       "playerTeamSelect"
     );
@@ -4314,10 +4236,10 @@ function updateTeamSelect(){
     return;
   }
 
-  const selected =
+  const selected=
     select.value;
 
-  select.innerHTML =
+  select.innerHTML=
     `<option value="">
     Mannschaft auswählen
     </option>`
@@ -4331,20 +4253,19 @@ function updateTeamSelect(){
   if(selected){
     select.value=selected;
   }
-
 }
 
 
 async function saveTeam(){
 
-  const id =
+  const id=
     document
       .getElementById(
         "teamEditId"
       )
       .value;
 
-  const existing =
+  const existing=
     id
     ?
     teamsData.find(
@@ -4353,7 +4274,7 @@ async function saveTeam(){
     :
     null;
 
-  const name =
+  const name=
     document
       .getElementById(
         "teamNameInput"
@@ -4371,13 +4292,13 @@ async function saveTeam(){
 
   try{
 
-    let imageUrl =
+    let imageUrl=
       existing?.bild||"";
 
-    let storagePath =
+    let storagePath=
       existing?.storagePath||"";
 
-    const file =
+    const file=
       document
         .getElementById(
           "teamImageFile"
@@ -4386,10 +4307,10 @@ async function saveTeam(){
 
     if(file){
 
-      const oldPath =
+      const oldPath=
         storagePath;
 
-      const upload =
+      const upload=
         await uploadImage(
           file,
           "teams",
@@ -4410,12 +4331,10 @@ async function saveTeam(){
         await deleteStorageFile(
           oldPath
         );
-
       }
-
     }
 
-    const data = {
+    const data={
 
       name:name,
 
@@ -4456,7 +4375,6 @@ async function saveTeam(){
         ),
 
       aktiv:true
-
     };
 
     if(id){
@@ -4473,7 +4391,6 @@ async function saveTeam(){
       await db
         .collection("teams")
         .add(data);
-
     }
 
     resetTeamForm();
@@ -4495,15 +4412,13 @@ async function saveTeam(){
         error.code
       )
     );
-
   }
-
 }
 
 
 function editTeam(id){
 
-  const team =
+  const team=
     teamsData.find(
       item=>item.id===id
     );
@@ -4520,7 +4435,7 @@ function editTeam(id){
   document.getElementById("teamSortInput").value=team.sortierung||1;
   document.getElementById("teamImageFile").value="";
 
-  const preview =
+  const preview=
     document.getElementById(
       "teamImagePreview"
     );
@@ -4536,9 +4451,7 @@ function editTeam(id){
 
     preview.removeAttribute("src");
     preview.classList.remove("visible");
-
   }
-
 }
 
 
@@ -4552,27 +4465,26 @@ function resetTeamForm(){
   document.getElementById("teamSortInput").value="1";
   document.getElementById("teamImageFile").value="";
 
-  const preview =
+  const preview=
     document.getElementById(
       "teamImagePreview"
     );
 
   preview.removeAttribute("src");
   preview.classList.remove("visible");
-
 }
 
 
 async function savePlayer(){
 
-  const id =
+  const id=
     document
       .getElementById(
         "playerEditId"
       )
       .value;
 
-  const existing =
+  const existing=
     id
     ?
     playersData.find(
@@ -4581,14 +4493,14 @@ async function savePlayer(){
     :
     null;
 
-  const teamId =
+  const teamId=
     document
       .getElementById(
         "playerTeamSelect"
       )
       .value;
 
-  const team =
+  const team=
     teamsData.find(
       item=>item.id===teamId
     );
@@ -4602,7 +4514,7 @@ async function savePlayer(){
     return;
   }
 
-  const name =
+  const name=
     document
       .getElementById(
         "playerNameInput"
@@ -4620,13 +4532,13 @@ async function savePlayer(){
 
   try{
 
-    let imageUrl =
+    let imageUrl=
       existing?.foto||"";
 
-    let storagePath =
+    let storagePath=
       existing?.storagePath||"";
 
-    const file =
+    const file=
       document
         .getElementById(
           "playerPhotoFile"
@@ -4635,10 +4547,10 @@ async function savePlayer(){
 
     if(file){
 
-      const oldPath =
+      const oldPath=
         storagePath;
 
-      const upload =
+      const upload=
         await uploadImage(
           file,
           "spieler",
@@ -4659,12 +4571,10 @@ async function savePlayer(){
         await deleteStorageFile(
           oldPath
         );
-
       }
-
     }
 
-    const data = {
+    const data={
 
       name:name,
 
@@ -4706,7 +4616,6 @@ async function savePlayer(){
         ),
 
       aktiv:true
-
     };
 
     if(id){
@@ -4723,7 +4632,6 @@ async function savePlayer(){
       await db
         .collection("spieler")
         .add(data);
-
     }
 
     resetPlayerForm();
@@ -4745,15 +4653,13 @@ async function savePlayer(){
         error.code
       )
     );
-
   }
-
 }
 
 
 function editPlayer(id){
 
-  const player =
+  const player=
     playersData.find(
       item=>item.id===id
     );
@@ -4770,7 +4676,7 @@ function editPlayer(id){
   document.getElementById("playerSortInput").value=player.sortierung||1;
   document.getElementById("playerPhotoFile").value="";
 
-  const preview =
+  const preview=
     document.getElementById(
       "playerPhotoPreview"
     );
@@ -4786,9 +4692,7 @@ function editPlayer(id){
 
     preview.removeAttribute("src");
     preview.classList.remove("visible");
-
   }
-
 }
 
 
@@ -4801,27 +4705,26 @@ function resetPlayerForm(){
   document.getElementById("playerPhotoFile").value="";
   document.getElementById("playerSortInput").value="1";
 
-  const preview =
+  const preview=
     document.getElementById(
       "playerPhotoPreview"
     );
 
   preview.removeAttribute("src");
   preview.classList.remove("visible");
-
 }
 
 
 async function saveReport(){
 
-  const id =
+  const id=
     document
       .getElementById(
         "reportEditId"
       )
       .value;
 
-  const data = {
+  const data={
 
     titel:
       document
@@ -4850,7 +4753,6 @@ async function saveReport(){
         .value.trim(),
 
     aktiv:true
-
   };
 
   if(
@@ -4882,7 +4784,6 @@ async function saveReport(){
       await db
         .collection("matchberichte")
         .add(data);
-
     }
 
     resetReportForm();
@@ -4904,15 +4805,13 @@ async function saveReport(){
         error.code
       )
     );
-
   }
-
 }
 
 
 function editReport(id){
 
-  const report =
+  const report=
     reportsData.find(
       item=>item.id===id
     );
@@ -4926,7 +4825,6 @@ function editReport(id){
   document.getElementById("reportTeam").value=report.team||"";
   document.getElementById("reportDate").value=dateInputValue(report.datum);
   document.getElementById("reportText").value=report.text||"";
-
 }
 
 
@@ -4937,7 +4835,6 @@ function resetReportForm(){
   document.getElementById("reportTeam").value="";
   document.getElementById("reportDate").value="";
   document.getElementById("reportText").value="";
-
 }
 
 
@@ -4973,7 +4870,6 @@ async function deleteItem(
       await deleteStorageFile(
         item.storagePath
       );
-
     }
 
     await db
@@ -4994,22 +4890,20 @@ async function deleteItem(
         error.code
       )
     );
-
   }
-
 }
 
 
 function renderAdminLists(){
 
-  const newsList =
+  const newsList=
     document.getElementById(
       "adminNewsList"
     );
 
   if(newsList){
 
-    newsList.innerHTML =
+    newsList.innerHTML=
       newsData.map(news=>`
 
       <div class="admin-list-item">
@@ -5055,18 +4949,17 @@ function renderAdminLists(){
       </div>
 
       `).join("");
-
   }
 
 
-  const teamList =
+  const teamList=
     document.getElementById(
       "adminTeamsList"
     );
 
   if(teamList){
 
-    teamList.innerHTML =
+    teamList.innerHTML=
       teamsData.map(team=>`
 
       <div class="admin-list-item">
@@ -5112,18 +5005,17 @@ function renderAdminLists(){
       </div>
 
       `).join("");
-
   }
 
 
-  const playerList =
+  const playerList=
     document.getElementById(
       "adminPlayersList"
     );
 
   if(playerList){
 
-    playerList.innerHTML =
+    playerList.innerHTML=
       playersData.map(player=>`
 
       <div class="admin-list-item">
@@ -5181,18 +5073,17 @@ function renderAdminLists(){
       </div>
 
       `).join("");
-
   }
 
 
-  const reportList =
+  const reportList=
     document.getElementById(
       "adminReportsList"
     );
 
   if(reportList){
 
-    reportList.innerHTML =
+    reportList.innerHTML=
       reportsData.map(report=>`
 
       <div class="admin-list-item">
@@ -5222,13 +5113,9 @@ function renderAdminLists(){
       </div>
 
       `).join("");
-
   }
-
 }
 
-
-/* SERVICE WORKER */
 
 if(
   "serviceWorker" in navigator
@@ -5258,12 +5145,9 @@ if(
           "Service Worker Fehler:",
           error
         );
-
       }
-
     }
   );
-
 }
 
 
