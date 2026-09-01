@@ -327,6 +327,100 @@ main{
 }
 
 
+/* =========================
+   ADMIN 2FA / TOTP
+========================= */
+
+.mfa-card{
+  border:2px solid #171717;
+  background:linear-gradient(145deg,#fffdf3,#ffffff);
+}
+
+.mfa-card h3{
+  margin-bottom:7px;
+}
+
+.mfa-info{
+  margin-top:10px;
+  padding:12px;
+  border-radius:12px;
+  background:#f7f7f7;
+  color:#555;
+  font-size:12px;
+  line-height:1.55;
+}
+
+.mfa-success{
+  background:#e8f7ee;
+  color:#176738;
+}
+
+.mfa-warning{
+  background:#fff5d5;
+  color:#735a00;
+}
+
+.mfa-error{
+  background:#ffecec;
+  color:#9e2828;
+}
+
+.mfa-code-input{
+  font-size:24px;
+  font-weight:900;
+  letter-spacing:8px;
+  text-align:center;
+}
+
+.mfa-qr-wrap{
+  display:none;
+  margin-top:15px;
+  padding:16px;
+  border:1px solid #e4e4e4;
+  border-radius:16px;
+  background:white;
+  text-align:center;
+}
+
+.mfa-qr-wrap.visible{
+  display:block;
+}
+
+#mfaQrCode{
+  display:flex;
+  justify-content:center;
+  margin:12px auto 16px;
+}
+
+#mfaQrCode img,
+#mfaQrCode canvas{
+  max-width:220px !important;
+  width:100% !important;
+  height:auto !important;
+}
+
+.mfa-secret{
+  margin-top:8px;
+  padding:12px;
+  border-radius:11px;
+  background:#f2f2f2;
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,monospace;
+  font-size:12px;
+  font-weight:800;
+  line-height:1.5;
+  word-break:break-all;
+  user-select:all;
+  -webkit-user-select:all;
+}
+
+.admin-protected{
+  display:none;
+}
+
+.admin-protected.visible{
+  display:block;
+}
+
 /* PUSH */
 
 .notification-box{
@@ -1152,6 +1246,69 @@ Anmelden
 </div>
 
 
+<!-- 2FA LOGIN CHALLENGE -->
+
+<div
+  id="adminMfaChallenge"
+  class="card mfa-card"
+  style="display:none;"
+>
+
+<span class="admin-label">
+2-FAKTOR-AUTHENTIFIZIERUNG
+</span>
+
+<h3>
+🔐 Authenticator-Code
+</h3>
+
+<p>
+Öffne deine Authenticator-App und gib den aktuellen 6-stelligen Code ein.
+</p>
+
+<div class="form-group" style="margin-top:14px;">
+
+<label>
+6-stelliger Code
+</label>
+
+<input
+  id="adminMfaCode"
+  type="text"
+  inputmode="numeric"
+  autocomplete="one-time-code"
+  maxlength="6"
+  class="form-input mfa-code-input"
+  placeholder="000000"
+  oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)"
+>
+
+</div>
+
+<button
+  id="adminMfaVerifyButton"
+  class="button button-yellow"
+  onclick="verifyAdminMfaCode()"
+>
+Code bestätigen
+</button>
+
+<button
+  class="button button-outline"
+  onclick="cancelAdminMfaLogin()"
+>
+Abbrechen
+</button>
+
+<div
+  id="adminMfaLoginStatus"
+  class="mfa-info"
+  style="display:none;"
+></div>
+
+</div>
+
+
 <div id="adminPanel" style="display:none;">
 
 
@@ -1169,6 +1326,131 @@ Abmelden
 
 </div>
 
+
+<!-- ADMIN 2FA STATUS / EINRICHTUNG -->
+
+<div
+  id="mfaSetupCard"
+  class="card mfa-card"
+>
+
+<span class="admin-label">
+ADMIN SICHERHEIT
+</span>
+
+<h3 id="mfaSetupTitle">
+🔐 2-Faktor-Authentifizierung
+</h3>
+
+<p id="mfaSetupDescription">
+Sicherheitsstatus wird geprüft...
+</p>
+
+<div
+  id="mfaSetupStatus"
+  class="mfa-info"
+>
+⏳ Bitte warten...
+</div>
+
+<div
+  id="mfaEmailVerificationActions"
+  style="display:none;"
+>
+
+<button
+  class="button button-yellow"
+  onclick="sendAdminVerificationEmail()"
+>
+📧 Bestätigungs-E-Mail senden
+</button>
+
+<button
+  class="button button-outline"
+  onclick="checkAdminEmailVerification()"
+>
+✅ E-Mail-Status prüfen
+</button>
+
+</div>
+
+<div
+  id="mfaEnrollmentActions"
+  style="display:none;"
+>
+
+<button
+  class="button button-yellow"
+  onclick="startTotpEnrollment()"
+>
+🔐 Authenticator einrichten
+</button>
+
+</div>
+
+<div
+  id="mfaQrWrap"
+  class="mfa-qr-wrap"
+>
+
+<strong>
+1. QR-Code mit deiner Authenticator-App scannen
+</strong>
+
+<div id="mfaQrCode"></div>
+
+<div>
+Oder Schlüssel manuell eingeben:
+</div>
+
+<div
+  id="mfaSecretKey"
+  class="mfa-secret"
+></div>
+
+<div class="form-group" style="margin-top:16px;">
+
+<label>
+2. Aktuellen 6-stelligen Code eingeben
+</label>
+
+<input
+  id="mfaEnrollmentCode"
+  type="text"
+  inputmode="numeric"
+  autocomplete="one-time-code"
+  maxlength="6"
+  class="form-input mfa-code-input"
+  placeholder="000000"
+  oninput="this.value=this.value.replace(/[^0-9]/g,'').slice(0,6)"
+>
+
+</div>
+
+<button
+  id="mfaEnrollButton"
+  class="button button-green"
+  onclick="finishTotpEnrollment()"
+>
+✅ 2FA aktivieren
+</button>
+
+<button
+  class="button button-outline"
+  onclick="cancelTotpEnrollment()"
+>
+Abbrechen
+</button>
+
+</div>
+
+</div>
+
+
+<div
+  id="adminProtectedContent"
+  class="admin-protected"
+>
 
 <!-- PUSH -->
 
@@ -1826,7 +2108,10 @@ Abbrechen
 </div>
 
 
-</div>
+</div><!-- /adminProtectedContent -->
+
+
+</div><!-- /adminPanel -->
 
 </section>
 
@@ -1909,6 +2194,9 @@ Kontakt
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-functions-compat.js"></script>
 
+<!-- QR-Code wird vollständig lokal im Browser erzeugt. -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
 
 <script>
 
@@ -1971,6 +2259,16 @@ let playersData = [];
 let staffData = [];
 let boardData = [];
 let reportsData = [];
+
+/*
+  TOTP-MFA nutzt die modulare Firebase Auth API.
+  Die übrigen Firebase-Bereiche bleiben unverändert auf Compat.
+*/
+
+let mfaApi = null;
+let mfaAuth = null;
+let pendingMfaResolver = null;
+let pendingTotpSecret = null;
 
 
 /* HILFSFUNKTIONEN */
@@ -3345,75 +3643,479 @@ function modalBackgroundClick(event){
 }
 
 
-/* AUTH */
+/* AUTH + TOTP 2FA */
 
-auth.onAuthStateChanged(
-  async user => {
+async function initModularMfa(){
 
-    const login =
-      document.getElementById(
-        "adminLogin"
+  if(mfaApi && mfaAuth){
+    return;
+  }
+
+  try{
+
+    const appModule =
+      await import(
+        "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js"
       );
 
-    const panel =
-      document.getElementById(
-        "adminPanel"
+    const authModule =
+      await import(
+        "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js"
       );
 
-    if(
-      user
-      &&
-      user.uid ===
-      ADMIN_UID
-    ){
+    const modularApp =
+      appModule.getApp();
 
-      login.style.display =
-        "none";
+    mfaAuth =
+      authModule.getAuth(
+        modularApp
+      );
 
-      panel.style.display =
-        "block";
-
-      document
-        .getElementById(
-          "adminUserText"
-        )
-        .textContent =
-          user.email;
-
-      renderAdminLists();
-
-    }
-
-    else{
-
-      if(user){
-
-        await auth.signOut();
-
-      }
-
-      login.style.display =
-        "block";
-
-      panel.style.display =
-        "none";
-
-    }
+    mfaApi =
+      authModule;
 
   }
-);
+
+  catch(error){
+
+    console.error(
+      "Modulare MFA-API konnte nicht geladen werden:",
+      error
+    );
+
+    throw new Error(
+      "Die 2FA-Komponenten konnten nicht geladen werden."
+    );
+
+  }
+
+}
+
+
+function setMfaLoginStatus(
+  text,
+  type=""
+){
+
+  const box =
+    document.getElementById(
+      "adminMfaLoginStatus"
+    );
+
+  if(!box){
+    return;
+  }
+
+  box.style.display =
+    text ? "block" : "none";
+
+  box.className =
+    "mfa-info"
+    +
+    (
+      type
+      ? " mfa-" + type
+      : ""
+    );
+
+  box.textContent =
+    text || "";
+
+}
+
+
+function setMfaSetupStatus(
+  text,
+  type=""
+){
+
+  const box =
+    document.getElementById(
+      "mfaSetupStatus"
+    );
+
+  if(!box){
+    return;
+  }
+
+  box.className =
+    "mfa-info"
+    +
+    (
+      type
+      ? " mfa-" + type
+      : ""
+    );
+
+  box.textContent =
+    text || "";
+
+}
+
+
+function showAdminLogin(){
+
+  document
+    .getElementById(
+      "adminLogin"
+    )
+    .style.display =
+      "block";
+
+  document
+    .getElementById(
+      "adminMfaChallenge"
+    )
+    .style.display =
+      "none";
+
+  document
+    .getElementById(
+      "adminPanel"
+    )
+    .style.display =
+      "none";
+
+}
+
+
+function showAdminMfaChallenge(){
+
+  document
+    .getElementById(
+      "adminLogin"
+    )
+    .style.display =
+      "none";
+
+  document
+    .getElementById(
+      "adminPanel"
+    )
+    .style.display =
+      "none";
+
+  document
+    .getElementById(
+      "adminMfaChallenge"
+    )
+    .style.display =
+      "block";
+
+  const input =
+    document.getElementById(
+      "adminMfaCode"
+    );
+
+  input.value = "";
+
+  setTimeout(
+    () => input.focus(),
+    100
+  );
+
+}
+
+
+function showAdminPanel(){
+
+  document
+    .getElementById(
+      "adminLogin"
+    )
+    .style.display =
+      "none";
+
+  document
+    .getElementById(
+      "adminMfaChallenge"
+    )
+    .style.display =
+      "none";
+
+  document
+    .getElementById(
+      "adminPanel"
+    )
+    .style.display =
+      "block";
+
+}
+
+
+async function refreshAdminSecurityState(){
+
+  await initModularMfa();
+
+  const user =
+    mfaAuth.currentUser;
+
+  if(
+    !user
+    ||
+    user.uid !== ADMIN_UID
+  ){
+
+    document
+      .getElementById(
+        "adminProtectedContent"
+      )
+      .classList.remove(
+        "visible"
+      );
+
+    return;
+
+  }
+
+  showAdminPanel();
+
+  document
+    .getElementById(
+      "adminUserText"
+    )
+    .textContent =
+      user.email || "Admin";
+
+  const protectedContent =
+    document.getElementById(
+      "adminProtectedContent"
+    );
+
+  const emailActions =
+    document.getElementById(
+      "mfaEmailVerificationActions"
+    );
+
+  const enrollmentActions =
+    document.getElementById(
+      "mfaEnrollmentActions"
+    );
+
+  const qrWrap =
+    document.getElementById(
+      "mfaQrWrap"
+    );
+
+  qrWrap.classList.remove(
+    "visible"
+  );
+
+  pendingTotpSecret =
+    null;
+
+  const factors =
+    mfaApi
+      .multiFactor(user)
+      .enrolledFactors;
+
+  const totpFactor =
+    factors.find(
+      factor =>
+        factor.factorId ===
+        mfaApi
+          .TotpMultiFactorGenerator
+          .FACTOR_ID
+    );
+
+  if(totpFactor){
+
+    document
+      .getElementById(
+        "mfaSetupTitle"
+      )
+      .textContent =
+        "✅ 2FA ist aktiviert";
+
+    document
+      .getElementById(
+        "mfaSetupDescription"
+      )
+      .textContent =
+        "Der Adminbereich ist mit Passwort und Authenticator-Code geschützt.";
+
+    setMfaSetupStatus(
+      "Authenticator ist eingerichtet. Bei einer neuen Anmeldung wird nach dem 6-stelligen Code gefragt.",
+      "success"
+    );
+
+    emailActions.style.display =
+      "none";
+
+    enrollmentActions.style.display =
+      "none";
+
+    protectedContent.classList.add(
+      "visible"
+    );
+
+    renderAdminLists();
+
+    return;
+
+  }
+
+  protectedContent.classList.remove(
+    "visible"
+  );
+
+  document
+    .getElementById(
+      "mfaSetupTitle"
+    )
+    .textContent =
+      "🔐 2FA muss eingerichtet werden";
+
+  document
+    .getElementById(
+      "mfaSetupDescription"
+    )
+    .textContent =
+      "Bevor du die Verwaltungsfunktionen verwenden kannst, richtest du einmalig einen Authenticator als zweiten Faktor ein.";
+
+  if(!user.emailVerified){
+
+    setMfaSetupStatus(
+      "⚠️ Zuerst muss die Admin-E-Mail-Adresse bestätigt werden. Danach kannst du den Authenticator einrichten.",
+      "warning"
+    );
+
+    emailActions.style.display =
+      "block";
+
+    enrollmentActions.style.display =
+      "none";
+
+    return;
+
+  }
+
+  setMfaSetupStatus(
+    "✅ E-Mail bestätigt. Du kannst jetzt den Authenticator einrichten.",
+    "success"
+  );
+
+  emailActions.style.display =
+    "none";
+
+  enrollmentActions.style.display =
+    "block";
+
+}
+
+
+async function initializeAdminAuth(){
+
+  try{
+
+    await initModularMfa();
+
+    mfaApi.onAuthStateChanged(
+      mfaAuth,
+      async user => {
+
+        if(
+          user
+          &&
+          user.uid !== ADMIN_UID
+        ){
+
+          await mfaApi.signOut(
+            mfaAuth
+          );
+
+          showAdminLogin();
+
+          document
+            .getElementById(
+              "loginStatus"
+            )
+            .textContent =
+              "❌ Kein Admin-Zugang.";
+
+          return;
+
+        }
+
+        if(!user){
+
+          showAdminLogin();
+          return;
+
+        }
+
+        try{
+
+          await refreshAdminSecurityState();
+
+        }
+
+        catch(error){
+
+          console.error(
+            "2FA-Status konnte nicht geprüft werden:",
+            error
+          );
+
+          showAdminPanel();
+
+          document
+            .getElementById(
+              "adminProtectedContent"
+            )
+            .classList.remove(
+              "visible"
+            );
+
+          setMfaSetupStatus(
+            "❌ Der 2FA-Status konnte nicht geprüft werden. Bitte App neu öffnen.",
+            "error"
+          );
+
+        }
+
+      }
+    );
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    document
+      .getElementById(
+        "loginStatus"
+      )
+      .textContent =
+        "❌ 2FA-System konnte nicht geladen werden.";
+
+  }
+
+}
 
 
 async function loginAdmin(){
 
+  const status =
+    document.getElementById(
+      "loginStatus"
+    );
+
+  status.textContent =
+    "⏳ Anmeldung läuft...";
+
   try{
+
+    await initModularMfa();
 
     const email =
       document
         .getElementById(
           "adminEmail"
         )
-        .value.trim();
+        .value
+        .trim();
 
     const password =
       document
@@ -3422,9 +4124,22 @@ async function loginAdmin(){
         )
         .value;
 
+    if(!email || !password){
+
+      status.textContent =
+        "❌ E-Mail und Passwort eingeben.";
+
+      return;
+
+    }
+
+    pendingMfaResolver =
+      null;
+
     const credential =
-      await auth
+      await mfaApi
         .signInWithEmailAndPassword(
+          mfaAuth,
           email,
           password
         );
@@ -3434,7 +4149,186 @@ async function loginAdmin(){
       ADMIN_UID
     ){
 
-      await auth.signOut();
+      await mfaApi.signOut(
+        mfaAuth
+      );
+
+      status.textContent =
+        "❌ Kein Admin-Zugang.";
+
+      return;
+
+    }
+
+    status.textContent =
+      "";
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Admin Login:",
+      error
+    );
+
+    if(
+      error.code ===
+      "auth/multi-factor-auth-required"
+    ){
+
+      try{
+
+        pendingMfaResolver =
+          mfaApi.getMultiFactorResolver(
+            mfaAuth,
+            error
+          );
+
+        const totpHint =
+          pendingMfaResolver
+            .hints
+            .find(
+              hint =>
+                hint.factorId ===
+                mfaApi
+                  .TotpMultiFactorGenerator
+                  .FACTOR_ID
+            );
+
+        if(!totpHint){
+
+          pendingMfaResolver =
+            null;
+
+          status.textContent =
+            "❌ Kein unterstützter Authenticator-Faktor gefunden.";
+
+          return;
+
+        }
+
+        status.textContent =
+          "";
+
+        setMfaLoginStatus(
+          "🔐 Passwort korrekt. Jetzt den Code aus der Authenticator-App eingeben.",
+          "warning"
+        );
+
+        showAdminMfaChallenge();
+
+        return;
+
+      }
+
+      catch(resolverError){
+
+        console.error(
+          resolverError
+        );
+
+      }
+
+    }
+
+    status.textContent =
+      "❌ Anmeldung fehlgeschlagen. E-Mail oder Passwort prüfen.";
+
+  }
+
+}
+
+
+async function verifyAdminMfaCode(){
+
+  if(!pendingMfaResolver){
+
+    alert(
+      "Bitte zuerst erneut mit E-Mail und Passwort anmelden."
+    );
+
+    showAdminLogin();
+    return;
+
+  }
+
+  const code =
+    document
+      .getElementById(
+        "adminMfaCode"
+      )
+      .value
+      .trim();
+
+  if(!/^\d{6}$/.test(code)){
+
+    setMfaLoginStatus(
+      "❌ Bitte einen 6-stelligen Code eingeben.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  const button =
+    document.getElementById(
+      "adminMfaVerifyButton"
+    );
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "⏳ Wird geprüft...";
+
+  try{
+
+    const totpHint =
+      pendingMfaResolver
+        .hints
+        .find(
+          hint =>
+            hint.factorId ===
+            mfaApi
+              .TotpMultiFactorGenerator
+              .FACTOR_ID
+        );
+
+    if(!totpHint){
+
+      throw new Error(
+        "Kein Authenticator-Faktor gefunden."
+      );
+
+    }
+
+    const assertion =
+      mfaApi
+        .TotpMultiFactorGenerator
+        .assertionForSignIn(
+          totpHint.uid,
+          code
+        );
+
+    const result =
+      await pendingMfaResolver
+        .resolveSignIn(
+          assertion
+        );
+
+    pendingMfaResolver =
+      null;
+
+    if(
+      result.user.uid !==
+      ADMIN_UID
+    ){
+
+      await mfaApi.signOut(
+        mfaAuth
+      );
 
       throw new Error(
         "Kein Admin-Zugang."
@@ -3442,25 +4336,517 @@ async function loginAdmin(){
 
     }
 
+    setMfaLoginStatus(
+      "",
+      ""
+    );
+
+    document
+      .getElementById(
+        "adminMfaCode"
+      )
+      .value =
+        "";
+
+    await refreshAdminSecurityState();
+
   }
 
   catch(error){
 
-    document
-      .getElementById(
-        "loginStatus"
-      )
-      .textContent =
-        "❌ Anmeldung fehlgeschlagen.";
+    console.error(
+      "2FA Login:",
+      error
+    );
+
+    setMfaLoginStatus(
+      "❌ Code ungültig oder abgelaufen. Bitte den aktuellen Code erneut eingeben.",
+      "error"
+    );
+
+  }
+
+  finally{
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "Code bestätigen";
 
   }
 
 }
 
 
+function cancelAdminMfaLogin(){
+
+  pendingMfaResolver =
+    null;
+
+  document
+    .getElementById(
+      "adminMfaCode"
+    )
+    .value =
+      "";
+
+  setMfaLoginStatus(
+    "",
+    ""
+  );
+
+  showAdminLogin();
+
+}
+
+
+async function sendAdminVerificationEmail(){
+
+  try{
+
+    await initModularMfa();
+
+    const user =
+      mfaAuth.currentUser;
+
+    if(!user){
+
+      throw new Error(
+        "Nicht angemeldet."
+      );
+
+    }
+
+    await mfaApi.sendEmailVerification(
+      user
+    );
+
+    setMfaSetupStatus(
+      "📧 Bestätigungs-E-Mail wurde gesendet. Öffne die E-Mail, bestätige die Adresse und tippe danach auf ‘E-Mail-Status prüfen’.",
+      "success"
+    );
+
+  }
+
+  catch(error){
+
+    console.error(
+      "E-Mail-Verifizierung:",
+      error
+    );
+
+    setMfaSetupStatus(
+      "❌ Bestätigungs-E-Mail konnte nicht gesendet werden.",
+      "error"
+    );
+
+  }
+
+}
+
+
+async function checkAdminEmailVerification(){
+
+  try{
+
+    await initModularMfa();
+
+    const user =
+      mfaAuth.currentUser;
+
+    if(!user){
+      throw new Error("Nicht angemeldet.");
+    }
+
+    setMfaSetupStatus(
+      "⏳ E-Mail-Status wird geprüft...",
+      ""
+    );
+
+    await mfaApi.reload(
+      user
+    );
+
+    if(!user.emailVerified){
+
+      setMfaSetupStatus(
+        "⚠️ Die E-Mail ist noch nicht bestätigt. Öffne zuerst den Link in der Bestätigungs-E-Mail.",
+        "warning"
+      );
+
+      return;
+
+    }
+
+    await refreshAdminSecurityState();
+
+  }
+
+  catch(error){
+
+    console.error(error);
+
+    setMfaSetupStatus(
+      "❌ E-Mail-Status konnte nicht geprüft werden.",
+      "error"
+    );
+
+  }
+
+}
+
+
+async function startTotpEnrollment(){
+
+  try{
+
+    await initModularMfa();
+
+    const user =
+      mfaAuth.currentUser;
+
+    if(
+      !user
+      ||
+      user.uid !== ADMIN_UID
+    ){
+
+      throw new Error(
+        "Nicht als Admin angemeldet."
+      );
+
+    }
+
+    await mfaApi.reload(
+      user
+    );
+
+    if(!user.emailVerified){
+
+      setMfaSetupStatus(
+        "⚠️ Die E-Mail muss zuerst bestätigt werden.",
+        "warning"
+      );
+
+      return;
+
+    }
+
+    const factors =
+      mfaApi
+        .multiFactor(user)
+        .enrolledFactors;
+
+    const existingTotp =
+      factors.find(
+        factor =>
+          factor.factorId ===
+          mfaApi
+            .TotpMultiFactorGenerator
+            .FACTOR_ID
+      );
+
+    if(existingTotp){
+
+      await refreshAdminSecurityState();
+      return;
+
+    }
+
+    setMfaSetupStatus(
+      "⏳ Authenticator-Schlüssel wird erstellt...",
+      ""
+    );
+
+    const session =
+      await mfaApi
+        .multiFactor(user)
+        .getSession();
+
+    pendingTotpSecret =
+      await mfaApi
+        .TotpMultiFactorGenerator
+        .generateSecret(
+          session
+        );
+
+    const qrUri =
+      pendingTotpSecret
+        .generateQrCodeUrl(
+          user.email || "FCW-Admin",
+          "FC Wängi 1967 Admin"
+        );
+
+    const qrContainer =
+      document.getElementById(
+        "mfaQrCode"
+      );
+
+    qrContainer.innerHTML =
+      "";
+
+    if(
+      typeof QRCode ===
+      "undefined"
+    ){
+
+      throw new Error(
+        "QR-Code-Bibliothek konnte nicht geladen werden."
+      );
+
+    }
+
+    new QRCode(
+      qrContainer,
+      {
+        text:qrUri,
+        width:220,
+        height:220,
+        correctLevel:
+          QRCode.CorrectLevel.M
+      }
+    );
+
+    document
+      .getElementById(
+        "mfaSecretKey"
+      )
+      .textContent =
+        pendingTotpSecret.secretKey;
+
+    document
+      .getElementById(
+        "mfaEnrollmentCode"
+      )
+      .value =
+        "";
+
+    document
+      .getElementById(
+        "mfaQrWrap"
+      )
+      .classList.add(
+        "visible"
+      );
+
+    setMfaSetupStatus(
+      "Scanne den QR-Code. Gib danach den aktuellen 6-stelligen Code ein und aktiviere 2FA.",
+      "warning"
+    );
+
+  }
+
+  catch(error){
+
+    console.error(
+      "TOTP Einrichtung:",
+      error
+    );
+
+    setMfaSetupStatus(
+      "❌ 2FA-Einrichtung konnte nicht gestartet werden: "
+      +
+      (
+        error.message ||
+        error.code ||
+        "Unbekannter Fehler"
+      ),
+      "error"
+    );
+
+  }
+
+}
+
+
+async function finishTotpEnrollment(){
+
+  if(!pendingTotpSecret){
+
+    setMfaSetupStatus(
+      "❌ Bitte zuerst auf ‘Authenticator einrichten’ tippen.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  const code =
+    document
+      .getElementById(
+        "mfaEnrollmentCode"
+      )
+      .value
+      .trim();
+
+  if(!/^\d{6}$/.test(code)){
+
+    setMfaSetupStatus(
+      "❌ Bitte den 6-stelligen Code aus der Authenticator-App eingeben.",
+      "error"
+    );
+
+    return;
+
+  }
+
+  const button =
+    document.getElementById(
+      "mfaEnrollButton"
+    );
+
+  button.disabled =
+    true;
+
+  button.textContent =
+    "⏳ 2FA wird aktiviert...";
+
+  try{
+
+    const user =
+      mfaAuth.currentUser;
+
+    if(!user){
+      throw new Error("Nicht angemeldet.");
+    }
+
+    const assertion =
+      mfaApi
+        .TotpMultiFactorGenerator
+        .assertionForEnrollment(
+          pendingTotpSecret,
+          code
+        );
+
+    await mfaApi
+      .multiFactor(user)
+      .enroll(
+        assertion,
+        "FCW Authenticator"
+      );
+
+    pendingTotpSecret =
+      null;
+
+    setMfaSetupStatus(
+      "✅ 2FA wurde aktiviert. Du wirst jetzt abgemeldet. Melde dich danach einmal mit Passwort und Authenticator-Code an.",
+      "success"
+    );
+
+    alert(
+      "✅ 2-Faktor-Authentifizierung aktiviert.\n\nDu wirst jetzt abgemeldet. Beim nächsten Login brauchst du zusätzlich den 6-stelligen Authenticator-Code."
+    );
+
+    await mfaApi.signOut(
+      mfaAuth
+    );
+
+    showAdminLogin();
+
+  }
+
+  catch(error){
+
+    console.error(
+      "TOTP Enrollment:",
+      error
+    );
+
+    setMfaSetupStatus(
+      "❌ Code ungültig oder abgelaufen. Bitte den aktuellen 6-stelligen Code erneut eingeben.",
+      "error"
+    );
+
+  }
+
+  finally{
+
+    button.disabled =
+      false;
+
+    button.textContent =
+      "✅ 2FA aktivieren";
+
+  }
+
+}
+
+
+function cancelTotpEnrollment(){
+
+  pendingTotpSecret =
+    null;
+
+  document
+    .getElementById(
+      "mfaQrCode"
+    )
+    .innerHTML =
+      "";
+
+  document
+    .getElementById(
+      "mfaSecretKey"
+    )
+    .textContent =
+      "";
+
+  document
+    .getElementById(
+      "mfaEnrollmentCode"
+    )
+    .value =
+      "";
+
+  document
+    .getElementById(
+      "mfaQrWrap"
+    )
+    .classList.remove(
+      "visible"
+    );
+
+  setMfaSetupStatus(
+    "✅ E-Mail bestätigt. Du kannst den Authenticator jederzeit einrichten.",
+    "success"
+  );
+
+}
+
+
 async function logoutAdmin(){
 
-  await auth.signOut();
+  try{
+
+    await initModularMfa();
+
+    await mfaApi.signOut(
+      mfaAuth
+    );
+
+  }
+
+  catch(error){
+
+    console.error(
+      "Abmeldung:",
+      error
+    );
+
+    try{
+      await auth.signOut();
+    }
+    catch(_error){}
+
+  }
+
+  pendingMfaResolver =
+    null;
+
+  pendingTotpSecret =
+    null;
 
   openPage(
     "kontakt"
@@ -5221,10 +6607,42 @@ if(
 
 window.addEventListener(
   "DOMContentLoaded",
-  () => {
+  async () => {
 
     updateNotificationStatus();
     updatePushCounters();
+
+    await initializeAdminAuth();
+
+    document
+      .getElementById(
+        "adminPassword"
+      )
+      ?.addEventListener(
+        "keydown",
+        event => {
+
+          if(event.key === "Enter"){
+            loginAdmin();
+          }
+
+        }
+      );
+
+    document
+      .getElementById(
+        "adminMfaCode"
+      )
+      ?.addEventListener(
+        "keydown",
+        event => {
+
+          if(event.key === "Enter"){
+            verifyAdminMfaCode();
+          }
+
+        }
+      );
 
   }
 );
