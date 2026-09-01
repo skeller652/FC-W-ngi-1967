@@ -797,6 +797,81 @@ textarea.form-input{
 }
 
 
+/* KOMMENTARE */
+
+.comments-section{
+  display:none;
+  margin-top:22px;
+  padding-top:18px;
+  border-top:1px solid #e7e7e7;
+}
+
+.comments-section.visible{
+  display:block;
+}
+
+.comments-title{
+  margin-bottom:12px;
+  font-size:17px;
+  font-weight:900;
+}
+
+.comment-form{
+  padding:14px;
+  border-radius:14px;
+  background:#f7f7f7;
+}
+
+.comment-form textarea{
+  min-height:90px;
+}
+
+.comment-status{
+  margin-top:8px;
+  font-size:11px;
+  font-weight:700;
+}
+
+.comments-list{
+  margin-top:16px;
+}
+
+.comment-item{
+  padding:12px 0;
+  border-bottom:1px solid #eee;
+}
+
+.comment-item:last-child{
+  border-bottom:none;
+}
+
+.comment-head{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:10px;
+}
+
+.comment-name{
+  font-size:13px;
+  font-weight:900;
+}
+
+.comment-date{
+  margin-top:2px;
+  color:#999;
+  font-size:10px;
+}
+
+.comment-text{
+  margin-top:7px;
+  color:#444;
+  font-size:13px;
+  line-height:1.5;
+  white-space:pre-wrap;
+}
+
+
 /* ADMIN */
 
 .admin-card{
@@ -2262,6 +2337,53 @@ Kontakt
 
 <div id="modalText" class="modal-text"></div>
 
+
+<div id="commentsSection" class="comments-section">
+
+<div class="comments-title">
+💬 Kommentare
+</div>
+
+<div class="comment-form">
+
+<div class="form-group">
+<label>Name</label>
+<input
+  id="commentName"
+  class="form-input"
+  maxlength="40"
+  placeholder="Dein Name"
+>
+</div>
+
+<div class="form-group">
+<label>Kommentar</label>
+<textarea
+  id="commentText"
+  class="form-input"
+  maxlength="500"
+  placeholder="Kommentar schreiben..."
+></textarea>
+</div>
+
+<button
+  id="commentSendButton"
+  class="button button-yellow"
+  onclick="submitComment()"
+>
+Kommentar senden
+</button>
+
+<div id="commentStatus" class="comment-status"></div>
+
+</div>
+
+<div id="commentsList" class="comments-list">
+<div class="loading">Kommentare werden geladen...</div>
+</div>
+
+</div>
+
 </div>
 
 </div>
@@ -2339,6 +2461,9 @@ let playersData = [];
 let staffData = [];
 let boardData = [];
 let reportsData = [];
+
+let currentCommentNewsId = null;
+let currentCommentsUnsubscribe = null;
 
 /*
   TOTP-MFA nutzt die modulare Firebase Auth API.
@@ -3166,6 +3291,8 @@ function openNews(id){
     text:news.text || ""
   });
 
+  openCommentsForNews(id);
+
 }
 
 
@@ -3682,12 +3809,18 @@ function openReport(id){
 
   });
 
+  openCommentsForNews(
+    "matchbericht:" + id
+  );
+
 }
 
 
 /* MODAL */
 
 function openModal(data){
+
+  hideComments();
 
   const image =
     document.getElementById(
@@ -3739,6 +3872,8 @@ function openModal(data){
 
 function closeModal(){
 
+  hideComments();
+
   document
     .getElementById(
       "contentModal"
@@ -3760,6 +3895,278 @@ function modalBackgroundClick(event){
 
     closeModal();
 
+  }
+
+}
+
+
+/* KOMMENTARE */
+
+function hideComments(){
+
+  currentCommentNewsId = null;
+
+  if(currentCommentsUnsubscribe){
+    currentCommentsUnsubscribe();
+    currentCommentsUnsubscribe = null;
+  }
+
+  const section =
+    document.getElementById("commentsSection");
+
+  if(section){
+    section.classList.remove("visible");
+  }
+
+}
+
+
+function openCommentsForNews(newsId){
+
+  currentCommentNewsId = newsId;
+
+  const section =
+    document.getElementById("commentsSection");
+
+  const nameInput =
+    document.getElementById("commentName");
+
+  const textInput =
+    document.getElementById("commentText");
+
+  const status =
+    document.getElementById("commentStatus");
+
+  if(section){
+    section.classList.add("visible");
+  }
+
+  if(nameInput){
+    nameInput.value =
+      localStorage.getItem("fcwCommentName") || "";
+  }
+
+  if(textInput){
+    textInput.value = "";
+  }
+
+  if(status){
+    status.textContent = "";
+  }
+
+  if(currentCommentsUnsubscribe){
+    currentCommentsUnsubscribe();
+  }
+
+  currentCommentsUnsubscribe =
+    db
+      .collection("kommentare")
+      .where("newsId","==",newsId)
+      .onSnapshot(
+        snapshot => {
+
+          const comments = [];
+
+          snapshot.forEach(doc => {
+
+            const data = doc.data();
+
+            if(data.aktiv === false){
+              return;
+            }
+
+            comments.push({
+              id:doc.id,
+              ...data
+            });
+
+          });
+
+          comments.sort(
+            (a,b) =>
+              (toDate(a.datum)?.getTime() || 0)
+              -
+              (toDate(b.datum)?.getTime() || 0)
+          );
+
+          renderComments(comments);
+
+        },
+        error => {
+
+          console.error("Kommentare Fehler:",error);
+
+          const list =
+            document.getElementById("commentsList");
+
+          if(list){
+            list.innerHTML =
+              `<div class="empty">Kommentare konnten nicht geladen werden.</div>`;
+          }
+
+        }
+      );
+
+}
+
+
+function renderComments(comments){
+
+  const list =
+    document.getElementById("commentsList");
+
+  if(!list){
+    return;
+  }
+
+  if(!comments.length){
+
+    list.innerHTML =
+      `<div class="empty">Noch keine Kommentare. Sei der Erste.</div>`;
+
+    return;
+  }
+
+  const adminActive =
+    auth.currentUser
+    &&
+    auth.currentUser.uid === ADMIN_UID;
+
+  list.innerHTML =
+    comments
+      .map(comment => `
+
+        <div class="comment-item">
+
+        <div class="comment-head">
+
+        <div>
+          <div class="comment-name">${esc(comment.name || "Gast")}</div>
+          <div class="comment-date">${formatDate(comment.datum)}</div>
+        </div>
+
+        ${
+          adminActive
+          ?
+          `<button
+            class="button button-red button-small"
+            style="margin-top:0;"
+            onclick="deleteComment('${comment.id}')"
+          >Löschen</button>`
+          :
+          ""
+        }
+
+        </div>
+
+        <div class="comment-text">${esc(comment.text || "")}</div>
+
+        </div>
+
+      `)
+      .join("");
+
+}
+
+
+async function submitComment(){
+
+  if(!currentCommentNewsId){
+    return;
+  }
+
+  const nameInput =
+    document.getElementById("commentName");
+
+  const textInput =
+    document.getElementById("commentText");
+
+  const status =
+    document.getElementById("commentStatus");
+
+  const button =
+    document.getElementById("commentSendButton");
+
+  const name =
+    nameInput.value.trim();
+
+  const text =
+    textInput.value.trim();
+
+  if(!name){
+    status.textContent = "❌ Bitte deinen Namen eingeben.";
+    return;
+  }
+
+  if(!text){
+    status.textContent = "❌ Bitte einen Kommentar eingeben.";
+    return;
+  }
+
+  button.disabled = true;
+  status.textContent = "⏳ Kommentar wird gesendet...";
+
+  try{
+
+    await db
+      .collection("kommentare")
+      .add({
+        newsId:currentCommentNewsId,
+        name:name.substring(0,40),
+        text:text.substring(0,500),
+        datum:firebase.firestore.FieldValue.serverTimestamp(),
+        aktiv:true
+      });
+
+    localStorage.setItem(
+      "fcwCommentName",
+      name.substring(0,40)
+    );
+
+    textInput.value = "";
+    status.textContent = "✅ Kommentar veröffentlicht.";
+
+  }
+  catch(error){
+
+    console.error("Kommentar senden:",error);
+
+    status.textContent =
+      "❌ Kommentar konnte nicht veröffentlicht werden.";
+
+  }
+  finally{
+    button.disabled = false;
+  }
+
+}
+
+
+async function deleteComment(id){
+
+  if(
+    !auth.currentUser
+    ||
+    auth.currentUser.uid !== ADMIN_UID
+  ){
+    return;
+  }
+
+  if(!confirm("Kommentar wirklich löschen?")){
+    return;
+  }
+
+  try{
+
+    await db
+      .collection("kommentare")
+      .doc(id)
+      .delete();
+
+  }
+  catch(error){
+    console.error(error);
+    alert("Kommentar konnte nicht gelöscht werden.");
   }
 
 }
