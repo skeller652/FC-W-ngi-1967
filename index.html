@@ -4061,10 +4061,15 @@ function renderComments(comments){
     return;
   }
 
+  const currentAdmin =
+    (mfaAuth && mfaAuth.currentUser)
+    ||
+    auth.currentUser;
+
   const adminActive =
-    auth.currentUser
+    currentAdmin
     &&
-    auth.currentUser.uid === ADMIN_UID;
+    currentAdmin.uid === ADMIN_UID;
 
   list.innerHTML =
     comments
@@ -4178,11 +4183,17 @@ async function submitComment(){
 
 async function deleteComment(id){
 
-  if(
-    !auth.currentUser
+  const currentAdmin =
+    (mfaAuth && mfaAuth.currentUser)
     ||
-    auth.currentUser.uid !== ADMIN_UID
+    auth.currentUser;
+
+  if(
+    !currentAdmin
+    ||
+    currentAdmin.uid !== ADMIN_UID
   ){
+    alert("Bitte zuerst als Admin anmelden.");
     return;
   }
 
@@ -4192,15 +4203,30 @@ async function deleteComment(id){
 
   try{
 
+    /*
+      Die Firestore-Compat-Instanz verwendet dieselbe Firebase-App
+      wie die modulare 2FA-Anmeldung. Nach erfolgreicher MFA-Anmeldung
+      ist der Admin-Token deshalb auch fuer diesen Löschvorgang gueltig.
+    */
     await db
       .collection("kommentare")
       .doc(id)
       .delete();
 
+    /* Lokale Anzeige sofort aktualisieren; der Snapshot synchronisiert danach nochmals. */
+    commentsData = commentsData.filter(comment => comment.id !== id);
+    renderAdminLists();
+    renderNews();
+    renderReports();
+
   }
   catch(error){
-    console.error(error);
-    alert("Kommentar konnte nicht gelöscht werden.");
+    console.error("Kommentar löschen:", error);
+    alert(
+      "Kommentar konnte nicht gelöscht werden. "
+      +
+      (error?.message || "Bitte Admin-Anmeldung prüfen.")
+    );
   }
 
 }
