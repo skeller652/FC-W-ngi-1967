@@ -4607,11 +4607,17 @@ async function startTotpEnrollment(){
           session
         );
 
+    /*
+      QR-Code bewusst mit sehr kurzen ASCII-Bezeichnungen erzeugen.
+      Die bisherige Kombination aus langer Bezeichnung + Umlaut konnte
+      bei qrcode.js auf Safari zu "code length overflow" führen.
+      Der eigentliche TOTP-Schlüssel bleibt unverändert.
+    */
     const qrUri =
       pendingTotpSecret
         .generateQrCodeUrl(
-          user.email || "FCW-Admin",
-          "FC Wängi 1967 Admin"
+          "admin",
+          "FCW"
         );
 
     const qrContainer =
@@ -4640,7 +4646,7 @@ async function startTotpEnrollment(){
         width:220,
         height:220,
         correctLevel:
-          QRCode.CorrectLevel.M
+          QRCode.CorrectLevel.L
       }
     );
 
