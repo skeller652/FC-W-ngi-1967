@@ -2956,6 +2956,7 @@ db
   );
 
   renderReports();
+  renderNews();
   renderAdminLists();
 
 });
@@ -2970,11 +2971,52 @@ function renderNews(){
       "newsList"
     );
 
-  if(!newsData.length){
+  const feedItems = [
+
+    ...newsData.map(news => ({
+      type:"news",
+      id:news.id,
+      datum:news.datum,
+      titel:news.titel || "",
+      text:news.text || "",
+      kategorie:news.kategorie || "News",
+      bild:news.bild || ""
+    })),
+
+    ...reportsData.map(report => ({
+      type:"report",
+      id:report.id,
+      datum:report.datum,
+      titel:report.titel || "",
+      text:report.text || "",
+      kategorie:report.team
+        ? "Matchbericht · " + report.team
+        : "Matchbericht",
+      bild:""
+    }))
+
+  ];
+
+  feedItems.sort(
+    (a,b) =>
+      (
+        toDate(b.datum)?.getTime()
+        ||
+        0
+      )
+      -
+      (
+        toDate(a.datum)?.getTime()
+        ||
+        0
+      )
+  );
+
+  if(!feedItems.length){
 
     container.innerHTML =
       `<div class="empty">
-      Keine News vorhanden.
+      Keine News oder Matchberichte vorhanden.
       </div>`;
 
     return;
@@ -2982,19 +3024,23 @@ function renderNews(){
   }
 
   container.innerHTML =
-    newsData
-      .map(news => `
+    feedItems
+      .map(item => `
 
         <div
           class="card"
-          onclick="openNews('${news.id}')"
+          onclick="${
+            item.type === "report"
+            ? `openReport('${item.id}')`
+            : `openNews('${item.id}')`
+          }"
         >
 
         ${
-          news.bild
+          item.bild
           ?
           `<img
-            src="${esc(news.bild)}"
+            src="${esc(item.bild)}"
             class="news-image"
           >`
           :
@@ -3002,24 +3048,21 @@ function renderNews(){
         }
 
         <span class="tag">
-        ${esc(
-          news.kategorie ||
-          "News"
-        )}
+        ${esc(item.kategorie)}
         </span>
 
         <div class="meta">
-        ${formatDate(news.datum)}
+        ${formatDate(item.datum)}
         </div>
 
         <h3>
-        ${esc(news.titel)}
+        ${esc(item.titel)}
         </h3>
 
         <p>
         ${esc(
           String(
-            news.text ||
+            item.text ||
             ""
           )
           .substring(
@@ -3035,7 +3078,6 @@ function renderNews(){
       .join("");
 
 }
-
 
 function renderHomeNews(){
 
@@ -6313,6 +6355,9 @@ async function saveReport(){
       "reportEditId"
     ).value;
 
+  const isNew =
+    !id;
+
   const data = {
 
     titel:
@@ -6359,27 +6404,98 @@ async function saveReport(){
 
   }
 
-  if(id){
+  try{
 
-    await db
-      .collection("matchberichte")
-      .doc(id)
-      .update(data);
+    if(id){
 
-  }
+      await db
+        .collection("matchberichte")
+        .doc(id)
+        .update(data);
 
-  else{
+      resetReportForm();
+
+      alert(
+        "✅ Matchbericht aktualisiert."
+      );
+
+      return;
+
+    }
 
     await db
       .collection("matchberichte")
       .add(data);
 
+    resetReportForm();
+
+    try{
+
+      const pushText =
+        data.text.length > 170
+        ?
+        data.text.substring(
+          0,
+          167
+        )
+        +
+        "..."
+        :
+        data.text;
+
+      const pushTitle =
+        "⚽ "
+        +
+        (
+          data.team
+          ?
+          data.team + " · "
+          :
+          ""
+        )
+        +
+        data.titel;
+
+      await sendPushCallable({
+        title:pushTitle,
+        body:pushText
+      });
+
+      alert(
+        "✅ Matchbericht veröffentlicht und Push gesendet."
+      );
+
+    }
+
+    catch(pushError){
+
+      console.error(
+        "Matchbericht Push:",
+        pushError
+      );
+
+      alert(
+        "✅ Matchbericht veröffentlicht.\n⚠️ Push konnte nicht gesendet werden."
+      );
+
+    }
+
   }
 
-  resetReportForm();
+  catch(error){
+
+    console.error(
+      "Matchbericht speichern:",
+      error
+    );
+
+    alert(
+      "❌ Matchbericht konnte nicht gespeichert werden."
+    );
+
+  }
 
 }
-
 
 function editReport(id){
 
