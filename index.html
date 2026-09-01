@@ -838,6 +838,60 @@ textarea.form-input{
 }
 
 
+
+/* =========================
+   ADMIN HISTORIE
+========================= */
+
+.admin-history{
+  margin-top:18px;
+  border:1px solid #e2e2e2;
+  border-radius:13px;
+  overflow:hidden;
+  background:#fafafa;
+}
+
+.admin-history summary{
+  list-style:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+  padding:13px 14px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:900;
+  background:#f5f5f5;
+}
+
+.admin-history summary::-webkit-details-marker{
+  display:none;
+}
+
+.admin-history summary::after{
+  content:"⌄";
+  font-size:18px;
+  line-height:1;
+  transition:transform .2s ease;
+}
+
+.admin-history[open] summary::after{
+  transform:rotate(180deg);
+}
+
+.admin-history-content{
+  padding:0 14px 6px;
+  background:white;
+}
+
+.admin-history-content:empty::before{
+  content:"Noch keine Einträge vorhanden.";
+  display:block;
+  padding:14px 0;
+  color:#888;
+  font-size:12px;
+}
+
 /* EMPTY */
 
 .loading,
@@ -1463,7 +1517,7 @@ Abbrechen
 <div>
 
 <div class="push-admin-title">
-Push-Nachricht senden
+Push
 </div>
 
 <div class="push-admin-subtitle">
@@ -1518,14 +1572,13 @@ An alle registrierten Geräte
 
 </div>
 
-
 <!-- NEWS ADMIN -->
 
 <div class="card admin-card">
 
 <span class="admin-label">NEWS</span>
 
-<h3>News veröffentlichen</h3>
+<h3>News</h3>
 
 <input id="newsEditId" type="hidden">
 
@@ -1578,10 +1631,63 @@ News veröffentlichen
 Abbrechen
 </button>
 
+<details class="admin-history">
+<summary>🕘 Historie</summary>
+<div class="admin-history-content">
 <div id="adminNewsList"></div>
+</div>
+</details>
 
 </div>
 
+<!-- MATCHBERICHT -->
+
+<div class="card admin-card">
+
+<span class="admin-label">
+MATCHBERICHT
+</span>
+
+<h3>Matchbericht</h3>
+
+<input id="reportEditId" type="hidden">
+
+<div class="form-group">
+<label>Titel</label>
+<input id="reportTitle" class="form-input">
+</div>
+
+<div class="form-group">
+<label>Mannschaft</label>
+<input id="reportTeam" class="form-input">
+</div>
+
+<div class="form-group">
+<label>Datum</label>
+<input id="reportDate" type="datetime-local" class="form-input">
+</div>
+
+<div class="form-group">
+<label>Bericht</label>
+<textarea id="reportText" class="form-input"></textarea>
+</div>
+
+<button class="button button-green" onclick="saveReport()">
+Matchbericht speichern
+</button>
+
+<button class="button button-outline" onclick="resetReportForm()">
+Abbrechen
+</button>
+
+<details class="admin-history">
+<summary>🕘 Historie</summary>
+<div class="admin-history-content">
+<div id="adminReportsList"></div>
+</div>
+</details>
+
+</div>
 
 <!-- TEAM ADMIN -->
 
@@ -1647,10 +1753,14 @@ Team speichern
 Abbrechen
 </button>
 
+<details class="admin-history">
+<summary>🕘 Historie</summary>
+<div class="admin-history-content">
 <div id="adminTeamsList"></div>
+</div>
+</details>
 
 </div>
-
 
 <!-- STAFF ADMIN -->
 
@@ -1793,10 +1903,14 @@ Staff speichern
 Abbrechen
 </button>
 
+<details class="admin-history">
+<summary>🕘 Historie</summary>
+<div class="admin-history-content">
 <div id="adminStaffList"></div>
+</div>
+</details>
 
 </div>
-
 
 <!-- SPIELER ADMIN -->
 
@@ -1922,10 +2036,14 @@ Spieler speichern
 Abbrechen
 </button>
 
+<details class="admin-history">
+<summary>🕘 Historie</summary>
+<div class="admin-history-content">
 <div id="adminPlayersList"></div>
+</div>
+</details>
 
 </div>
-
 
 <!-- VORSTAND ADMIN -->
 
@@ -2060,50 +2178,12 @@ Vorstandsmitglied speichern
 Abbrechen
 </button>
 
+<details class="admin-history">
+<summary>🕘 Historie</summary>
+<div class="admin-history-content">
 <div id="adminBoardList"></div>
-
 </div>
-
-
-<!-- MATCHBERICHT -->
-
-<div class="card admin-card">
-
-<span class="admin-label">
-MATCHBERICHT
-</span>
-
-<input id="reportEditId" type="hidden">
-
-<div class="form-group">
-<label>Titel</label>
-<input id="reportTitle" class="form-input">
-</div>
-
-<div class="form-group">
-<label>Mannschaft</label>
-<input id="reportTeam" class="form-input">
-</div>
-
-<div class="form-group">
-<label>Datum</label>
-<input id="reportDate" type="datetime-local" class="form-input">
-</div>
-
-<div class="form-group">
-<label>Bericht</label>
-<textarea id="reportText" class="form-input"></textarea>
-</div>
-
-<button class="button button-green" onclick="saveReport()">
-Matchbericht speichern
-</button>
-
-<button class="button button-outline" onclick="resetReportForm()">
-Abbrechen
-</button>
-
-<div id="adminReportsList"></div>
+</details>
 
 </div>
 
