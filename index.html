@@ -558,6 +558,78 @@ main{
 }
 
 
+db.collection("kalender").onSnapshot(snapshot => {
+  calendarData = [];
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    if(data.aktiv === false) return;
+    calendarData.push({id:doc.id,...data});
+  });
+  calendarData.sort((a,b)=>(toDate(a.datum)?.getTime()||0)-(toDate(b.datum)?.getTime()||0));
+  renderCalendar();
+  renderHomeMatchCards();
+  renderAdminLists();
+});
+
+db.collection("sponsoren").onSnapshot(snapshot => {
+  sponsorsData = [];
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    if(data.aktiv === false) return;
+    sponsorsData.push({id:doc.id,...data});
+  });
+  sponsorsData.sort((a,b)=>Number(a.sortierung??999)-Number(b.sortierung??999));
+  renderSponsors();
+  renderAdminLists();
+});
+
+db.collection("kommentare").onSnapshot(snapshot => {
+  commentsData = [];
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    if(data.aktiv === false) return;
+    commentsData.push({id:doc.id,...data});
+  });
+  commentsData.sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
+  renderAdminLists();
+  renderNews();
+});
+
+
+function renderHomeMatchCards(){
+  const nextBox=document.getElementById("homeNextMatch");
+  const resultBox=document.getElementById("homeLastResult");
+  const now=Date.now();
+  const next=calendarData.find(item=>item.typ==="Spiel" && (toDate(item.datum)?.getTime()||0)>=now);
+  if(nextBox){
+    if(!next){ nextBox.innerHTML='<div class="home-status-label">Nächstes Spiel</div><div class="empty">Noch kein kommendes Spiel eingetragen.</div>'; }
+    else{
+      nextBox.innerHTML=`<div class="home-status-label">⚽ Nächstes Spiel</div><div class="home-status-big">${esc(next.team||"FC Wängi")} ${next.gegner?"– "+esc(next.gegner):""}</div><div class="home-status-meta">${formatDateTime(next.datum)}${next.ort?" · "+esc(next.ort):""}</div><button class="button button-outline button-small" onclick="openPage('kalender')">Kalender öffnen</button>`;
+    }
+  }
+  const finished=reportsData.filter(r=>Number.isFinite(Number(r.toreFcw)) && Number.isFinite(Number(r.toreGegner))).sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
+  const last=finished[0];
+  if(resultBox){
+    if(!last){ resultBox.innerHTML='<div class="home-status-label">Letztes Resultat</div><div class="empty">Noch kein Resultat eingetragen.</div>'; }
+    else{
+      resultBox.innerHTML=`<div class="home-status-label">🏁 Letztes Resultat</div><div class="home-status-big">${esc(last.team||"FC Wängi")} ${last.gegner?"– "+esc(last.gegner):""}</div><div class="result-score">${Number(last.toreFcw)} : ${Number(last.toreGegner)}</div><button class="button button-outline button-small" onclick="openReport('${last.id}')">Matchbericht öffnen</button>`;
+    }
+  }
+}
+
+function formatDateTime(value){
+  const d=toDate(value); if(!d) return "";
+  return new Intl.DateTimeFormat("de-CH",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(d);
+}
+
+function commentCountFor(id){ return commentsData.filter(c=>c.newsId===id).length; }
+function setNewsFilter(filter,button){
+  activeNewsFilter=filter;
+  document.querySelectorAll(".filter-chip").forEach(x=>x.classList.remove("active"));
+  button?.classList.add("active"); renderNews();
+}
+
+
 /* NEWS */
 
 .news-image{
@@ -980,6 +1052,28 @@ textarea.form-input{
 }
 
 
+function renderCalendar(){
+  const container=document.getElementById("calendarList"); if(!container)return;
+  if(!calendarData.length){container.innerHTML='<div class="empty">Noch keine Termine eingetragen.</div>';return;}
+  container.innerHTML=calendarData.map(item=>{const d=toDate(item.datum);const day=d?String(d.getDate()).padStart(2,"0"):"--";const mon=d?new Intl.DateTimeFormat("de-CH",{month:"short"}).format(d):"";return `<div class="card calendar-item"><div class="calendar-date"><div class="day">${day}</div><div class="month">${esc(mon)}</div></div><div><span class="tag">${esc(item.typ||"Termin")}</span><h3>${esc(item.titel||"")}</h3><div class="meta">${formatDateTime(item.datum)}${item.ort?" · "+esc(item.ort):""}</div>${item.team||item.gegner?`<p><strong>${esc(item.team||"")}</strong>${item.gegner?" – "+esc(item.gegner):""}</p>`:""}${item.beschreibung?`<p>${esc(item.beschreibung)}</p>`:""}</div></div>`;}).join("");
+  renderHomeMatchCards();
+}
+
+function renderSponsors(){
+  const container=document.getElementById("sponsorList"); if(!container)return;
+  if(!sponsorsData.length){container.innerHTML='<div class="empty">Noch keine Sponsoren eingetragen.</div>';return;}
+  container.innerHTML=`<div class="sponsor-grid">${sponsorsData.map(item=>`<div class="card sponsor-card" onclick="openSponsor('${item.id}')"><img class="sponsor-logo" src="${esc(item.logo||"./logo.png")}" onerror="this.src='./logo.png'"><div class="sponsor-level">${esc(item.stufe||"Partner")}</div><h3>${esc(item.name||"")}</h3></div>`).join("")}</div>`;
+}
+function openSponsor(id){const s=sponsorsData.find(x=>x.id===id);if(!s)return;if(s.webseite){window.open(s.webseite,"_blank","noopener");}}
+
+function tryHandleDeepLink(){
+  if(!pendingDeepLink) return;
+  const type=pendingDeepLink.get("open"), id=pendingDeepLink.get("id"); if(!type||!id)return;
+  if(type==="news" && newsData.some(x=>x.id===id)){pendingDeepLink=null;openPage("news");setTimeout(()=>openNews(id),50);}
+  if(type==="report" && reportsData.some(x=>x.id===id)){pendingDeepLink=null;openPage("news");setTimeout(()=>openReport(id),50);}
+}
+
+
 /* MODAL */
 
 .modal{
@@ -1094,10 +1188,62 @@ textarea.form-input{
   margin-bottom:3px;
 }
 
+
+
+/* =========================
+   ERWEITERUNGEN 2026.09
+========================= */
+.home-match-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:12px;
+  margin-bottom:22px;
+}
+.home-status-card{margin:0;}
+.home-status-label{font-size:11px;font-weight:900;color:#8b6d00;text-transform:uppercase;letter-spacing:.04em;}
+.home-status-big{font-size:20px;font-weight:900;margin:8px 0 4px;}
+.home-status-meta{font-size:12px;color:#777;line-height:1.5;}
+.result-score{font-size:30px;font-weight:900;margin:8px 0;}
+.news-toolbar{display:flex;gap:8px;overflow-x:auto;padding:2px 0 12px;scrollbar-width:none;}
+.news-toolbar::-webkit-scrollbar{display:none;}
+.filter-chip{white-space:nowrap;border:1px solid #ddd;background:white;border-radius:999px;padding:8px 12px;font-size:11px;font-weight:800;}
+.filter-chip.active{background:#171717;color:#f4c400;border-color:#171717;}
+.news-comment-count{margin-top:10px;color:#777;font-size:11px;font-weight:800;}
+.match-summary{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:10px;margin:14px 0;padding:16px;border-radius:16px;background:#f7f7f7;}
+.match-side{text-align:center;font-weight:900;}
+.match-score{font-size:28px;font-weight:900;white-space:nowrap;}
+.detail-block{margin-top:14px;padding:13px;border-radius:13px;background:#f7f7f7;white-space:pre-wrap;font-size:13px;line-height:1.55;}
+.detail-block strong{display:block;margin-bottom:5px;}
+.calendar-item{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:start;}
+.calendar-date{border-radius:13px;background:#171717;color:white;text-align:center;padding:9px 4px;font-weight:900;}
+.calendar-date .day{font-size:22px;line-height:1;}
+.calendar-date .month{font-size:10px;text-transform:uppercase;margin-top:4px;}
+.sponsor-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.sponsor-card{text-align:center;cursor:pointer;}
+.sponsor-logo{width:100%;height:120px;object-fit:contain;margin-bottom:10px;}
+.sponsor-level{font-size:10px;font-weight:900;color:#8b6d00;text-transform:uppercase;}
+.admin-dashboard-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;}
+.admin-stat{padding:12px;border-radius:13px;background:#f7f7f7;text-align:center;}
+.admin-stat strong{display:block;font-size:22px;}
+.admin-stat span{font-size:10px;color:#777;}
+.comment-admin-text{margin:6px 0 10px;font-size:12px;color:#444;white-space:pre-wrap;}
+.comment-admin-meta{font-size:10px;color:#888;margin-bottom:4px;}
+.update-banner{display:none;position:fixed;left:50%;top:12px;transform:translateX(-50%);z-index:1000;width:calc(100% - 24px);max-width:680px;padding:12px 14px;border-radius:15px;background:#171717;color:white;box-shadow:0 8px 30px rgba(0,0,0,.25);}
+.update-banner.visible{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.update-banner strong{font-size:13px;}
+.update-banner button{margin:0;width:auto;white-space:nowrap;}
+@media(max-width:520px){
+  .home-match-grid{grid-template-columns:1fr;}
+  .admin-dashboard-grid{grid-template-columns:repeat(2,1fr);}
+  .sponsor-grid{grid-template-columns:1fr 1fr;}
+}
+
 </style>
 </head>
 
 <body>
+
+<div id="updateBanner" class="update-banner"><strong>✨ Neue FCW-App-Version verfügbar</strong><button class="button button-yellow button-small" onclick="updateAppNow()">Aktualisieren</button></div>
 
 <div class="app">
 
@@ -1157,6 +1303,15 @@ Status wird geprüft...
 
 
 <h2 class="section-heading">
+Spielübersicht
+</h2>
+
+<div class="home-match-grid">
+  <div id="homeNextMatch" class="card home-status-card"><div class="loading">Nächstes Spiel wird geladen...</div></div>
+  <div id="homeLastResult" class="card home-status-card"><div class="loading">Letztes Resultat wird geladen...</div></div>
+</div>
+
+<h2 class="section-heading">
 Aktuelle News
 </h2>
 
@@ -1195,6 +1350,18 @@ Schnellzugriff
 <small>Vereinsleitung</small>
 </button>
 
+<button class="quick-button" onclick="openPage('kalender')">
+<span class="quick-icon">📅</span>
+<strong>Kalender</strong>
+<small>Termine & Events</small>
+</button>
+
+<button class="quick-button" onclick="openPage('sponsoren')">
+<span class="quick-icon">🤝</span>
+<strong>Sponsoren</strong>
+<small>Unsere Partner</small>
+</button>
+
 </div>
 
 </section>
@@ -1212,6 +1379,11 @@ News
 Aktuelles rund um den FC Wängi 1967.
 </p>
 
+<div id="newsFilters" class="news-toolbar">
+<button class="filter-chip active" data-filter="Alle" onclick="setNewsFilter('Alle',this)">Alle</button>
+<button class="filter-chip" data-filter="News" onclick="setNewsFilter('News',this)">News</button>
+<button class="filter-chip" data-filter="Matchbericht" onclick="setNewsFilter('Matchbericht',this)">Matchberichte</button>
+</div>
 <div id="newsList"></div>
 
 </section>
@@ -1288,6 +1460,18 @@ vom OFV / football.ch geladen.
 </section>
 
 
+
+<!-- KOMMENTARE ADMIN -->
+<div class="card admin-card">
+<span class="admin-label">KOMMENTARE</span>
+<h3>Kommentare moderieren</h3>
+<p class="page-description">Alle Kommentare aus News und Matchberichten an einem Ort.</p>
+<details class="admin-history" open>
+<summary>💬 Kommentare</summary>
+<div class="admin-history-content"><div id="adminCommentsList"></div></div>
+</details>
+</div>
+
 <!-- MATCHBERICHT -->
 
 <section id="matchberichte" class="page">
@@ -1304,6 +1488,21 @@ Berichte unserer Mannschaften.
 
 </section>
 
+
+
+<!-- KALENDER -->
+<section id="kalender" class="page">
+<h1 class="page-title">Vereinskalender</h1>
+<p class="page-description">Spiele, Turniere und wichtige Vereinstermine.</p>
+<div id="calendarList"><div class="loading">Kalender wird geladen...</div></div>
+</section>
+
+<!-- SPONSOREN -->
+<section id="sponsoren" class="page">
+<h1 class="page-title">Sponsoren</h1>
+<p class="page-description">Vielen Dank an unsere Partner und Unterstützer.</p>
+<div id="sponsorList"><div class="loading">Sponsoren werden geladen...</div></div>
+</section>
 
 <!-- KONTAKT -->
 
@@ -1581,6 +1780,12 @@ Abbrechen
   class="admin-protected"
 >
 
+<div class="card admin-card">
+<span class="admin-label">ÜBERSICHT</span>
+<h3>Admin-Dashboard</h3>
+<div id="adminDashboard" class="admin-dashboard-grid"></div>
+</div>
+
 <!-- PUSH -->
 
 <div class="card push-admin">
@@ -1727,25 +1932,23 @@ MATCHBERICHT
 
 <input id="reportEditId" type="hidden">
 
-<div class="form-group">
-<label>Titel</label>
-<input id="reportTitle" class="form-input">
+<div class="form-group"><label>Titel</label><input id="reportTitle" class="form-input" placeholder="z. B. Derbysieg in Münchwilen"></div>
+<div class="form-row">
+  <div class="form-group"><label>Mannschaft</label><input id="reportTeam" class="form-input" placeholder="1. Mannschaft"></div>
+  <div class="form-group"><label>Gegner</label><input id="reportOpponent" class="form-input"></div>
 </div>
-
-<div class="form-group">
-<label>Mannschaft</label>
-<input id="reportTeam" class="form-input">
+<div class="form-row">
+  <div class="form-group"><label>Heim / Auswärts</label><select id="reportVenue" class="form-input"><option value="Heim">Heim</option><option value="Auswärts">Auswärts</option></select></div>
+  <div class="form-group"><label>Datum</label><input id="reportDate" type="datetime-local" class="form-input"></div>
 </div>
-
-<div class="form-group">
-<label>Datum</label>
-<input id="reportDate" type="datetime-local" class="form-input">
+<div class="form-row">
+  <div class="form-group"><label>Tore FC Wängi</label><input id="reportGoalsFcw" type="number" min="0" class="form-input"></div>
+  <div class="form-group"><label>Tore Gegner</label><input id="reportGoalsOpponent" type="number" min="0" class="form-input"></div>
 </div>
-
-<div class="form-group">
-<label>Bericht</label>
-<textarea id="reportText" class="form-input"></textarea>
-</div>
+<div class="form-group"><label>Torschützen</label><textarea id="reportScorers" class="form-input" placeholder="z. B. 12' Müller, 67' Meier"></textarea></div>
+<div class="form-group"><label>Aufstellung</label><textarea id="reportLineup" class="form-input" placeholder="Torhüter, Verteidigung, Mittelfeld, Sturm ..."></textarea></div>
+<div class="form-group"><label>Bericht</label><textarea id="reportText" class="form-input"></textarea></div>
+<div class="form-group"><label>Match-Foto</label><div class="photo-upload"><input id="reportImageFile" type="file" accept="image/*" onchange="previewSelectedImage(this,'reportImagePreview')"><img id="reportImagePreview" class="photo-preview"><div id="reportUploadStatus" class="upload-status"></div></div></div>
 
 <button class="button button-green" onclick="saveReport()">
 Matchbericht speichern
@@ -2263,6 +2466,45 @@ Abbrechen
 </div>
 
 
+<!-- KALENDER ADMIN -->
+<div class="card admin-card">
+<span class="admin-label">KALENDER</span>
+<h3>Kalender verwalten</h3>
+<input id="calendarEditId" type="hidden">
+<div class="form-group"><label>Titel</label><input id="calendarTitle" class="form-input"></div>
+<div class="form-row">
+  <div class="form-group"><label>Typ</label><select id="calendarType" class="form-input"><option>Spiel</option><option>Training</option><option>Turnier</option><option>Vereinsanlass</option><option>Sitzung</option><option>Sonstiges</option></select></div>
+  <div class="form-group"><label>Datum / Zeit</label><input id="calendarDate" type="datetime-local" class="form-input"></div>
+</div>
+<div class="form-row">
+  <div class="form-group"><label>Mannschaft</label><input id="calendarTeam" class="form-input"></div>
+  <div class="form-group"><label>Gegner (bei Spiel)</label><input id="calendarOpponent" class="form-input"></div>
+</div>
+<div class="form-group"><label>Ort</label><input id="calendarLocation" class="form-input"></div>
+<div class="form-group"><label>Beschreibung</label><textarea id="calendarDescription" class="form-input"></textarea></div>
+<button class="button button-green" onclick="saveCalendarItem()">Termin speichern</button>
+<button class="button button-outline" onclick="resetCalendarForm()">Abbrechen</button>
+<details class="admin-history"><summary>🕘 Historie</summary><div class="admin-history-content"><div id="adminCalendarList"></div></div></details>
+</div>
+
+<!-- SPONSOREN ADMIN -->
+<div class="card admin-card">
+<span class="admin-label">SPONSOREN</span>
+<h3>Sponsoren verwalten</h3>
+<input id="sponsorEditId" type="hidden">
+<div class="form-group"><label>Name</label><input id="sponsorName" class="form-input"></div>
+<div class="form-row">
+  <div class="form-group"><label>Sponsorenstufe</label><select id="sponsorLevel" class="form-input"><option>Hauptsponsor</option><option>Gold Partner</option><option>Silber Partner</option><option>Bronze Partner</option><option>Partner</option></select></div>
+  <div class="form-group"><label>Sortierung</label><input id="sponsorSort" type="number" min="1" class="form-input" value="1"></div>
+</div>
+<div class="form-group"><label>Webseite</label><input id="sponsorWebsite" type="url" class="form-input" placeholder="https://..."></div>
+<div class="form-group"><label>Logo</label><div class="photo-upload"><input id="sponsorLogoFile" type="file" accept="image/*" onchange="previewSelectedImage(this,'sponsorLogoPreview')"><img id="sponsorLogoPreview" class="photo-preview"><div id="sponsorUploadStatus" class="upload-status"></div></div></div>
+<button class="button button-green" onclick="saveSponsor()">Sponsor speichern</button>
+<button class="button button-outline" onclick="resetSponsorForm()">Abbrechen</button>
+<details class="admin-history"><summary>🕘 Historie</summary><div class="admin-history-content"><div id="adminSponsorsList"></div></div></details>
+</div>
+
+
 </div><!-- /adminProtectedContent -->
 
 
@@ -2454,6 +2696,9 @@ const ADMIN_UID =
 const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
+const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
+const APP_VERSION = "2026.09.02-1";
+
 
 let newsData = [];
 let teamsData = [];
@@ -2461,6 +2706,11 @@ let playersData = [];
 let staffData = [];
 let boardData = [];
 let reportsData = [];
+let calendarData = [];
+let sponsorsData = [];
+let commentsData = [];
+let activeNewsFilter = "Alle";
+let pendingDeepLink = new URLSearchParams(window.location.search);
 
 let currentCommentNewsId = null;
 let currentCommentsUnsubscribe = null;
@@ -3090,186 +3340,27 @@ db
 /* NEWS */
 
 function renderNews(){
-
-  const container =
-    document.getElementById(
-      "newsList"
-    );
-
-  const feedItems = [
-
-    ...newsData.map(news => ({
-      type:"news",
-      id:news.id,
-      datum:news.datum,
-      titel:news.titel || "",
-      text:news.text || "",
-      kategorie:news.kategorie || "News",
-      bild:news.bild || ""
-    })),
-
-    ...reportsData.map(report => ({
-      type:"report",
-      id:report.id,
-      datum:report.datum,
-      titel:report.titel || "",
-      text:report.text || "",
-      kategorie:report.team
-        ? "Matchbericht · " + report.team
-        : "Matchbericht",
-      bild:""
-    }))
-
+  const container=document.getElementById("newsList"); if(!container) return;
+  let feedItems=[
+    ...newsData.map(news=>({type:"news",id:news.id,datum:news.datum,titel:news.titel||"",text:news.text||"",kategorie:news.kategorie||"News",bild:news.bild||"",commentKey:news.id})),
+    ...reportsData.map(report=>({type:"report",id:report.id,datum:report.datum,titel:report.titel||"",text:report.text||"",kategorie:report.team?"Matchbericht · "+report.team:"Matchbericht",bild:report.bild||"",commentKey:"matchbericht:"+report.id}))
   ];
-
-  feedItems.sort(
-    (a,b) =>
-      (
-        toDate(b.datum)?.getTime()
-        ||
-        0
-      )
-      -
-      (
-        toDate(a.datum)?.getTime()
-        ||
-        0
-      )
-  );
-
-  if(!feedItems.length){
-
-    container.innerHTML =
-      `<div class="empty">
-      Keine News oder Matchberichte vorhanden.
-      </div>`;
-
-    return;
-
-  }
-
-  container.innerHTML =
-    feedItems
-      .map(item => `
-
-        <div
-          class="card"
-          onclick="${
-            item.type === "report"
-            ? `openReport('${item.id}')`
-            : `openNews('${item.id}')`
-          }"
-        >
-
-        ${
-          item.bild
-          ?
-          `<img
-            src="${esc(item.bild)}"
-            class="news-image"
-          >`
-          :
-          ""
-        }
-
-        <span class="tag">
-        ${esc(item.kategorie)}
-        </span>
-
-        <div class="meta">
-        ${formatDate(item.datum)}
-        </div>
-
-        <h3>
-        ${esc(item.titel)}
-        </h3>
-
-        <p>
-        ${esc(
-          String(
-            item.text ||
-            ""
-          )
-          .substring(
-            0,
-            180
-          )
-        )}
-        </p>
-
-        </div>
-
-      `)
-      .join("");
-
+  if(activeNewsFilter==="News") feedItems=feedItems.filter(x=>x.type==="news");
+  if(activeNewsFilter==="Matchbericht") feedItems=feedItems.filter(x=>x.type==="report");
+  feedItems.sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
+  if(!feedItems.length){container.innerHTML='<div class="empty">Keine Beiträge vorhanden.</div>';return;}
+  container.innerHTML=feedItems.map(item=>`<div class="card" onclick="${item.type==="report"?`openReport('${item.id}')`:`openNews('${item.id}')`}">${item.bild?`<img src="${esc(item.bild)}" class="news-image">`:""}<span class="tag">${esc(item.kategorie)}</span><div class="meta">${formatDate(item.datum)}</div><h3>${esc(item.titel)}</h3><p>${esc(String(item.text||"").substring(0,180))}</p><div class="news-comment-count">💬 ${commentCountFor(item.commentKey)} Kommentar${commentCountFor(item.commentKey)===1?"":"e"}</div></div>`).join("");
+  tryHandleDeepLink();
 }
 
 function renderHomeNews(){
-
-  const container =
-    document.getElementById(
-      "homeNews"
-    );
-
-  const news =
-    newsData[0];
-
-  if(!news){
-
-    container.innerHTML =
-      `<div class="empty">
-      Keine News vorhanden.
-      </div>`;
-
-    return;
-
-  }
-
-  container.innerHTML = `
-
-    <div
-      class="card"
-      onclick="openNews('${news.id}')"
-    >
-
-    ${
-      news.bild
-      ?
-      `<img
-        src="${esc(news.bild)}"
-        class="news-image"
-      >`
-      :
-      ""
-    }
-
-    <span class="tag">
-    ${esc(
-      news.kategorie ||
-      "News"
-    )}
-    </span>
-
-    <h3>
-    ${esc(news.titel)}
-    </h3>
-
-    <p>
-    ${esc(
-      String(news.text || "")
-      .substring(
-        0,
-        140
-      )
-    )}
-    </p>
-
-    </div>
-
-  `;
-
+  const container=document.getElementById("homeNews"); if(!container)return;
+  const items=[...newsData.map(x=>({type:"news",...x})),...reportsData.map(x=>({type:"report",...x}))].sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
+  const item=items[0];
+  if(!item){container.innerHTML='<div class="empty">Keine News vorhanden.</div>';return;}
+  const isReport=item.type==="report";
+  container.innerHTML=`<div class="card" onclick="${isReport?`openReport('${item.id}')`:`openNews('${item.id}')`}">${item.bild?`<img src="${esc(item.bild)}" class="news-image">`:""}<span class="tag">${esc(isReport?"Matchbericht · "+(item.team||"FCW"):(item.kategorie||"News"))}</span><h3>${esc(item.titel)}</h3><p>${esc(String(item.text||"").substring(0,140))}</p></div>`;
 }
-
 
 function openNews(id){
 
@@ -3292,6 +3383,7 @@ function openNews(id){
   });
 
   openCommentsForNews(id);
+  history.replaceState(null,"",`?open=news&id=${encodeURIComponent(id)}`);
 
 }
 
@@ -3721,100 +3813,24 @@ function openBoardMember(id){
 /* REPORTS */
 
 function renderReports(){
-
-  const container =
-    document.getElementById(
-      "reportsList"
-    );
-
-  if(!reportsData.length){
-
-    container.innerHTML =
-      `<div class="empty">
-      Keine Matchberichte vorhanden.
-      </div>`;
-
-    return;
-
-  }
-
-  container.innerHTML =
-    reportsData
-      .map(report => `
-
-        <div
-          class="card"
-          onclick="openReport('${report.id}')"
-        >
-
-        <span class="tag">
-        ${esc(
-          report.team ||
-          "Matchbericht"
-        )}
-        </span>
-
-        <h3>
-        ${esc(report.titel)}
-        </h3>
-
-        <p>
-        ${esc(
-          String(report.text || "")
-          .substring(
-            0,
-            180
-          )
-        )}
-        </p>
-
-        </div>
-
-      `)
-      .join("");
-
+  const container=document.getElementById("reportsList"); if(!container)return;
+  if(!reportsData.length){container.innerHTML='<div class="empty">Keine Matchberichte vorhanden.</div>';return;}
+  container.innerHTML=reportsData.map(report=>`<div class="card" onclick="openReport('${report.id}')">${report.bild?`<img src="${esc(report.bild)}" class="news-image">`:""}<span class="tag">${esc(report.team||"Matchbericht")}</span><div class="meta">${formatDate(report.datum)}</div><h3>${esc(report.titel)}</h3>${report.gegner?`<div class="match-summary"><div class="match-side">${esc(report.team||"FC Wängi")}</div><div class="match-score">${report.toreFcw??"–"} : ${report.toreGegner??"–"}</div><div class="match-side">${esc(report.gegner)}</div></div>`:""}<p>${esc(String(report.text||"").substring(0,180))}</p><div class="news-comment-count">💬 ${commentCountFor("matchbericht:"+report.id)} Kommentare</div></div>`).join("");
+  renderHomeMatchCards(); tryHandleDeepLink();
 }
-
 
 function openReport(id){
+  const report=reportsData.find(item=>item.id===id); if(!report)return;
+  const score=(report.toreFcw!==undefined&&report.toreFcw!==null&&report.toreGegner!==undefined&&report.toreGegner!==null)?`
 
-  const report =
-    reportsData.find(
-      item =>
-        item.id === id
-    );
-
-  if(!report){
-    return;
-  }
-
-  openModal({
-
-    image:"",
-
-    tag:
-      report.team ||
-      "Matchbericht",
-
-    title:
-      report.titel,
-
-    meta:
-      formatDate(
-        report.datum
-      ),
-
-    text:
-      report.text
-
-  });
-
-  openCommentsForNews(
-    "matchbericht:" + id
-  );
-
+${report.team||"FC Wängi"} ${report.toreFcw} : ${report.toreGegner} ${report.gegner||""}`:"";
+  const details=[report.heimauswaerts?`Spielort: ${report.heimauswaerts}`:"",report.torschuetzen?`Torschützen:
+${report.torschuetzen}`:"",report.aufstellung?`Aufstellung:
+${report.aufstellung}`:""].filter(Boolean).join("\n\n");
+  openModal({image:report.bild||"",tag:report.team||"Matchbericht",title:report.titel,meta:formatDate(report.datum),text:(score?score.trim()+"\n\n":"")+(report.text||"")+(details?"\n\n"+details:"")});
+  openCommentsForNews("matchbericht:"+id);
+  history.replaceState(null,"",`?open=report&id=${encodeURIComponent(id)}`);
 }
-
 
 /* MODAL */
 
@@ -3873,6 +3889,7 @@ function openModal(data){
 function closeModal(){
 
   hideComments();
+  history.replaceState(null,"",window.location.pathname);
 
   document
     .getElementById(
@@ -5665,200 +5682,22 @@ async function sendPushFromAdmin(){
 /* NEWS SAVE + AUTO PUSH */
 
 async function saveNews(){
-
-  const id =
-    document
-      .getElementById(
-        "newsEditId"
-      )
-      .value;
-
-  const isNew =
-    !id;
-
-  const existing =
-    id
-    ?
-    newsData.find(
-      x =>
-        x.id === id
-    )
-    :
-    null;
-
-  const title =
-    document
-      .getElementById(
-        "newsTitle"
-      )
-      .value.trim();
-
-  const text =
-    document
-      .getElementById(
-        "newsText"
-      )
-      .value.trim();
-
-  const category =
-    document
-      .getElementById(
-        "newsCategory"
-      )
-      .value.trim();
-
-  if(
-    !title
-    ||
-    !text
-  ){
-
-    alert(
-      "Titel und Text eingeben."
-    );
-
-    return;
-
-  }
-
+  const id=document.getElementById("newsEditId").value; const isNew=!id; const existing=id?newsData.find(x=>x.id===id):null;
+  const title=document.getElementById("newsTitle").value.trim(); const text=document.getElementById("newsText").value.trim(); const category=document.getElementById("newsCategory").value.trim();
+  if(!title||!text){alert("Titel und Text eingeben.");return;}
   try{
-
-    let imageUrl =
-      existing?.bild || "";
-
-    let storagePath =
-      existing?.storagePath || "";
-
-    const file =
-      document
-        .getElementById(
-          "newsImageFile"
-        )
-        .files?.[0];
-
-    if(file){
-
-      const upload =
-        await uploadImage(
-          file,
-          "news",
-          "newsUploadStatus"
-        );
-
-      if(storagePath){
-
-        await deleteStorageFile(
-          storagePath
-        );
-
-      }
-
-      imageUrl =
-        upload.url;
-
-      storagePath =
-        upload.path;
-
-    }
-
-    const data = {
-
-      titel:title,
-      text:text,
-      kategorie:category,
-      datum:inputTimestamp("newsDate"),
-      bild:imageUrl,
-      storagePath:storagePath,
-      aktiv:true
-
-    };
-
-    if(id){
-
-      await db
-        .collection("news")
-        .doc(id)
-        .update(data);
-
-    }
-
-    else{
-
-      await db
-        .collection("news")
-        .add(data);
-
-    }
-
+    let imageUrl=existing?.bild||"",storagePath=existing?.storagePath||""; const file=document.getElementById("newsImageFile").files?.[0];
+    if(file){const upload=await uploadImage(file,"news","newsUploadStatus");if(storagePath)await deleteStorageFile(storagePath);imageUrl=upload.url;storagePath=upload.path;}
+    const data={titel:title,text,kategorie:category,datum:inputTimestamp("newsDate"),bild:imageUrl,storagePath,aktiv:true};
+    let savedId=id;
+    if(id){await db.collection("news").doc(id).update(data);}else{const ref=await db.collection("news").add(data);savedId=ref.id;}
     resetNewsForm();
-
-
     if(isNew){
-
-      try{
-
-        const pushText =
-          text.length > 170
-          ?
-          text.substring(
-            0,
-            167
-          )
-          +
-          "..."
-          :
-          text;
-
-        await sendPushCallable({
-
-          title:
-            "📰 "
-            +
-            title,
-
-          body:
-            pushText
-
-        });
-
-        alert(
-          "✅ News veröffentlicht und Push gesendet."
-        );
-
-      }
-
-      catch(error){
-
-        alert(
-          "✅ News veröffentlicht.\n⚠️ Push konnte nicht gesendet werden."
-        );
-
-      }
-
-    }
-
-    else{
-
-      alert(
-        "✅ News aktualisiert."
-      );
-
-    }
-
-  }
-
-  catch(error){
-
-    console.error(error);
-
-    alert(
-      "❌ News konnte nicht gespeichert werden."
-    );
-
-  }
-
+      try{const pushText=text.length>170?text.substring(0,167)+"...":text;await sendPushCallable({title:"📰 "+title,body:pushText,url:`${APP_URL}?open=news&id=${encodeURIComponent(savedId)}`});alert("✅ News veröffentlicht und Push gesendet.");}
+      catch(error){console.error(error);alert("✅ News veröffentlicht.\n⚠️ Push konnte nicht gesendet werden.");}
+    }else alert("✅ News aktualisiert.");
+  }catch(error){console.error(error);alert("❌ News konnte nicht gespeichert werden.");}
 }
-
 
 function editNews(id){
 
@@ -6756,194 +6595,48 @@ function resetBoardForm(){
 /* MATCHBERICHT */
 
 async function saveReport(){
-
-  const id =
-    document.getElementById(
-      "reportEditId"
-    ).value;
-
-  const isNew =
-    !id;
-
-  const data = {
-
-    titel:
-      document
-        .getElementById(
-          "reportTitle"
-        )
-        .value.trim(),
-
-    team:
-      document
-        .getElementById(
-          "reportTeam"
-        )
-        .value.trim(),
-
-    datum:
-      inputTimestamp(
-        "reportDate"
-      ),
-
-    text:
-      document
-        .getElementById(
-          "reportText"
-        )
-        .value.trim(),
-
-    aktiv:true
-
+  const id=document.getElementById("reportEditId").value,isNew=!id,existing=id?reportsData.find(x=>x.id===id):null;
+  const data={
+    titel:document.getElementById("reportTitle").value.trim(),team:document.getElementById("reportTeam").value.trim(),gegner:document.getElementById("reportOpponent").value.trim(),heimauswaerts:document.getElementById("reportVenue").value,datum:inputTimestamp("reportDate"),
+    toreFcw:document.getElementById("reportGoalsFcw").value===""?null:Number(document.getElementById("reportGoalsFcw").value),toreGegner:document.getElementById("reportGoalsOpponent").value===""?null:Number(document.getElementById("reportGoalsOpponent").value),
+    torschuetzen:document.getElementById("reportScorers").value.trim(),aufstellung:document.getElementById("reportLineup").value.trim(),text:document.getElementById("reportText").value.trim(),aktiv:true,bild:existing?.bild||"",storagePath:existing?.storagePath||""
   };
-
-  if(
-    !data.titel
-    ||
-    !data.text
-  ){
-
-    alert(
-      "Titel und Bericht eingeben."
-    );
-
-    return;
-
-  }
-
+  if(!data.titel||!data.text){alert("Titel und Bericht eingeben.");return;}
   try{
-
-    if(id){
-
-      await db
-        .collection("matchberichte")
-        .doc(id)
-        .update(data);
-
-      resetReportForm();
-
-      alert(
-        "✅ Matchbericht aktualisiert."
-      );
-
-      return;
-
-    }
-
-    await db
-      .collection("matchberichte")
-      .add(data);
-
+    const file=document.getElementById("reportImageFile").files?.[0]; if(file){const upload=await uploadImage(file,"matchberichte","reportUploadStatus");if(data.storagePath)await deleteStorageFile(data.storagePath);data.bild=upload.url;data.storagePath=upload.path;}
+    let savedId=id;if(id){await db.collection("matchberichte").doc(id).update(data);}else{const ref=await db.collection("matchberichte").add(data);savedId=ref.id;}
     resetReportForm();
-
-    try{
-
-      const pushText =
-        data.text.length > 170
-        ?
-        data.text.substring(
-          0,
-          167
-        )
-        +
-        "..."
-        :
-        data.text;
-
-      const pushTitle =
-        "⚽ "
-        +
-        (
-          data.team
-          ?
-          data.team + " · "
-          :
-          ""
-        )
-        +
-        data.titel;
-
-      await sendPushCallable({
-        title:pushTitle,
-        body:pushText
-      });
-
-      alert(
-        "✅ Matchbericht veröffentlicht und Push gesendet."
-      );
-
-    }
-
-    catch(pushError){
-
-      console.error(
-        "Matchbericht Push:",
-        pushError
-      );
-
-      alert(
-        "✅ Matchbericht veröffentlicht.\n⚠️ Push konnte nicht gesendet werden."
-      );
-
-    }
-
-  }
-
-  catch(error){
-
-    console.error(
-      "Matchbericht speichern:",
-      error
-    );
-
-    alert(
-      "❌ Matchbericht konnte nicht gespeichert werden."
-    );
-
-  }
-
+    if(isNew){
+      try{const body=data.gegner&&data.toreFcw!==null&&data.toreGegner!==null?`${data.team||"FC Wängi"} ${data.toreFcw}:${data.toreGegner} ${data.gegner}`:(data.text.length>170?data.text.substring(0,167)+"...":data.text);await sendPushCallable({title:`⚽ ${data.team?data.team+" · ":""}${data.titel}`,body,url:`${APP_URL}?open=report&id=${encodeURIComponent(savedId)}`});alert("✅ Matchbericht veröffentlicht und Push gesendet.");}
+      catch(e){console.error(e);alert("✅ Matchbericht veröffentlicht.\n⚠️ Push konnte nicht gesendet werden.");}
+    } else alert("✅ Matchbericht aktualisiert.");
+  }catch(e){console.error(e);alert("❌ Matchbericht konnte nicht gespeichert werden.");}
 }
-
 function editReport(id){
-
-  const item =
-    reportsData.find(
-      x =>
-        x.id === id
-    );
-
-  if(!item){
-    return;
-  }
-
-  document.getElementById("reportEditId").value =
-    item.id;
-
-  document.getElementById("reportTitle").value =
-    item.titel || "";
-
-  document.getElementById("reportTeam").value =
-    item.team || "";
-
-  document.getElementById("reportText").value =
-    item.text || "";
-
-  document.getElementById("reportDate").value =
-    dateInputValue(
-      item.datum
-    );
-
+  const x=reportsData.find(i=>i.id===id);if(!x)return;
+  document.getElementById("reportEditId").value=x.id;document.getElementById("reportTitle").value=x.titel||"";document.getElementById("reportTeam").value=x.team||"";document.getElementById("reportOpponent").value=x.gegner||"";document.getElementById("reportVenue").value=x.heimauswaerts||"Heim";document.getElementById("reportDate").value=dateInputValue(x.datum);document.getElementById("reportGoalsFcw").value=x.toreFcw??"";document.getElementById("reportGoalsOpponent").value=x.toreGegner??"";document.getElementById("reportScorers").value=x.torschuetzen||"";document.getElementById("reportLineup").value=x.aufstellung||"";document.getElementById("reportText").value=x.text||"";
+  const p=document.getElementById("reportImagePreview");if(x.bild){p.src=x.bild;p.classList.add("visible");}else{p.removeAttribute("src");p.classList.remove("visible");}
+}
+function resetReportForm(){
+  ["reportEditId","reportTitle","reportTeam","reportOpponent","reportDate","reportGoalsFcw","reportGoalsOpponent","reportScorers","reportLineup","reportText"].forEach(id=>{const e=document.getElementById(id);if(e)e.value="";});document.getElementById("reportVenue").value="Heim";document.getElementById("reportImageFile").value="";const p=document.getElementById("reportImagePreview");p.removeAttribute("src");p.classList.remove("visible");
 }
 
+async function saveCalendarItem(){
+  const id=document.getElementById("calendarEditId").value;const data={titel:document.getElementById("calendarTitle").value.trim(),typ:document.getElementById("calendarType").value,datum:inputTimestamp("calendarDate"),team:document.getElementById("calendarTeam").value.trim(),gegner:document.getElementById("calendarOpponent").value.trim(),ort:document.getElementById("calendarLocation").value.trim(),beschreibung:document.getElementById("calendarDescription").value.trim(),aktiv:true};
+  if(!data.titel){alert("Titel eingeben.");return;} if(id)await db.collection("kalender").doc(id).update(data);else await db.collection("kalender").add(data);resetCalendarForm();alert("✅ Termin gespeichert.");
+}
+function editCalendarItem(id){const x=calendarData.find(i=>i.id===id);if(!x)return;document.getElementById("calendarEditId").value=x.id;document.getElementById("calendarTitle").value=x.titel||"";document.getElementById("calendarType").value=x.typ||"Sonstiges";document.getElementById("calendarDate").value=dateInputValue(x.datum);document.getElementById("calendarTeam").value=x.team||"";document.getElementById("calendarOpponent").value=x.gegner||"";document.getElementById("calendarLocation").value=x.ort||"";document.getElementById("calendarDescription").value=x.beschreibung||"";}
+function resetCalendarForm(){["calendarEditId","calendarTitle","calendarDate","calendarTeam","calendarOpponent","calendarLocation","calendarDescription"].forEach(id=>document.getElementById(id).value="");document.getElementById("calendarType").value="Spiel";}
 
-function resetReportForm(){
+async function saveSponsor(){
+  const id=document.getElementById("sponsorEditId").value,existing=id?sponsorsData.find(x=>x.id===id):null;const name=document.getElementById("sponsorName").value.trim();if(!name){alert("Name eingeben.");return;}let logo=existing?.logo||"",storagePath=existing?.storagePath||"";const file=document.getElementById("sponsorLogoFile").files?.[0];if(file){const up=await uploadImage(file,"sponsoren","sponsorUploadStatus");if(storagePath)await deleteStorageFile(storagePath);logo=up.url;storagePath=up.path;}const data={name,stufe:document.getElementById("sponsorLevel").value,webseite:document.getElementById("sponsorWebsite").value.trim(),sortierung:Number(document.getElementById("sponsorSort").value||999),logo,storagePath,aktiv:true};if(id)await db.collection("sponsoren").doc(id).update(data);else await db.collection("sponsoren").add(data);resetSponsorForm();alert("✅ Sponsor gespeichert.");
+}
+function editSponsor(id){const x=sponsorsData.find(i=>i.id===id);if(!x)return;document.getElementById("sponsorEditId").value=x.id;document.getElementById("sponsorName").value=x.name||"";document.getElementById("sponsorLevel").value=x.stufe||"Partner";document.getElementById("sponsorWebsite").value=x.webseite||"";document.getElementById("sponsorSort").value=x.sortierung||1;const p=document.getElementById("sponsorLogoPreview");if(x.logo){p.src=x.logo;p.classList.add("visible");}}
+function resetSponsorForm(){document.getElementById("sponsorEditId").value="";document.getElementById("sponsorName").value="";document.getElementById("sponsorLevel").value="Hauptsponsor";document.getElementById("sponsorWebsite").value="";document.getElementById("sponsorSort").value="1";document.getElementById("sponsorLogoFile").value="";const p=document.getElementById("sponsorLogoPreview");p.removeAttribute("src");p.classList.remove("visible");}
 
-  document.getElementById("reportEditId").value = "";
-  document.getElementById("reportTitle").value = "";
-  document.getElementById("reportTeam").value = "";
-  document.getElementById("reportText").value = "";
-  document.getElementById("reportDate").value = "";
-
+function commentTargetLabel(key){
+  if(String(key).startsWith("matchbericht:")){const id=String(key).split(":")[1];return "Matchbericht: "+(reportsData.find(x=>x.id===id)?.titel||"Unbekannt");}
+  return "News: "+(newsData.find(x=>x.id===key)?.titel||"Unbekannt");
 }
 
 
@@ -6984,6 +6677,15 @@ async function deleteItem(
 
   if(collection === "vorstand"){
     item = boardData.find(x => x.id === id);
+  }
+  if(collection === "matchberichte"){
+    item = reportsData.find(x => x.id === id);
+  }
+  if(collection === "sponsoren"){
+    item = sponsorsData.find(x => x.id === id);
+  }
+  if(collection === "kalender"){
+    item = calendarData.find(x => x.id === id);
   }
 
   if(
@@ -7145,6 +6847,18 @@ function renderAdminLists(){
 
   }
 
+
+  const commentsList=document.getElementById("adminCommentsList");
+  if(commentsList){
+    commentsList.innerHTML=commentsData.length?commentsData.map(c=>`<div class="admin-list-item"><div class="comment-admin-meta">${esc(commentTargetLabel(c.newsId))} · ${formatDate(c.datum)}</div><strong>${esc(c.name||"Gast")}</strong><div class="comment-admin-text">${esc(c.text||"")}</div><div class="admin-actions"><button class="button button-red button-small" onclick="deleteComment('${c.id}')">Löschen</button></div></div>`).join(""):'<div class="empty">Keine Kommentare vorhanden.</div>';
+  }
+  const calList=document.getElementById("adminCalendarList");
+  if(calList){calList.innerHTML=calendarData.map(x=>adminRow(`${formatDate(x.datum)} · ${x.titel}`,"",`editCalendarItem('${x.id}')`,`deleteItem('kalender','${x.id}')`)).join("");}
+  const spList=document.getElementById("adminSponsorsList");
+  if(spList){spList.innerHTML=sponsorsData.map(x=>adminRow(`${x.name} · ${x.stufe||"Partner"}`,x.logo,`editSponsor('${x.id}')`,`deleteItem('sponsoren','${x.id}')`)).join("");}
+  const dash=document.getElementById("adminDashboard");
+  if(dash){dash.innerHTML=`<div class="admin-stat"><strong>${newsData.length}</strong><span>News</span></div><div class="admin-stat"><strong>${reportsData.length}</strong><span>Berichte</span></div><div class="admin-stat"><strong>${commentsData.length}</strong><span>Kommentare</span></div><div class="admin-stat"><strong>${teamsData.length}</strong><span>Teams</span></div><div class="admin-stat"><strong>${calendarData.length}</strong><span>Termine</span></div><div class="admin-stat"><strong>${sponsorsData.length}</strong><span>Sponsoren</span></div>`;}
+
 }
 
 
@@ -7203,52 +6917,22 @@ function adminRow(
 }
 
 
-/* SERVICE WORKER */
-
-if(
-  "serviceWorker"
-  in navigator
-){
-
-  window.addEventListener(
-    "load",
-    async () => {
-
-      try{
-
-        await navigator
-          .serviceWorker
-          .register(
-            "./sw.js"
-          );
-
-        if(
-          "Notification"
-          in window
-          &&
-          Notification.permission ===
-          "granted"
-        ){
-
-          await registerCurrentDeviceForPush();
-
-        }
-
-      }
-
-      catch(error){
-
-        console.error(
-          error
-        );
-
-      }
-
-    }
-  );
-
+/* SERVICE WORKER + APP-UPDATES */
+let waitingServiceWorker=null;
+function showUpdateBanner(worker){waitingServiceWorker=worker;document.getElementById("updateBanner")?.classList.add("visible");}
+function updateAppNow(){if(waitingServiceWorker){waitingServiceWorker.postMessage({type:"SKIP_WAITING"});}else{window.location.reload();}}
+if("serviceWorker" in navigator){
+  window.addEventListener("load",async()=>{
+    try{
+      const registration=await navigator.serviceWorker.register("./sw.js");
+      if(registration.waiting)showUpdateBanner(registration.waiting);
+      registration.addEventListener("updatefound",()=>{const worker=registration.installing;if(!worker)return;worker.addEventListener("statechange",()=>{if(worker.state==="installed"&&navigator.serviceWorker.controller)showUpdateBanner(worker);});});
+      navigator.serviceWorker.addEventListener("controllerchange",()=>window.location.reload());
+      registration.update();
+      if("Notification" in window&&Notification.permission==="granted")await registerCurrentDeviceForPush();
+    }catch(error){console.error(error);}
+  });
 }
-
 
 window.addEventListener(
   "DOMContentLoaded",
@@ -7256,6 +6940,8 @@ window.addEventListener(
 
     updateNotificationStatus();
     updatePushCounters();
+    renderHomeMatchCards();
+    tryHandleDeepLink();
 
     await initializeAdminAuth();
 
