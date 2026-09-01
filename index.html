@@ -3653,23 +3653,27 @@ async function initModularMfa(){
 
   try{
 
-    const appModule =
-      await import(
-        "https://www.gstatic.com/firebasejs/10.13.2/firebase-app.js"
-      );
+    /*
+      WICHTIG:
+      Die bestehende Firebase-Compat-App bleibt die zentrale App.
+      Fuer TOTP verwenden wir nur die modularen Auth-Funktionen
+      auf exakt derselben Auth-Instanz. So bleiben Firestore,
+      Storage, Functions und die bestehende Anmeldung synchron.
+    */
 
     const authModule =
       await import(
         "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js"
       );
 
-    const modularApp =
-      appModule.getApp();
+    if(!auth || !auth._delegate){
+      throw new Error(
+        "Firebase Auth konnte nicht initialisiert werden."
+      );
+    }
 
     mfaAuth =
-      authModule.getAuth(
-        modularApp
-      );
+      auth._delegate;
 
     mfaApi =
       authModule;
@@ -4232,8 +4236,40 @@ async function loginAdmin(){
 
     }
 
+    let loginMessage =
+      "❌ Anmeldung fehlgeschlagen.";
+
+    if(
+      error.code === "auth/invalid-credential"
+      ||
+      error.code === "auth/wrong-password"
+      ||
+      error.code === "auth/user-not-found"
+    ){
+      loginMessage =
+        "❌ E-Mail oder Passwort ist nicht korrekt.";
+    }
+    else if(
+      error.code === "auth/too-many-requests"
+    ){
+      loginMessage =
+        "❌ Zu viele Anmeldeversuche. Bitte kurz warten und erneut versuchen.";
+    }
+    else if(
+      error.code === "auth/network-request-failed"
+    ){
+      loginMessage =
+        "❌ Netzwerkfehler. Bitte Internetverbindung prüfen.";
+    }
+    else if(error.code){
+      loginMessage =
+        "❌ Anmeldung fehlgeschlagen ("
+        + error.code
+        + ").";
+    }
+
     status.textContent =
-      "❌ Anmeldung fehlgeschlagen. E-Mail oder Passwort prüfen.";
+      loginMessage;
 
   }
 
