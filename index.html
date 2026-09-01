@@ -3952,6 +3952,7 @@ function openCommentsForNews(newsId){
   const isReport = String(newsId || "").startsWith("matchbericht:")
     && reportsData.some(item => "matchbericht:" + item.id === newsId);
 
+  // Kommentare gibt es ausschliesslich bei News und Matchberichten.
   if(!isNews && !isReport){
     hideComments();
     return;
@@ -3959,25 +3960,19 @@ function openCommentsForNews(newsId){
 
   currentCommentNewsId = newsId;
 
-  const section =
-    document.getElementById("commentsSection");
+  const section = document.getElementById("commentsSection");
+  const nameInput = document.getElementById("commentName");
+  const textInput = document.getElementById("commentText");
+  const status = document.getElementById("commentStatus");
+  const list = document.getElementById("commentsList");
 
-  const nameInput =
-    document.getElementById("commentName");
-
-  const textInput =
-    document.getElementById("commentText");
-
-  const status =
-    document.getElementById("commentStatus");
-
+  // Beim Öffnen einer News / eines Matchberichts ist der Kommentarbereich sofort sichtbar.
   if(section){
     section.classList.add("visible");
   }
 
   if(nameInput){
-    nameInput.value =
-      localStorage.getItem("fcwCommentName") || "";
+    nameInput.value = localStorage.getItem("fcwCommentName") || "";
   }
 
   if(textInput){
@@ -3988,59 +3983,57 @@ function openCommentsForNews(newsId){
     status.textContent = "";
   }
 
+  // Bereits geladene Kommentare sofort anzeigen, ohne auf Firestore warten zu müssen.
+  const cachedComments = commentsData
+    .filter(comment => comment.newsId === newsId && comment.aktiv !== false)
+    .sort((a,b) =>
+      (toDate(a.datum)?.getTime() || 0)
+      -
+      (toDate(b.datum)?.getTime() || 0)
+    );
+
+  if(cachedComments.length){
+    renderComments(cachedComments);
+  }
+  else if(list){
+    list.innerHTML = `<div class="empty">Noch keine Kommentare. Schreibe den ersten Kommentar.</div>`;
+  }
+
   if(currentCommentsUnsubscribe){
     currentCommentsUnsubscribe();
   }
 
-  currentCommentsUnsubscribe =
-    db
-      .collection("kommentare")
-      .where("newsId","==",newsId)
-      .onSnapshot(
-        snapshot => {
+  // Live-Updates: neue oder gelöschte Kommentare erscheinen sofort im geöffneten Beitrag.
+  currentCommentsUnsubscribe = db
+    .collection("kommentare")
+    .where("newsId","==",newsId)
+    .onSnapshot(
+      snapshot => {
+        const comments = [];
 
-          const comments = [];
-
-          snapshot.forEach(doc => {
-
-            const data = doc.data();
-
-            if(data.aktiv === false){
-              return;
-            }
-
-            comments.push({
-              id:doc.id,
-              ...data
-            });
-
-          });
-
-          comments.sort(
-            (a,b) =>
-              (toDate(a.datum)?.getTime() || 0)
-              -
-              (toDate(b.datum)?.getTime() || 0)
-          );
-
-          renderComments(comments);
-
-        },
-        error => {
-
-          console.error("Kommentare Fehler:",error);
-
-          const list =
-            document.getElementById("commentsList");
-
-          if(list){
-            list.innerHTML =
-              `<div class="empty">Kommentare konnten nicht geladen werden.</div>`;
+        snapshot.forEach(doc => {
+          const data = doc.data();
+          if(data.aktiv === false){
+            return;
           }
+          comments.push({ id:doc.id, ...data });
+        });
 
+        comments.sort((a,b) =>
+          (toDate(a.datum)?.getTime() || 0)
+          -
+          (toDate(b.datum)?.getTime() || 0)
+        );
+
+        renderComments(comments);
+      },
+      error => {
+        console.error("Kommentare Fehler:",error);
+        if(list){
+          list.innerHTML = `<div class="empty">Kommentare konnten nicht geladen werden.</div>`;
         }
-      );
-
+      }
+    );
 }
 
 
