@@ -558,76 +558,6 @@ main{
 }
 
 
-db.collection("kalender").onSnapshot(snapshot => {
-  calendarData = [];
-  snapshot.forEach(doc => {
-    const data = doc.data();
-    if(data.aktiv === false) return;
-    calendarData.push({id:doc.id,...data});
-  });
-  calendarData.sort((a,b)=>(toDate(a.datum)?.getTime()||0)-(toDate(b.datum)?.getTime()||0));
-  renderCalendar();
-  renderHomeMatchCards();
-  renderAdminLists();
-});
-
-db.collection("sponsoren").onSnapshot(snapshot => {
-  sponsorsData = [];
-  snapshot.forEach(doc => {
-    const data = doc.data();
-    if(data.aktiv === false) return;
-    sponsorsData.push({id:doc.id,...data});
-  });
-  sponsorsData.sort((a,b)=>Number(a.sortierung??999)-Number(b.sortierung??999));
-  renderSponsors();
-  renderAdminLists();
-});
-
-db.collection("kommentare").onSnapshot(snapshot => {
-  commentsData = [];
-  snapshot.forEach(doc => {
-    const data = doc.data();
-    if(data.aktiv === false) return;
-    commentsData.push({id:doc.id,...data});
-  });
-  commentsData.sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
-  renderAdminLists();
-  renderNews();
-});
-
-
-function renderHomeMatchCards(){
-  const nextBox=document.getElementById("homeNextMatch");
-  const resultBox=document.getElementById("homeLastResult");
-  const now=Date.now();
-  const next=calendarData.find(item=>item.typ==="Spiel" && (toDate(item.datum)?.getTime()||0)>=now);
-  if(nextBox){
-    if(!next){ nextBox.innerHTML='<div class="home-status-label">Nächstes Spiel</div><div class="empty">Noch kein kommendes Spiel eingetragen.</div>'; }
-    else{
-      nextBox.innerHTML=`<div class="home-status-label">⚽ Nächstes Spiel</div><div class="home-status-big">${esc(next.team||"FC Wängi")} ${next.gegner?"– "+esc(next.gegner):""}</div><div class="home-status-meta">${formatDateTime(next.datum)}${next.ort?" · "+esc(next.ort):""}</div><button class="button button-outline button-small" onclick="openPage('kalender')">Kalender öffnen</button>`;
-    }
-  }
-  const finished=reportsData.filter(r=>Number.isFinite(Number(r.toreFcw)) && Number.isFinite(Number(r.toreGegner))).sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
-  const last=finished[0];
-  if(resultBox){
-    if(!last){ resultBox.innerHTML='<div class="home-status-label">Letztes Resultat</div><div class="empty">Noch kein Resultat eingetragen.</div>'; }
-    else{
-      resultBox.innerHTML=`<div class="home-status-label">🏁 Letztes Resultat</div><div class="home-status-big">${esc(last.team||"FC Wängi")} ${last.gegner?"– "+esc(last.gegner):""}</div><div class="result-score">${Number(last.toreFcw)} : ${Number(last.toreGegner)}</div><button class="button button-outline button-small" onclick="openReport('${last.id}')">Matchbericht öffnen</button>`;
-    }
-  }
-}
-
-function formatDateTime(value){
-  const d=toDate(value); if(!d) return "";
-  return new Intl.DateTimeFormat("de-CH",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(d);
-}
-
-function commentCountFor(id){ return commentsData.filter(c=>c.newsId===id).length; }
-function setNewsFilter(filter,button){
-  activeNewsFilter=filter;
-  document.querySelectorAll(".filter-chip").forEach(x=>x.classList.remove("active"));
-  button?.classList.add("active"); renderNews();
-}
 
 
 /* NEWS */
@@ -1052,26 +982,6 @@ textarea.form-input{
 }
 
 
-function renderCalendar(){
-  const container=document.getElementById("calendarList"); if(!container)return;
-  if(!calendarData.length){container.innerHTML='<div class="empty">Noch keine Termine eingetragen.</div>';return;}
-  container.innerHTML=calendarData.map(item=>{const d=toDate(item.datum);const day=d?String(d.getDate()).padStart(2,"0"):"--";const mon=d?new Intl.DateTimeFormat("de-CH",{month:"short"}).format(d):"";return `<div class="card calendar-item"><div class="calendar-date"><div class="day">${day}</div><div class="month">${esc(mon)}</div></div><div><span class="tag">${esc(item.typ||"Termin")}</span><h3>${esc(item.titel||"")}</h3><div class="meta">${formatDateTime(item.datum)}${item.ort?" · "+esc(item.ort):""}</div>${item.team||item.gegner?`<p><strong>${esc(item.team||"")}</strong>${item.gegner?" – "+esc(item.gegner):""}</p>`:""}${item.beschreibung?`<p>${esc(item.beschreibung)}</p>`:""}</div></div>`;}).join("");
-  renderHomeMatchCards();
-}
-
-function renderSponsors(){
-  const container=document.getElementById("sponsorList"); if(!container)return;
-  if(!sponsorsData.length){container.innerHTML='<div class="empty">Noch keine Sponsoren eingetragen.</div>';return;}
-  container.innerHTML=`<div class="sponsor-grid">${sponsorsData.map(item=>`<div class="card sponsor-card" onclick="openSponsor('${item.id}')"><img class="sponsor-logo" src="${esc(item.logo||"./logo.png")}" onerror="this.src='./logo.png'"><div class="sponsor-level">${esc(item.stufe||"Partner")}</div><h3>${esc(item.name||"")}</h3></div>`).join("")}</div>`;
-}
-function openSponsor(id){const s=sponsorsData.find(x=>x.id===id);if(!s)return;if(s.webseite){window.open(s.webseite,"_blank","noopener");}}
-
-function tryHandleDeepLink(){
-  if(!pendingDeepLink) return;
-  const type=pendingDeepLink.get("open"), id=pendingDeepLink.get("id"); if(!type||!id)return;
-  if(type==="news" && newsData.some(x=>x.id===id)){pendingDeepLink=null;openPage("news");setTimeout(()=>openNews(id),50);}
-  if(type==="report" && reportsData.some(x=>x.id===id)){pendingDeepLink=null;openPage("news");setTimeout(()=>openReport(id),50);}
-}
 
 
 /* MODAL */
@@ -2715,6 +2625,99 @@ let pendingDeepLink = new URLSearchParams(window.location.search);
 let currentCommentNewsId = null;
 let currentCommentsUnsubscribe = null;
 
+db.collection("kalender").onSnapshot(snapshot => {
+  calendarData = [];
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    if(data.aktiv === false) return;
+    calendarData.push({id:doc.id,...data});
+  });
+  calendarData.sort((a,b)=>(toDate(a.datum)?.getTime()||0)-(toDate(b.datum)?.getTime()||0));
+  renderCalendar();
+  renderHomeMatchCards();
+  renderAdminLists();
+});
+
+db.collection("sponsoren").onSnapshot(snapshot => {
+  sponsorsData = [];
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    if(data.aktiv === false) return;
+    sponsorsData.push({id:doc.id,...data});
+  });
+  sponsorsData.sort((a,b)=>Number(a.sortierung??999)-Number(b.sortierung??999));
+  renderSponsors();
+  renderAdminLists();
+});
+
+db.collection("kommentare").onSnapshot(snapshot => {
+  commentsData = [];
+  snapshot.forEach(doc => {
+    const data = doc.data();
+    if(data.aktiv === false) return;
+    commentsData.push({id:doc.id,...data});
+  });
+  commentsData.sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
+  renderAdminLists();
+  renderNews();
+});
+
+
+function renderHomeMatchCards(){
+  const nextBox=document.getElementById("homeNextMatch");
+  const resultBox=document.getElementById("homeLastResult");
+  const now=Date.now();
+  const next=calendarData.find(item=>item.typ==="Spiel" && (toDate(item.datum)?.getTime()||0)>=now);
+  if(nextBox){
+    if(!next){ nextBox.innerHTML='<div class="home-status-label">Nächstes Spiel</div><div class="empty">Noch kein kommendes Spiel eingetragen.</div>'; }
+    else{
+      nextBox.innerHTML=`<div class="home-status-label">⚽ Nächstes Spiel</div><div class="home-status-big">${esc(next.team||"FC Wängi")} ${next.gegner?"– "+esc(next.gegner):""}</div><div class="home-status-meta">${formatDateTime(next.datum)}${next.ort?" · "+esc(next.ort):""}</div><button class="button button-outline button-small" onclick="openPage('kalender')">Kalender öffnen</button>`;
+    }
+  }
+  const finished=reportsData.filter(r=>Number.isFinite(Number(r.toreFcw)) && Number.isFinite(Number(r.toreGegner))).sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
+  const last=finished[0];
+  if(resultBox){
+    if(!last){ resultBox.innerHTML='<div class="home-status-label">Letztes Resultat</div><div class="empty">Noch kein Resultat eingetragen.</div>'; }
+    else{
+      resultBox.innerHTML=`<div class="home-status-label">🏁 Letztes Resultat</div><div class="home-status-big">${esc(last.team||"FC Wängi")} ${last.gegner?"– "+esc(last.gegner):""}</div><div class="result-score">${Number(last.toreFcw)} : ${Number(last.toreGegner)}</div><button class="button button-outline button-small" onclick="openReport('${last.id}')">Matchbericht öffnen</button>`;
+    }
+  }
+}
+
+function formatDateTime(value){
+  const d=toDate(value); if(!d) return "";
+  return new Intl.DateTimeFormat("de-CH",{day:"2-digit",month:"2-digit",year:"numeric",hour:"2-digit",minute:"2-digit"}).format(d);
+}
+
+function commentCountFor(id){ return commentsData.filter(c=>c.newsId===id).length; }
+function setNewsFilter(filter,button){
+  activeNewsFilter=filter;
+  document.querySelectorAll(".filter-chip").forEach(x=>x.classList.remove("active"));
+  button?.classList.add("active"); renderNews();
+}
+
+function renderCalendar(){
+  const container=document.getElementById("calendarList"); if(!container)return;
+  if(!calendarData.length){container.innerHTML='<div class="empty">Noch keine Termine eingetragen.</div>';return;}
+  container.innerHTML=calendarData.map(item=>{const d=toDate(item.datum);const day=d?String(d.getDate()).padStart(2,"0"):"--";const mon=d?new Intl.DateTimeFormat("de-CH",{month:"short"}).format(d):"";return `<div class="card calendar-item"><div class="calendar-date"><div class="day">${day}</div><div class="month">${esc(mon)}</div></div><div><span class="tag">${esc(item.typ||"Termin")}</span><h3>${esc(item.titel||"")}</h3><div class="meta">${formatDateTime(item.datum)}${item.ort?" · "+esc(item.ort):""}</div>${item.team||item.gegner?`<p><strong>${esc(item.team||"")}</strong>${item.gegner?" – "+esc(item.gegner):""}</p>`:""}${item.beschreibung?`<p>${esc(item.beschreibung)}</p>`:""}</div></div>`;}).join("");
+  renderHomeMatchCards();
+}
+
+function renderSponsors(){
+  const container=document.getElementById("sponsorList"); if(!container)return;
+  if(!sponsorsData.length){container.innerHTML='<div class="empty">Noch keine Sponsoren eingetragen.</div>';return;}
+  container.innerHTML=`<div class="sponsor-grid">${sponsorsData.map(item=>`<div class="card sponsor-card" onclick="openSponsor('${item.id}')"><img class="sponsor-logo" src="${esc(item.logo||"./logo.png")}" onerror="this.src='./logo.png'"><div class="sponsor-level">${esc(item.stufe||"Partner")}</div><h3>${esc(item.name||"")}</h3></div>`).join("")}</div>`;
+}
+function openSponsor(id){const s=sponsorsData.find(x=>x.id===id);if(!s)return;if(s.webseite){window.open(s.webseite,"_blank","noopener");}}
+
+function tryHandleDeepLink(){
+  if(!pendingDeepLink) return;
+  const type=pendingDeepLink.get("open"), id=pendingDeepLink.get("id"); if(!type||!id)return;
+  if(type==="news" && newsData.some(x=>x.id===id)){pendingDeepLink=null;openPage("news");setTimeout(()=>openNews(id),50);}
+  if(type==="report" && reportsData.some(x=>x.id===id)){pendingDeepLink=null;openPage("news");setTimeout(()=>openReport(id),50);}
+}
+
+
 /*
   TOTP-MFA nutzt die modulare Firebase Auth API.
   Die übrigen Firebase-Bereiche bleiben unverändert auf Compat.
@@ -3379,10 +3382,9 @@ function openNews(id){
     tag:news.kategorie || "News",
     title:news.titel || "",
     meta:formatDate(news.datum),
-    text:news.text || ""
+    text:news.text || "",
+    commentsKey:id
   });
-
-  openCommentsForNews(id);
   history.replaceState(null,"",`?open=news&id=${encodeURIComponent(id)}`);
 
 }
@@ -3827,8 +3829,7 @@ ${report.team||"FC Wängi"} ${report.toreFcw} : ${report.toreGegner} ${report.ge
   const details=[report.heimauswaerts?`Spielort: ${report.heimauswaerts}`:"",report.torschuetzen?`Torschützen:
 ${report.torschuetzen}`:"",report.aufstellung?`Aufstellung:
 ${report.aufstellung}`:""].filter(Boolean).join("\n\n");
-  openModal({image:report.bild||"",tag:report.team||"Matchbericht",title:report.titel,meta:formatDate(report.datum),text:(score?score.trim()+"\n\n":"")+(report.text||"")+(details?"\n\n"+details:"")});
-  openCommentsForNews("matchbericht:"+id);
+  openModal({image:report.bild||"",tag:report.team||"Matchbericht",title:report.titel,meta:formatDate(report.datum),text:(score?score.trim()+"\n\n":"")+(report.text||"")+(details?"\n\n"+details:""),commentsKey:"matchbericht:"+id});
   history.replaceState(null,"",`?open=report&id=${encodeURIComponent(id)}`);
 }
 
@@ -3882,6 +3883,13 @@ function openModal(data){
     .add(
       "visible"
     );
+
+  if(data.commentsKey){
+    openCommentsForNews(data.commentsKey);
+  }
+  else{
+    hideComments();
+  }
 
 }
 
@@ -3939,6 +3947,15 @@ function hideComments(){
 
 
 function openCommentsForNews(newsId){
+
+  const isNews = newsData.some(item => item.id === newsId);
+  const isReport = String(newsId || "").startsWith("matchbericht:")
+    && reportsData.some(item => "matchbericht:" + item.id === newsId);
+
+  if(!isNews && !isReport){
+    hideComments();
+    return;
+  }
 
   currentCommentNewsId = newsId;
 
