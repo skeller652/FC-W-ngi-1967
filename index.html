@@ -721,25 +721,28 @@ main{
 }
 
 .ofv-header{
-  padding:18px;
+  padding:16px;
   background:linear-gradient(135deg,#171717,#303030);
   color:white;
 }
 
 .ofv-header p{
   color:#ddd;
+  margin:6px 0 0;
 }
 
-.ofv-widget-wrap,
-.sfvFullHeight{
-  width:100% !important;
-  min-height:1100px;
+.ofv-match-frame{
+  display:block;
+  width:100%;
+  height:520px;
+  border:0;
+  background:#fff;
 }
 
 .ofv-rankings-grid{
   display:grid;
-  gap:16px;
-  margin-top:14px;
+  gap:12px;
+  margin-top:8px;
 }
 
 .ofv-ranking-card{
@@ -748,7 +751,7 @@ main{
 }
 
 .ofv-ranking-title{
-  padding:14px 16px;
+  padding:12px 14px;
   border-bottom:1px solid var(--border);
   background:#fff7d1;
 }
@@ -760,16 +763,16 @@ main{
 
 .ofv-ranking-title small{
   display:block;
-  margin-top:3px;
+  margin-top:2px;
   color:#6e6e6e;
 }
 
 .ofv-ranking-frame{
   display:block;
   width:100%;
-  min-height:760px;
+  height:560px;
   border:0;
-  background:white;
+  background:#fff;
 }
 
 
@@ -1408,9 +1411,9 @@ vom OFV / football.ch geladen.
 </div>
 
 <iframe
-  class="sfvFullHeight"
+  class="ofv-match-frame"
   frameborder="0"
-  scrolling="no"
+  scrolling="yes"
   src="https://widget.football.ch/Widgets.aspx/v-1800/a-as/"
 ></iframe>
 
@@ -3549,9 +3552,9 @@ function renderOfvRankings(){
             <small>${esc(team.liga || "Live-Rangliste")}</small>
           </div>
           <iframe
-            class="ofv-ranking-frame sfvFullHeight"
+            class="ofv-ranking-frame"
             frameborder="0"
-            scrolling="no"
+            scrolling="yes"
             loading="lazy"
             src="${esc(team.rankingUrl)}"
             title="Rangliste ${esc(team.name || "FC Wängi")}"
