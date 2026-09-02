@@ -802,7 +802,6 @@ main{
 .moderation-item{padding:12px;border:1px solid var(--border);border-radius:12px;background:#fafafa;}
 .moderation-item strong{display:block;margin-bottom:5px;}
 .moderation-meta{font-size:10px;color:#777;margin-bottom:6px;}
-.comment-actions-inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 .report-comment-button{border:0;background:transparent;color:#9a6d00;font-size:11px;font-weight:800;padding:4px 0;cursor:pointer;}
 .security-note{font-size:12px;color:#666;line-height:1.5;margin-top:8px;}
 
@@ -2733,7 +2732,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.09.02-3";
+const APP_VERSION = "2026.09.02-3.1";
 
 
 let newsData = [];
@@ -3076,64 +3075,163 @@ function previewSelectedImage(
 }
 
 
+async function fileToJpeg(file){
+
+  const isHeic =
+    file.type === "image/heic"
+    ||
+    file.type === "image/heif"
+    ||
+    /\.(heic|heif)$/i.test(file.name || "");
+
+  if(!isHeic){
+    return file;
+  }
+
+  const statusText =
+    "⏳ HEIC-Foto wird in JPG umgewandelt...";
+
+  try{
+    const objectUrl = URL.createObjectURL(file);
+    const img = new Image();
+
+    await new Promise((resolve,reject)=>{
+      img.onload = resolve;
+      img.onerror = () => reject(new Error("HEIC-Bild konnte vom Browser nicht gelesen werden."));
+      img.src = objectUrl;
+    });
+
+    const maxSide = 2400;
+    let width = img.naturalWidth || img.width;
+    let height = img.naturalHeight || img.height;
+
+    if(!width || !height){
+      URL.revokeObjectURL(objectUrl);
+      throw new Error("Bildabmessungen konnten nicht gelesen werden.");
+    }
+
+    const scale = Math.min(1, maxSide / Math.max(width,height));
+    width = Math.max(1, Math.round(width * scale));
+    height = Math.max(1, Math.round(height * scale));
+
+    const canvas = document.createElement("canvas");
+    canvas.width = width;
+    canvas.height = height;
+
+    const ctx = canvas.getContext("2d");
+    if(!ctx){
+      URL.revokeObjectURL(objectUrl);
+      throw new Error("Bildkonvertierung ist auf diesem Gerät nicht verfügbar.");
+    }
+
+    ctx.drawImage(img,0,0,width,height);
+    URL.revokeObjectURL(objectUrl);
+
+    const blob = await new Promise((resolve,reject)=>{
+      canvas.toBlob(
+        result => result ? resolve(result) : reject(new Error("HEIC konnte nicht in JPG umgewandelt werden.")),
+        "image/jpeg",
+        0.88
+      );
+    });
+
+    const baseName = String(file.name || "foto")
+      .replace(/\.[^.]+$/,"")
+      .replace(/[^a-z0-9_-]/gi,"-")
+      .slice(0,80)
+      ||
+      "foto";
+
+    return new File(
+      [blob],
+      baseName + ".jpg",
+      {
+        type:"image/jpeg",
+        lastModified:Date.now()
+      }
+    );
+  }
+  catch(error){
+    console.error("HEIC-Konvertierung:",error);
+    throw new Error(
+      "Dieses HEIC/HEIF-Foto konnte nicht automatisch in JPG umgewandelt werden. Bitte das Foto als JPG/PNG exportieren oder einen Screenshot verwenden."
+    );
+  }
+}
+
+
 async function uploadImage(
   file,
   folder,
   statusId
 ){
 
-  if(
-    !auth.currentUser
+  const currentAdmin =
+    (mfaAuth && mfaAuth.currentUser)
     ||
-    auth.currentUser.uid !==
-    ADMIN_UID
+    auth.currentUser;
+
+  if(
+    !currentAdmin
+    ||
+    currentAdmin.uid !== ADMIN_UID
   ){
-
     throw new Error(
-      "Keine Admin-Berechtigung."
+      "Keine Admin-Berechtigung. Bitte Admin neu anmelden."
     );
-
   }
 
   if(!file){
     return null;
   }
 
-  const allowedImageTypes = ["image/jpeg","image/png","image/webp"];
-
-  if(!allowedImageTypes.includes(file.type)){
-    throw new Error("Nur JPG, PNG oder WEBP sind erlaubt.");
-  }
-
-  if(file.size > 8 * 1024 * 1024){
-    throw new Error("Das Bild ist grösser als 8 MB.");
-  }
-
   const status =
-    document.getElementById(
-      statusId
-    );
+    document.getElementById(statusId);
+
+  const isHeic =
+    file.type === "image/heic"
+    ||
+    file.type === "image/heif"
+    ||
+    /\.(heic|heif)$/i.test(file.name || "");
 
   if(status){
+    status.textContent = isHeic
+      ? "⏳ HEIC-Foto wird in JPG umgewandelt..."
+      : "⏳ Bild wird vorbereitet...";
+  }
 
+  let uploadFile = await fileToJpeg(file);
+
+  const allowedImageTypes = [
+    "image/jpeg",
+    "image/png",
+    "image/webp"
+  ];
+
+  if(!allowedImageTypes.includes(uploadFile.type)){
+    throw new Error(
+      "Nicht unterstütztes Bildformat. Erlaubt sind JPG, PNG, WEBP sowie HEIC/HEIF mit automatischer Umwandlung."
+    );
+  }
+
+  if(uploadFile.size > 8 * 1024 * 1024){
+    throw new Error(
+      "Das Bild ist nach der Verarbeitung noch grösser als 8 MB. Bitte ein kleineres Bild verwenden."
+    );
+  }
+
+  if(status){
     status.textContent =
       "⏳ Bild wird hochgeladen...";
-
   }
 
   const extension =
-    (
-      file.name
-        .split(".")
-        .pop()
-        ||
-        "jpg"
-    )
-    .replace(
-      /[^a-z0-9]/gi,
-      ""
-    )
-    .toLowerCase();
+    uploadFile.type === "image/png"
+      ? "png"
+      : uploadFile.type === "image/webp"
+        ? "webp"
+        : "jpg";
 
   const name =
     Date.now()
@@ -3159,10 +3257,10 @@ async function uploadImage(
     storage.ref(path);
 
   await ref.put(
-    file,
+    uploadFile,
     {
       contentType:
-        file.type
+        uploadFile.type
     }
   );
 
@@ -3170,17 +3268,16 @@ async function uploadImage(
     await ref.getDownloadURL();
 
   if(status){
-
     status.textContent =
-      "✅ Foto hochgeladen";
-
+      isHeic
+        ? "✅ HEIC umgewandelt und Foto hochgeladen"
+        : "✅ Foto hochgeladen";
   }
 
   return {
     url,
     path
   };
-
 }
 
 
@@ -4301,14 +4398,11 @@ function renderComments(comments){
         ${
           adminActive
           ?
-          `<div class="comment-actions-inline">
-            <button class="report-comment-button" onclick="event.stopPropagation();reportComment('${comment.id}')">🚩 Melden</button>
-            <button
-              class="button button-red button-small"
-              style="margin-top:0;"
-              onclick="deleteComment('${comment.id}')"
-            >Löschen</button>
-          </div>`
+          `<button
+            class="button button-red button-small"
+            style="margin-top:0;"
+            onclick="deleteComment('${comment.id}')"
+          >Löschen</button>`
           :
           `<button class="report-comment-button" onclick="event.stopPropagation();reportComment('${comment.id}')">🚩 Melden</button>`
         }
@@ -6012,7 +6106,7 @@ async function saveNews(){
       try{const pushText=text.length>170?text.substring(0,167)+"...":text;await sendPushCallable({title:"📰 "+title,body:pushText,url:`${APP_URL}?open=news&id=${encodeURIComponent(savedId)}`});alert("✅ News veröffentlicht und Push gesendet.");}
       catch(error){console.error(error);alert("✅ News veröffentlicht.\n⚠️ Push konnte nicht gesendet werden.");}
     }else alert("✅ News aktualisiert.");
-  }catch(error){console.error(error);alert("❌ News konnte nicht gespeichert werden.");}
+  }catch(error){console.error("News speichern:",error);alert("❌ News konnte nicht gespeichert werden.\n\n" + (error?.message || "Unbekannter Fehler."));}
 }
 
 function editNews(id){
