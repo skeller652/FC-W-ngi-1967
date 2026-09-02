@@ -1148,6 +1148,17 @@ textarea.form-input{
   .sponsor-grid{grid-template-columns:1fr 1fr;}
 }
 
+
+/* === FCW V2 PROFESSIONAL === */
+.connection-banner{display:none;padding:9px 14px;text-align:center;font-size:12px;font-weight:800;background:#fff3cd;border-bottom:1px solid #ead28b;}
+.connection-banner.visible{display:block;}
+.news-search{width:100%;margin:10px 0 12px;padding:12px 14px;border:1px solid #ddd;border-radius:14px;background:#fafafa;outline:none;}
+.news-search:focus{border-color:#d8ad00;background:#fff;}
+.modal-actions{display:flex;gap:8px;margin:14px 0 4px;flex-wrap:wrap;}
+.share-button{margin-top:0!important;}
+.security-note{font-size:11px;color:#777;margin-top:8px;line-height:1.45;}
+.app-version{font-size:10px;color:#999;text-align:center;margin:18px 0 5px;}
+
 </style>
 </head>
 
@@ -1167,6 +1178,7 @@ textarea.form-input{
 </div>
 
 </header>
+<div id="connectionBanner" class="connection-banner">📡 Keine Internetverbindung – gespeicherte Inhalte können weiterhin verfügbar sein.</div>
 
 <main>
 
@@ -1294,6 +1306,7 @@ Aktuelles rund um den FC Wängi 1967.
 <button class="filter-chip" data-filter="News" onclick="setNewsFilter('News',this)">News</button>
 <button class="filter-chip" data-filter="Matchbericht" onclick="setNewsFilter('Matchbericht',this)">Matchberichte</button>
 </div>
+<input id="newsSearch" class="news-search" type="search" placeholder="🔎 News und Matchberichte durchsuchen…" oninput="setNewsSearch(this.value)">
 <div id="newsList"></div>
 
 </section>
@@ -1431,6 +1444,7 @@ Admin-Bereich öffnen
 </button>
 
 </div>
+<div class="app-version">FC Wängi App · Version 2.0</div>
 
 </section>
 
@@ -2488,7 +2502,9 @@ Kontakt
 <div id="modalMeta" class="modal-meta"></div>
 
 <div id="modalText" class="modal-text"></div>
-
+<div class="modal-actions">
+<button id="modalShareButton" class="button button-outline button-small share-button" onclick="shareCurrentContent()">↗️ Beitrag teilen</button>
+</div>
 
 <div id="commentsSection" class="comments-section">
 
@@ -2600,6 +2616,9 @@ const sendPushCallable =
     "sendPush"
   );
 
+const submitCommentCallable = functions.httpsCallable("submitComment");
+const deleteCommentCallable = functions.httpsCallable("deleteComment");
+
 const ADMIN_UID =
   "Ml4BJbbv4AOKZUCC4rutXv1HxWJ3";
 
@@ -2607,7 +2626,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.09.02-1";
+const APP_VERSION = "2026.09.02-2";
 
 
 let newsData = [];
@@ -2620,6 +2639,8 @@ let calendarData = [];
 let sponsorsData = [];
 let commentsData = [];
 let activeNewsFilter = "Alle";
+let newsSearchTerm = "";
+let currentShareData = null;
 let pendingDeepLink = new URLSearchParams(window.location.search);
 
 let currentCommentNewsId = null;
@@ -2695,6 +2716,7 @@ function setNewsFilter(filter,button){
   document.querySelectorAll(".filter-chip").forEach(x=>x.classList.remove("active"));
   button?.classList.add("active"); renderNews();
 }
+function setNewsSearch(value){ newsSearchTerm=String(value||"").trim().toLowerCase(); renderNews(); }
 
 function renderCalendar(){
   const container=document.getElementById("calendarList"); if(!container)return;
@@ -2708,7 +2730,11 @@ function renderSponsors(){
   if(!sponsorsData.length){container.innerHTML='<div class="empty">Noch keine Sponsoren eingetragen.</div>';return;}
   container.innerHTML=`<div class="sponsor-grid">${sponsorsData.map(item=>`<div class="card sponsor-card" onclick="openSponsor('${item.id}')"><img class="sponsor-logo" src="${esc(item.logo||"./logo.png")}" onerror="this.src='./logo.png'"><div class="sponsor-level">${esc(item.stufe||"Partner")}</div><h3>${esc(item.name||"")}</h3></div>`).join("")}</div>`;
 }
-function openSponsor(id){const s=sponsorsData.find(x=>x.id===id);if(!s)return;if(s.webseite){window.open(s.webseite,"_blank","noopener");}}
+function openSponsor(id){
+  const sponsor=sponsorsData.find(x=>x.id===id); if(!sponsor||!sponsor.webseite)return;
+  try{ const url=new URL(sponsor.webseite); if(!["http:","https:"].includes(url.protocol)) throw new Error(); window.open(url.toString(),"_blank","noopener,noreferrer"); }
+  catch{ alert("Die hinterlegte Sponsor-Webseite ist ungültig."); }
+}
 
 function tryHandleDeepLink(){
   if(!pendingDeepLink) return;
@@ -3350,9 +3376,12 @@ function renderNews(){
   ];
   if(activeNewsFilter==="News") feedItems=feedItems.filter(x=>x.type==="news");
   if(activeNewsFilter==="Matchbericht") feedItems=feedItems.filter(x=>x.type==="report");
+  if(newsSearchTerm){
+    feedItems=feedItems.filter(x=>`${x.titel} ${x.text} ${x.kategorie}`.toLowerCase().includes(newsSearchTerm));
+  }
   feedItems.sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
   if(!feedItems.length){container.innerHTML='<div class="empty">Keine Beiträge vorhanden.</div>';return;}
-  container.innerHTML=feedItems.map(item=>`<div class="card" onclick="${item.type==="report"?`openReport('${item.id}')`:`openNews('${item.id}')`}">${item.bild?`<img src="${esc(item.bild)}" class="news-image">`:""}<span class="tag">${esc(item.kategorie)}</span><div class="meta">${formatDate(item.datum)}</div><h3>${esc(item.titel)}</h3><p>${esc(String(item.text||"").substring(0,180))}</p><div class="news-comment-count">💬 ${commentCountFor(item.commentKey)} Kommentar${commentCountFor(item.commentKey)===1?"":"e"}</div></div>`).join("");
+  container.innerHTML=feedItems.map(item=>`<div class="card" onclick="${item.type==="report"?`openReport('${item.id}')`:`openNews('${item.id}')`}">${item.bild?`<img loading="lazy" src="${esc(item.bild)}" class="news-image">`:""}<span class="tag">${esc(item.kategorie)}</span><div class="meta">${formatDate(item.datum)}</div><h3>${esc(item.titel)}</h3><p>${esc(String(item.text||"").substring(0,180))}</p><div class="news-comment-count">💬 ${commentCountFor(item.commentKey)} Kommentar${commentCountFor(item.commentKey)===1?"":"e"}</div></div>`).join("");
   tryHandleDeepLink();
 }
 
@@ -3362,7 +3391,7 @@ function renderHomeNews(){
   const item=items[0];
   if(!item){container.innerHTML='<div class="empty">Keine News vorhanden.</div>';return;}
   const isReport=item.type==="report";
-  container.innerHTML=`<div class="card" onclick="${isReport?`openReport('${item.id}')`:`openNews('${item.id}')`}">${item.bild?`<img src="${esc(item.bild)}" class="news-image">`:""}<span class="tag">${esc(isReport?"Matchbericht · "+(item.team||"FCW"):(item.kategorie||"News"))}</span><h3>${esc(item.titel)}</h3><p>${esc(String(item.text||"").substring(0,140))}</p></div>`;
+  container.innerHTML=`<div class="card" onclick="${isReport?`openReport('${item.id}')`:`openNews('${item.id}')`}">${item.bild?`<img loading="lazy" src="${esc(item.bild)}" class="news-image">`:""}<span class="tag">${esc(isReport?"Matchbericht · "+(item.team||"FCW"):(item.kategorie||"News"))}</span><h3>${esc(item.titel)}</h3><p>${esc(String(item.text||"").substring(0,140))}</p></div>`;
 }
 
 function openNews(id){
@@ -3817,7 +3846,7 @@ function openBoardMember(id){
 function renderReports(){
   const container=document.getElementById("reportsList"); if(!container)return;
   if(!reportsData.length){container.innerHTML='<div class="empty">Keine Matchberichte vorhanden.</div>';return;}
-  container.innerHTML=reportsData.map(report=>`<div class="card" onclick="openReport('${report.id}')">${report.bild?`<img src="${esc(report.bild)}" class="news-image">`:""}<span class="tag">${esc(report.team||"Matchbericht")}</span><div class="meta">${formatDate(report.datum)}</div><h3>${esc(report.titel)}</h3>${report.gegner?`<div class="match-summary"><div class="match-side">${esc(report.team||"FC Wängi")}</div><div class="match-score">${report.toreFcw??"–"} : ${report.toreGegner??"–"}</div><div class="match-side">${esc(report.gegner)}</div></div>`:""}<p>${esc(String(report.text||"").substring(0,180))}</p><div class="news-comment-count">💬 ${commentCountFor("matchbericht:"+report.id)} Kommentare</div></div>`).join("");
+  container.innerHTML=reportsData.map(report=>`<div class="card" onclick="openReport('${report.id}')">${report.bild?`<img loading="lazy" src="${esc(report.bild)}" class="news-image">`:""}<span class="tag">${esc(report.team||"Matchbericht")}</span><div class="meta">${formatDate(report.datum)}</div><h3>${esc(report.titel)}</h3>${report.gegner?`<div class="match-summary"><div class="match-side">${esc(report.team||"FC Wängi")}</div><div class="match-score">${report.toreFcw??"–"} : ${report.toreGegner??"–"}</div><div class="match-side">${esc(report.gegner)}</div></div>`:""}<p>${esc(String(report.text||"").substring(0,180))}</p><div class="news-comment-count">💬 ${commentCountFor("matchbericht:"+report.id)} Kommentare</div></div>`).join("");
   renderHomeMatchCards(); tryHandleDeepLink();
 }
 
@@ -3838,6 +3867,7 @@ ${report.aufstellung}`:""].filter(Boolean).join("\n\n");
 function openModal(data){
 
   hideComments();
+  currentShareData = { title:data.title||"FC Wängi 1967", text:data.text||"", url:window.location.href };
 
   const image =
     document.getElementById(
@@ -3893,6 +3923,15 @@ function openModal(data){
 
 }
 
+
+async function shareCurrentContent(){
+  const data=currentShareData||{title:"FC Wängi 1967",text:"",url:window.location.href};
+  const shareData={title:data.title,text:String(data.text||"").substring(0,180),url:window.location.href};
+  try{
+    if(navigator.share){ await navigator.share(shareData); }
+    else{ await navigator.clipboard.writeText(window.location.href); alert("✅ Link wurde kopiert."); }
+  }catch(error){ if(error?.name!=="AbortError") console.warn("Teilen:",error); }
+}
 
 function closeModal(){
 
@@ -4140,15 +4179,14 @@ async function submitComment(){
 
   try{
 
-    await db
-      .collection("kommentare")
-      .add({
-        newsId:currentCommentNewsId,
-        name:name.substring(0,40),
-        text:text.substring(0,500),
-        datum:firebase.firestore.FieldValue.serverTimestamp(),
-        aktiv:true
-      });
+    const lastSent=Number(localStorage.getItem("fcwLastCommentAt")||0);
+    if(Date.now()-lastSent < 20000){ throw new Error("Bitte warte kurz, bevor du erneut kommentierst."); }
+    await submitCommentCallable({
+      newsId:currentCommentNewsId,
+      name:name.substring(0,40),
+      text:text.substring(0,500)
+    });
+    localStorage.setItem("fcwLastCommentAt",String(Date.now()));
 
     localStorage.setItem(
       "fcwCommentName",
@@ -4163,8 +4201,7 @@ async function submitComment(){
 
     console.error("Kommentar senden:",error);
 
-    status.textContent =
-      "❌ Kommentar konnte nicht veröffentlicht werden.";
+    status.textContent = "❌ " + (error?.message || "Kommentar konnte nicht veröffentlicht werden.");
 
   }
   finally{
@@ -4201,10 +4238,7 @@ async function deleteComment(id){
       wie die modulare 2FA-Anmeldung. Nach erfolgreicher MFA-Anmeldung
       ist der Admin-Token deshalb auch fuer diesen Löschvorgang gueltig.
     */
-    await db
-      .collection("kommentare")
-      .doc(id)
-      .delete();
+    await deleteCommentCallable({ id });
 
     /* Lokale Anzeige sofort aktualisieren; der Snapshot synchronisiert danach nochmals. */
     commentsData = commentsData.filter(comment => comment.id !== id);
