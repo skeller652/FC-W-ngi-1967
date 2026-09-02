@@ -736,6 +736,42 @@ main{
   min-height:1100px;
 }
 
+.ofv-rankings-grid{
+  display:grid;
+  gap:16px;
+  margin-top:14px;
+}
+
+.ofv-ranking-card{
+  overflow:hidden;
+  padding:0;
+}
+
+.ofv-ranking-title{
+  padding:14px 16px;
+  border-bottom:1px solid var(--border);
+  background:#fff7d1;
+}
+
+.ofv-ranking-title strong{
+  display:block;
+  font-size:16px;
+}
+
+.ofv-ranking-title small{
+  display:block;
+  margin-top:3px;
+  color:#6e6e6e;
+}
+
+.ofv-ranking-frame{
+  display:block;
+  width:100%;
+  min-height:760px;
+  border:0;
+  background:white;
+}
+
 
 /* FORM */
 
@@ -1380,6 +1416,12 @@ vom OFV / football.ch geladen.
 
 </div>
 
+<h2 class="section-heading">Live-Ranglisten</h2>
+<p class="page-description">
+Die Ranglisten werden direkt über die offiziellen football.ch / OFV Team-Widgets geladen.
+</p>
+<div id="ofvRankingsList" class="ofv-rankings-grid"></div>
+
 </section>
 
 
@@ -1909,6 +1951,18 @@ Abbrechen
 <div class="form-group">
 <label>Liga</label>
 <input id="teamLeagueInput" class="form-input">
+</div>
+
+<div class="form-group">
+<label>OFV Ranglisten-Widget URL</label>
+<input
+  id="teamOfvRankingUrlInput"
+  class="form-input"
+  placeholder="https://widget.football.ch/Widgets.aspx/.../a-trr/"
+>
+<small style="display:block;margin-top:6px;color:#777;line-height:1.4;">
+Offizielle football.ch Team-Widget-URL für «Resultate + Rangliste». Leer lassen, wenn für dieses Team keine Rangliste angezeigt werden soll.
+</small>
 </div>
 
 <div class="form-group">
@@ -3195,6 +3249,7 @@ db
   );
 
   renderTeams();
+  renderOfvRankings();
   updateTeamSelects();
   renderAdminLists();
 
@@ -3416,6 +3471,87 @@ function openNews(id){
   });
   history.replaceState(null,"",`?open=news&id=${encodeURIComponent(id)}`);
 
+}
+
+
+/* OFV LIVE-RANGLISTEN */
+
+function safeOfvRankingUrl(value){
+
+  const raw = String(value || "").trim();
+
+  if(!raw){
+    return "";
+  }
+
+  try{
+    const url = new URL(raw);
+
+    if(url.protocol !== "https:"){
+      return "";
+    }
+
+    if(url.hostname !== "widget.football.ch"){
+      return "";
+    }
+
+    if(!url.pathname.toLowerCase().includes("widgets.aspx")){
+      return "";
+    }
+
+    return url.toString();
+  }
+  catch{
+    return "";
+  }
+}
+
+function renderOfvRankings(){
+
+  const container =
+    document.getElementById("ofvRankingsList");
+
+  if(!container){
+    return;
+  }
+
+  const configured =
+    teamsData
+      .map(team => ({
+        ...team,
+        rankingUrl:safeOfvRankingUrl(team.ofvRanglisteUrl)
+      }))
+      .filter(team => team.rankingUrl);
+
+  if(!configured.length){
+    container.innerHTML = `
+      <div class="card empty">
+        Noch keine Live-Ranglisten hinterlegt.<br>
+        Im Adminbereich unter «Team verwalten» kann pro Mannschaft die offizielle OFV/football.ch Ranglisten-Widget-URL eingetragen werden.
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML =
+    configured
+      .map(team => `
+        <div class="card ofv-ranking-card">
+          <div class="ofv-ranking-title">
+            <strong>${esc(team.name || "FC Wängi")}</strong>
+            <small>${esc(team.liga || "Live-Rangliste")}</small>
+          </div>
+          <iframe
+            class="ofv-ranking-frame sfvFullHeight"
+            frameborder="0"
+            scrolling="no"
+            loading="lazy"
+            src="${esc(team.rankingUrl)}"
+            title="Rangliste ${esc(team.name || "FC Wängi")}"
+          ></iframe>
+        </div>
+      `)
+      .join("");
 }
 
 
@@ -5943,6 +6079,15 @@ async function saveTeam(){
         )
         .value.trim(),
 
+    ofvRanglisteUrl:
+      safeOfvRankingUrl(
+        document
+          .getElementById(
+            "teamOfvRankingUrlInput"
+          )
+          .value
+      ),
+
     trainer:
       document
         .getElementById(
@@ -6018,6 +6163,9 @@ function editTeam(id){
   document.getElementById("teamLeagueInput").value =
     item.liga || "";
 
+  document.getElementById("teamOfvRankingUrlInput").value =
+    item.ofvRanglisteUrl || "";
+
   document.getElementById("teamCoachInput").value =
     item.trainer || "";
 
@@ -6035,6 +6183,7 @@ function resetTeamForm(){
   document.getElementById("teamEditId").value = "";
   document.getElementById("teamNameInput").value = "";
   document.getElementById("teamLeagueInput").value = "";
+  document.getElementById("teamOfvRankingUrlInput").value = "";
   document.getElementById("teamCoachInput").value = "";
   document.getElementById("teamTrainingInput").value = "";
   document.getElementById("teamSortInput").value = "1";
