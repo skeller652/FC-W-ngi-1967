@@ -3491,11 +3491,18 @@ function safeOfvRankingUrl(value){
       return "";
     }
 
-    if(url.hostname !== "widget.football.ch"){
-      return "";
-    }
+    const host = url.hostname.toLowerCase();
+    const path = url.pathname.toLowerCase();
 
-    if(!url.pathname.toLowerCase().includes("widgets.aspx")){
+    const isFootballWidget =
+      host === "widget.football.ch" &&
+      path.includes("widgets.aspx");
+
+    const isOfvMatchcenter =
+      host === "matchcenter.ofv.swiss" &&
+      path.endsWith("default.aspx");
+
+    if(!isFootballWidget && !isOfvMatchcenter){
       return "";
     }
 
