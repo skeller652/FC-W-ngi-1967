@@ -985,6 +985,97 @@ textarea.form-input{
 
 
 
+
+
+/* =========================
+   ADMIN WORKSPACE V3.2 – AUFKLAPPBARE KATEGORIEN
+========================= */
+.admin-workspace-accordion{
+  display:grid;
+  gap:12px;
+}
+
+.admin-category{
+  border:1px solid #e2e2e2;
+  border-radius:17px;
+  overflow:hidden;
+  background:#fff;
+  box-shadow:0 6px 18px rgba(0,0,0,.06);
+}
+
+.admin-category > summary{
+  list-style:none;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:16px;
+  cursor:pointer;
+  user-select:none;
+  background:#fff;
+}
+
+.admin-category > summary::-webkit-details-marker{display:none;}
+
+.admin-category > summary::after{
+  content:"⌄";
+  flex:0 0 auto;
+  font-size:20px;
+  font-weight:900;
+  color:#8b7300;
+  transition:transform .2s ease;
+}
+
+.admin-category[open] > summary::after{
+  transform:rotate(180deg);
+}
+
+.admin-category-summary-text strong{
+  display:block;
+  font-size:16px;
+  color:#171717;
+}
+
+.admin-category-summary-text span{
+  display:block;
+  margin-top:3px;
+  font-size:12px;
+  line-height:1.35;
+  color:#6d6250;
+}
+
+.admin-category[open] > summary{
+  background:#fff7d1;
+  border-bottom:1px solid #f0d979;
+}
+
+.admin-category-content{
+  padding:12px;
+  background:#f7f7f7;
+}
+
+.admin-category-content > .card{
+  margin:0 0 12px;
+}
+
+.admin-category-content > .card:last-child{
+  margin-bottom:0;
+}
+
+#adminProtectedContent .admin-card,
+#adminProtectedContent .push-admin{
+  border-radius:15px;
+}
+
+#adminProtectedContent .admin-history{
+  margin-top:14px;
+}
+
+@media (max-width:700px){
+  .admin-category > summary{padding:14px;}
+  .admin-category-content{padding:9px;}
+}
+
 /* =========================
    ADMIN HISTORIE
 ========================= */
@@ -7346,6 +7437,80 @@ function adminRow(
 }
 
 
+
+
+/* =========================
+   ADMIN WORKSPACE / AUFKLAPPBARE KATEGORIEN
+========================= */
+const ADMIN_WORKSPACE_META = {
+  overview:{icon:"📊",title:"Übersicht",description:"Kennzahlen und schneller Überblick über die Vereins-App."},
+  content:{icon:"📰",title:"Inhalte",description:"Push-Nachrichten, News und Matchberichte erstellen und verwalten."},
+  teams:{icon:"⚽",title:"Mannschaften",description:"Teams, Staff, Spieler und Vorstand zentral pflegen."},
+  club:{icon:"🏟️",title:"Verein",description:"Kalender und Sponsoren verwalten."},
+  moderation:{icon:"🛡️",title:"Moderation & Sicherheit",description:"Kommentare, Meldungen und Admin-Aktivitäten prüfen."}
+};
+
+function adminWorkspaceGroupForCard(card){
+  if(card.classList.contains("push-admin")) return "content";
+  const label=(card.querySelector(".admin-label")?.textContent || "").trim().toUpperCase();
+  if(label === "ÜBERSICHT") return "overview";
+  if(["NEWS","MATCHBERICHT"].includes(label)) return "content";
+  if(["TEAMS","STAFF","SPIELER","VORSTAND"].includes(label)) return "teams";
+  if(["KALENDER","SPONSOREN"].includes(label)) return "club";
+  if(["SICHERHEIT","KOMMENTARE"].includes(label)) return "moderation";
+  return "club";
+}
+
+function setupAdminWorkspace(){
+  const container=document.getElementById("adminProtectedContent");
+  if(!container || container.dataset.workspaceReady==="1") return;
+  container.dataset.workspaceReady="1";
+
+  const cards=Array.from(container.children).filter(el=>el.classList?.contains("card"));
+
+  const accordion=document.createElement("div");
+  accordion.className="admin-workspace-accordion";
+
+  Object.entries(ADMIN_WORKSPACE_META).forEach(([group,meta],index)=>{
+    const details=document.createElement("details");
+    details.className="admin-category";
+    details.dataset.group=group;
+    if(index===0) details.open=true;
+
+    const summary=document.createElement("summary");
+    summary.innerHTML=`
+      <div class="admin-category-summary-text">
+        <strong>${meta.icon} ${meta.title}</strong>
+        <span>${meta.description}</span>
+      </div>
+    `;
+
+    const content=document.createElement("div");
+    content.className="admin-category-content";
+
+    details.appendChild(summary);
+    details.appendChild(content);
+    accordion.appendChild(details);
+  });
+
+  cards.forEach(card=>{
+    const group=adminWorkspaceGroupForCard(card);
+    card.dataset.adminGroup=group;
+    const target=accordion.querySelector(`.admin-category[data-group="${group}"] .admin-category-content`);
+    if(target) target.appendChild(card);
+  });
+
+  container.appendChild(accordion);
+}
+
+function openAdminCategory(group){
+  const container=document.getElementById("adminProtectedContent");
+  const details=container?.querySelector(`.admin-category[data-group="${group}"]`);
+  if(!details) return;
+  details.open=true;
+  details.scrollIntoView({behavior:"smooth",block:"start"});
+}
+
 /* SERVICE WORKER + APP-UPDATES */
 let waitingServiceWorker=null;
 function showUpdateBanner(worker){waitingServiceWorker=worker;document.getElementById("updateBanner")?.classList.add("visible");}
@@ -7371,6 +7536,7 @@ window.addEventListener(
     updatePushCounters();
     renderHomeMatchCards();
     tryHandleDeepLink();
+    setupAdminWorkspace();
 
     await initializeAdminAuth();
 
