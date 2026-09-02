@@ -802,6 +802,7 @@ main{
 .moderation-item{padding:12px;border:1px solid var(--border);border-radius:12px;background:#fafafa;}
 .moderation-item strong{display:block;margin-bottom:5px;}
 .moderation-meta{font-size:10px;color:#777;margin-bottom:6px;}
+.comment-actions-inline{display:flex;gap:8px;align-items:center;flex-wrap:wrap;}
 .report-comment-button{border:0;background:transparent;color:#9a6d00;font-size:11px;font-weight:800;padding:4px 0;cursor:pointer;}
 .security-note{font-size:12px;color:#666;line-height:1.5;margin-top:8px;}
 
@@ -4300,11 +4301,14 @@ function renderComments(comments){
         ${
           adminActive
           ?
-          `<button
-            class="button button-red button-small"
-            style="margin-top:0;"
-            onclick="deleteComment('${comment.id}')"
-          >Löschen</button>`
+          `<div class="comment-actions-inline">
+            <button class="report-comment-button" onclick="event.stopPropagation();reportComment('${comment.id}')">🚩 Melden</button>
+            <button
+              class="button button-red button-small"
+              style="margin-top:0;"
+              onclick="deleteComment('${comment.id}')"
+            >Löschen</button>
+          </div>`
           :
           `<button class="report-comment-button" onclick="event.stopPropagation();reportComment('${comment.id}')">🚩 Melden</button>`
         }
