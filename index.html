@@ -776,6 +776,36 @@ main{
 }
 
 
+/* V3 – AUFGERÄUMTE SPIELE / SICHERHEIT */
+.ofv-ranking-details{
+  border:1px solid var(--border);
+  border-radius:16px;
+  overflow:hidden;
+  background:#fff;
+}
+.ofv-ranking-details summary{
+  list-style:none;
+  cursor:pointer;
+  padding:14px 16px;
+  background:#fff7d1;
+  font-weight:900;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+}
+.ofv-ranking-details summary::-webkit-details-marker{display:none;}
+.ofv-ranking-details summary::after{content:"▼";font-size:11px;opacity:.65;}
+.ofv-ranking-details[open] summary::after{content:"▲";}
+.ofv-ranking-details .ofv-ranking-frame{height:560px;}
+.moderation-grid{display:grid;gap:12px;}
+.moderation-item{padding:12px;border:1px solid var(--border);border-radius:12px;background:#fafafa;}
+.moderation-item strong{display:block;margin-bottom:5px;}
+.moderation-meta{font-size:10px;color:#777;margin-bottom:6px;}
+.report-comment-button{border:0;background:transparent;color:#9a6d00;font-size:11px;font-weight:800;padding:4px 0;cursor:pointer;}
+.security-note{font-size:12px;color:#666;line-height:1.5;margin-top:8px;}
+
+
 /* FORM */
 
 .form-group{
@@ -1489,7 +1519,7 @@ Admin-Bereich öffnen
 </button>
 
 </div>
-<div class="app-version">FC Wängi App · Version 2.0</div>
+<div class="app-version">FC Wängi App · Version 3.0</div>
 
 </section>
 
@@ -1742,6 +1772,23 @@ Abbrechen
 <span class="admin-label">ÜBERSICHT</span>
 <h3>Admin-Dashboard</h3>
 <div id="adminDashboard" class="admin-dashboard-grid"></div>
+</div>
+
+<!-- V3 SICHERHEIT / MELDUNGEN -->
+<div class="card admin-card">
+<span class="admin-label">SICHERHEIT</span>
+<h3>🛡️ Meldungen & Aktivitätsprotokoll</h3>
+<p class="page-description">Gemeldete Kommentare und wichtige Admin-Aktionen zentral prüfen.</p>
+<button class="button button-outline button-small" onclick="loadAdminModeration()">↻ Aktualisieren</button>
+<details class="admin-history" style="margin-top:10px;">
+<summary>🚩 Gemeldete Kommentare</summary>
+<div class="admin-history-content"><div id="adminReportedComments"><div class="empty">Noch nicht geladen.</div></div></div>
+</details>
+<details class="admin-history">
+<summary>🧾 Aktivitätsprotokoll</summary>
+<div class="admin-history-content"><div id="adminAuditLog"><div class="empty">Noch nicht geladen.</div></div></div>
+</details>
+<div class="security-note">Hinweis: Sensible Backend-Sammlungen bleiben für normale Nutzer gesperrt. Diese Ansicht lädt Daten nur über eine Admin-Cloud-Function.</div>
 </div>
 
 <!-- KOMMENTARE ADMIN: nur im geschützten Adminbereich -->
@@ -2675,6 +2722,8 @@ const sendPushCallable =
 
 const submitCommentCallable = functions.httpsCallable("submitComment");
 const deleteCommentCallable = functions.httpsCallable("deleteComment");
+const reportCommentCallable = functions.httpsCallable("reportComment");
+const getAdminModerationCallable = functions.httpsCallable("getAdminModeration");
 
 const ADMIN_UID =
   "Ml4BJbbv4AOKZUCC4rutXv1HxWJ3";
@@ -2683,7 +2732,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.09.02-2";
+const APP_VERSION = "2026.09.02-3";
 
 
 let newsData = [];
@@ -3049,27 +3098,14 @@ async function uploadImage(
     return null;
   }
 
-  if(
-    !file.type.startsWith(
-      "image/"
-    )
-  ){
+  const allowedImageTypes = ["image/jpeg","image/png","image/webp"];
 
-    throw new Error(
-      "Keine gültige Bilddatei."
-    );
-
+  if(!allowedImageTypes.includes(file.type)){
+    throw new Error("Nur JPG, PNG oder WEBP sind erlaubt.");
   }
 
-  if(
-    file.size >
-    15 * 1024 * 1024
-  ){
-
-    throw new Error(
-      "Das Bild ist grösser als 15 MB."
-    );
-
+  if(file.size > 8 * 1024 * 1024){
+    throw new Error("Das Bild ist grösser als 8 MB.");
   }
 
   const status =
@@ -3545,12 +3581,11 @@ function renderOfvRankings(){
 
   container.innerHTML =
     configured
-      .map(team => `
-        <div class="card ofv-ranking-card">
-          <div class="ofv-ranking-title">
-            <strong>${esc(team.name || "FC Wängi")}</strong>
-            <small>${esc(team.liga || "Live-Rangliste")}</small>
-          </div>
+      .map((team,index) => `
+        <details class="ofv-ranking-details" ${index===0 ? "open" : ""}>
+          <summary>
+            <span>${esc(team.name || "FC Wängi")} · ${esc(team.liga || "Live-Rangliste")}</span>
+          </summary>
           <iframe
             class="ofv-ranking-frame"
             frameborder="0"
@@ -3559,7 +3594,7 @@ function renderOfvRankings(){
             src="${esc(team.rankingUrl)}"
             title="Rangliste ${esc(team.name || "FC Wängi")}"
           ></iframe>
-        </div>
+        </details>
       `)
       .join("");
 }
@@ -4271,7 +4306,7 @@ function renderComments(comments){
             onclick="deleteComment('${comment.id}')"
           >Löschen</button>`
           :
-          ""
+          `<button class="report-comment-button" onclick="event.stopPropagation();reportComment('${comment.id}')">🚩 Melden</button>`
         }
 
         </div>
@@ -4356,6 +4391,51 @@ async function submitComment(){
 
 }
 
+
+
+async function reportComment(id){
+  const reason = prompt("Warum möchtest du diesen Kommentar melden? (z. B. Spam, Beleidigung, unpassend)");
+  if(reason === null) return;
+  const clean = String(reason || "").trim();
+  if(clean.length < 3){
+    alert("Bitte einen kurzen Grund angeben.");
+    return;
+  }
+  try{
+    await reportCommentCallable({id, reason:clean});
+    alert("✅ Kommentar wurde gemeldet. Danke.");
+  }catch(error){
+    console.error("Kommentar melden:",error);
+    alert("Meldung konnte nicht gesendet werden. " + (error?.message || "Bitte später erneut versuchen."));
+  }
+}
+
+async function loadAdminModeration(){
+  const currentAdmin = (mfaAuth && mfaAuth.currentUser) || auth.currentUser;
+  if(!currentAdmin || currentAdmin.uid !== ADMIN_UID){
+    alert("Bitte zuerst als Admin anmelden.");
+    return;
+  }
+  const reportBox=document.getElementById("adminReportedComments");
+  const logBox=document.getElementById("adminAuditLog");
+  if(reportBox) reportBox.innerHTML='<div class="loading">Meldungen werden geladen...</div>';
+  if(logBox) logBox.innerHTML='<div class="loading">Protokoll wird geladen...</div>';
+  try{
+    const result=await getAdminModerationCallable({});
+    const reports=result?.data?.reports || [];
+    const logs=result?.data?.logs || [];
+    if(reportBox){
+      reportBox.innerHTML = reports.length ? reports.map(r=>`<div class="moderation-item"><div class="moderation-meta">${esc(r.createdAt || "")} · ${Number(r.count||1)} Meldung(en)</div><strong>${esc(r.commentName || "Gast")}</strong><div class="comment-admin-text">${esc(r.commentText || "Kommentar nicht mehr vorhanden")}</div><div class="moderation-meta">Grund: ${esc(r.reason || "Nicht angegeben")}</div>${r.commentId?`<button class="button button-red button-small" onclick="deleteComment('${r.commentId}')">Kommentar löschen</button>`:""}</div>`).join("") : '<div class="empty">Keine offenen Meldungen.</div>';
+    }
+    if(logBox){
+      logBox.innerHTML = logs.length ? logs.map(l=>`<div class="moderation-item"><div class="moderation-meta">${esc(l.createdAt || "")}</div><strong>${esc(l.action || "Aktion")}</strong><div class="comment-admin-text">${esc(l.details || "")}</div></div>`).join("") : '<div class="empty">Noch keine protokollierten Aktionen.</div>';
+    }
+  }catch(error){
+    console.error("Moderation laden:",error);
+    if(reportBox) reportBox.innerHTML='<div class="empty">Meldungen konnten nicht geladen werden.</div>';
+    if(logBox) logBox.innerHTML='<div class="empty">Protokoll konnte nicht geladen werden.</div>';
+  }
+}
 
 async function deleteComment(id){
 
@@ -5897,6 +5977,22 @@ async function sendPushFromAdmin(){
 
 /* NEWS SAVE + AUTO PUSH */
 
+
+async function writeAdminLog(action, details=""){
+  const currentAdmin=(mfaAuth && mfaAuth.currentUser) || auth.currentUser;
+  if(!currentAdmin || currentAdmin.uid !== ADMIN_UID) return;
+  try{
+    await db.collection("adminLogs").add({
+      action:String(action||"Aktion").slice(0,80),
+      details:String(details||"").slice(0,500),
+      uid:currentAdmin.uid,
+      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+    });
+  }catch(error){
+    console.warn("Admin-Log konnte nicht geschrieben werden:",error);
+  }
+}
+
 async function saveNews(){
   const id=document.getElementById("newsEditId").value; const isNew=!id; const existing=id?newsData.find(x=>x.id===id):null;
   const title=document.getElementById("newsTitle").value.trim(); const text=document.getElementById("newsText").value.trim(); const category=document.getElementById("newsCategory").value.trim();
@@ -6345,6 +6441,8 @@ async function saveStaff(){
 
   }
 
+  await writeAdminLog(id ? "Staff bearbeitet" : "Staff erstellt", data.name || "");
+
   resetStaffForm();
 
   alert(
@@ -6745,6 +6843,8 @@ async function saveBoardMember(){
 
   }
 
+  await writeAdminLog(id ? "Vorstand bearbeitet" : "Vorstand erstellt", data.name || "");
+
   resetBoardForm();
 
   alert(
@@ -6932,6 +7032,8 @@ async function deleteItem(
     .doc(id)
     .delete();
 
+  await writeAdminLog("Löschen", `${collection} · ${id}`);
+
 }
 
 
@@ -7086,7 +7188,7 @@ function renderAdminLists(){
   const spList=document.getElementById("adminSponsorsList");
   if(spList){spList.innerHTML=sponsorsData.map(x=>adminRow(`${x.name} · ${x.stufe||"Partner"}`,x.logo,`editSponsor('${x.id}')`,`deleteItem('sponsoren','${x.id}')`)).join("");}
   const dash=document.getElementById("adminDashboard");
-  if(dash){dash.innerHTML=`<div class="admin-stat"><strong>${newsData.length}</strong><span>News</span></div><div class="admin-stat"><strong>${reportsData.length}</strong><span>Berichte</span></div><div class="admin-stat"><strong>${commentsData.length}</strong><span>Kommentare</span></div><div class="admin-stat"><strong>${teamsData.length}</strong><span>Teams</span></div><div class="admin-stat"><strong>${calendarData.length}</strong><span>Termine</span></div><div class="admin-stat"><strong>${sponsorsData.length}</strong><span>Sponsoren</span></div>`;}
+  if(dash){dash.innerHTML=`<div class="admin-stat"><strong>${newsData.length}</strong><span>News</span></div><div class="admin-stat"><strong>${reportsData.length}</strong><span>Berichte</span></div><div class="admin-stat"><strong>${commentsData.length}</strong><span>Kommentare</span></div><div class="admin-stat"><strong>${teamsData.length}</strong><span>Teams</span></div><div class="admin-stat"><strong>${calendarData.length}</strong><span>Termine</span></div><div class="admin-stat"><strong>${sponsorsData.length}</strong><span>Sponsoren</span></div><div class="admin-stat"><strong>2FA</strong><span>Admin-Schutz</span></div>`;}
 
 }
 
