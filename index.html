@@ -2767,12 +2767,13 @@ Kommentar senden
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-functions-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-check-compat.js"></script>
 
 <!-- QR-Code wird vollständig lokal im Browser erzeugt. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 
-<script type="module">
+<script>
 
 /* FIREBASE */
 
@@ -2800,28 +2801,19 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-/* SECURITY V4.1: Firebase App Check modular auf derselben Firebase-App. */
+/* SECURITY V4.2: Firebase App Check mit reCAPTCHA Enterprise (Compat).
+   Wichtig: vor Firestore, Storage, Functions und Messaging initialisieren. */
 const APP_CHECK_ENTERPRISE_KEY = "6Ldra7AtAAAAAKCOEsXNyVlcbZvksQyr_I2q0lrp";
-const {
-  initializeAppCheck,
-  ReCaptchaEnterpriseProvider,
-  getToken: getAppCheckToken
-} = await import("https://www.gstatic.com/firebasejs/10.13.2/firebase-app-check.js");
+const appCheck = firebase.appCheck();
+appCheck.activate(
+  new firebase.appCheck.ReCaptchaEnterpriseProvider(APP_CHECK_ENTERPRISE_KEY),
+  true
+);
 
-const firebaseDelegateApp = firebase.app()._delegate;
-if(!firebaseDelegateApp){
-  throw new Error("Firebase App Check konnte die gemeinsame Firebase-App nicht finden.");
-}
-
-const appCheck = initializeAppCheck(firebaseDelegateApp,{
-  provider:new ReCaptchaEnterpriseProvider(APP_CHECK_ENTERPRISE_KEY),
-  isTokenAutoRefreshEnabled:true
-});
-
-/* Nur für unseren Funktionstest in der Safari-Konsole. */
+/* Testfunktion für Safari-Konsole. */
 window.fcwAppCheck = appCheck;
 window.fcwGetAppCheckToken = async function(forceRefresh=true){
-  return getAppCheckToken(appCheck,forceRefresh);
+  return appCheck.getToken(forceRefresh);
 };
 
 const db = firebase.firestore();
@@ -7608,117 +7600,13 @@ window.addEventListener(
 
 
 
-/* Modul-Funktionen für bestehende HTML-onclick/onchange Handler freigeben. */
-Object.assign(window,{
-  adminRow,
-  adminWorkspaceGroupForCard,
-  cancelAdminMfaLogin,
-  cancelTotpEnrollment,
-  checkAdminEmailVerification,
-  closeModal,
-  commentCountFor,
-  commentTargetLabel,
-  dateInputValue,
-  deleteComment,
-  deleteItem,
-  deleteStorageFile,
-  editBoardMember,
-  editCalendarItem,
-  editNews,
-  editPlayer,
-  editReport,
-  editSponsor,
-  editStaff,
-  editTeam,
-  enableNotifications,
-  esc,
-  fileToJpeg,
-  finishTotpEnrollment,
-  formatDate,
-  formatDateTime,
-  hideComments,
-  initModularMfa,
-  initializeAdminAuth,
-  inputTimestamp,
-  loadAdminModeration,
-  loginAdmin,
-  logoutAdmin,
-  modalBackgroundClick,
-  openAdminCategory,
-  openBoardMember,
-  openCommentsForNews,
-  openModal,
-  openNews,
-  openPage,
-  openPlayer,
-  openReport,
-  openSponsor,
-  openStaff,
-  previewSelectedImage,
-  refreshAdminSecurityState,
-  registerCurrentDeviceForPush,
-  renderAdminLists,
-  renderBoard,
-  renderCalendar,
-  renderComments,
-  renderHomeMatchCards,
-  renderHomeNews,
-  renderNews,
-  renderOfvRankings,
-  renderReports,
-  renderSponsors,
-  renderTeams,
-  reportComment,
-  resetAdminIdleTimer,
-  resetBoardForm,
-  resetCalendarForm,
-  resetNewsForm,
-  resetPlayerForm,
-  resetReportForm,
-  resetSponsorForm,
-  resetStaffForm,
-  resetTeamForm,
-  safeOfvRankingUrl,
-  saveBoardMember,
-  saveCalendarItem,
-  saveNews,
-  savePlayer,
-  saveReport,
-  saveSponsor,
-  saveStaff,
-  saveTeam,
-  sendAdminVerificationEmail,
-  sendPushFromAdmin,
-  setMfaLoginStatus,
-  setMfaSetupStatus,
-  setNewsFilter,
-  setNewsSearch,
-  setupAdminWorkspace,
-  shareCurrentContent,
-  showAdminLogin,
-  showAdminMfaChallenge,
-  showAdminPanel,
-  showUpdateBanner,
-  startTotpEnrollment,
-  submitComment,
-  toDate,
-  toggleTeam,
-  tryHandleDeepLink,
-  updateAppNow,
-  updateNotificationStatus,
-  updatePushCounters,
-  updateTeamSelects,
-  uploadImage,
-  verifyAdminMfaCode,
-  writeAdminLog
-});
+
 </script>
 
 
-<script
-  src="https://widget.football.ch/portaldata/30/scripts/sfvVereinWidget.js"
->
+<script src="https://widget.football.ch/portaldata/30/scripts/sfvVereinWidget.js"></script>
 
+<script>
 /* SECURITY V4: Admin automatisch nach 30 Minuten Inaktivität abmelden. */
 const ADMIN_IDLE_TIMEOUT_MS = 30 * 60 * 1000;
 let adminIdleTimer = null;
@@ -7733,58 +7621,6 @@ function resetAdminIdleTimer(){
   },ADMIN_IDLE_TIMEOUT_MS);
 }
 ["click","touchstart","keydown","scroll"].forEach(evt=>window.addEventListener(evt,resetAdminIdleTimer,{passive:true}));
-
-
-
-/* SECURITY V4.2: Funktionen aus dem ES-Modul für HTML-onclick verfügbar machen. */
-Object.assign(window, {
-  cancelAdminMfaLogin,
-  cancelTotpEnrollment,
-  checkAdminEmailVerification,
-  closeModal,
-  deleteComment,
-  enableNotifications,
-  finishTotpEnrollment,
-  loadAdminModeration,
-  loginAdmin,
-  logoutAdmin,
-  modalBackgroundClick,
-  openBoardMember,
-  openNews,
-  openPage,
-  openPlayer,
-  openReport,
-  openSponsor,
-  openStaff,
-  previewSelectedImage,
-  reportComment,
-  resetBoardForm,
-  resetCalendarForm,
-  resetNewsForm,
-  resetPlayerForm,
-  resetReportForm,
-  resetSponsorForm,
-  resetStaffForm,
-  resetTeamForm,
-  saveBoardMember,
-  saveCalendarItem,
-  saveNews,
-  savePlayer,
-  saveReport,
-  saveSponsor,
-  saveStaff,
-  saveTeam,
-  sendAdminVerificationEmail,
-  sendPushFromAdmin,
-  setNewsFilter,
-  setNewsSearch,
-  shareCurrentContent,
-  startTotpEnrollment,
-  submitComment,
-  toggleTeam,
-  updateAppNow,
-  verifyAdminMfaCode
-});
 </script>
 
 </body>
