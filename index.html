@@ -9,6 +9,10 @@
   content="width=device-width, initial-scale=1.0, viewport-fit=cover"
 >
 
+
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline' https://www.gstatic.com https://www.google.com https://www.recaptcha.net https://cdnjs.cloudflare.com https://widget.football.ch; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https:; connect-src 'self' https://*.googleapis.com https://www.google.com https://www.recaptcha.net https://*.firebaseio.com https://*.firebasestorage.app https://*.cloudfunctions.net https://*.firebaseapp.com wss://*.firebaseio.com; frame-src https://widget.football.ch https://matchcenter.ofv.swiss https://www.google.com https://www.recaptcha.net; font-src 'self' data:; object-src 'none'; base-uri 'self'; form-action 'self'; upgrade-insecure-requests">
+
 <meta name="theme-color" content="#f4c400">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -1610,7 +1614,12 @@ Admin-Bereich öffnen
 </button>
 
 </div>
-<div class="app-version">FC Wängi App · Version 3.0</div>
+<div class="card">
+<h3>🛡️ Datenschutz & Sicherheit</h3>
+<p style="margin-bottom:12px;">Informationen zur Datenverarbeitung, Push-Mitteilungen, Kommentaren und deinen Rechten.</p>
+<a class="button button-outline" href="./datenschutz.html" target="_blank" rel="noopener noreferrer">Datenschutzerklärung öffnen</a>
+</div>
+<div class="app-version">FC Wängi App · Version 4.0 Security</div>
 
 </section>
 
@@ -2763,7 +2772,7 @@ Kommentar senden
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
 
 
-<script>
+<script type="module">
 
 /* FIREBASE */
 
@@ -2791,6 +2800,30 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+/* SECURITY V4.1: Firebase App Check modular auf derselben Firebase-App. */
+const APP_CHECK_ENTERPRISE_KEY = "6Ldra7AtAAAAAKCOEsXNyVlcbZvksQyr_I2q0lrp";
+const {
+  initializeAppCheck,
+  ReCaptchaEnterpriseProvider,
+  getToken: getAppCheckToken
+} = await import("https://www.gstatic.com/firebasejs/10.13.2/firebase-app-check.js");
+
+const firebaseDelegateApp = firebase.app()._delegate;
+if(!firebaseDelegateApp){
+  throw new Error("Firebase App Check konnte die gemeinsame Firebase-App nicht finden.");
+}
+
+const appCheck = initializeAppCheck(firebaseDelegateApp,{
+  provider:new ReCaptchaEnterpriseProvider(APP_CHECK_ENTERPRISE_KEY),
+  isTokenAutoRefreshEnabled:true
+});
+
+/* Nur für unseren Funktionstest in der Safari-Konsole. */
+window.fcwAppCheck = appCheck;
+window.fcwGetAppCheckToken = async function(forceRefresh=true){
+  return getAppCheckToken(appCheck,forceRefresh);
+};
+
 const db = firebase.firestore();
 const auth = firebase.auth();
 const storage = firebase.storage();
@@ -2815,6 +2848,7 @@ const submitCommentCallable = functions.httpsCallable("submitComment");
 const deleteCommentCallable = functions.httpsCallable("deleteComment");
 const reportCommentCallable = functions.httpsCallable("reportComment");
 const getAdminModerationCallable = functions.httpsCallable("getAdminModeration");
+const recordAdminActionCallable = functions.httpsCallable("recordAdminAction");
 
 const ADMIN_UID =
   "Ml4BJbbv4AOKZUCC4rutXv1HxWJ3";
@@ -2823,7 +2857,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.09.02-3.1";
+const APP_VERSION = "2026.09.08-4.1-security";
 
 
 let newsData = [];
@@ -6172,11 +6206,9 @@ async function writeAdminLog(action, details=""){
   const currentAdmin=(mfaAuth && mfaAuth.currentUser) || auth.currentUser;
   if(!currentAdmin || currentAdmin.uid !== ADMIN_UID) return;
   try{
-    await db.collection("adminLogs").add({
+    await recordAdminActionCallable({
       action:String(action||"Aktion").slice(0,80),
-      details:String(details||"").slice(0,500),
-      uid:currentAdmin.uid,
-      createdAt:firebase.firestore.FieldValue.serverTimestamp()
+      details:String(details||"").slice(0,500)
     });
   }catch(error){
     console.warn("Admin-Log konnte nicht geschrieben werden:",error);
@@ -7574,12 +7606,135 @@ window.addEventListener(
   }
 );
 
+
+
+/* Modul-Funktionen für bestehende HTML-onclick/onchange Handler freigeben. */
+Object.assign(window,{
+  adminRow,
+  adminWorkspaceGroupForCard,
+  cancelAdminMfaLogin,
+  cancelTotpEnrollment,
+  checkAdminEmailVerification,
+  closeModal,
+  commentCountFor,
+  commentTargetLabel,
+  dateInputValue,
+  deleteComment,
+  deleteItem,
+  deleteStorageFile,
+  editBoardMember,
+  editCalendarItem,
+  editNews,
+  editPlayer,
+  editReport,
+  editSponsor,
+  editStaff,
+  editTeam,
+  enableNotifications,
+  esc,
+  fileToJpeg,
+  finishTotpEnrollment,
+  formatDate,
+  formatDateTime,
+  hideComments,
+  initModularMfa,
+  initializeAdminAuth,
+  inputTimestamp,
+  loadAdminModeration,
+  loginAdmin,
+  logoutAdmin,
+  modalBackgroundClick,
+  openAdminCategory,
+  openBoardMember,
+  openCommentsForNews,
+  openModal,
+  openNews,
+  openPage,
+  openPlayer,
+  openReport,
+  openSponsor,
+  openStaff,
+  previewSelectedImage,
+  refreshAdminSecurityState,
+  registerCurrentDeviceForPush,
+  renderAdminLists,
+  renderBoard,
+  renderCalendar,
+  renderComments,
+  renderHomeMatchCards,
+  renderHomeNews,
+  renderNews,
+  renderOfvRankings,
+  renderReports,
+  renderSponsors,
+  renderTeams,
+  reportComment,
+  resetAdminIdleTimer,
+  resetBoardForm,
+  resetCalendarForm,
+  resetNewsForm,
+  resetPlayerForm,
+  resetReportForm,
+  resetSponsorForm,
+  resetStaffForm,
+  resetTeamForm,
+  safeOfvRankingUrl,
+  saveBoardMember,
+  saveCalendarItem,
+  saveNews,
+  savePlayer,
+  saveReport,
+  saveSponsor,
+  saveStaff,
+  saveTeam,
+  sendAdminVerificationEmail,
+  sendPushFromAdmin,
+  setMfaLoginStatus,
+  setMfaSetupStatus,
+  setNewsFilter,
+  setNewsSearch,
+  setupAdminWorkspace,
+  shareCurrentContent,
+  showAdminLogin,
+  showAdminMfaChallenge,
+  showAdminPanel,
+  showUpdateBanner,
+  startTotpEnrollment,
+  submitComment,
+  toDate,
+  toggleTeam,
+  tryHandleDeepLink,
+  updateAppNow,
+  updateNotificationStatus,
+  updatePushCounters,
+  updateTeamSelects,
+  uploadImage,
+  verifyAdminMfaCode,
+  writeAdminLog
+});
 </script>
 
 
 <script
   src="https://widget.football.ch/portaldata/30/scripts/sfvVereinWidget.js"
-></script>
+>
+
+/* SECURITY V4: Admin automatisch nach 30 Minuten Inaktivität abmelden. */
+const ADMIN_IDLE_TIMEOUT_MS = 30 * 60 * 1000;
+let adminIdleTimer = null;
+function resetAdminIdleTimer(){
+  const currentAdmin=(mfaAuth && mfaAuth.currentUser) || auth.currentUser;
+  if(!currentAdmin || currentAdmin.uid !== ADMIN_UID) return;
+  clearTimeout(adminIdleTimer);
+  adminIdleTimer=setTimeout(async()=>{
+    try{ if(mfaApi && mfaAuth) await mfaApi.signOut(mfaAuth); else await auth.signOut(); }catch(e){}
+    alert("🔐 Admin-Sitzung wurde nach 30 Minuten Inaktivität beendet.");
+    showAdminLogin();
+  },ADMIN_IDLE_TIMEOUT_MS);
+}
+["click","touchstart","keydown","scroll"].forEach(evt=>window.addEventListener(evt,resetAdminIdleTimer,{passive:true}));
+
+</script>
 
 </body>
 </html>
