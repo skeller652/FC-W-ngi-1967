@@ -2761,13 +2761,13 @@ Kommentar senden
 </div>
 
 
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-firestore-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-storage-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-messaging-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-functions-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.13.2/firebase-app-check-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-storage-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-messaging-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-functions-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/12.18.0/firebase-app-check-compat.js"></script>
 
 <!-- QR-Code wird vollständig lokal im Browser erzeugt. -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
@@ -2801,7 +2801,7 @@ const firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
-/* SECURITY V4.2: Firebase App Check mit reCAPTCHA Enterprise (Compat).
+/* SECURITY V4.5: Firebase App Check mit reCAPTCHA Enterprise (Compat).
    Wichtig: vor Firestore, Storage, Functions und Messaging initialisieren. */
 const APP_CHECK_ENTERPRISE_KEY = "6Ldra7AtAAAAAKCOEsXNyVlcbZvksQyr_I2q0lrp";
 const appCheck = firebase.appCheck();
@@ -4721,7 +4721,7 @@ async function initModularMfa(){
 
     const authModule =
       await import(
-        "https://www.gstatic.com/firebasejs/10.13.2/firebase-auth.js"
+        "https://www.gstatic.com/firebasejs/12.18.0/firebase-auth.js"
       );
 
     if(!auth || !auth._delegate){
