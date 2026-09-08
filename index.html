@@ -2857,7 +2857,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.09.08-4.1-security";
+const APP_VERSION = "2026.09.08-4.2-security";
 
 
 let newsData = [];
@@ -7734,6 +7734,57 @@ function resetAdminIdleTimer(){
 }
 ["click","touchstart","keydown","scroll"].forEach(evt=>window.addEventListener(evt,resetAdminIdleTimer,{passive:true}));
 
+
+
+/* SECURITY V4.2: Funktionen aus dem ES-Modul für HTML-onclick verfügbar machen. */
+Object.assign(window, {
+  cancelAdminMfaLogin,
+  cancelTotpEnrollment,
+  checkAdminEmailVerification,
+  closeModal,
+  deleteComment,
+  enableNotifications,
+  finishTotpEnrollment,
+  loadAdminModeration,
+  loginAdmin,
+  logoutAdmin,
+  modalBackgroundClick,
+  openBoardMember,
+  openNews,
+  openPage,
+  openPlayer,
+  openReport,
+  openSponsor,
+  openStaff,
+  previewSelectedImage,
+  reportComment,
+  resetBoardForm,
+  resetCalendarForm,
+  resetNewsForm,
+  resetPlayerForm,
+  resetReportForm,
+  resetSponsorForm,
+  resetStaffForm,
+  resetTeamForm,
+  saveBoardMember,
+  saveCalendarItem,
+  saveNews,
+  savePlayer,
+  saveReport,
+  saveSponsor,
+  saveStaff,
+  saveTeam,
+  sendAdminVerificationEmail,
+  sendPushFromAdmin,
+  setNewsFilter,
+  setNewsSearch,
+  shareCurrentContent,
+  startTotpEnrollment,
+  submitComment,
+  toggleTeam,
+  updateAppNow,
+  verifyAdminMfaCode
+});
 </script>
 
 </body>
