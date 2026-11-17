@@ -1347,7 +1347,7 @@ textarea.form-input{
   max-width:720px;
 
   display:grid;
-  grid-template-columns:repeat(8,1fr);
+  grid-template-columns:repeat(5,1fr);
 
   padding:
     7px
@@ -1365,8 +1365,8 @@ textarea.form-input{
   border:none;
   background:transparent;
   color:#777;
-  font-size:7px;
-  font-weight:700;
+  font-size:10px;
+  font-weight:800;
 }
 
 .nav-button.active{
@@ -1375,11 +1375,50 @@ textarea.form-input{
 
 .nav-icon{
   display:block;
-  font-size:18px;
+  font-size:20px;
   margin-bottom:3px;
 }
 
 
+
+
+/* MEHR-MENÜ */
+.more-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.more-card{
+  min-height:112px;
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 4px 14px rgba(0,0,0,.05);
+  text-align:left;
+}
+.more-card:active{
+  transform:scale(.985);
+}
+.more-icon{
+  display:block;
+  margin-bottom:11px;
+  font-size:27px;
+}
+.more-card strong{
+  display:block;
+  margin-bottom:4px;
+  font-size:15px;
+}
+.more-card small{
+  display:block;
+  color:#777;
+  font-size:11px;
+  line-height:1.35;
+}
+@media(max-width:380px){
+  .more-grid{grid-template-columns:1fr;}
+}
 
 /* =========================
    ERWEITERUNGEN 2026.09
@@ -1726,6 +1765,51 @@ Berichte unserer Mannschaften.
 <p class="page-description">Vielen Dank an unsere Partner und Unterstützer.</p>
 <div id="sponsorList"><div class="loading">Sponsoren werden geladen...</div></div>
 </section>
+
+<!-- MEHR -->
+<section id="mehr" class="page">
+<h1 class="page-title">Mehr</h1>
+<p class="page-description">Weitere Bereiche des FC Wängi 1967.</p>
+
+<div class="more-grid">
+  <button class="more-card" onclick="openPage('spielbetrieb')">
+    <span class="more-icon">⚽</span>
+    <strong>Spiele</strong>
+    <small>Spielplan und Ranglisten</small>
+  </button>
+
+  <button class="more-card" onclick="openPage('matchberichte')">
+    <span class="more-icon">📝</span>
+    <strong>Berichte</strong>
+    <small>Matchberichte unserer Teams</small>
+  </button>
+
+  <button class="more-card" onclick="openPage('kalender')">
+    <span class="more-icon">📅</span>
+    <strong>Kalender</strong>
+    <small>Termine und Vereinsanlässe</small>
+  </button>
+
+  <button class="more-card" onclick="openPage('vorstand')">
+    <span class="more-icon">👔</span>
+    <strong>Vorstand</strong>
+    <small>Vereinsleitung</small>
+  </button>
+
+  <button class="more-card" onclick="openPage('sponsoren')">
+    <span class="more-icon">🤝</span>
+    <strong>Sponsoren</strong>
+    <small>Partner und Unterstützer</small>
+  </button>
+
+  <button class="more-card" onclick="openPage('kontakt')">
+    <span class="more-icon">☎️</span>
+    <strong>Kontakt</strong>
+    <small>Kontakt und Administration</small>
+  </button>
+</div>
+</section>
+
 
 <!-- KONTAKT -->
 
@@ -2800,34 +2884,19 @@ Home
 News
 </button>
 
-<button class="nav-button" data-page="teams" onclick="openPage('teams')">
-<span class="nav-icon">👕</span>
-Teams
-</button>
-
-<button class="nav-button" data-page="vorstand" onclick="openPage('vorstand')">
-<span class="nav-icon">👔</span>
-Vorstand
-</button>
-
-<button class="nav-button" data-page="spielbetrieb" onclick="openPage('spielbetrieb')">
-<span class="nav-icon">⚽</span>
-Spiele
-</button>
-
 <button class="nav-button" data-page="liveticker" onclick="openPage('liveticker')">
 <span class="nav-icon">🔴</span>
 Live
 </button>
 
-<button class="nav-button" data-page="matchberichte" onclick="openPage('matchberichte')">
-<span class="nav-icon">📝</span>
-Berichte
+<button class="nav-button" data-page="teams" onclick="openPage('teams')">
+<span class="nav-icon">👕</span>
+Teams
 </button>
 
-<button class="nav-button" data-page="kontakt" onclick="openPage('kontakt')">
-<span class="nav-icon">☎️</span>
-Kontakt
+<button class="nav-button" data-page="mehr" onclick="openPage('mehr')">
+<span class="nav-icon">•••</span>
+Mehr
 </button>
 
 </nav>
@@ -2995,7 +3064,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.11.17-5.7-teams-only-editor";
+const APP_VERSION = "2026.11.17-5.8-clean-navigation";
 
 
 let newsData = [];
@@ -3305,9 +3374,22 @@ function openPage(name){
         "active"
       );
 
+      const morePages=[
+        "vorstand",
+        "spielbetrieb",
+        "matchberichte",
+        "kalender",
+        "sponsoren",
+        "kontakt",
+        "admin"
+      ];
+
       if(
-        button.dataset.page ===
-        name
+        button.dataset.page === name ||
+        (
+          button.dataset.page === "mehr" &&
+          morePages.includes(name)
+        )
       ){
 
         button.classList.add(
