@@ -3064,7 +3064,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.11.17-5.9-push-liveticker";
+const APP_VERSION = "2026.11.17-5.10-liveticker-deeplink";
 
 
 let newsData = [];
@@ -3219,9 +3219,31 @@ function openSponsor(id){
 
 function tryHandleDeepLink(){
   if(!pendingDeepLink) return;
-  const type=pendingDeepLink.get("open"), id=pendingDeepLink.get("id"); if(!type||!id)return;
-  if(type==="news" && newsData.some(x=>x.id===id)){pendingDeepLink=null;openPage("news");setTimeout(()=>openNews(id),50);}
-  if(type==="report" && reportsData.some(x=>x.id===id)){pendingDeepLink=null;openPage("news");setTimeout(()=>openReport(id),50);}
+
+  const type=pendingDeepLink.get("open");
+  const id=pendingDeepLink.get("id");
+
+  if(!type) return;
+
+  if(type==="liveticker"){
+    pendingDeepLink=null;
+    openPage("liveticker");
+    history.replaceState(null,"",window.location.pathname);
+    return;
+  }
+
+  if(type==="news" && id && newsData.some(x=>x.id===id)){
+    pendingDeepLink=null;
+    openPage("news");
+    setTimeout(()=>openNews(id),50);
+    return;
+  }
+
+  if(type==="report" && id && reportsData.some(x=>x.id===id)){
+    pendingDeepLink=null;
+    openPage("news");
+    setTimeout(()=>openReport(id),50);
+  }
 }
 
 
