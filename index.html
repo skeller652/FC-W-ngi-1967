@@ -3176,7 +3176,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.11.17-6.0-club-suite";
+const APP_VERSION = "2026.11.17-6.1-calendar-modal-fix";
 
 
 let newsData = [];
@@ -5202,6 +5202,7 @@ ${report.aufstellung}`:""].filter(Boolean).join("\n\n");
 
 function openModal(data){
 
+  document.querySelectorAll("#contentModal .game-detail-actions").forEach(el=>el.remove());
   hideComments();
   currentShareData = { title:data.title||"FC Wängi 1967", text:data.text||"", url:window.location.href };
 
@@ -5270,6 +5271,7 @@ async function shareCurrentContent(){
 }
 
 function closeModal(){
+  document.querySelectorAll("#contentModal .game-detail-actions").forEach(el=>el.remove());
 
   hideComments();
   history.replaceState(null,"",window.location.pathname);
@@ -8675,12 +8677,23 @@ function renderEnhancedHome(){
 
 function openCalendarItem(id){
   const item=calendarData.find(x=>x.id===id); if(!item)return;
+
+  document.querySelectorAll("#contentModal .game-detail-actions").forEach(el=>el.remove());
+
   const gameLine=[item.team,item.gegner].filter(Boolean).join(" – ");
   const text=[gameLine,formatDateTime(item.datum),item.ort,item.beschreibung].filter(Boolean).join("\n\n");
-  openModal({tag:item.typ||"Termin",title:item.titel||"Termin",meta:formatDateTime(item.datum),text});
+
+  openModal({
+    tag:item.typ||"Termin",
+    title:item.titel||"Termin",
+    meta:formatDateTime(item.datum),
+    text
+  });
+
   const modalText=document.getElementById("modalText");
+
   if(modalText){
-    modalText.insertAdjacentHTML("afterend",`<div class="game-detail-actions">
+    modalText.insertAdjacentHTML("afterend",`<div class="game-detail-actions" id="calendarModalActions">
       <button class="button button-yellow" onclick="downloadCalendarItem('${item.id}')">📅 Zum Kalender</button>
       ${item.ort?`<button class="button button-outline" onclick="openMaps('${encodeURIComponent(item.ort)}')">📍 Route</button>`:""}
       ${item.typ==="Spiel"?`<button class="button button-outline" onclick="openPage('liveticker');closeModal()">🔴 Liveticker</button>`:""}
