@@ -2995,7 +2995,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.11.17-5.0-liveticker";
+const APP_VERSION = "2026.11.17-5.1-liveticker-savefix";
 
 
 let newsData = [];
@@ -3681,8 +3681,9 @@ function renderLiveTicker(){
         <div class="form-group"><label>Heim Tore</label><input id="liveHomeScore" class="form-input" type="number" min="0" value="${homeScore}"></div>
         <div class="form-group"><label>Gast Tore</label><input id="liveAwayScore" class="form-input" type="number" min="0" value="${awayScore}"></div>
       </div>
-      <button class="button button-green" onclick="saveLiveTickerMatch()">Spielstand speichern</button>
+      <button id="liveSaveMatchButton" class="button button-green" onclick="saveLiveTickerMatch()">Spielstand speichern</button>
       <button class="button button-outline" onclick="resetLiveTicker()">Neues Spiel / zurücksetzen</button>
+      <div id="liveTickerSaveStatus" class="upload-status" style="margin-top:10px;font-weight:800;"></div>
       <div class="live-score-buttons">
         <button class="button button-yellow" onclick="quickLiveTickerGoal('home')">⚽ Tor Heim +1</button>
         <button class="button button-yellow" onclick="quickLiveTickerGoal('away')">⚽ Tor Gast +1</button>
@@ -3702,35 +3703,108 @@ function renderLiveTicker(){
     </div>`;
 }
 
+function setLiveTickerSaveStatus(message,type=""){
+  const el=document.getElementById("liveTickerSaveStatus");
+  if(!el) return;
+  el.textContent=message || "";
+  el.style.color=type==="success" ? "#176738" : type==="error" ? "#9e2828" : "#666";
+}
+
+async function ensureLiveTickerAdminWriteReady(){
+  const currentAdmin=(typeof mfaAuth!=="undefined" && mfaAuth && mfaAuth.currentUser) || auth.currentUser;
+  if(!currentAdmin || currentAdmin.uid!==ADMIN_UID){
+    throw new Error("Kein gültiger Admin-Login vorhanden.");
+  }
+  if(typeof currentAdmin.getIdToken === "function"){
+    await currentAdmin.getIdToken(true);
+  }else if(mfaApi && typeof mfaApi.getIdToken === "function"){
+    await mfaApi.getIdToken(currentAdmin,true);
+  }
+  return currentAdmin;
+}
+
+function liveTickerFriendlyWriteError(error){
+  console.error("Liveticker speichern fehlgeschlagen:",error);
+  const code=String(error?.code || "");
+  if(code.includes("permission-denied")){
+    return "Speichern abgelehnt: Firestore-Regeln erlauben den Liveticker noch nicht. Bitte die neue firestore.rules veröffentlichen.";
+  }
+  if(code.includes("failed-precondition")){
+    return "Speichern nicht möglich: Firebase-Voraussetzung fehlt. Seite neu laden und nochmals versuchen.";
+  }
+  if(code.includes("unavailable")){
+    return "Firebase ist momentan nicht erreichbar. Internetverbindung prüfen und nochmals versuchen.";
+  }
+  if(code.includes("unauthenticated")){
+    return "Admin-Sitzung ist abgelaufen. Bitte neu als Admin anmelden.";
+  }
+  return "Speichern fehlgeschlagen: " + (error?.message || "Unbekannter Firebase-Fehler");
+}
+
 async function saveLiveTickerMatch(){
-  if(!liveTickerIsAdmin()) return alert("Kein Admin-Zugang.");
-  const payload={
-    homeTeam:document.getElementById("liveHomeTeam")?.value.trim() || "FC Wängi",
-    awayTeam:document.getElementById("liveAwayTeam")?.value.trim() || "Gegner",
-    status:document.getElementById("liveStatus")?.value || "Vor dem Spiel",
-    minute:Number(document.getElementById("liveMinute")?.value || 0),
-    homeScore:Math.max(0,Number(document.getElementById("liveHomeScore")?.value || 0)),
-    awayScore:Math.max(0,Number(document.getElementById("liveAwayScore")?.value || 0)),
-    updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-  };
-  await db.collection("liveticker").doc("current").set(payload,{merge:true});
+  const button=document.getElementById("liveSaveMatchButton");
+  try{
+    setLiveTickerSaveStatus("Speichere …");
+    if(button) button.disabled=true;
+    await ensureLiveTickerAdminWriteReady();
+
+    const minuteValue=document.getElementById("liveMinute")?.value;
+    const homeScoreValue=document.getElementById("liveHomeScore")?.value;
+    const awayScoreValue=document.getElementById("liveAwayScore")?.value;
+
+    const minute=Math.min(130,Math.max(0,Number(minuteValue || 0)));
+    const homeScore=Math.max(0,Number(homeScoreValue || 0));
+    const awayScore=Math.max(0,Number(awayScoreValue || 0));
+
+    if(!Number.isFinite(minute) || !Number.isFinite(homeScore) || !Number.isFinite(awayScore)){
+      throw new Error("Minute und Spielstand müssen gültige Zahlen sein.");
+    }
+
+    const payload={
+      homeTeam:document.getElementById("liveHomeTeam")?.value.trim() || "FC Wängi",
+      awayTeam:document.getElementById("liveAwayTeam")?.value.trim() || "Gegner",
+      status:document.getElementById("liveStatus")?.value || "Vor dem Spiel",
+      minute,
+      homeScore,
+      awayScore,
+      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    await db.collection("liveticker").doc("current").set(payload,{merge:true});
+    setLiveTickerSaveStatus("✅ Spielstand gespeichert.","success");
+  }catch(error){
+    const message=liveTickerFriendlyWriteError(error);
+    setLiveTickerSaveStatus("❌ "+message,"error");
+    alert(message);
+  }finally{
+    if(button) button.disabled=false;
+  }
 }
 
 async function quickLiveTickerGoal(side){
-  if(!liveTickerIsAdmin()) return;
-  const d=liveTickerData || {};
-  const home=d.homeTeam || "FC Wängi", away=d.awayTeam || "Gegner";
-  const now=Date.now();
-  const event={id:"ev_"+now+"_"+Math.random().toString(36).slice(2,7),minute:Number(document.getElementById("liveMinute")?.value || d.minute || 0),type:"Tor",team:side==="home"?home:away,text:"Tor für "+(side==="home"?home:away)+"!",createdAt:now,sortTime:now};
-  const events=Array.isArray(d.events)?[...d.events]:[];
-  events.push(event);
-  const changes={events,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
-  changes[side==="home"?"homeScore":"awayScore"]=(Number(d[side==="home"?"homeScore":"awayScore"])||0)+1;
-  await db.collection("liveticker").doc("current").set(changes,{merge:true});
+  try{
+    setLiveTickerSaveStatus("Speichere Tor …");
+    await ensureLiveTickerAdminWriteReady();
+    const d=liveTickerData || {};
+    const home=d.homeTeam || "FC Wängi", away=d.awayTeam || "Gegner";
+    const now=Date.now();
+    const event={id:"ev_"+now+"_"+Math.random().toString(36).slice(2,7),minute:Number(document.getElementById("liveMinute")?.value || d.minute || 0),type:"Tor",team:side==="home"?home:away,text:"Tor für "+(side==="home"?home:away)+"!",createdAt:now,sortTime:now};
+    const events=Array.isArray(d.events)?[...d.events]:[];
+    events.push(event);
+    const changes={events,updatedAt:firebase.firestore.FieldValue.serverTimestamp()};
+    changes[side==="home"?"homeScore":"awayScore"]=(Number(d[side==="home"?"homeScore":"awayScore"])||0)+1;
+    await db.collection("liveticker").doc("current").set(changes,{merge:true});
+    setLiveTickerSaveStatus("✅ Tor gespeichert.","success");
+  }catch(error){
+    const message=liveTickerFriendlyWriteError(error);
+    setLiveTickerSaveStatus("❌ "+message,"error");
+    alert(message);
+  }
 }
 
 async function saveLiveTickerEvent(){
-  if(!liveTickerIsAdmin()) return alert("Kein Admin-Zugang.");
+  try{
+    await ensureLiveTickerAdminWriteReady();
   const d=liveTickerData || {};
   const events=Array.isArray(d.events)?[...d.events]:[];
   const now=Date.now();
@@ -3748,6 +3822,9 @@ async function saveLiveTickerEvent(){
   if(idx>=0) events[idx]=item; else events.push(item);
   liveTickerEditEventId=null;
   await db.collection("liveticker").doc("current").set({events,minute:item.minute,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+  }catch(error){
+    alert(liveTickerFriendlyWriteError(error));
+  }
 }
 
 function editLiveTickerEvent(id){
@@ -3763,18 +3840,29 @@ function cancelLiveTickerEventEdit(){
 }
 
 async function deleteLiveTickerEvent(id){
-  if(!liveTickerIsAdmin()) return;
   if(!confirm("Dieses Liveticker-Ereignis wirklich löschen?")) return;
-  const events=(Array.isArray(liveTickerData?.events)?liveTickerData.events:[]).filter(e=>e.id!==id);
-  if(liveTickerEditEventId===id) liveTickerEditEventId=null;
-  await db.collection("liveticker").doc("current").set({events,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+  try{
+    await ensureLiveTickerAdminWriteReady();
+    const events=(Array.isArray(liveTickerData?.events)?liveTickerData.events:[]).filter(e=>e.id!==id);
+    if(liveTickerEditEventId===id) liveTickerEditEventId=null;
+    await db.collection("liveticker").doc("current").set({events,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+  }catch(error){
+    alert(liveTickerFriendlyWriteError(error));
+  }
 }
 
 async function resetLiveTicker(){
-  if(!liveTickerIsAdmin()) return;
   if(!confirm("Liveticker für ein neues Spiel zurücksetzen? Alle bisherigen Ereignisse werden gelöscht.")) return;
-  liveTickerEditEventId=null;
-  await db.collection("liveticker").doc("current").set({homeTeam:"FC Wängi",awayTeam:"Gegner",homeScore:0,awayScore:0,minute:0,status:"Vor dem Spiel",events:[],updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+  try{
+    await ensureLiveTickerAdminWriteReady();
+    liveTickerEditEventId=null;
+    await db.collection("liveticker").doc("current").set({homeTeam:"FC Wängi",awayTeam:"Gegner",homeScore:0,awayScore:0,minute:0,status:"Vor dem Spiel",events:[],updatedAt:firebase.firestore.FieldValue.serverTimestamp()});
+    setLiveTickerSaveStatus("✅ Liveticker zurückgesetzt.","success");
+  }catch(error){
+    const message=liveTickerFriendlyWriteError(error);
+    setLiveTickerSaveStatus("❌ "+message,"error");
+    alert(message);
+  }
 }
 
 
