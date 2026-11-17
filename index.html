@@ -2995,7 +2995,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.11.17-5.4-admin-history-visible";
+const APP_VERSION = "2026.11.17-5.5-unified-live-editor";
 
 
 let newsData = [];
@@ -3713,8 +3713,8 @@ function renderLiveTicker(){
   const editEvent=liveTickerEditEventId ? events.find(e=>e.id===liveTickerEditEventId) : null;
   adminBox.innerHTML=`
     <div class="live-admin-box">
-      <h3>🛠️ Liveticker direkt bearbeiten</h3>
-      <div class="live-admin-note">Nur für den eingeloggten Admin sichtbar. Änderungen erscheinen bei allen Nutzern sofort.</div>
+      <h3>🛠️ Liveticker bearbeiten</h3>
+      <div class="live-admin-note">Spielstand, Status und Ereignisse direkt in einem Bereich bearbeiten. Änderungen erscheinen bei allen Nutzern sofort.</div>
       <div class="form-row">
         <div class="form-group"><label>Heimteam</label><input id="liveHomeTeam" class="form-input" value="${liveTickerAttr(home)}"></div>
         <div class="form-group"><label>Gastteam</label><input id="liveAwayTeam" class="form-input" value="${liveTickerAttr(away)}"></div>
@@ -3734,10 +3734,9 @@ function renderLiveTicker(){
         <button class="button button-yellow" onclick="quickLiveTickerGoal('home')">⚽ Tor Heim +1</button>
         <button class="button button-yellow" onclick="quickLiveTickerGoal('away')">⚽ Tor Gast +1</button>
       </div>
-    </div>
 
-    <div class="live-admin-box">
-      <h3>${editEvent ? "Ereignis bearbeiten" : "Ereignis hinzufügen"}</h3>
+      <div style="margin-top:22px;padding-top:18px;border-top:1px solid #eadb8b;">
+        <h3>${editEvent ? "✏️ Ereignis bearbeiten" : "➕ Ereignis hinzufügen"}</h3>
       <div class="form-row">
         <div class="form-group"><label>Minute</label><input id="liveEventMinute" class="form-input" type="number" min="0" max="130" value="${liveTickerAttr(editEvent?.minute ?? minute)}"></div>
         <div class="form-group"><label>Typ</label><select id="liveEventType" class="form-input">${["Tor","Gelbe Karte","Rote Karte","Wechsel","Chance","Info","Spielstand"].map(x=>`<option ${x===(editEvent?.type||"Info")?"selected":""}>${x}</option>`).join("")}</select></div>
@@ -3746,6 +3745,7 @@ function renderLiveTicker(){
       <div class="form-group"><label>Text</label><textarea id="liveEventText" class="form-input" placeholder="Was ist passiert?">${liveTickerSafeText(editEvent?.text || "")}</textarea></div>
       <button id="liveSaveEventButton" class="button button-green" onclick="saveLiveTickerEvent()">${editEvent ? "Änderung speichern" : "Ereignis veröffentlichen"}</button>
       ${editEvent ? '<button class="button button-outline" onclick="cancelLiveTickerEventEdit()">Abbrechen</button>' : ""}
+      </div>
     </div>`;
 }
 
