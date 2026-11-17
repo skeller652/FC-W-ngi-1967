@@ -2995,7 +2995,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.11.17-5.5-unified-live-editor";
+const APP_VERSION = "2026.11.17-5.6-goal-events-update-score";
 
 
 let newsData = [];
@@ -3714,7 +3714,7 @@ function renderLiveTicker(){
   adminBox.innerHTML=`
     <div class="live-admin-box">
       <h3>🛠️ Liveticker bearbeiten</h3>
-      <div class="live-admin-note">Spielstand, Status und Ereignisse direkt in einem Bereich bearbeiten. Änderungen erscheinen bei allen Nutzern sofort.</div>
+      <div class="live-admin-note">Spielstand, Status und Ereignisse direkt in einem Bereich bearbeiten. Bei einem Ereignis vom Typ „Tor“ wird der Spielstand automatisch erhöht.</div>
       <div class="form-row">
         <div class="form-group"><label>Heimteam</label><input id="liveHomeTeam" class="form-input" value="${liveTickerAttr(home)}"></div>
         <div class="form-group"><label>Gastteam</label><input id="liveAwayTeam" class="form-input" value="${liveTickerAttr(away)}"></div>
@@ -3730,11 +3730,6 @@ function renderLiveTicker(){
       <button id="liveSaveMatchButton" class="button button-green" onclick="saveLiveTickerMatch()">Spielstand speichern</button>
       <button class="button button-outline" onclick="resetLiveTicker()">Neues Spiel / zurücksetzen</button>
       <div id="liveTickerSaveStatus" class="upload-status" style="margin-top:10px;font-weight:800;"></div>
-      <div class="live-score-buttons">
-        <button class="button button-yellow" onclick="quickLiveTickerGoal('home')">⚽ Tor Heim +1</button>
-        <button class="button button-yellow" onclick="quickLiveTickerGoal('away')">⚽ Tor Gast +1</button>
-      </div>
-
       <div style="margin-top:22px;padding-top:18px;border-top:1px solid #eadb8b;">
         <h3>${editEvent ? "✏️ Ereignis bearbeiten" : "➕ Ereignis hinzufügen"}</h3>
       <div class="form-row">
@@ -3882,53 +3877,6 @@ async function saveLiveTickerMatch(){
   }
 }
 
-async function quickLiveTickerGoal(side){
-  try{
-    setLiveTickerSaveStatus("Speichere Tor …");
-    await ensureLiveTickerAdminWriteReady();
-
-    const d=liveTickerData || {};
-    const home=d.homeTeam || "FC Wängi";
-    const away=d.awayTeam || "Gegner";
-    const now=Date.now();
-    const minute=Number(document.getElementById("liveMinute")?.value || d.minute || 0);
-    const scoreField=side==="home" ? "homeScore" : "awayScore";
-    const oldScore=Number(d[scoreField] || 0);
-    const newScore=oldScore+1;
-    const event={
-      id:"ev_"+now+"_"+Math.random().toString(36).slice(2,7),
-      minute,
-      type:"Tor",
-      team:side==="home"?home:away,
-      text:"Tor für "+(side==="home"?home:away)+"!",
-      createdAt:now,
-      sortTime:now
-    };
-
-    const changes={
-      events:firebase.firestore.FieldValue.arrayUnion(event),
-      updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-    };
-    changes[scoreField]=firebase.firestore.FieldValue.increment(1);
-
-    await db.collection("liveticker").doc("current").set(changes,{merge:true});
-
-    const localEvents=liveTickerLocalEvents();
-    const localChanges={
-      events:[...localEvents,event],
-      minute
-    };
-    localChanges[scoreField]=newScore;
-    liveTickerLocalApply(localChanges);
-
-    setLiveTickerSaveStatus("✅ Tor gespeichert und in der Historie eingetragen.","success");
-  }catch(error){
-    const message=liveTickerFriendlyWriteError(error);
-    setLiveTickerSaveStatus("❌ "+message,"error");
-    alert(message);
-  }
-}
-
 async function saveLiveTickerEvent(){
   const button=document.getElementById("liveSaveEventButton");
   try{
@@ -3942,6 +3890,8 @@ async function saveLiveTickerEvent(){
     const minuteValue=Number(document.getElementById("liveEventMinute")?.value || 0);
     const minute=Math.min(130,Math.max(0,Number.isFinite(minuteValue)?minuteValue:0));
     const textValue=String(document.getElementById("liveEventText")?.value || "").trim();
+    const type=String(document.getElementById("liveEventType")?.value || "Info");
+    const team=String(document.getElementById("liveEventTeam")?.value || "");
 
     if(!textValue){
       throw new Error("Bitte einen Text für das Ereignis eingeben.");
@@ -3950,47 +3900,107 @@ async function saveLiveTickerEvent(){
     const item={
       id:liveTickerEditEventId || "ev_"+now+"_"+Math.random().toString(36).slice(2,7),
       minute,
-      type:document.getElementById("liveEventType")?.value || "Info",
-      team:document.getElementById("liveEventTeam")?.value || "",
+      type,
+      team,
       text:textValue,
       createdAt:liveTickerEditEventId ? (events.find(e=>e.id===liveTickerEditEventId)?.createdAt || now) : now,
       sortTime:liveTickerEditEventId ? (events.find(e=>e.id===liveTickerEditEventId)?.sortTime || now) : now
     };
 
     const ref=db.collection("liveticker").doc("current");
+    const homeTeam=d.homeTeam || "FC Wängi";
+    const awayTeam=d.awayTeam || "Gegner";
 
     if(liveTickerEditEventId){
       const idx=events.findIndex(e=>e.id===item.id);
       if(idx<0) throw new Error("Das zu bearbeitende Ereignis wurde nicht gefunden.");
 
+      const oldItem=events[idx];
       const updatedEvents=[...events];
       updatedEvents[idx]=item;
+
+      let homeScore=Number(d.homeScore || 0);
+      let awayScore=Number(d.awayScore || 0);
+
+      // Falls ein bestehendes Tor bearbeitet wird, zuerst den alten Tor-Effekt zurücknehmen.
+      if(oldItem?.type==="Tor"){
+        if(oldItem.team===homeTeam) homeScore=Math.max(0,homeScore-1);
+        if(oldItem.team===awayTeam) awayScore=Math.max(0,awayScore-1);
+      }
+
+      // Danach den neuen Tor-Effekt anwenden.
+      if(item.type==="Tor"){
+        if(!item.team){
+          throw new Error("Bei einem Tor muss ein Team ausgewählt werden.");
+        }
+        if(item.team===homeTeam) homeScore+=1;
+        else if(item.team===awayTeam) awayScore+=1;
+        else throw new Error("Das ausgewählte Team passt nicht zum aktuellen Spiel.");
+      }
 
       await ref.set({
         events:updatedEvents,
         minute:item.minute,
+        homeScore,
+        awayScore,
         updatedAt:firebase.firestore.FieldValue.serverTimestamp()
       },{merge:true});
 
       liveTickerEditEventId=null;
       liveTickerLocalApply({
         events:updatedEvents,
-        minute:item.minute
+        minute:item.minute,
+        homeScore,
+        awayScore
       });
-      setLiveTickerSaveStatus("✅ Ereignis geändert und Historie aktualisiert.","success");
+
+      setLiveTickerSaveStatus(
+        item.type==="Tor"
+          ? "✅ Tor geändert – Spielstand und Historie aktualisiert."
+          : "✅ Ereignis geändert und Historie aktualisiert.",
+        "success"
+      );
     }else{
-      await ref.set({
+      if(item.type==="Tor" && !item.team){
+        throw new Error("Bei einem Tor muss ein Team ausgewählt werden.");
+      }
+
+      const payload={
         events:firebase.firestore.FieldValue.arrayUnion(item),
         minute:item.minute,
         updatedAt:firebase.firestore.FieldValue.serverTimestamp()
-      },{merge:true});
+      };
+
+      let homeScore=Number(d.homeScore || 0);
+      let awayScore=Number(d.awayScore || 0);
+
+      if(item.type==="Tor"){
+        if(item.team===homeTeam){
+          homeScore+=1;
+          payload.homeScore=firebase.firestore.FieldValue.increment(1);
+        }else if(item.team===awayTeam){
+          awayScore+=1;
+          payload.awayScore=firebase.firestore.FieldValue.increment(1);
+        }else{
+          throw new Error("Das ausgewählte Team passt nicht zum aktuellen Spiel.");
+        }
+      }
+
+      await ref.set(payload,{merge:true});
 
       liveTickerLocalApply({
         events:[...events,item],
-        minute:item.minute
+        minute:item.minute,
+        homeScore,
+        awayScore
       });
 
-      setLiveTickerSaveStatus("✅ Ereignis veröffentlicht und in der Historie sichtbar.","success");
+      setLiveTickerSaveStatus(
+        item.type==="Tor"
+          ? "✅ Tor veröffentlicht – Spielstand automatisch erhöht."
+          : "✅ Ereignis veröffentlicht und in der Historie sichtbar.",
+        "success"
+      );
     }
   }catch(error){
     const message=liveTickerFriendlyWriteError(error);
@@ -3999,13 +4009,6 @@ async function saveLiveTickerEvent(){
   }finally{
     if(button) button.disabled=false;
   }
-}
-
-function editLiveTickerEvent(id){
-  if(!liveTickerIsAdmin()) return;
-  liveTickerEditEventId=id;
-  renderLiveTicker();
-  document.getElementById("liveTickerAdmin")?.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
 function cancelLiveTickerEventEdit(){
