@@ -3064,7 +3064,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.11.17-5.8-clean-navigation";
+const APP_VERSION = "2026.11.17-5.9-push-liveticker";
 
 
 let newsData = [];
@@ -3887,6 +3887,47 @@ async function saveLiveTickerTeams(){
   }
 }
 
+function buildLiveTickerPush(item, homeScore, awayScore){
+  const d=liveTickerData || {};
+  const homeTeam=d.homeTeam || "FC Wängi";
+  const awayTeam=d.awayTeam || "Gegner";
+  const minute=Number(item?.minute || 0);
+  const minuteText=minute>0 ? `${minute}. Min · ` : "";
+
+  if(item?.type==="Tor"){
+    return {
+      title:`⚽ TOR! ${homeTeam} ${homeScore}:${awayScore} ${awayTeam}`,
+      body:`${minuteText}${item.team || ""}${item.text ? " · "+item.text : ""}`.slice(0,500),
+      url:`${APP_URL}?open=liveticker`,
+      tag:"liveticker-score"
+    };
+  }
+
+  return {
+    title:`🔴 Liveticker · ${item?.type || "Ereignis"}`,
+    body:`${minuteText}${item?.team ? item.team+" · " : ""}${item?.text || ""}`.slice(0,500),
+    url:`${APP_URL}?open=liveticker`,
+    tag:"liveticker-event"
+  };
+}
+
+async function sendLiveTickerPush(item, homeScore, awayScore){
+  try{
+    const push=buildLiveTickerPush(item,homeScore,awayScore);
+    const result=await sendPushCallable(push);
+    console.log("Liveticker-Push gesendet:",result?.data || result);
+    return result;
+  }catch(error){
+    console.error("Liveticker-Push konnte nicht gesendet werden:",error);
+    setLiveTickerSaveStatus(
+      "✅ Ereignis gespeichert. ⚠️ Push konnte nicht gesendet werden: "
+      +(error?.message || "Unbekannter Fehler."),
+      "error"
+    );
+    return null;
+  }
+}
+
 async function saveLiveTickerEvent(){
   const button=document.getElementById("liveSaveEventButton");
   try{
@@ -4005,12 +4046,16 @@ async function saveLiveTickerEvent(){
         awayScore
       });
 
-      setLiveTickerSaveStatus(
-        item.type==="Tor"
-          ? "✅ Tor veröffentlicht – Spielstand automatisch erhöht."
-          : "✅ Ereignis veröffentlicht und in der Historie sichtbar.",
-        "success"
-      );
+      const pushResult=await sendLiveTickerPush(item,homeScore,awayScore);
+
+      if(pushResult){
+        setLiveTickerSaveStatus(
+          item.type==="Tor"
+            ? "✅ Tor veröffentlicht – Spielstand erhöht und Push gesendet."
+            : "✅ Ereignis veröffentlicht und Push gesendet.",
+          "success"
+        );
+      }
     }
   }catch(error){
     const message=liveTickerFriendlyWriteError(error);
@@ -6597,7 +6642,42 @@ async function logoutAdmin(){
 
 /* PUSH */
 
+messaging.onMessage(async payload => {
+  try{
+    const title =
+      payload?.data?.title ||
+      payload?.notification?.title ||
+      "FC Wängi 1967";
+
+    const body =
+      payload?.data?.body ||
+      payload?.notification?.body ||
+      "";
+
+    const url =
+      payload?.data?.url ||
+      APP_URL;
+
+    const registration =
+      await navigator.serviceWorker.ready;
+
+    await registration.showNotification(title,{
+      body,
+      icon:"./icon-512.png",
+      badge:"./icon-512.png",
+      data:{url},
+      tag:payload?.data?.tag || undefined
+    });
+  }catch(error){
+    console.warn("Foreground-Push konnte nicht angezeigt werden:",error);
+  }
+});
+
 async function registerCurrentDeviceForPush(){
+
+  if(!("serviceWorker" in navigator)){
+    throw new Error("Service Worker wird von diesem Gerät nicht unterstützt.");
+  }
 
   const registration =
     await navigator
@@ -6617,7 +6697,7 @@ async function registerCurrentDeviceForPush(){
       });
 
   if(!token){
-    return;
+    throw new Error("Firebase konnte keinen Push-Token erzeugen.");
   }
 
   await registerPushTokenCallable({
@@ -6629,12 +6709,18 @@ async function registerCurrentDeviceForPush(){
     "1"
   );
 
-  document
-    .getElementById(
-      "notificationStatus"
-    )
-    .textContent =
+  localStorage.setItem(
+    "fcwPushTokenUpdatedAt",
+    String(Date.now())
+  );
+
+  const status=document.getElementById("notificationStatus");
+  if(status){
+    status.textContent =
       "✅ FCW-Mitteilungen sind aktiviert";
+  }
+
+  return token;
 
 }
 
@@ -6662,8 +6748,12 @@ async function enableNotifications(){
 
   catch(error){
 
+    console.error("Push aktivieren:",error);
+
     alert(
-      "Push konnte nicht aktiviert werden."
+      "Push konnte nicht aktiviert werden.\n\n"
+      +
+      (error?.message || "Unbekannter Fehler.")
     );
 
   }
@@ -6805,7 +6895,9 @@ async function sendPushFromAdmin(){
     const result =
       await sendPushCallable({
         title,
-        body
+        body,
+        url:APP_URL,
+        tag:"admin-manual"
       });
 
     alert(
@@ -6822,8 +6914,12 @@ async function sendPushFromAdmin(){
 
   catch(error){
 
+    console.error("Push senden:",error);
+
     alert(
-      "❌ Push konnte nicht gesendet werden."
+      "❌ Push konnte nicht gesendet werden.\n\n"
+      +
+      (error?.message || error?.code || "Unbekannter Fehler.")
     );
 
   }
@@ -8198,6 +8294,12 @@ window.addEventListener(
   async () => {
 
     updateNotificationStatus();
+
+if("Notification" in window && Notification.permission==="granted"){
+  registerCurrentDeviceForPush().catch(error=>{
+    console.warn("Push-Token konnte beim Start nicht aktualisiert werden:",error);
+  });
+}
     updatePushCounters();
     renderHomeMatchCards();
     tryHandleDeepLink();
