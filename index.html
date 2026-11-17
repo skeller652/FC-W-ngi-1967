@@ -1520,6 +1520,15 @@ textarea.form-input{
   .player-stat-row{grid-template-columns:1fr repeat(5,32px);font-size:9px}
 }
 
+
+.admin-manager-note{margin:8px 0 14px;color:#666;font-size:12px;line-height:1.5}
+.admin-account-row{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 0;border-bottom:1px solid #eee}
+.admin-account-row:last-child{border-bottom:0}
+.admin-account-info strong{display:block}
+.admin-account-info small{color:#777}
+.admin-role-badge{display:inline-block;margin-top:4px;padding:3px 7px;border-radius:999px;background:#fff0a7;color:#725900;font-size:9px;font-weight:900}
+#adminManagementCard[hidden]{display:none!important}
+
 </style>
 </head>
 
@@ -2188,6 +2197,39 @@ Abbrechen
 <span class="admin-label">ÜBERSICHT</span>
 <h3>Admin-Dashboard</h3>
 <div id="adminDashboard" class="admin-dashboard-grid"></div>
+</div>
+
+<div id="adminManagementCard" class="card admin-card" hidden>
+  <span class="admin-label">ADMINISTRATOREN</span>
+  <h3>🔐 Admins verwalten</h3>
+  <p class="admin-manager-note">
+    Nur der Hauptadmin kann weitere Administratoren anlegen oder entfernen.
+    Neue Admins müssen bei der ersten Anmeldung ihre E-Mail bestätigen und anschliessend TOTP-2FA einrichten.
+  </p>
+
+  <div class="form-group">
+    <label>Name</label>
+    <input id="newAdminName" class="form-input" maxlength="80" placeholder="Vorname Nachname">
+  </div>
+
+  <div class="form-group">
+    <label>E-Mail</label>
+    <input id="newAdminEmail" type="email" class="form-input" maxlength="160" placeholder="admin@beispiel.ch">
+  </div>
+
+  <div class="form-group">
+    <label>Startpasswort</label>
+    <input id="newAdminPassword" type="password" class="form-input" minlength="12" maxlength="128" autocomplete="new-password" placeholder="Mindestens 12 Zeichen">
+  </div>
+
+  <button id="createAdminButton" class="button button-green" onclick="createNewAdmin()">
+    ➕ Admin hinzufügen
+  </button>
+
+  <div id="adminManagementStatus" class="notification-status"></div>
+
+  <h3 style="margin-top:22px;">Bestehende Admins</h3>
+  <div id="adminAccountsList"><div class="empty">Noch nicht geladen.</div></div>
 </div>
 
 <!-- V3 SICHERHEIT / MELDUNGEN -->
@@ -3168,15 +3210,67 @@ const deleteCommentCallable = functions.httpsCallable("deleteComment");
 const reportCommentCallable = functions.httpsCallable("reportComment");
 const getAdminModerationCallable = functions.httpsCallable("getAdminModeration");
 const recordAdminActionCallable = functions.httpsCallable("recordAdminAction");
+const getAdminAccessCallable = functions.httpsCallable("getAdminAccess");
+const listAdminsCallable = functions.httpsCallable("listAdmins");
+const createAdminCallable = functions.httpsCallable("createAdmin");
+const removeAdminCallable = functions.httpsCallable("removeAdmin");
 
-const ADMIN_UID =
+const PRIMARY_ADMIN_UID =
   "Ml4BJbbv4AOKZUCC4rutXv1HxWJ3";
+
+let currentAdminAccess = {
+  isAdmin:false,
+  isPrimary:false,
+  email:"",
+  name:""
+};
+
+function currentAdminUser(){
+  return (typeof mfaAuth!=="undefined" && mfaAuth && mfaAuth.currentUser) || auth.currentUser || null;
+}
+
+function isAdminSession(){
+  return !!(currentAdminUser() && currentAdminAccess.isAdmin);
+}
+
+function isPrimaryAdminSession(){
+  return !!(currentAdminUser() && currentAdminAccess.isAdmin && currentAdminAccess.isPrimary);
+}
+
+async function refreshCurrentAdminAccess(user=currentAdminUser()){
+  if(!user){
+    currentAdminAccess={isAdmin:false,isPrimary:false,email:"",name:""};
+    return currentAdminAccess;
+  }
+
+  try{
+    if(typeof user.getIdToken === "function"){
+      await user.getIdToken(true);
+    }else if(mfaApi && typeof mfaApi.getIdToken === "function"){
+      await mfaApi.getIdToken(user,true);
+    }
+
+    const result=await getAdminAccessCallable({});
+    currentAdminAccess={
+      isAdmin:result?.data?.isAdmin===true,
+      isPrimary:result?.data?.isPrimary===true,
+      email:result?.data?.email || user.email || "",
+      name:result?.data?.name || user.displayName || ""
+    };
+  }catch(error){
+    console.error("Admin-Berechtigung konnte nicht geprüft werden:",error);
+    currentAdminAccess={isAdmin:false,isPrimary:false,email:user.email||"",name:user.displayName||""};
+  }
+
+  renderAdminManagementVisibility();
+  return currentAdminAccess;
+}
 
 const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.11.17-6.1-calendar-modal-fix";
+const APP_VERSION = "2026.11.17-6.2-multi-admin";
 
 
 let newsData = [];
@@ -3783,11 +3877,7 @@ async function uploadImage(
     ||
     auth.currentUser;
 
-  if(
-    !currentAdmin
-    ||
-    currentAdmin.uid !== ADMIN_UID
-  ){
+  if(!isAdminSession()){
     throw new Error(
       "Keine Admin-Berechtigung. Bitte Admin neu anmelden."
     );
@@ -3923,7 +4013,7 @@ async function deleteStorageFile(path){
 /* LIVETICKER */
 function liveTickerIsAdmin(){
   const currentAdmin=(typeof mfaAuth!=="undefined" && mfaAuth && mfaAuth.currentUser) || auth.currentUser;
-  return !!(currentAdmin && currentAdmin.uid===ADMIN_UID);
+  return isAdminSession();
 }
 
 function liveTickerEventIcon(type){
@@ -4054,7 +4144,7 @@ function setLiveTickerSaveStatus(message,type=""){
 
 async function ensureLiveTickerAdminWriteReady(){
   const currentAdmin=(typeof mfaAuth!=="undefined" && mfaAuth && mfaAuth.currentUser) || auth.currentUser;
-  if(!currentAdmin || currentAdmin.uid!==ADMIN_UID){
+  if(!isAdminSession()){
     throw new Error("Kein gültiger Admin-Login vorhanden.");
   }
   if(typeof currentAdmin.getIdToken === "function"){
@@ -5436,10 +5526,7 @@ function renderComments(comments){
     ||
     auth.currentUser;
 
-  const adminActive =
-    currentAdmin
-    &&
-    currentAdmin.uid === ADMIN_UID;
+  const adminActive = isAdminSession();
 
   list.innerHTML =
     comments
@@ -5569,7 +5656,7 @@ async function reportComment(id){
 
 async function loadAdminModeration(){
   const currentAdmin = (mfaAuth && mfaAuth.currentUser) || auth.currentUser;
-  if(!currentAdmin || currentAdmin.uid !== ADMIN_UID){
+  if(!isAdminSession()){
     alert("Bitte zuerst als Admin anmelden.");
     return;
   }
@@ -5606,11 +5693,7 @@ async function deleteComment(id){
     ||
     auth.currentUser;
 
-  if(
-    !currentAdmin
-    ||
-    currentAdmin.uid !== ADMIN_UID
-  ){
+  if(!isAdminSession()){
     alert("Bitte zuerst als Admin anmelden.");
     return;
   }
@@ -5862,22 +5945,17 @@ async function refreshAdminSecurityState(){
   const user =
     mfaAuth.currentUser;
 
-  if(
-    !user
-    ||
-    user.uid !== ADMIN_UID
-  ){
-
-    document
-      .getElementById(
-        "adminProtectedContent"
-      )
-      .classList.remove(
-        "visible"
-      );
-
+  if(!user){
+    currentAdminAccess={isAdmin:false,isPrimary:false,email:"",name:""};
+    document.getElementById("adminProtectedContent").classList.remove("visible");
     return;
+  }
 
+  await refreshCurrentAdminAccess(user);
+
+  if(!currentAdminAccess.isAdmin){
+    document.getElementById("adminProtectedContent").classList.remove("visible");
+    return;
   }
 
   showAdminPanel();
@@ -5887,7 +5965,9 @@ async function refreshAdminSecurityState(){
       "adminUserText"
     )
     .textContent =
-      user.email || "Admin";
+      (currentAdminAccess.name ? currentAdminAccess.name + " · " : "")
+      + (user.email || "Admin")
+      + (currentAdminAccess.isPrimary ? " · Hauptadmin" : "");
 
   const protectedContent =
     document.getElementById(
@@ -5962,6 +6042,8 @@ async function refreshAdminSecurityState(){
     );
 
     renderAdminLists();
+    renderAdminManagementVisibility();
+    if(currentAdminAccess.isPrimary) loadAdminAccounts();
 
     return;
 
@@ -6026,34 +6108,20 @@ async function initializeAdminAuth(){
       mfaAuth,
       async user => {
 
-        if(
-          user
-          &&
-          user.uid !== ADMIN_UID
-        ){
-
-          await mfaApi.signOut(
-            mfaAuth
-          );
-
+        if(!user){
+          currentAdminAccess={isAdmin:false,isPrimary:false,email:"",name:""};
           showAdminLogin();
-
-          document
-            .getElementById(
-              "loginStatus"
-            )
-            .textContent =
-              "❌ Kein Admin-Zugang.";
-
+          renderAdminManagementVisibility();
           return;
-
         }
 
-        if(!user){
+        const access=await refreshCurrentAdminAccess(user);
 
+        if(!access.isAdmin){
+          await mfaApi.signOut(mfaAuth);
           showAdminLogin();
+          document.getElementById("loginStatus").textContent="❌ Kein Admin-Zugang.";
           return;
-
         }
 
         try{
@@ -6156,24 +6224,15 @@ async function loginAdmin(){
           password
         );
 
-    if(
-      credential.user.uid !==
-      ADMIN_UID
-    ){
+    const access=await refreshCurrentAdminAccess(credential.user);
 
-      await mfaApi.signOut(
-        mfaAuth
-      );
-
-      status.textContent =
-        "❌ Kein Admin-Zugang.";
-
+    if(!access.isAdmin){
+      await mfaApi.signOut(mfaAuth);
+      status.textContent="❌ Kein Admin-Zugang.";
       return;
-
     }
 
-    status.textContent =
-      "";
+    status.textContent="";
 
   }
 
@@ -6365,19 +6424,11 @@ async function verifyAdminMfaCode(){
     pendingMfaResolver =
       null;
 
-    if(
-      result.user.uid !==
-      ADMIN_UID
-    ){
+    const access=await refreshCurrentAdminAccess(result.user);
 
-      await mfaApi.signOut(
-        mfaAuth
-      );
-
-      throw new Error(
-        "Kein Admin-Zugang."
-      );
-
+    if(!access.isAdmin){
+      await mfaApi.signOut(mfaAuth);
+      throw new Error("Kein Admin-Zugang.");
     }
 
     setMfaLoginStatus(
@@ -6550,16 +6601,8 @@ async function startTotpEnrollment(){
     const user =
       mfaAuth.currentUser;
 
-    if(
-      !user
-      ||
-      user.uid !== ADMIN_UID
-    ){
-
-      throw new Error(
-        "Nicht als Admin angemeldet."
-      );
-
+    if(!user || !isAdminSession()){
+      throw new Error("Nicht als Admin angemeldet.");
     }
 
     await mfaApi.reload(
@@ -7208,7 +7251,7 @@ async function sendPushFromAdmin(){
 
 async function writeAdminLog(action, details=""){
   const currentAdmin=(mfaAuth && mfaAuth.currentUser) || auth.currentUser;
-  if(!currentAdmin || currentAdmin.uid !== ADMIN_UID) return;
+  if(!isAdminSession()) return;
   try{
     await recordAdminActionCallable({
       action:String(action||"Aktion").slice(0,80),
@@ -8525,11 +8568,120 @@ function adminRow(
 
 
 
+
+/* =========================
+   ADMIN-VERWALTUNG V6.2
+========================= */
+
+function renderAdminManagementVisibility(){
+  const card=document.getElementById("adminManagementCard");
+  if(!card)return;
+  card.hidden=!isPrimaryAdminSession();
+}
+
+async function loadAdminAccounts(){
+  if(!isPrimaryAdminSession()) return;
+
+  const list=document.getElementById("adminAccountsList");
+  if(list) list.innerHTML='<div class="loading">Admins werden geladen...</div>';
+
+  try{
+    const result=await listAdminsCallable({});
+    const admins=result?.data?.admins || [];
+
+    if(!list)return;
+
+    list.innerHTML=admins.length
+      ? admins.map(item=>`
+          <div class="admin-account-row">
+            <div class="admin-account-info">
+              <strong>${esc(item.name || item.email || "Admin")}</strong>
+              <small>${esc(item.email || "")}</small>
+              <div><span class="admin-role-badge">${item.isPrimary ? "HAUPTADMIN" : "ADMIN"}</span></div>
+            </div>
+            ${item.isPrimary
+              ? '<span class="meta">Geschützt</span>'
+              : `<button class="button button-red button-small" onclick="removeAdminAccount('${item.uid}','${String(item.email||"").replace(/'/g,"&#39;")}')">Entfernen</button>`
+            }
+          </div>
+        `).join("")
+      : '<div class="empty">Keine Admins gefunden.</div>';
+  }catch(error){
+    console.error("Admins laden:",error);
+    if(list) list.innerHTML='<div class="empty">Admins konnten nicht geladen werden.</div>';
+  }
+}
+
+async function createNewAdmin(){
+  if(!isPrimaryAdminSession()){
+    alert("Nur der Hauptadmin darf neue Admins anlegen.");
+    return;
+  }
+
+  const name=document.getElementById("newAdminName")?.value.trim() || "";
+  const email=document.getElementById("newAdminEmail")?.value.trim().toLowerCase() || "";
+  const password=document.getElementById("newAdminPassword")?.value || "";
+  const status=document.getElementById("adminManagementStatus");
+  const button=document.getElementById("createAdminButton");
+
+  if(!name){
+    if(status) status.textContent="❌ Bitte einen Namen eingeben.";
+    return;
+  }
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){
+    if(status) status.textContent="❌ Bitte eine gültige E-Mail-Adresse eingeben.";
+    return;
+  }
+  if(password.length<12){
+    if(status) status.textContent="❌ Das Startpasswort muss mindestens 12 Zeichen lang sein.";
+    return;
+  }
+
+  if(button) button.disabled=true;
+  if(status) status.textContent="⏳ Admin wird erstellt...";
+
+  try{
+    const result=await createAdminCallable({name,email,password});
+    if(status) status.textContent=`✅ Admin ${result?.data?.email || email} wurde angelegt.`;
+    document.getElementById("newAdminName").value="";
+    document.getElementById("newAdminEmail").value="";
+    document.getElementById("newAdminPassword").value="";
+    await loadAdminAccounts();
+  }catch(error){
+    console.error("Admin erstellen:",error);
+    if(status) status.textContent="❌ "+(error?.message || "Admin konnte nicht erstellt werden.");
+  }finally{
+    if(button) button.disabled=false;
+  }
+}
+
+async function removeAdminAccount(uid,email){
+  if(!isPrimaryAdminSession()){
+    alert("Nur der Hauptadmin darf Admins entfernen.");
+    return;
+  }
+
+  if(!confirm(`Admin-Zugang für ${email || "diesen Benutzer"} wirklich entfernen?`)) return;
+
+  const status=document.getElementById("adminManagementStatus");
+  if(status) status.textContent="⏳ Admin-Zugang wird entfernt...";
+
+  try{
+    await removeAdminCallable({uid});
+    if(status) status.textContent="✅ Admin-Zugang wurde entfernt.";
+    await loadAdminAccounts();
+  }catch(error){
+    console.error("Admin entfernen:",error);
+    if(status) status.textContent="❌ "+(error?.message || "Admin konnte nicht entfernt werden.");
+  }
+}
+
 /* =========================
    ADMIN WORKSPACE / AUFKLAPPBARE KATEGORIEN
 ========================= */
 const ADMIN_WORKSPACE_META = {
   overview:{icon:"📊",title:"Übersicht",description:"Kennzahlen und schneller Überblick über die Vereins-App."},
+  access:{icon:"🔐",title:"Admin-Zugänge",description:"Administratoren sicher hinzufügen und entfernen."},
   content:{icon:"📰",title:"Inhalte",description:"Push-Nachrichten, News und Matchberichte erstellen und verwalten."},
   teams:{icon:"⚽",title:"Mannschaften",description:"Teams, Staff, Spieler und Vorstand zentral pflegen."},
   club:{icon:"🏟️",title:"Verein",description:"Kalender und Sponsoren verwalten."},
@@ -8540,6 +8692,7 @@ function adminWorkspaceGroupForCard(card){
   if(card.classList.contains("push-admin")) return "content";
   const label=(card.querySelector(".admin-label")?.textContent || "").trim().toUpperCase();
   if(label === "ÜBERSICHT") return "overview";
+  if(label === "ADMINISTRATOREN") return "access";
   if(["NEWS","MATCHBERICHT"].includes(label)) return "content";
   if(["TEAMS","STAFF","SPIELER","VORSTAND"].includes(label)) return "teams";
   if(["KALENDER","SPONSOREN"].includes(label)) return "club";
@@ -8897,7 +9050,7 @@ const ADMIN_IDLE_TIMEOUT_MS = 30 * 60 * 1000;
 let adminIdleTimer = null;
 function resetAdminIdleTimer(){
   const currentAdmin=(mfaAuth && mfaAuth.currentUser) || auth.currentUser;
-  if(!currentAdmin || currentAdmin.uid !== ADMIN_UID) return;
+  if(!isAdminSession()) return;
   clearTimeout(adminIdleTimer);
   adminIdleTimer=setTimeout(async()=>{
     try{ if(mfaApi && mfaAuth) await mfaApi.signOut(mfaAuth); else await auth.signOut(); }catch(e){}
