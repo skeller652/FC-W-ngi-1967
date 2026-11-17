@@ -1496,6 +1496,36 @@ textarea.form-input{
 .game-detail-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
 .game-detail-actions .button{margin-top:0}
 .calendar-item{cursor:pointer}
+.home-calendar-card{
+  display:block;
+  padding:16px 17px;
+}
+.home-calendar-top{
+  display:flex;
+  align-items:center;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-bottom:10px;
+}
+.home-calendar-date{
+  color:#888;
+  font-size:11px;
+  font-weight:700;
+}
+.home-calendar-title{
+  margin:0 0 8px;
+  font-size:18px;
+  line-height:1.25;
+  font-weight:900;
+}
+.home-calendar-details{
+  margin:0;
+  color:#666;
+  font-size:12px;
+  line-height:1.45;
+  word-break:break-word;
+}
+
 .stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
 .stat-card{padding:14px;border:1px solid var(--border);border-radius:14px;background:#fafafa}
 .stat-number{font-size:24px;font-weight:950}
@@ -3278,7 +3308,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.11.17-6.4-home-calendar";
+const APP_VERSION = "2026.11.17-6.5-home-calendar-layout";
 
 
 let newsData = [];
@@ -3465,11 +3495,13 @@ function renderHomeCalendar(){
       item.ort||""
     ].filter(Boolean).join(" · ");
 
-    return `<div class="card calendar-item" onclick="openCalendarItem('${item.id}')">
-      <span class="tag">${esc(item.typ||"Termin")}</span>
-      <div class="meta">${formatDateTime(item.datum)}</div>
-      <h3>${esc(item.titel||"Termin")}</h3>
-      ${details?`<p>${esc(details)}</p>`:""}
+    return `<div class="card calendar-item home-calendar-card" onclick="openCalendarItem('${item.id}')">
+      <div class="home-calendar-top">
+        <span class="tag">${esc(item.typ||"Termin")}</span>
+        <span class="home-calendar-date">${formatDateTime(item.datum)}</span>
+      </div>
+      <h3 class="home-calendar-title">${esc(item.titel||"Termin")}</h3>
+      ${details?`<p class="home-calendar-details">${esc(details)}</p>`:""}
     </div>`;
   }).join("");
 }
