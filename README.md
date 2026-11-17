@@ -28,9 +28,3 @@ Installationsreihenfolge
 7. Firebase Console > Firestore Database > Regeln: firestore.rules komplett einsetzen und veröffentlichen.
 8. Firebase Console > Storage > Regeln: storage.rules komplett einsetzen und veröffentlichen.
 9. App vollständig schließen und neu öffnen. Bei altem Cache einmal privates Safari-Fenster testen.
-
-Wichtig
--------
-- Vor dem Veröffentlichen der neuen Firestore-Regeln zuerst die neuen Functions deployen.
-- Bestehende Daten werden nicht gelöscht.
-- Für Live-Ranglisten weiterhin pro Team die OFV-/football.ch-URL im Adminbereich hinterlegen.
