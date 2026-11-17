@@ -1,9 +1,11 @@
 /* =========================================
    FC WÄNGI 1967 SERVICE WORKER
-   Version 2026.11.17-5.9-push
+   Version 2026.11.17-5.11-push-routing
 ========================================= */
 
-const CACHE_NAME = "fc-waengi-app-v10-push";
+const CACHE_NAME = "fc-waengi-app-v11-push-routing";
+
+const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
 
 const APP_SHELL = [
   "./",
@@ -77,6 +79,22 @@ firebase.initializeApp({
 
 const messaging = firebase.messaging();
 
+function buildTargetUrl(target,id,url){
+  try{
+    if(url){
+      const parsed=new URL(url);
+      if(parsed.origin==="https://skeller652.github.io" && parsed.pathname.startsWith("/FC-W-ngi-1967/")){
+        return parsed.toString();
+      }
+    }
+  }catch(_error){}
+
+  const u=new URL(APP_URL);
+  if(target) u.searchParams.set("open",target);
+  if(id) u.searchParams.set("id",id);
+  return u.toString();
+}
+
 messaging.onBackgroundMessage(async payload => {
   try{
     const title =
@@ -89,9 +107,9 @@ messaging.onBackgroundMessage(async payload => {
       payload?.notification?.body ||
       "";
 
-    const url =
-      payload?.data?.url ||
-      "https://skeller652.github.io/FC-W-ngi-1967/";
+    const target = payload?.data?.target || "home";
+    const id = payload?.data?.id || "";
+    const url = buildTargetUrl(target,id,payload?.data?.url);
 
     const tag =
       payload?.data?.tag ||
@@ -101,7 +119,7 @@ messaging.onBackgroundMessage(async payload => {
       body,
       icon:"./icon-512.png",
       badge:"./icon-512.png",
-      data:{url},
+      data:{url,target,id},
       tag,
       renotify:true
     });
@@ -113,9 +131,10 @@ messaging.onBackgroundMessage(async payload => {
 self.addEventListener("notificationclick", event => {
   event.notification.close();
 
-  const targetUrl =
-    event.notification?.data?.url ||
-    "https://skeller652.github.io/FC-W-ngi-1967/";
+  const data=event.notification?.data || {};
+  const target=data.target || "home";
+  const id=data.id || "";
+  const targetUrl=buildTargetUrl(target,id,data.url);
 
   event.waitUntil((async () => {
     const windows = await clients.matchAll({
@@ -123,17 +142,38 @@ self.addEventListener("notificationclick", event => {
       includeUncontrolled:true
     });
 
-    for(const client of windows){
+    if(windows.length){
+      const client=windows[0];
+
       try{
-        const clientUrl=new URL(client.url);
-        const target=new URL(targetUrl);
-        if(clientUrl.origin===target.origin){
-          await client.navigate(targetUrl);
-          return client.focus();
-        }
+        await client.navigate(targetUrl);
+      }catch(_error){}
+
+      try{
+        client.postMessage({
+          type:"FCW_PUSH_NAVIGATE",
+          target,
+          id,
+          url:targetUrl
+        });
+      }catch(_error){}
+
+      return client.focus();
+    }
+
+    const opened=await clients.openWindow(targetUrl);
+
+    if(opened){
+      try{
+        opened.postMessage({
+          type:"FCW_PUSH_NAVIGATE",
+          target,
+          id,
+          url:targetUrl
+        });
       }catch(_error){}
     }
 
-    return clients.openWindow(targetUrl);
+    return opened;
   })());
 });

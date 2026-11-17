@@ -3064,7 +3064,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.11.17-5.10-liveticker-deeplink";
+const APP_VERSION = "2026.11.17-5.11-push-routing";
 
 
 let newsData = [];
@@ -3217,32 +3217,109 @@ function openSponsor(id){
   catch{ alert("Die hinterlegte Sponsor-Webseite ist ungültig."); }
 }
 
+function navigateToPushTarget(target,id=""){
+  const t=String(target||"").trim().toLowerCase();
+
+  if(t==="liveticker" || t==="live"){
+    openPage("liveticker");
+    return true;
+  }
+
+  if(t==="news"){
+    openPage("news");
+    if(id){
+      const tryOpen=()=>{
+        if(newsData.some(x=>x.id===id)){
+          openNews(id);
+          return true;
+        }
+        return false;
+      };
+      if(!tryOpen()) setTimeout(tryOpen,300);
+    }
+    return true;
+  }
+
+  if(t==="report" || t==="berichte" || t==="matchberichte"){
+    openPage("matchberichte");
+    if(id){
+      const tryOpen=()=>{
+        if(reportsData.some(x=>x.id===id)){
+          openReport(id);
+          return true;
+        }
+        return false;
+      };
+      if(!tryOpen()) setTimeout(tryOpen,300);
+    }
+    return true;
+  }
+
+  if(t==="kalender" || t==="calendar"){
+    openPage("kalender");
+    return true;
+  }
+
+  if(t==="teams" || t==="team"){
+    openPage("teams");
+    return true;
+  }
+
+  if(t==="spiele" || t==="spielbetrieb"){
+    openPage("spielbetrieb");
+    return true;
+  }
+
+  if(t==="vorstand"){
+    openPage("vorstand");
+    return true;
+  }
+
+  if(t==="sponsoren"){
+    openPage("sponsoren");
+    return true;
+  }
+
+  if(t==="kontakt"){
+    openPage("kontakt");
+    return true;
+  }
+
+  if(t==="mehr"){
+    openPage("mehr");
+    return true;
+  }
+
+  openPage("home");
+  return false;
+}
+
+navigator.serviceWorker?.addEventListener("message",event=>{
+  const data=event.data || {};
+  if(data.type!=="FCW_PUSH_NAVIGATE") return;
+
+  const target=data.target || "";
+  const id=data.id || "";
+
+  navigateToPushTarget(target,id);
+
+  try{
+    history.replaceState(null,"",window.location.pathname);
+  }catch(_error){}
+});
+
 function tryHandleDeepLink(){
   if(!pendingDeepLink) return;
 
-  const type=pendingDeepLink.get("open");
-  const id=pendingDeepLink.get("id");
+  const target=pendingDeepLink.get("open") || pendingDeepLink.get("target");
+  const id=pendingDeepLink.get("id") || "";
 
-  if(!type) return;
+  if(!target) return;
 
-  if(type==="liveticker"){
+  const handled=navigateToPushTarget(target,id);
+  if(handled){
     pendingDeepLink=null;
-    openPage("liveticker");
     history.replaceState(null,"",window.location.pathname);
-    return;
-  }
-
-  if(type==="news" && id && newsData.some(x=>x.id===id)){
-    pendingDeepLink=null;
-    openPage("news");
-    setTimeout(()=>openNews(id),50);
-    return;
-  }
-
-  if(type==="report" && id && reportsData.some(x=>x.id===id)){
-    pendingDeepLink=null;
-    openPage("news");
-    setTimeout(()=>openReport(id),50);
   }
 }
 
@@ -3921,6 +3998,8 @@ function buildLiveTickerPush(item, homeScore, awayScore){
       title:`⚽ TOR! ${homeTeam} ${homeScore}:${awayScore} ${awayTeam}`,
       body:`${minuteText}${item.team || ""}${item.text ? " · "+item.text : ""}`.slice(0,500),
       url:`${APP_URL}?open=liveticker`,
+      target:"liveticker",
+      id:"",
       tag:"liveticker-score"
     };
   }
@@ -3929,6 +4008,8 @@ function buildLiveTickerPush(item, homeScore, awayScore){
     title:`🔴 Liveticker · ${item?.type || "Ereignis"}`,
     body:`${minuteText}${item?.team ? item.team+" · " : ""}${item?.text || ""}`.slice(0,500),
     url:`${APP_URL}?open=liveticker`,
+    target:"liveticker",
+    id:"",
     tag:"liveticker-event"
   };
 }
@@ -6919,6 +7000,8 @@ async function sendPushFromAdmin(){
         title,
         body,
         url:APP_URL,
+        target:"home",
+        id:"",
         tag:"admin-manual"
       });
 
@@ -6977,7 +7060,7 @@ async function saveNews(){
     if(id){await db.collection("news").doc(id).update(data);}else{const ref=await db.collection("news").add(data);savedId=ref.id;}
     resetNewsForm();
     if(isNew){
-      try{const pushText=text.length>170?text.substring(0,167)+"...":text;await sendPushCallable({title:"📰 "+title,body:pushText,url:`${APP_URL}?open=news&id=${encodeURIComponent(savedId)}`});alert("✅ News veröffentlicht und Push gesendet.");}
+      try{const pushText=text.length>170?text.substring(0,167)+"...":text;await sendPushCallable({title:"📰 "+title,body:pushText,url:`${APP_URL}?open=news&id=${encodeURIComponent(savedId)}`,target:"news",id:savedId,tag:"news"});alert("✅ News veröffentlicht und Push gesendet.");}
       catch(error){console.error(error);alert("✅ News veröffentlicht.\n⚠️ Push konnte nicht gesendet werden.");}
     }else alert("✅ News aktualisiert.");
   }catch(error){console.error("News speichern:",error);alert("❌ News konnte nicht gespeichert werden.\n\n" + (error?.message || "Unbekannter Fehler."));}
@@ -7908,7 +7991,7 @@ async function saveReport(){
     let savedId=id;if(id){await db.collection("matchberichte").doc(id).update(data);}else{const ref=await db.collection("matchberichte").add(data);savedId=ref.id;}
     resetReportForm();
     if(isNew){
-      try{const body=data.gegner&&data.toreFcw!==null&&data.toreGegner!==null?`${data.team||"FC Wängi"} ${data.toreFcw}:${data.toreGegner} ${data.gegner}`:(data.text.length>170?data.text.substring(0,167)+"...":data.text);await sendPushCallable({title:`⚽ ${data.team?data.team+" · ":""}${data.titel}`,body,url:`${APP_URL}?open=report&id=${encodeURIComponent(savedId)}`});alert("✅ Matchbericht veröffentlicht und Push gesendet.");}
+      try{const body=data.gegner&&data.toreFcw!==null&&data.toreGegner!==null?`${data.team||"FC Wängi"} ${data.toreFcw}:${data.toreGegner} ${data.gegner}`:(data.text.length>170?data.text.substring(0,167)+"...":data.text);await sendPushCallable({title:`⚽ ${data.team?data.team+" · ":""}${data.titel}`,body,url:`${APP_URL}?open=report&id=${encodeURIComponent(savedId)}`,target:"report",id:savedId,tag:"report"});alert("✅ Matchbericht veröffentlicht und Push gesendet.");}
       catch(e){console.error(e);alert("✅ Matchbericht veröffentlicht.\n⚠️ Push konnte nicht gesendet werden.");}
     } else alert("✅ Matchbericht aktualisiert.");
   }catch(e){console.error(e);alert("❌ Matchbericht konnte nicht gespeichert werden.");}
@@ -7923,8 +8006,40 @@ function resetReportForm(){
 }
 
 async function saveCalendarItem(){
-  const id=document.getElementById("calendarEditId").value;const data={titel:document.getElementById("calendarTitle").value.trim(),typ:document.getElementById("calendarType").value,datum:inputTimestamp("calendarDate"),team:document.getElementById("calendarTeam").value.trim(),gegner:document.getElementById("calendarOpponent").value.trim(),ort:document.getElementById("calendarLocation").value.trim(),beschreibung:document.getElementById("calendarDescription").value.trim(),aktiv:true};
-  if(!data.titel){alert("Titel eingeben.");return;} if(id)await db.collection("kalender").doc(id).update(data);else await db.collection("kalender").add(data);resetCalendarForm();alert("✅ Termin gespeichert.");
+  const id=document.getElementById("calendarEditId").value;
+  const isNew=!id;
+  const data={titel:document.getElementById("calendarTitle").value.trim(),typ:document.getElementById("calendarType").value,datum:inputTimestamp("calendarDate"),team:document.getElementById("calendarTeam").value.trim(),gegner:document.getElementById("calendarOpponent").value.trim(),ort:document.getElementById("calendarLocation").value.trim(),beschreibung:document.getElementById("calendarDescription").value.trim(),aktiv:true};
+  if(!data.titel){alert("Titel eingeben.");return;}
+
+  let savedId=id;
+  if(id){
+    await db.collection("kalender").doc(id).update(data);
+  }else{
+    const ref=await db.collection("kalender").add(data);
+    savedId=ref.id;
+  }
+
+  resetCalendarForm();
+
+  if(isNew){
+    try{
+      const body=[data.typ,data.team,data.gegner,data.ort].filter(Boolean).join(" · ") || "Neuer Termin im Vereinskalender";
+      await sendPushCallable({
+        title:"📅 "+data.titel,
+        body,
+        url:`${APP_URL}?open=kalender&id=${encodeURIComponent(savedId)}`,
+        target:"kalender",
+        id:savedId,
+        tag:"kalender"
+      });
+      alert("✅ Termin gespeichert und Push gesendet.");
+    }catch(error){
+      console.error("Kalender-Push:",error);
+      alert("✅ Termin gespeichert.\n⚠️ Push konnte nicht gesendet werden.");
+    }
+  }else{
+    alert("✅ Termin gespeichert.");
+  }
 }
 function editCalendarItem(id){const x=calendarData.find(i=>i.id===id);if(!x)return;document.getElementById("calendarEditId").value=x.id;document.getElementById("calendarTitle").value=x.titel||"";document.getElementById("calendarType").value=x.typ||"Sonstiges";document.getElementById("calendarDate").value=dateInputValue(x.datum);document.getElementById("calendarTeam").value=x.team||"";document.getElementById("calendarOpponent").value=x.gegner||"";document.getElementById("calendarLocation").value=x.ort||"";document.getElementById("calendarDescription").value=x.beschreibung||"";}
 function resetCalendarForm(){["calendarEditId","calendarTitle","calendarDate","calendarTeam","calendarOpponent","calendarLocation","calendarDescription"].forEach(id=>document.getElementById(id).value="");document.getElementById("calendarType").value="Spiel";}
@@ -8310,6 +8425,13 @@ if("serviceWorker" in navigator){
     }catch(error){console.error(error);}
   });
 }
+
+window.addEventListener("pageshow",()=>{
+  const params=new URLSearchParams(window.location.search);
+  const target=params.get("open") || params.get("target");
+  const id=params.get("id") || "";
+  if(target) navigateToPushTarget(target,id);
+});
 
 window.addEventListener(
   "DOMContentLoaded",
