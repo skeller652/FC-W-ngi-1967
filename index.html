@@ -1637,6 +1637,14 @@ Aktuelle News
 <div class="loading">News werden geladen...</div>
 </div>
 
+<h2 class="section-heading">
+Nächste Termine
+</h2>
+
+<div id="homeCalendar">
+<div class="loading">Termine werden geladen...</div>
+</div>
+
 
 <h2 class="section-heading">
 Schnellzugriff
@@ -3270,7 +3278,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.11.17-6.3-news-calendar-feed";
+const APP_VERSION = "2026.11.17-6.4-home-calendar";
 
 
 let newsData = [];
@@ -3304,6 +3312,7 @@ db.collection("kalender").onSnapshot(snapshot => {
   calendarData.sort((a,b)=>(toDate(a.datum)?.getTime()||0)-(toDate(b.datum)?.getTime()||0));
   renderCalendar();
   renderNews();
+  renderHomeCalendar();
   renderHomeMatchCards();
   renderAdminLists();
 });
@@ -3422,6 +3431,47 @@ function renderCalendar(){
   }).join("");
   renderHomeMatchCards();
   renderEnhancedHome();
+}
+
+function renderHomeCalendar(){
+  const container=document.getElementById("homeCalendar");
+  if(!container) return;
+
+  const now=Date.now();
+  const favorite=getUserPreferences().favoriteTeam;
+
+  let items=calendarData
+    .filter(item=>item.aktiv!==false)
+    .filter(item=>(toDate(item.datum)?.getTime()||0)>=now)
+    .sort((a,b)=>(toDate(a.datum)?.getTime()||0)-(toDate(b.datum)?.getTime()||0));
+
+  if(favorite){
+    const favItems=items.filter(item=>item.team===favorite);
+    const otherItems=items.filter(item=>item.team!==favorite);
+    items=[...favItems,...otherItems];
+  }
+
+  items=items.slice(0,3);
+
+  if(!items.length){
+    container.innerHTML='<div class="empty">Keine kommenden Termine.</div>';
+    return;
+  }
+
+  container.innerHTML=items.map(item=>{
+    const details=[
+      item.team||"",
+      item.gegner?("vs. "+item.gegner):"",
+      item.ort||""
+    ].filter(Boolean).join(" · ");
+
+    return `<div class="card calendar-item" onclick="openCalendarItem('${item.id}')">
+      <span class="tag">${esc(item.typ||"Termin")}</span>
+      <div class="meta">${formatDateTime(item.datum)}</div>
+      <h3>${esc(item.titel||"Termin")}</h3>
+      ${details?`<p>${esc(details)}</p>`:""}
+    </div>`;
+  }).join("");
 }
 
 function renderSponsors(){
@@ -8891,6 +8941,7 @@ function renderEnhancedHome(){
 
   renderPlayerStats();
   renderGallery();
+  renderHomeCalendar();
   renderAdminDashboard();
 }
 
