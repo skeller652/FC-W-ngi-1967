@@ -1,9 +1,9 @@
 /* =========================================
    FC WÄNGI 1967 SERVICE WORKER
-   Version 2026.11.17-5.11-push-routing
+   Version 2026.11.17-6.0-club-suite
 ========================================= */
 
-const CACHE_NAME = "fc-waengi-app-v11-push-routing";
+const CACHE_NAME = "fc-waengi-app-v12-club-suite";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
 
@@ -42,7 +42,26 @@ self.addEventListener("fetch", event => {
   if(event.request.method !== "GET") return;
 
   const requestUrl = new URL(event.request.url);
-  if(requestUrl.origin !== self.location.origin) return;
+  const isAppOrigin = requestUrl.origin === self.location.origin;
+  const isFirebaseImage = requestUrl.hostname.endsWith("firebasestorage.app") || requestUrl.hostname.endsWith("googleapis.com");
+  const isImage = event.request.destination === "image";
+
+  if(isImage && (isAppOrigin || isFirebaseImage)){
+    event.respondWith(
+      caches.match(event.request).then(cached => {
+        const network = fetch(event.request).then(response => {
+          if(response && (response.ok || response.type === "opaque")){
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request,response.clone()));
+          }
+          return response;
+        }).catch(()=>cached);
+        return cached || network;
+      })
+    );
+    return;
+  }
+
+  if(!isAppOrigin) return;
 
   event.respondWith(
     fetch(event.request)

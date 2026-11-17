@@ -1479,6 +1479,47 @@ textarea.form-input{
 .security-note{font-size:11px;color:#777;margin-top:8px;line-height:1.45;}
 .app-version{font-size:10px;color:#999;text-align:center;margin:18px 0 5px;}
 
+
+/* =========================
+   V6.0 CLUB SUITE
+========================= */
+.fcw-live-home{display:none;margin-bottom:15px;padding:14px 16px;border-radius:16px;background:#171717;color:#fff;cursor:pointer}
+.fcw-live-home.visible{display:block}
+.fcw-live-home strong{color:var(--yellow)}
+.settings-grid{display:grid;gap:10px}
+.settings-checks{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.settings-check{display:flex;align-items:center;gap:8px;padding:10px;border:1px solid var(--border);border-radius:12px;background:#fafafa;font-size:12px;font-weight:750}
+.settings-check input{width:18px;height:18px}
+.sponsor-spotlight{display:none;align-items:center;gap:12px;padding:14px;border:1px solid #f0d86a;border-radius:16px;background:#fffbea;margin:12px 0}
+.sponsor-spotlight.visible{display:flex}
+.sponsor-spotlight img{width:70px;height:45px;object-fit:contain;background:#fff;border-radius:8px}
+.game-detail-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.game-detail-actions .button{margin-top:0}
+.calendar-item{cursor:pointer}
+.stat-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.stat-card{padding:14px;border:1px solid var(--border);border-radius:14px;background:#fafafa}
+.stat-number{font-size:24px;font-weight:950}
+.stat-label{font-size:11px;color:#777}
+.gallery-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.gallery-item{position:relative;overflow:hidden;border-radius:14px;background:#eee;aspect-ratio:1/1}
+.gallery-item img{width:100%;height:100%;object-fit:cover;display:block}
+.gallery-caption{position:absolute;left:0;right:0;bottom:0;padding:22px 8px 8px;background:linear-gradient(transparent,rgba(0,0,0,.75));color:#fff;font-size:10px;font-weight:800}
+.live-nav-dot{display:none;width:7px;height:7px;border-radius:50%;background:#d62828;margin:0 auto 2px;animation:livePulse 1.2s infinite}
+.nav-button.live-now .live-nav-dot{display:block}
+.player-stat-row{display:grid;grid-template-columns:1fr repeat(5,44px);gap:5px;align-items:center;padding:9px 0;border-bottom:1px solid #eee;font-size:11px}
+.player-stat-row strong{font-size:12px}
+.player-stat-head{font-weight:900;color:#777}
+.admin-dashboard-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.admin-kpi{padding:14px;border:1px solid var(--border);border-radius:14px;background:#fafafa}
+.admin-kpi strong{display:block;font-size:23px}
+.admin-kpi span{font-size:10px;color:#777}
+.publish-box{padding:11px;border-radius:12px;background:#f7f7f7;margin-bottom:13px}
+.update-banner.visible{display:flex}
+@media(max-width:420px){
+  .settings-checks{grid-template-columns:1fr}
+  .player-stat-row{grid-template-columns:1fr repeat(5,32px);font-size:9px}
+}
+
 </style>
 </head>
 
@@ -1543,6 +1584,32 @@ Status wird geprüft...
 
 </div>
 
+<div id="homeLiveBanner" class="fcw-live-home" onclick="openPage('liveticker')">
+  <strong>🔴 LIVE</strong>
+  <span id="homeLiveBannerText">Liveticker öffnen</span>
+</div>
+
+<div class="card">
+  <h3>⭐ Meine FCW-App</h3>
+  <p style="margin-bottom:12px;">Favoriten-Team und gewünschte Push-Mitteilungen auswählen.</p>
+  <div class="settings-grid">
+    <div class="form-group">
+      <label>Favoriten-Team</label>
+      <select id="favoriteTeamSelect" class="form-input"><option value="">Alle Teams</option></select>
+    </div>
+    <div class="settings-checks">
+      <label class="settings-check"><input id="prefNews" type="checkbox" checked> 📰 News</label>
+      <label class="settings-check"><input id="prefLive" type="checkbox" checked> 🔴 Liveticker</label>
+      <label class="settings-check"><input id="prefCalendar" type="checkbox" checked> 📅 Kalender</label>
+      <label class="settings-check"><input id="prefReports" type="checkbox" checked> 📝 Berichte</label>
+      <label class="settings-check"><input id="prefGames" type="checkbox" checked> ⚽ Spiele</label>
+    </div>
+    <button class="button button-yellow" onclick="saveUserPreferences()">Einstellungen speichern</button>
+    <div id="preferenceStatus" class="notification-status"></div>
+  </div>
+</div>
+
+<div id="homeSponsorSpotlight" class="sponsor-spotlight"></div>
 
 <h2 class="section-heading">
 Spielübersicht
@@ -1807,7 +1874,31 @@ Berichte unserer Mannschaften.
     <strong>Kontakt</strong>
     <small>Kontakt und Administration</small>
   </button>
+
+  <button class="more-card" onclick="openPage('statistiken')">
+    <span class="more-icon">📊</span>
+    <strong>Statistiken</strong>
+    <small>Spieler & Torhüter</small>
+  </button>
+
+  <button class="more-card" onclick="openPage('galerie')">
+    <span class="more-icon">📸</span>
+    <strong>Galerie</strong>
+    <small>Bilder aus dem Vereinsleben</small>
+  </button>
 </div>
+</section>
+
+<section id="statistiken" class="page">
+  <h1 class="page-title">Statistiken</h1>
+  <p class="page-description">Statistiken aus strukturierten Liveticker-Ereignissen ab V6.0.</p>
+  <div id="playerStatsList"><div class="loading">Statistiken werden geladen...</div></div>
+</section>
+
+<section id="galerie" class="page">
+  <h1 class="page-title">Bildergalerie</h1>
+  <p class="page-description">Bilder aus News, Matchberichten, Teams, Spielern und Sponsoren.</p>
+  <div id="galleryList" class="gallery-grid"></div>
 </section>
 
 
@@ -2127,6 +2218,14 @@ Abbrechen
 </details>
 </div>
 
+<div class="card admin-card">
+  <span class="admin-label">ÜBERSICHT</span>
+  <h3>📊 Admin-Cockpit</h3>
+  <div id="adminDashboardKpis" class="admin-dashboard-grid"></div>
+  <button class="button button-outline" onclick="loadAdminModeration()">Push-Verlauf & Sicherheit laden</button>
+  <div id="adminPushHistory" style="margin-top:12px;"></div>
+</div>
+
 <!-- PUSH -->
 
 <div class="card push-admin">
@@ -2217,6 +2316,10 @@ An alle registrierten Geräte
 <label>Datum</label>
 <input id="newsDate" type="datetime-local" class="form-input">
 </div>
+<div class="publish-box">
+  <div class="form-group"><label>Veröffentlichung</label><select id="newsPublishMode" class="form-input" onchange="togglePublishFields('news')"><option value="now">Jetzt veröffentlichen</option><option value="draft">Als Entwurf speichern</option><option value="scheduled">Geplant veröffentlichen</option></select></div>
+  <div id="newsPublishAtWrap" class="form-group" style="display:none;"><label>Veröffentlichen am</label><input id="newsPublishAt" type="datetime-local" class="form-input"></div>
+</div>
 
 <div class="form-group">
 <label>Text</label>
@@ -2281,6 +2384,10 @@ MATCHBERICHT
 <div class="form-row">
   <div class="form-group"><label>Heim / Auswärts</label><select id="reportVenue" class="form-input"><option value="Heim">Heim</option><option value="Auswärts">Auswärts</option></select></div>
   <div class="form-group"><label>Datum</label><input id="reportDate" type="datetime-local" class="form-input"></div>
+<div class="publish-box">
+  <div class="form-group"><label>Veröffentlichung</label><select id="reportPublishMode" class="form-input" onchange="togglePublishFields('report')"><option value="now">Jetzt veröffentlichen</option><option value="draft">Als Entwurf speichern</option><option value="scheduled">Geplant veröffentlichen</option></select></div>
+  <div id="reportPublishAtWrap" class="form-group" style="display:none;"><label>Veröffentlichen am</label><input id="reportPublishAt" type="datetime-local" class="form-input"></div>
+</div>
 </div>
 <div class="form-row">
   <div class="form-group"><label>Tore FC Wängi</label><input id="reportGoalsFcw" type="number" min="0" class="form-input"></div>
@@ -3069,7 +3176,7 @@ const VAPID_KEY =
   "BDh4fUsnFpKsO0AH39A949bg6xnzdjdUpTSXE6XEgAaqjvHH2pbdEkAWGxK7GnWHxSHFLRfHkrVu0hgA75BoON0";
 
 const APP_URL = "https://skeller652.github.io/FC-W-ngi-1967/";
-const APP_VERSION = "2026.11.17-5.14-liveticker-parade";
+const APP_VERSION = "2026.11.17-6.0-club-suite";
 
 
 let newsData = [];
@@ -3174,15 +3281,17 @@ function renderHomeMatchCards(){
   const nextBox=document.getElementById("homeNextMatch");
   const resultBox=document.getElementById("homeLastResult");
   const now=Date.now();
-  const next=calendarData.find(item=>item.typ==="Spiel" && (toDate(item.datum)?.getTime()||0)>=now);
+  const favorite=getUserPreferences().favoriteTeam;
+  const upcoming=calendarData.filter(item=>item.typ==="Spiel" && (toDate(item.datum)?.getTime()||0)>=now);
+  const next=(favorite ? upcoming.find(item=>item.team===favorite) : null) || upcoming[0];
   if(nextBox){
     if(!next){ nextBox.innerHTML='<div class="home-status-label">Nächstes Spiel</div><div class="empty">Noch kein kommendes Spiel eingetragen.</div>'; }
     else{
       nextBox.innerHTML=`<div class="home-status-label">⚽ Nächstes Spiel</div><div class="home-status-big">${esc(next.team||"FC Wängi")} ${next.gegner?"– "+esc(next.gegner):""}</div><div class="home-status-meta">${formatDateTime(next.datum)}${next.ort?" · "+esc(next.ort):""}</div><button class="button button-outline button-small" onclick="openPage('kalender')">Kalender öffnen</button>`;
     }
   }
-  const finished=reportsData.filter(r=>Number.isFinite(Number(r.toreFcw)) && Number.isFinite(Number(r.toreGegner))).sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
-  const last=finished[0];
+  const finished=reportsData.filter(r=>r.aktiv!==false && Number.isFinite(Number(r.toreFcw)) && Number.isFinite(Number(r.toreGegner))).sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
+  const last=(favorite ? finished.find(r=>r.team===favorite) : null) || finished[0];
   if(resultBox){
     if(!last){ resultBox.innerHTML='<div class="home-status-label">Letztes Resultat</div><div class="empty">Noch kein Resultat eingetragen.</div>'; }
     else{
@@ -3206,15 +3315,25 @@ function setNewsSearch(value){ newsSearchTerm=String(value||"").trim().toLowerCa
 
 function renderCalendar(){
   const container=document.getElementById("calendarList"); if(!container)return;
-  if(!calendarData.length){container.innerHTML='<div class="empty">Noch keine Termine eingetragen.</div>';return;}
-  container.innerHTML=calendarData.map(item=>{const d=toDate(item.datum);const day=d?String(d.getDate()).padStart(2,"0"):"--";const mon=d?new Intl.DateTimeFormat("de-CH",{month:"short"}).format(d):"";return `<div class="card calendar-item"><div class="calendar-date"><div class="day">${day}</div><div class="month">${esc(mon)}</div></div><div><span class="tag">${esc(item.typ||"Termin")}</span><h3>${esc(item.titel||"")}</h3><div class="meta">${formatDateTime(item.datum)}${item.ort?" · "+esc(item.ort):""}</div>${item.team||item.gegner?`<p><strong>${esc(item.team||"")}</strong>${item.gegner?" – "+esc(item.gegner):""}</p>`:""}${item.beschreibung?`<p>${esc(item.beschreibung)}</p>`:""}</div></div>`;}).join("");
+  const favorite=getUserPreferences().favoriteTeam;
+  const visible=[...calendarData].sort((a,b)=>(toDate(a.datum)?.getTime()||0)-(toDate(b.datum)?.getTime()||0));
+  if(!visible.length){container.innerHTML='<div class="empty">Noch keine Termine eingetragen.</div>';return;}
+  container.innerHTML=visible.map(item=>{
+    const d=toDate(item.datum);
+    const day=d?String(d.getDate()).padStart(2,"0"):"--";
+    const mon=d?new Intl.DateTimeFormat("de-CH",{month:"short"}).format(d):"";
+    const fav=favorite && item.team===favorite ? ' <span class="tag">⭐ Favorit</span>' : "";
+    return `<div class="card calendar-item" onclick="openCalendarItem('${item.id}')"><div class="calendar-date"><div class="day">${day}</div><div class="month">${esc(mon)}</div></div><div><span class="tag">${esc(item.typ||"Termin")}</span>${fav}<h3>${esc(item.titel||"")}</h3><div class="meta">${formatDateTime(item.datum)}${item.ort?" · "+esc(item.ort):""}</div>${item.team||item.gegner?`<p><strong>${esc(item.team||"")}</strong>${item.gegner?" – "+esc(item.gegner):""}</p>`:""}${item.beschreibung?`<p>${esc(item.beschreibung)}</p>`:""}</div></div>`;
+  }).join("");
   renderHomeMatchCards();
+  renderEnhancedHome();
 }
 
 function renderSponsors(){
   const container=document.getElementById("sponsorList"); if(!container)return;
   if(!sponsorsData.length){container.innerHTML='<div class="empty">Noch keine Sponsoren eingetragen.</div>';return;}
   container.innerHTML=`<div class="sponsor-grid">${sponsorsData.map(item=>`<div class="card sponsor-card" onclick="openSponsor('${item.id}')"><img class="sponsor-logo" src="${esc(item.logo||"./logo.png")}" onerror="this.src='./logo.png'"><div class="sponsor-level">${esc(item.stufe||"Partner")}</div><h3>${esc(item.name||"")}</h3></div>`).join("")}</div>`;
+  renderEnhancedHome(); renderGallery();
 }
 function openSponsor(id){
   const sponsor=sponsorsData.find(x=>x.id===id); if(!sponsor||!sponsor.webseite)return;
@@ -3484,6 +3603,8 @@ function openPage(name){
         "kalender",
         "sponsoren",
         "kontakt",
+        "statistiken",
+        "galerie",
         "admin"
       ];
 
@@ -3806,7 +3927,7 @@ function liveTickerIsAdmin(){
 }
 
 function liveTickerEventIcon(type){
-  return ({"Tor":"⚽","Gelbe Karte":"🟨","Rote Karte":"🟥","Wechsel":"🔄","Chance":"🔥","Parade":"🧤","Info":"ℹ️","Spielstand":"📣"})[type] || "•";
+  return ({"Spielbeginn":"▶️","Tor":"⚽","Assist":"🎯","Gelbe Karte":"🟨","Rote Karte":"🟥","Wechsel":"🔄","Chance":"🔥","Parade":"🧤","Elfmeter":"🥅","Abseits":"🚩","Halbzeit":"⏸️","Spielende":"🏁","Info":"ℹ️","Spielstand":"📣"})[type] || "•";
 }
 
 function liveTickerSafeText(value){
@@ -3832,6 +3953,7 @@ function liveTickerLocalApply(changes){
     updatedAt:new Date()
   };
   renderLiveTicker();
+  renderEnhancedHome();
 }
 
 function liveTickerLocalEvents(){
@@ -3884,7 +4006,7 @@ function renderLiveTicker(){
             <span class="live-event-type">${liveTickerEventIcon(ev.type)} ${liveTickerSafeText(ev.type || "Info")}</span>
             <span class="live-event-team">${liveTickerSafeText(ev.team || "")}</span>
           </div>
-          <div class="live-event-text">${liveTickerSafeText(ev.text || "")}</div>
+          <div class="live-event-text">${ev.playerName?`<strong>${liveTickerSafeText(ev.playerName)}</strong> · `:""}${liveTickerSafeText(ev.text || "")}</div>
           ${liveTickerIsAdmin() ? `<div class="live-event-admin"><button class="button button-small button-outline" onclick="editLiveTickerEvent('${liveTickerSafeText(ev.id)}')">Bearbeiten</button><button class="button button-small button-red" onclick="deleteLiveTickerEvent('${liveTickerSafeText(ev.id)}')">Löschen</button></div>` : ""}
         </div>
       </div>`).join("");
@@ -3906,14 +4028,16 @@ function renderLiveTicker(){
       </div>
       <button id="liveSaveTeamsButton" class="button button-green" onclick="saveLiveTickerTeams()">Teams speichern</button>
       <button class="button button-outline" onclick="resetLiveTicker()">Neues Spiel / zurücksetzen</button>
+      <button class="button button-blue" onclick="createReportDraftFromLiveTicker()">📝 Matchbericht-Entwurf erstellen</button>
       <div id="liveTickerSaveStatus" class="upload-status" style="margin-top:10px;font-weight:800;"></div>
       <div style="margin-top:22px;padding-top:18px;border-top:1px solid #eadb8b;">
         <h3>${editEvent ? "✏️ Ereignis bearbeiten" : "➕ Ereignis hinzufügen"}</h3>
       <div class="form-row">
         <div class="form-group"><label>Minute</label><input id="liveEventMinute" class="form-input" type="number" min="0" max="130" value="${liveTickerAttr(editEvent?.minute ?? minute)}"></div>
-        <div class="form-group"><label>Typ</label><select id="liveEventType" class="form-input">${["Tor","Gelbe Karte","Rote Karte","Wechsel","Chance","Parade","Info"].map(x=>`<option ${x===(editEvent?.type||"Info")?"selected":""}>${x}</option>`).join("")}</select></div>
+        <div class="form-group"><label>Typ</label><select id="liveEventType" class="form-input">${["Spielbeginn","Tor","Assist","Gelbe Karte","Rote Karte","Wechsel","Chance","Parade","Elfmeter","Abseits","Halbzeit","Spielende","Info"].map(x=>`<option ${x===(editEvent?.type||"Info")?"selected":""}>${x}</option>`).join("")}</select></div>
       </div>
       <div class="form-group"><label>Team</label><select id="liveEventTeam" class="form-input"><option value="">Allgemein</option><option ${editEvent?.team===home?"selected":""}>${liveTickerSafeText(home)}</option><option ${editEvent?.team===away?"selected":""}>${liveTickerSafeText(away)}</option></select></div>
+      <div class="form-group"><label>Spieler / Torhüter (optional)</label><select id="liveEventPlayer" class="form-input"><option value="">Kein Spieler</option>${playersData.map(p=>`<option value="${liveTickerAttr(p.id)}" ${editEvent?.playerId===p.id?"selected":""}>${liveTickerSafeText(p.name||"Spieler")} · ${liveTickerSafeText(teamsData.find(t=>t.id===p.teamId)?.name||"")}</option>`).join("")}</select></div>
       <div class="form-group"><label>Text</label><textarea id="liveEventText" class="form-input" placeholder="Was ist passiert?">${liveTickerSafeText(editEvent?.text || "")}</textarea></div>
       <button id="liveSaveEventButton" class="button button-green" onclick="saveLiveTickerEvent()">${editEvent ? "Änderung speichern" : "Ereignis veröffentlichen"}</button>
       ${editEvent ? '<button class="button button-outline" onclick="cancelLiveTickerEventEdit()">Abbrechen</button>' : ""}
@@ -4004,7 +4128,9 @@ function buildLiveTickerPush(item, homeScore, awayScore){
       url:`${APP_URL}?open=liveticker`,
       target:"liveticker",
       id:"",
-      tag:"liveticker-score"
+      tag:"liveticker-score",
+      category:"live",
+      team:""
     };
   }
 
@@ -4014,7 +4140,9 @@ function buildLiveTickerPush(item, homeScore, awayScore){
     url:`${APP_URL}?open=liveticker`,
     target:"liveticker",
     id:"",
-    tag:"liveticker-event"
+    tag:"liveticker-event",
+    category:"live",
+    team:""
   };
 }
 
@@ -4050,6 +4178,9 @@ async function saveLiveTickerEvent(){
     const textValue=String(document.getElementById("liveEventText")?.value || "").trim();
     const type=String(document.getElementById("liveEventType")?.value || "Info");
     const team=String(document.getElementById("liveEventTeam")?.value || "");
+    const playerId=String(document.getElementById("liveEventPlayer")?.value || "");
+    const player=playersData.find(p=>p.id===playerId);
+    const playerName=player?.name || "";
 
     if(!textValue){
       throw new Error("Bitte einen Text für das Ereignis eingeben.");
@@ -4060,6 +4191,8 @@ async function saveLiveTickerEvent(){
       minute,
       type,
       team,
+      playerId,
+      playerName,
       text:textValue,
       createdAt:liveTickerEditEventId ? (events.find(e=>e.id===liveTickerEditEventId)?.createdAt || now) : now,
       sortTime:liveTickerEditEventId ? (events.find(e=>e.id===liveTickerEditEventId)?.sortTime || now) : now
@@ -4095,6 +4228,9 @@ async function saveLiveTickerEvent(){
         else if(item.team===awayTeam) awayScore+=1;
         else throw new Error("Das ausgewählte Team passt nicht zum aktuellen Spiel.");
       }
+
+      await applyPlayerStatDelta(oldItem,-1,d);
+      await applyPlayerStatDelta(item,1,{...d,homeScore,awayScore});
 
       await ref.set({
         events:updatedEvents,
@@ -4144,6 +4280,10 @@ async function saveLiveTickerEvent(){
         }
       }
 
+      await applyPlayerStatDelta(item,1,{...d,homeScore,awayScore});
+      if(item.type==="Spielbeginn") payload.status="Live";
+      if(item.type==="Halbzeit") payload.status="Halbzeit";
+      if(item.type==="Spielende") payload.status="Beendet";
       await ref.set(payload,{merge:true});
 
       liveTickerLocalApply({
@@ -4182,10 +4322,19 @@ async function deleteLiveTickerEvent(id){
   if(!confirm("Dieses Liveticker-Ereignis wirklich löschen?")) return;
   try{
     await ensureLiveTickerAdminWriteReady();
+    const oldItem=liveTickerLocalEvents().find(e=>e.id===id);
     const events=liveTickerLocalEvents().filter(e=>e.id!==id);
     if(liveTickerEditEventId===id) liveTickerEditEventId=null;
-    await db.collection("liveticker").doc("current").set({events,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
-    liveTickerLocalApply({events});
+
+    let homeScore=Number(liveTickerData?.homeScore||0);
+    let awayScore=Number(liveTickerData?.awayScore||0);
+    if(oldItem?.type==="Tor"){
+      if(oldItem.team===liveTickerData?.homeTeam) homeScore=Math.max(0,homeScore-1);
+      if(oldItem.team===liveTickerData?.awayTeam) awayScore=Math.max(0,awayScore-1);
+    }
+    if(oldItem) await applyPlayerStatDelta(oldItem,-1,liveTickerData||{});
+    await db.collection("liveticker").doc("current").set({events,homeScore,awayScore,updatedAt:firebase.firestore.FieldValue.serverTimestamp()},{merge:true});
+    liveTickerLocalApply({events,homeScore,awayScore});
     setLiveTickerSaveStatus("✅ Ereignis gelöscht.","success");
   }catch(error){
     const message=liveTickerFriendlyWriteError(error);
@@ -4224,10 +4373,6 @@ db
     const data =
       doc.data();
 
-    if(data.aktiv === false){
-      return;
-    }
-
     newsData.push({
       id:doc.id,
       ...data
@@ -4252,6 +4397,8 @@ db
 
   renderNews();
   renderHomeNews();
+  renderGallery();
+  renderEnhancedHome();
   renderAdminLists();
 
 });
@@ -4291,6 +4438,9 @@ db
   );
 
   renderTeams();
+  populatePreferenceUi();
+  renderPlayerStats();
+  renderGallery();
   renderOfvRankings();
   updateTeamSelects();
   renderAdminLists();
@@ -4336,6 +4486,8 @@ db
   );
 
   renderTeams();
+  renderPlayerStats();
+  renderGallery();
   renderAdminLists();
 
 });
@@ -4430,10 +4582,6 @@ db
     const data =
       doc.data();
 
-    if(data.aktiv === false){
-      return;
-    }
-
     reportsData.push({
       id:doc.id,
       ...data
@@ -4460,6 +4608,8 @@ db
   renderNews();
   renderAdminLists();
   renderHomeMatchCards();
+  renderGallery();
+  renderEnhancedHome();
 
 });
 
@@ -4469,8 +4619,8 @@ db
 function renderNews(){
   const container=document.getElementById("newsList"); if(!container) return;
   let feedItems=[
-    ...newsData.map(news=>({type:"news",id:news.id,datum:news.datum,titel:news.titel||"",text:news.text||"",kategorie:news.kategorie||"News",bild:news.bild||"",commentKey:news.id})),
-    ...reportsData.map(report=>({type:"report",id:report.id,datum:report.datum,titel:report.titel||"",text:report.text||"",kategorie:report.team?"Matchbericht · "+report.team:"Matchbericht",bild:report.bild||"",commentKey:"matchbericht:"+report.id}))
+    ...newsData.filter(x=>x.aktiv!==false).map(news=>({type:"news",id:news.id,datum:news.datum,titel:news.titel||"",text:news.text||"",kategorie:news.kategorie||"News",bild:news.bild||"",commentKey:news.id})),
+    ...reportsData.filter(x=>x.aktiv!==false).map(report=>({type:"report",id:report.id,datum:report.datum,titel:report.titel||"",text:report.text||"",kategorie:report.team?"Matchbericht · "+report.team:"Matchbericht",bild:report.bild||"",commentKey:"matchbericht:"+report.id}))
   ];
   if(activeNewsFilter==="News") feedItems=feedItems.filter(x=>x.type==="news");
   if(activeNewsFilter==="Matchbericht") feedItems=feedItems.filter(x=>x.type==="report");
@@ -4485,8 +4635,9 @@ function renderNews(){
 
 function renderHomeNews(){
   const container=document.getElementById("homeNews"); if(!container)return;
-  const items=[...newsData.map(x=>({type:"news",...x})),...reportsData.map(x=>({type:"report",...x}))].sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
-  const item=items[0];
+  const favorite=getUserPreferences().favoriteTeam;
+  const items=[...newsData.filter(x=>x.aktiv!==false).map(x=>({type:"news",...x})),...reportsData.filter(x=>x.aktiv!==false).map(x=>({type:"report",...x}))].sort((a,b)=>(toDate(b.datum)?.getTime()||0)-(toDate(a.datum)?.getTime()||0));
+  const item=(favorite ? items.find(x=>x.type==="report" && x.team===favorite) : null) || items[0];
   if(!item){container.innerHTML='<div class="empty">Keine News vorhanden.</div>';return;}
   const isReport=item.type==="report";
   container.innerHTML=`<div class="card" onclick="${isReport?`openReport('${item.id}')`:`openNews('${item.id}')`}">${item.bild?`<img loading="lazy" src="${esc(item.bild)}" class="news-image">`:""}<span class="tag">${esc(isReport?"Matchbericht · "+(item.team||"FCW"):(item.kategorie||"News"))}</span><h3>${esc(item.titel)}</h3><p>${esc(String(item.text||"").substring(0,140))}</p></div>`;
@@ -5030,8 +5181,8 @@ function openBoardMember(id){
 
 function renderReports(){
   const container=document.getElementById("reportsList"); if(!container)return;
-  if(!reportsData.length){container.innerHTML='<div class="empty">Keine Matchberichte vorhanden.</div>';return;}
-  container.innerHTML=reportsData.map(report=>`<div class="card" onclick="openReport('${report.id}')">${report.bild?`<img loading="lazy" src="${esc(report.bild)}" class="news-image">`:""}<span class="tag">${esc(report.team||"Matchbericht")}</span><div class="meta">${formatDate(report.datum)}</div><h3>${esc(report.titel)}</h3>${report.gegner?`<div class="match-summary"><div class="match-side">${esc(report.team||"FC Wängi")}</div><div class="match-score">${report.toreFcw??"–"} : ${report.toreGegner??"–"}</div><div class="match-side">${esc(report.gegner)}</div></div>`:""}<p>${esc(String(report.text||"").substring(0,180))}</p><div class="news-comment-count">💬 ${commentCountFor("matchbericht:"+report.id)} Kommentare</div></div>`).join("");
+  const publicReports=reportsData.filter(x=>x.aktiv!==false); if(!publicReports.length){container.innerHTML='<div class="empty">Keine Matchberichte vorhanden.</div>';return;}
+  container.innerHTML=publicReports.map(report=>`<div class="card" onclick="openReport('${report.id}')">${report.bild?`<img loading="lazy" src="${esc(report.bild)}" class="news-image">`:""}<span class="tag">${esc(report.team||"Matchbericht")}</span><div class="meta">${formatDate(report.datum)}</div><h3>${esc(report.titel)}</h3>${report.gegner?`<div class="match-summary"><div class="match-side">${esc(report.team||"FC Wängi")}</div><div class="match-score">${report.toreFcw??"–"} : ${report.toreGegner??"–"}</div><div class="match-side">${esc(report.gegner)}</div></div>`:""}<p>${esc(String(report.text||"").substring(0,180))}</p><div class="news-comment-count">💬 ${commentCountFor("matchbericht:"+report.id)} Kommentare</div></div>`).join("");
   renderHomeMatchCards(); tryHandleDeepLink();
 }
 
@@ -5428,11 +5579,16 @@ async function loadAdminModeration(){
     const result=await getAdminModerationCallable({});
     const reports=result?.data?.reports || [];
     const logs=result?.data?.logs || [];
+    const pushes=result?.data?.pushes || [];
+    const pushBox=document.getElementById("adminPushHistory");
     if(reportBox){
       reportBox.innerHTML = reports.length ? reports.map(r=>`<div class="moderation-item"><div class="moderation-meta">${esc(r.createdAt || "")} · ${Number(r.count||1)} Meldung(en)</div><strong>${esc(r.commentName || "Gast")}</strong><div class="comment-admin-text">${esc(r.commentText || "Kommentar nicht mehr vorhanden")}</div><div class="moderation-meta">Grund: ${esc(r.reason || "Nicht angegeben")}</div>${r.commentId?`<button class="button button-red button-small" onclick="deleteComment('${r.commentId}')">Kommentar löschen</button>`:""}</div>`).join("") : '<div class="empty">Keine offenen Meldungen.</div>';
     }
     if(logBox){
       logBox.innerHTML = logs.length ? logs.map(l=>`<div class="moderation-item"><div class="moderation-meta">${esc(l.createdAt || "")}</div><strong>${esc(l.action || "Aktion")}</strong><div class="comment-admin-text">${esc(l.details || "")}</div></div>`).join("") : '<div class="empty">Noch keine protokollierten Aktionen.</div>';
+    }
+    if(pushBox){
+      pushBox.innerHTML = pushes.length ? pushes.map(p=>`<div class="moderation-item"><div class="moderation-meta">${esc(p.createdAt||"")} · ${Number(p.success||0)}/${Number(p.devices||0)} erfolgreich</div><strong>${esc(p.title||"Push")}</strong><div class="comment-admin-text">${esc(p.body||"")}</div></div>`).join("") : '<div class="empty">Noch keine Push-Historie.</div>';
     }
   }catch(error){
     console.error("Moderation laden:",error);
@@ -6807,8 +6963,17 @@ async function registerCurrentDeviceForPush(){
     throw new Error("Firebase konnte keinen Push-Token erzeugen.");
   }
 
+  const preferences=getUserPreferences();
   await registerPushTokenCallable({
-    token
+    token,
+    preferences:{
+      news:preferences.news,
+      live:preferences.live,
+      calendar:preferences.calendar,
+      reports:preferences.reports,
+      games:preferences.games
+    },
+    favoriteTeam:preferences.favoriteTeam || ""
   });
 
   localStorage.setItem(
@@ -7059,14 +7224,20 @@ async function saveNews(){
   try{
     let imageUrl=existing?.bild||"",storagePath=existing?.storagePath||""; const file=document.getElementById("newsImageFile").files?.[0];
     if(file){const upload=await uploadImage(file,"news","newsUploadStatus");if(storagePath)await deleteStorageFile(storagePath);imageUrl=upload.url;storagePath=upload.path;}
-    const data={titel:title,text,kategorie:category,datum:inputTimestamp("newsDate"),bild:imageUrl,storagePath,aktiv:true};
+    const publishMode=document.getElementById("newsPublishMode")?.value || "now";
+    const publishAtValue=document.getElementById("newsPublishAt")?.value || "";
+    const publishAt=publishAtValue ? firebase.firestore.Timestamp.fromDate(new Date(publishAtValue)) : null;
+    if(publishMode==="scheduled" && !publishAt) throw new Error("Bitte Veröffentlichungsdatum wählen.");
+    const data={titel:title,text,kategorie:category,datum:inputTimestamp("newsDate"),bild:imageUrl,storagePath,aktiv:publishMode==="now",publishMode,publishAt};
     let savedId=id;
     if(id){await db.collection("news").doc(id).update(data);}else{const ref=await db.collection("news").add(data);savedId=ref.id;}
     resetNewsForm();
-    if(isNew){
-      try{const pushText=text.length>170?text.substring(0,167)+"...":text;await sendPushCallable({title:"📰 "+title,body:pushText,url:`${APP_URL}?open=news&id=${encodeURIComponent(savedId)}`,target:"news",id:savedId,tag:"news"});alert("✅ News veröffentlicht und Push gesendet.");}
+    if(isNew && publishMode==="now"){
+      try{const pushText=text.length>170?text.substring(0,167)+"...":text;await sendPushCallable({title:"📰 "+title,body:pushText,url:`${APP_URL}?open=news&id=${encodeURIComponent(savedId)}`,target:"news",id:savedId,tag:"news",category:"news",team:favoriteTeamForContent(category)});alert("✅ News veröffentlicht und Push gesendet.");}
       catch(error){console.error(error);alert("✅ News veröffentlicht.\n⚠️ Push konnte nicht gesendet werden.");}
-    }else alert("✅ News aktualisiert.");
+    }else if(isNew && publishMode==="draft") alert("✅ News als Entwurf gespeichert.");
+    else if(isNew && publishMode==="scheduled") alert("✅ News zur Veröffentlichung eingeplant.");
+    else alert("✅ News aktualisiert.");
   }catch(error){console.error("News speichern:",error);alert("❌ News konnte nicht gespeichert werden.\n\n" + (error?.message || "Unbekannter Fehler."));}
 }
 
@@ -7110,6 +7281,9 @@ function resetNewsForm(){
   document.getElementById("newsText").value = "";
   document.getElementById("newsDate").value = "";
   document.getElementById("newsImageFile").value = "";
+  if(document.getElementById("newsPublishMode")) document.getElementById("newsPublishMode").value="now";
+  if(document.getElementById("newsPublishAt")) document.getElementById("newsPublishAt").value="";
+  togglePublishFields("news");
 
   const preview =
     document.getElementById(
@@ -7984,29 +8158,35 @@ function resetBoardForm(){
 
 async function saveReport(){
   const id=document.getElementById("reportEditId").value,isNew=!id,existing=id?reportsData.find(x=>x.id===id):null;
+  const publishMode=document.getElementById("reportPublishMode")?.value || "now";
+  const publishAtValue=document.getElementById("reportPublishAt")?.value || "";
+  const publishAt=publishAtValue ? firebase.firestore.Timestamp.fromDate(new Date(publishAtValue)) : null;
+  if(publishMode==="scheduled" && !publishAt){alert("Bitte Veröffentlichungsdatum wählen.");return;}
   const data={
     titel:document.getElementById("reportTitle").value.trim(),team:document.getElementById("reportTeam").value.trim(),gegner:document.getElementById("reportOpponent").value.trim(),heimauswaerts:document.getElementById("reportVenue").value,datum:inputTimestamp("reportDate"),
     toreFcw:document.getElementById("reportGoalsFcw").value===""?null:Number(document.getElementById("reportGoalsFcw").value),toreGegner:document.getElementById("reportGoalsOpponent").value===""?null:Number(document.getElementById("reportGoalsOpponent").value),
-    torschuetzen:document.getElementById("reportScorers").value.trim(),aufstellung:document.getElementById("reportLineup").value.trim(),text:document.getElementById("reportText").value.trim(),aktiv:true,bild:existing?.bild||"",storagePath:existing?.storagePath||""
+    torschuetzen:document.getElementById("reportScorers").value.trim(),aufstellung:document.getElementById("reportLineup").value.trim(),text:document.getElementById("reportText").value.trim(),aktiv:publishMode==="now",publishMode,publishAt,bild:existing?.bild||"",storagePath:existing?.storagePath||""
   };
   if(!data.titel||!data.text){alert("Titel und Bericht eingeben.");return;}
   try{
     const file=document.getElementById("reportImageFile").files?.[0]; if(file){const upload=await uploadImage(file,"matchberichte","reportUploadStatus");if(data.storagePath)await deleteStorageFile(data.storagePath);data.bild=upload.url;data.storagePath=upload.path;}
     let savedId=id;if(id){await db.collection("matchberichte").doc(id).update(data);}else{const ref=await db.collection("matchberichte").add(data);savedId=ref.id;}
     resetReportForm();
-    if(isNew){
-      try{const body=data.gegner&&data.toreFcw!==null&&data.toreGegner!==null?`${data.team||"FC Wängi"} ${data.toreFcw}:${data.toreGegner} ${data.gegner}`:(data.text.length>170?data.text.substring(0,167)+"...":data.text);await sendPushCallable({title:`⚽ ${data.team?data.team+" · ":""}${data.titel}`,body,url:`${APP_URL}?open=report&id=${encodeURIComponent(savedId)}`,target:"report",id:savedId,tag:"report"});alert("✅ Matchbericht veröffentlicht und Push gesendet.");}
+    if(isNew && publishMode==="now"){
+      try{const body=data.gegner&&data.toreFcw!==null&&data.toreGegner!==null?`${data.team||"FC Wängi"} ${data.toreFcw}:${data.toreGegner} ${data.gegner}`:(data.text.length>170?data.text.substring(0,167)+"...":data.text);await sendPushCallable({title:`⚽ ${data.team?data.team+" · ":""}${data.titel}`,body,url:`${APP_URL}?open=report&id=${encodeURIComponent(savedId)}`,target:"report",id:savedId,tag:"report",category:"reports",team:data.team});alert("✅ Matchbericht veröffentlicht und Push gesendet.");}
       catch(e){console.error(e);alert("✅ Matchbericht veröffentlicht.\n⚠️ Push konnte nicht gesendet werden.");}
-    } else alert("✅ Matchbericht aktualisiert.");
+    } else if(isNew && publishMode==="draft") alert("✅ Matchbericht als Entwurf gespeichert.");
+    else if(isNew && publishMode==="scheduled") alert("✅ Matchbericht zur Veröffentlichung eingeplant.");
+    else alert("✅ Matchbericht aktualisiert.");
   }catch(e){console.error(e);alert("❌ Matchbericht konnte nicht gespeichert werden.");}
 }
 function editReport(id){
   const x=reportsData.find(i=>i.id===id);if(!x)return;
-  document.getElementById("reportEditId").value=x.id;document.getElementById("reportTitle").value=x.titel||"";document.getElementById("reportTeam").value=x.team||"";document.getElementById("reportOpponent").value=x.gegner||"";document.getElementById("reportVenue").value=x.heimauswaerts||"Heim";document.getElementById("reportDate").value=dateInputValue(x.datum);document.getElementById("reportGoalsFcw").value=x.toreFcw??"";document.getElementById("reportGoalsOpponent").value=x.toreGegner??"";document.getElementById("reportScorers").value=x.torschuetzen||"";document.getElementById("reportLineup").value=x.aufstellung||"";document.getElementById("reportText").value=x.text||"";
+  document.getElementById("reportEditId").value=x.id;document.getElementById("reportTitle").value=x.titel||"";document.getElementById("reportTeam").value=x.team||"";document.getElementById("reportOpponent").value=x.gegner||"";document.getElementById("reportVenue").value=x.heimauswaerts||"Heim";document.getElementById("reportDate").value=dateInputValue(x.datum);document.getElementById("reportGoalsFcw").value=x.toreFcw??"";document.getElementById("reportGoalsOpponent").value=x.toreGegner??"";document.getElementById("reportScorers").value=x.torschuetzen||"";document.getElementById("reportLineup").value=x.aufstellung||"";document.getElementById("reportText").value=x.text||"";document.getElementById("reportPublishMode").value=x.publishMode||(x.aktiv===false?"draft":"now");document.getElementById("reportPublishAt").value=dateInputValue(x.publishAt);togglePublishFields("report");
   const p=document.getElementById("reportImagePreview");if(x.bild){p.src=x.bild;p.classList.add("visible");}else{p.removeAttribute("src");p.classList.remove("visible");}
 }
 function resetReportForm(){
-  ["reportEditId","reportTitle","reportTeam","reportOpponent","reportDate","reportGoalsFcw","reportGoalsOpponent","reportScorers","reportLineup","reportText"].forEach(id=>{const e=document.getElementById(id);if(e)e.value="";});document.getElementById("reportVenue").value="Heim";document.getElementById("reportImageFile").value="";const p=document.getElementById("reportImagePreview");p.removeAttribute("src");p.classList.remove("visible");
+  ["reportEditId","reportTitle","reportTeam","reportOpponent","reportDate","reportGoalsFcw","reportGoalsOpponent","reportScorers","reportLineup","reportText"].forEach(id=>{const e=document.getElementById(id);if(e)e.value="";});document.getElementById("reportVenue").value="Heim";document.getElementById("reportImageFile").value="";if(document.getElementById("reportPublishMode"))document.getElementById("reportPublishMode").value="now";if(document.getElementById("reportPublishAt"))document.getElementById("reportPublishAt").value="";togglePublishFields("report");const p=document.getElementById("reportImagePreview");p.removeAttribute("src");p.classList.remove("visible");
 }
 
 async function saveCalendarItem(){
@@ -8034,7 +8214,9 @@ async function saveCalendarItem(){
         url:`${APP_URL}?open=kalender&id=${encodeURIComponent(savedId)}`,
         target:"kalender",
         id:savedId,
-        tag:"kalender"
+        tag:"kalender",
+        category:data.typ==="Spiel" ? "games" : "calendar",
+        team:data.team || ""
       });
       alert("✅ Termin gespeichert und Push gesendet.");
     }catch(error){
@@ -8142,7 +8324,7 @@ function renderAdminLists(){
     newsList.innerHTML =
       newsData
         .map(item => adminRow(
-          item.titel,
+          (item.aktiv===false?"📝 ":"")+item.titel,
           item.bild,
           `editNews('${item.id}')`,
           `deleteItem('news','${item.id}')`
@@ -8413,6 +8595,202 @@ function openAdminCategory(group){
   details.scrollIntoView({behavior:"smooth",block:"start"});
 }
 
+
+/* =========================
+   V6.0 FUNKTIONEN
+========================= */
+
+const DEFAULT_PREFS={news:true,live:true,calendar:true,reports:true,games:true,favoriteTeam:""};
+
+function getUserPreferences(){
+  try{
+    return {...DEFAULT_PREFS,...JSON.parse(localStorage.getItem("fcwUserPreferences")||"{}")};
+  }catch(_error){
+    return {...DEFAULT_PREFS};
+  }
+}
+
+function populatePreferenceUi(){
+  const p=getUserPreferences();
+  const select=document.getElementById("favoriteTeamSelect");
+  if(select){
+    const current=select.value || p.favoriteTeam || "";
+    select.innerHTML='<option value="">Alle Teams</option>'+teamsData.map(t=>`<option value="${esc(t.name||"")}">${esc(t.name||"")}</option>`).join("");
+    select.value=current;
+  }
+  [["prefNews","news"],["prefLive","live"],["prefCalendar","calendar"],["prefReports","reports"],["prefGames","games"]].forEach(([id,key])=>{
+    const el=document.getElementById(id); if(el) el.checked=p[key]!==false;
+  });
+}
+
+async function saveUserPreferences(){
+  const prefs={
+    favoriteTeam:document.getElementById("favoriteTeamSelect")?.value || "",
+    news:document.getElementById("prefNews")?.checked!==false,
+    live:document.getElementById("prefLive")?.checked!==false,
+    calendar:document.getElementById("prefCalendar")?.checked!==false,
+    reports:document.getElementById("prefReports")?.checked!==false,
+    games:document.getElementById("prefGames")?.checked!==false
+  };
+  localStorage.setItem("fcwUserPreferences",JSON.stringify(prefs));
+  const status=document.getElementById("preferenceStatus");
+  if(status) status.textContent="✅ Einstellungen gespeichert";
+  renderCalendar(); renderHomeNews(); renderEnhancedHome();
+  if("Notification" in window && Notification.permission==="granted"){
+    try{await registerCurrentDeviceForPush();}catch(error){console.warn("Push-Einstellungen konnten nicht synchronisiert werden:",error);}
+  }
+}
+
+function favoriteTeamForContent(value){
+  const text=String(value||"").toLowerCase();
+  return teamsData.find(t=>text.includes(String(t.name||"").toLowerCase()))?.name || "";
+}
+
+function renderEnhancedHome(){
+  populatePreferenceUi();
+  const p=getUserPreferences();
+
+  const live=document.getElementById("homeLiveBanner");
+  const liveText=document.getElementById("homeLiveBannerText");
+  if(live){
+    const active=liveTickerStatusIsLive(liveTickerData?.status||"");
+    live.classList.toggle("visible",active);
+    if(liveText && active){
+      liveText.textContent=` · ${liveTickerData?.homeTeam||"FC Wängi"} ${Number(liveTickerData?.homeScore||0)}:${Number(liveTickerData?.awayScore||0)} ${liveTickerData?.awayTeam||"Gegner"}`;
+    }
+    document.querySelector('.nav-button[data-page="liveticker"]')?.classList.toggle("live-now",active);
+  }
+
+  const sponsorBox=document.getElementById("homeSponsorSpotlight");
+  if(sponsorBox && sponsorsData.length){
+    const sponsor=sponsorsData[Math.floor(Date.now()/86400000)%sponsorsData.length];
+    sponsorBox.classList.add("visible");
+    sponsorBox.innerHTML=`<img src="${esc(sponsor.logo||"./logo.png")}" onerror="this.src='./logo.png'"><div><div class="meta">Partner des FC Wängi</div><strong>${esc(sponsor.name||"Sponsor")}</strong><br><button class="button button-small button-outline" onclick="openSponsor('${sponsor.id}')">Partner ansehen</button></div>`;
+  }
+
+  renderPlayerStats();
+  renderGallery();
+  renderAdminDashboard();
+}
+
+function openCalendarItem(id){
+  const item=calendarData.find(x=>x.id===id); if(!item)return;
+  const gameLine=[item.team,item.gegner].filter(Boolean).join(" – ");
+  const text=[gameLine,formatDateTime(item.datum),item.ort,item.beschreibung].filter(Boolean).join("\n\n");
+  openModal({tag:item.typ||"Termin",title:item.titel||"Termin",meta:formatDateTime(item.datum),text});
+  const modalText=document.getElementById("modalText");
+  if(modalText){
+    modalText.insertAdjacentHTML("afterend",`<div class="game-detail-actions">
+      <button class="button button-yellow" onclick="downloadCalendarItem('${item.id}')">📅 Zum Kalender</button>
+      ${item.ort?`<button class="button button-outline" onclick="openMaps('${encodeURIComponent(item.ort)}')">📍 Route</button>`:""}
+      ${item.typ==="Spiel"?`<button class="button button-outline" onclick="openPage('liveticker');closeModal()">🔴 Liveticker</button>`:""}
+    </div>`);
+  }
+}
+
+function openMaps(encoded){
+  const place=decodeURIComponent(encoded||"");
+  if(!place)return;
+  window.open("https://maps.apple.com/?q="+encodeURIComponent(place),"_blank","noopener");
+}
+
+function downloadCalendarItem(id){
+  const item=calendarData.find(x=>x.id===id); if(!item)return;
+  const d=toDate(item.datum)||new Date();
+  const end=new Date(d.getTime()+2*60*60*1000);
+  const stamp=x=>x.toISOString().replace(/[-:]/g,"").replace(/\.\d{3}/,"");
+  const ics=[
+    "BEGIN:VCALENDAR","VERSION:2.0","PRODID:-//FC Waengi 1967//App//DE",
+    "BEGIN:VEVENT",
+    "UID:"+item.id+"@fc-waengi-1967",
+    "DTSTART:"+stamp(d),"DTEND:"+stamp(end),
+    "SUMMARY:"+String(item.titel||"FC Wängi Termin").replace(/\n/g," "),
+    "LOCATION:"+String(item.ort||"").replace(/\n/g," "),
+    "DESCRIPTION:"+String(item.beschreibung||"").replace(/\n/g," "),
+    "END:VEVENT","END:VCALENDAR"
+  ].join("\r\n");
+  const blob=new Blob([ics],{type:"text/calendar;charset=utf-8"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");a.href=url;a.download="fcw-termin.ics";a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
+}
+
+async function applyPlayerStatDelta(event,delta,liveData={}){
+  if(!event?.playerId || !delta)return;
+  const updates={};
+  if(event.type==="Tor") updates.goals=firebase.firestore.FieldValue.increment(delta);
+  if(event.type==="Assist") updates.assists=firebase.firestore.FieldValue.increment(delta);
+  if(event.type==="Gelbe Karte") updates.yellowCards=firebase.firestore.FieldValue.increment(delta);
+  if(event.type==="Rote Karte") updates.redCards=firebase.firestore.FieldValue.increment(delta);
+  if(event.type==="Parade") updates.saves=firebase.firestore.FieldValue.increment(delta);
+  if(event.type==="Spielende"){
+    updates.appearances=firebase.firestore.FieldValue.increment(delta);
+    const fcwIsHome=String(liveData.homeTeam||"").toLowerCase().includes("wängi");
+    const conceded=fcwIsHome?Number(liveData.awayScore||0):Number(liveData.homeScore||0);
+    updates.goalsConceded=firebase.firestore.FieldValue.increment(delta*conceded);
+    if(conceded===0) updates.cleanSheets=firebase.firestore.FieldValue.increment(delta);
+  }
+  if(Object.keys(updates).length){
+    await db.collection("spieler").doc(event.playerId).set(updates,{merge:true});
+  }
+}
+
+function renderPlayerStats(){
+  const box=document.getElementById("playerStatsList"); if(!box)return;
+  const rows=playersData.filter(p=>["goals","assists","yellowCards","redCards","saves","cleanSheets","appearances"].some(k=>Number(p[k]||0)>0));
+  if(!rows.length){box.innerHTML='<div class="empty">Noch keine strukturierten Statistiken vorhanden. Sie entstehen automatisch aus neuen Liveticker-Ereignissen.</div>';return;}
+  box.innerHTML=`<div class="player-stat-row player-stat-head"><span>Spieler</span><span>⚽</span><span>🎯</span><span>🟨</span><span>🧤</span><span>🧱</span></div>`+
+    rows.sort((a,b)=>Number(b.goals||0)-Number(a.goals||0)).map(p=>`<div class="player-stat-row"><strong>${esc(p.name||"")}</strong><span>${Number(p.goals||0)}</span><span>${Number(p.assists||0)}</span><span>${Number(p.yellowCards||0)}</span><span>${Number(p.saves||0)}</span><span>${Number(p.cleanSheets||0)}</span></div>`).join("");
+}
+
+function renderGallery(){
+  const box=document.getElementById("galleryList"); if(!box)return;
+  const images=[
+    ...newsData.filter(x=>x.aktiv!==false&&x.bild).map(x=>({url:x.bild,title:x.titel||"News"})),
+    ...reportsData.filter(x=>x.aktiv!==false&&x.bild).map(x=>({url:x.bild,title:x.titel||"Matchbericht"})),
+    ...teamsData.filter(x=>x.bild).map(x=>({url:x.bild,title:x.name||"Team"})),
+    ...playersData.filter(x=>x.foto).map(x=>({url:x.foto,title:x.name||"Spieler"})),
+    ...sponsorsData.filter(x=>x.logo).map(x=>({url:x.logo,title:x.name||"Sponsor"}))
+  ].slice(0,80);
+  box.innerHTML=images.length?images.map(x=>`<div class="gallery-item" onclick="openModal({image:'${String(x.url).replace(/'/g,"&#39;")}',tag:'Galerie',title:'${String(x.title).replace(/'/g,"&#39;")}',text:''})"><img loading="lazy" src="${esc(x.url)}"><div class="gallery-caption">${esc(x.title)}</div></div>`).join(""):'<div class="empty">Noch keine Bilder vorhanden.</div>';
+}
+
+function togglePublishFields(prefix){
+  const mode=document.getElementById(prefix+"PublishMode")?.value || "now";
+  const wrap=document.getElementById(prefix+"PublishAtWrap");
+  if(wrap) wrap.style.display=mode==="scheduled"?"block":"none";
+}
+
+function createReportDraftFromLiveTicker(){
+  const d=liveTickerData||{};
+  const events=[...(d.events||[])].sort((a,b)=>Number(a.minute||0)-Number(b.minute||0));
+  const scorers=events.filter(e=>e.type==="Tor" && String(e.team||"").toLowerCase().includes("wängi")).map(e=>`${e.minute||"–"}' ${e.playerName||e.text||"Tor"}`).join(", ");
+  const timeline=events.map(e=>`${e.minute||"–"}' ${e.type}${e.playerName?" · "+e.playerName:""}${e.text?" – "+e.text:""}`).join("\n");
+  document.getElementById("reportTitle").value=`${d.homeTeam||"FC Wängi"} ${Number(d.homeScore||0)}:${Number(d.awayScore||0)} ${d.awayTeam||"Gegner"}`;
+  document.getElementById("reportTeam").value=String(d.homeTeam||"").toLowerCase().includes("wängi")?(d.homeTeam||"FC Wängi"):(d.awayTeam||"FC Wängi");
+  document.getElementById("reportOpponent").value=String(d.homeTeam||"").toLowerCase().includes("wängi")?(d.awayTeam||"Gegner"):(d.homeTeam||"Gegner");
+  document.getElementById("reportVenue").value=String(d.homeTeam||"").toLowerCase().includes("wängi")?"Heim":"Auswärts";
+  document.getElementById("reportGoalsFcw").value=String(d.homeTeam||"").toLowerCase().includes("wängi")?Number(d.homeScore||0):Number(d.awayScore||0);
+  document.getElementById("reportGoalsOpponent").value=String(d.homeTeam||"").toLowerCase().includes("wängi")?Number(d.awayScore||0):Number(d.homeScore||0);
+  document.getElementById("reportScorers").value=scorers;
+  document.getElementById("reportText").value=`Spielverlauf:\n\n${timeline}\n\nFazit:\n`;
+  openPage("admin");
+  openAdminCategory("content");
+  document.getElementById("reportTitle")?.scrollIntoView({behavior:"smooth",block:"center"});
+}
+
+function renderAdminDashboard(){
+  const box=document.getElementById("adminDashboardKpis"); if(!box)return;
+  box.innerHTML=[
+    ["Push-Geräte","🔔","–"],
+    ["News","📰",newsData.length],
+    ["Berichte","📝",reportsData.length],
+    ["Teams","👕",teamsData.length],
+    ["Spieler","👤",playersData.length],
+    ["Termine","📅",calendarData.length]
+  ].map(([label,icon,value])=>`<div class="admin-kpi"><strong>${icon} ${value}</strong><span>${label}</span></div>`).join("");
+}
+
 /* SERVICE WORKER + APP-UPDATES */
 let waitingServiceWorker=null;
 function showUpdateBanner(worker){waitingServiceWorker=worker;document.getElementById("updateBanner")?.classList.add("visible");}
@@ -8450,6 +8828,10 @@ if("Notification" in window && Notification.permission==="granted"){
 }
     updatePushCounters();
     renderHomeMatchCards();
+    populatePreferenceUi();
+    renderEnhancedHome();
+    renderPlayerStats();
+    renderGallery();
     tryHandleDeepLink();
     setupAdminWorkspace();
 
